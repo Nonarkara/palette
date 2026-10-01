@@ -161,6 +161,7 @@
         scope: "Selection, spatial proportions, interface, search vocabulary, role assignments, and editorial reading.",
         independence: "Not affiliated with or endorsed by the Wada estate, Seigensha, or linked institutions."
       },
+      license: "MIT",
       reading: {
         temperature: palette.temperature,
         energy: palette.energy,
@@ -169,6 +170,7 @@
         suggestedUse: palette.use,
         note: "Dr Non's deterministic reading for this exhibition; it is not attributed to Wada."
       },
+      agentPrompt: agentBrief(palette),
       layoutNote: "Roles and shares describe this exhibition layout, not Wada's prescription.",
       colors: palette.colors.map((color, index) => ({
         name: color.name,
@@ -271,7 +273,9 @@
         }).slice(0, 48)
       : state.palettes.slice(0, 24);
     el.searchResults.replaceChildren(...results.map((palette) => paletteResult(palette, el.searchDialog)));
-    el.searchExplainer.textContent = `${results.length}${results.length === 48 ? "+" : ""} relationships shown. Search names, temperature, energy, medium, or use.`;
+    el.searchExplainer.textContent = terms.length
+      ? `${results.length}${results.length === 48 ? "+" : ""} relationships found for “${query.trim()}”. Choose one to enter the room.`
+      : "Browse everything below, choose a mood, or type your own words. Search stays on this device.";
   }
 
   function paletteResult(palette, dialog) {
@@ -305,14 +309,28 @@
     el.paletteIndex.replaceChildren(...palettes.map((palette) => paletteResult(palette, el.indexDialog)));
   }
 
+  function agentBrief(palette) {
+    const roles = ["dominant", "counter", "support", "signal"];
+    const weights = fieldWeights(palette.colors.length);
+    const totalWeight = weights.reduce((sum, weight) => sum + weight, 0);
+    const tokens = palette.colors.map((color, index) => {
+      const share = Math.round((weights[index] / totalWeight) * 100);
+      return `--palette-${roles[index]}: ${color.hex.toUpperCase()}; /* ${color.name} · about ${share}% */`;
+    }).join("\n");
+    return `Use this colour system for the work.\n\nPalette: Plate ${formatPlate(palette.id)} — ${palette.colors.map((color) => color.name).join(" + ")}\nMood: ${palette.temperature}; ${palette.energy}; ${palette.contrast}.\nSuggested direction: ${palette.use}.\n\n:root {\n${tokens.split("\n").map((line) => `  ${line}`).join("\n")}\n}\n\nKeep the roles and unequal proportions. Choose black or white text by measured contrast on each actual background. Do not treat the digital values as exact printed ink.\n\nSource relationship: Sanzo Wada. Digital interpretation, roles, and reading: Dr Non Arkaraprasertkul.\nReference: https://colors.nonarkara.org/#plate-${formatPlate(palette.id)}\nLicense: MIT.`;
+  }
+
   async function copyPalette() {
     const palette = currentPalette();
-    const value = palette.colors.map((color, index) => `--palette-${index + 1}: ${color.hex}; /* ${color.name} */`).join("\n");
+    const value = agentBrief(palette);
     try {
       await navigator.clipboard.writeText(value);
-      el.status.textContent = `Copied plate ${formatPlate(palette.id)} CSS values.`;
+      el.copyAgentButton.textContent = "COPIED — GIVE IT TO YOUR AGENT";
+      el.status.textContent = `Copied plate ${formatPlate(palette.id)} instructions for your agent.`;
+      window.setTimeout(() => { el.copyAgentButton.textContent = "COPY THIS FOR YOUR AGENT"; }, 2400);
     } catch {
-      el.status.textContent = "Copy was blocked by the browser. Open the digest to read the values.";
+      el.copyAgentButton.textContent = "COPY BLOCKED — OPEN JSON";
+      el.status.textContent = "Copy was blocked by the browser. Open the JSON room to select the palette manually.";
     }
   }
 
@@ -357,6 +375,19 @@
       button.addEventListener("click", () => action(button.dataset.action));
     });
     el.searchInput.addEventListener("input", () => renderSearch(el.searchInput.value));
+    el.searchDialog.querySelectorAll("[data-query]").forEach((button) => {
+      button.addEventListener("click", () => {
+        el.searchInput.value = button.dataset.query;
+        renderSearch(button.dataset.query);
+        el.searchInput.focus();
+      });
+    });
+    el.surpriseButton.addEventListener("click", () => {
+      goToIndex(Math.floor(Math.random() * state.palettes.length));
+      el.searchDialog.close();
+      el.stage.focus();
+    });
+    el.copyAgentButton.addEventListener("click", copyPalette);
     el.copyJsonButton.addEventListener("click", copyJson);
     el.indexDialog.querySelectorAll("[data-size]").forEach((button) => {
       button.addEventListener("click", () => {
@@ -406,6 +437,8 @@
       jsonDialog: byId("json-dialog"),
       jsonCode: byId("json-code"),
       copyJsonButton: byId("copy-json"),
+      copyAgentButton: byId("copy-agent"),
+      surpriseButton: byId("surprise-me"),
       aboutDialog: byId("about-dialog"),
       analysis: byId("current-analysis")
     });
@@ -422,6 +455,7 @@
       bindEvents();
       renderSearch("");
       renderPalette({ announce: false });
+      if (!requested) openDialog(el.searchDialog, el.searchInput);
     } catch (error) {
       el.plateNumber.textContent = "THE ROOM COULD NOT OPEN";
       el.plateNames.textContent = "Colour data is unavailable.";

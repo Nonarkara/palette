@@ -20,17 +20,22 @@ values, not claims about the exact printed inks in the book.
 
 ## Use the exhibition in two minutes
 
-1. Open <https://colors.nonarkara.org/>.
-2. Move with `←` and `→`, or press the Left and Right Arrow keys.
-3. Press `⌕` or `/` and search a colour, atmosphere, medium, or use. Try
+1. Open <https://colors.nonarkara.org/>. The finder welcomes people with an idea
+   and people with no idea at all.
+2. Choose a starting mood, type any colour, atmosphere, place, material, or use,
+   or choose **NO IDEA — SURPRISE ME**.
+3. Move with `←` and `→`, or press the Left and Right Arrow keys.
+4. Press `⌕` or `/` at any time to search again. Try
    `ochre`, `quiet`, `poster`, `night`, `อบอุ่น`, `สงบ`, `温暖`, or `安静`.
-4. Press `◐` or `C` to remove hue and inspect the value structure.
-5. Press `{}` or `J` to inspect and copy the current plate as portable JSON.
-6. Press `⧉` to copy named CSS custom properties for the current plate.
-7. Press `i` or `I` for the English, Thai, and Simplified Chinese reading.
-8. Press `A` for Dr Non's Red / Black study, research position, and two system
+5. Press `◐` or `C` to remove hue and inspect the value structure.
+6. Choose **COPY THIS FOR YOUR AGENT** or press `⧉`. Paste the resulting brief
+   into any coding agent; it already contains tokens, roles, proportions,
+   contrast instructions, provenance, and the stable plate link.
+7. Press `{}` or `J` to inspect and copy the current plate as portable JSON.
+8. Press `i` or `I` for the English, Thai, and Simplified Chinese reading.
+9. Press `A` for Dr Non's Red / Black study, research position, and two system
    diagrams.
-9. Copy the URL. Every plate has a stable address such as `#plate-087`.
+10. Copy the URL. Every plate has a stable address such as `#plate-087`.
 
 The complete instrument:
 
@@ -44,7 +49,7 @@ The complete instrument:
 | `◐` | Grayscale value study | `C` |
 | `A` | About, research, and system architecture | `A` |
 | `{}` | View and copy portable plate JSON | `J` |
-| `⧉` | Copy CSS values | — |
+| `⧉` | Copy an agent-ready implementation brief | — |
 | `i` | Principles and Dr Non's Digest | `I` |
 
 ## Turn a plate into a working interface
@@ -153,7 +158,7 @@ plates containing two, three, or four colours.
 
 The `{}` instrument exports a self-describing `palette-exhibition/1` object. In
 addition to the colour values, it includes the plate URL, field roles and area
-shares, the exhibition's computed reading, source attribution, and caveats that
+shares, the exhibition's computed reading, a ready-to-paste agent prompt, source attribution, and caveats that
 separate software interpretation from Wada's work and screen conversion from
 printed ink. The visible code can be selected manually if clipboard permission
 is unavailable.

@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@400;700&family=IBM+Plex+Sans+Thai:wght@400;600&family=JetBrains+Mono:wght@400;600&family=Noto+Sans+SC:wght@400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css?v=0.1.0-7">
+    <link rel="stylesheet" href="styles.css?v=0.1.0-9">
   </head>
   <body>
     <a class="skip-link" href="#palette-stage">Skip to the colour plate</a>
@@ -26,6 +26,7 @@
         <p id="plate-number">PLATE 001</p>
         <h1 id="plate-names">Loading colour relationship</h1>
         <p id="plate-reading">The field is preparing itself.</p>
+        <button type="button" id="copy-agent" class="copy-agent">COPY THIS FOR YOUR AGENT</button>
       </section>
 
       <nav class="instrument" aria-label="Exhibition controls">
@@ -37,7 +38,7 @@
         <button type="button" data-action="contrast" aria-pressed="false" aria-label="Toggle grayscale study" title="Grayscale study — C">◐</button>
         <button type="button" data-action="about" aria-label="About Dr Non and the research" title="About / research — A">A</button>
         <button type="button" data-action="json" aria-label="View and copy palette JSON" title="JSON export — J"><span aria-hidden="true">{}</span></button>
-        <button type="button" data-action="copy" aria-label="Copy palette CSS values" title="Copy CSS values">⧉</button>
+        <button type="button" data-action="copy" aria-label="Copy palette instructions for an agent" title="Copy for your agent">⧉</button>
         <button type="button" data-action="digest" aria-label="Read principles and Dr Non's Digest" title="Digest — I">i</button>
       </nav>
 
@@ -46,13 +47,31 @@
 
     <dialog id="search-dialog" class="sheet search-sheet">
       <form method="dialog" class="sheet-top">
-        <p>Find a relationship</p>
+        <p>Find your palette</p>
         <button value="close" aria-label="Close search">×</button>
       </form>
-      <label for="search-input">Colour, atmosphere, or use</label>
-      <input id="search-input" type="search" autocomplete="off" placeholder="ochre, quiet, poster, night…">
-      <p id="search-explainer">Search names and computed readings. Nothing is generated remotely.</p>
+      <section class="search-lead" aria-labelledby="search-title">
+        <p>348 HISTORIC RELATIONSHIPS · FREE TO EXPLORE</p>
+        <h2 id="search-title">Start with a feeling.<br>Or don’t.</h2>
+        <p>Bring a mood, colour, place, material, or purpose. We will find related colour schemes. No idea yet? Let chance choose your first room.</p>
+      </section>
+      <label for="search-input">What should it feel like?</label>
+      <input id="search-input" type="search" autocomplete="off" placeholder="quiet, red, night, poster…">
+      <div class="mood-starters" role="group" aria-label="Browse common moods">
+        <button type="button" data-query="quiet">QUIET</button>
+        <button type="button" data-query="warm">WARM</button>
+        <button type="button" data-query="punk">PUNK</button>
+        <button type="button" data-query="night">NIGHT</button>
+        <button type="button" data-query="air">AIRY</button>
+        <button type="button" data-query="earth">EARTHY</button>
+        <button type="button" id="surprise-me">NO IDEA — SURPRISE ME</button>
+      </div>
+      <p id="search-explainer">Browse everything below, choose a mood, or type your own words. Search stays on this device.</p>
       <ol id="search-results" class="result-list"></ol>
+      <footer class="search-footer">
+        <p>Found one? Open it, then choose <strong>COPY THIS FOR YOUR AGENT</strong>. Paste the copied brief into any coding agent.</p>
+        <a href="https://github.com/Nonarkara/palette/blob/main/LICENSE" rel="noreferrer">MIT LICENSE · FORK IT · MAKE IT YOURS ↗</a>
+      </footer>
     </dialog>
 
     <dialog id="index-dialog" class="sheet index-sheet">
@@ -316,7 +335,7 @@
       </section>
     </dialog>
 
-    <script src="content.js?v=0.1.0-7"></script>
-    <script src="app.js?v=0.1.0-7"></script>
+    <script src="content.js?v=0.1.0-9"></script>
+    <script src="app.js?v=0.1.0-9"></script>
   </body>
 </html>

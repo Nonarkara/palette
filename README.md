@@ -7,6 +7,13 @@ The current combination fills the screen. Search changes the room by colour,
 temperature, energy, medium, or intended use. A black instrument rail holds the
 few controls needed to move, search, compare, copy, and read.
 
+Come with an idea or without one. Type a mood, colour, place, material, or use;
+choose one of the starting moods; or let chance open a room. When a relationship
+feels right, choose **COPY THIS FOR YOUR AGENT**. Palette copies a complete brief
+with named CSS tokens, production roles, unequal proportions, accessibility
+instructions, attribution, and a stable reference link. Paste it into any coding
+agent and start building.
+
 **Live exhibition:** <https://colors.nonarkara.org/>
 
 **GitHub Pages mirror:** <https://nonarkara.github.io/palette/>
@@ -42,16 +49,22 @@ art, publisher copy, or printed colour claims.
 | `◐` | Grayscale value study | `C` |
 | `A` | Dr Non, the research, and the system architecture | `A` |
 | `{}` | Inspect and copy portable JSON for the current plate | `J` |
-| `⧉` | Copy CSS values with colour names | — |
+| `⧉` | Copy an agent-ready palette brief | — |
 | `i` | Principles, provenance, and Dr Non's Digest | `I` |
 
 Every control is a real button. Every state change is announced to assistive
 technology. Colour names, plate numbers, and text readings remain available, so
 colour is never the only carrier of information.
 
+The visible **COPY THIS FOR YOUR AGENT** action and the `⧉` instrument copy the
+same concise implementation brief: named CSS variables, suggested roles and
+proportions, contrast instruction, source boundary, licence, and stable plate
+URL. It is designed to be pasted directly into any coding agent.
+
 The `{}` instrument opens a readable JSON export for the current plate. It
 includes the named colours, RGB and hex conversions, actual field proportions,
-role suggestions, computed reading, provenance, and stable plate URL. Copy it
+role suggestions, computed reading, provenance, an agent-ready prompt, and a
+stable plate URL. Copy it
 into code, a design tool, an agent brief, or another project without scraping
 the screen.
 
@@ -205,4 +218,6 @@ the upstream data authors. Automated and structured browser gates pass. The
 real-human Mama Rule remains a release gate for a future `1.0` tag; this public
 edition is deliberately numbered `0.1.0` until that first-time-user test occurs.
 
-Code and original writing: MIT. Source data: upstream MIT terms retained.
+Code and original writing: **MIT licensed—use it, fork it, change it, and ship
+your own version.** Source data: upstream MIT terms retained. Preserve the
+attribution and digital-conversion caveats recorded in `THIRD_PARTY_NOTICES.md`.

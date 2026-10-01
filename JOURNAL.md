@@ -128,3 +128,26 @@ credit is parsed; accessibility, deployment, and live-byte gates are recorded
 with the release.
 
 Tags: `interpretation`, `authorship`, `fine-print`, `provenance`, `design-dna`
+
+## 2026-10-02 — Welcome the idea and the blank page
+
+**What changed:** Turned the finder into the front door for root visitors. A
+person can type a free-form idea, choose a common mood, browse the relationships,
+or ask for a chance encounter. Every chosen plate now exposes one plain action
+that copies an agent-ready implementation brief; the same brief travels inside
+the JSON export.
+
+**Why:** The original instrument made every action possible but expected a new
+visitor to decipher its symbols. The revised path welcomes both kinds of
+visitor: the person trying to refine a direction and the person who has no
+direction yet.
+
+**Key decision:** Discovery is a door, not another permanent layer. Root visits
+open the finder; stable plate links still open directly into the colour field.
+After selection, one modeless action completes the handoff to any coding agent.
+
+**Evidence:** Mood filtering, chance selection, direct plate entry, the visible
+copy action, exported agent prompt, 376px layout, content checks, accessibility,
+and production bytes are verified with the release.
+
+Tags: `onboarding`, `search`, `agent-handoff`, `mit`, `interaction`
