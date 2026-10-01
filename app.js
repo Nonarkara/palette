@@ -283,6 +283,9 @@
     const button = document.createElement("button");
     button.type = "button";
     button.className = "result-button";
+    if (palette.id === state.palettes[state.index]?.id) {
+      button.setAttribute("aria-current", "true");
+    }
     button.addEventListener("click", () => goToPlate(palette.id, dialog));
     const swatches = document.createElement("span");
     swatches.className = "mini-fields";
@@ -307,6 +310,11 @@
       ? state.palettes
       : state.palettes.filter((palette) => palette.colors.length === Number(state.indexSize));
     el.paletteIndex.replaceChildren(...palettes.map((palette) => paletteResult(palette, el.indexDialog)));
+    if (el.indexCount) {
+      const size = palettes.length;
+      const sizeWord = state.indexSize === "all" ? "" : ` with ${state.indexSize} colours`;
+      el.indexCount.textContent = `${size} relationships${sizeWord}.`;
+    }
   }
 
   function agentBrief(palette) {
@@ -402,15 +410,20 @@
       const dialogOpen = document.querySelector("dialog[open]");
       const typing = /input|textarea/i.test(document.activeElement?.tagName || "");
       if (dialogOpen || typing) return;
+      // Never steal Cmd/Ctrl/Alt shortcuts — the browser, OS, and assistive
+      // tools own those (Cmd+R reload, Ctrl+G find-next, Cmd+I italic, …).
+      if (event.metaKey || event.ctrlKey || event.altKey) return;
       if (event.key === "ArrowLeft") action("previous");
       if (event.key === "ArrowRight") action("next");
       if (event.key === "/") { event.preventDefault(); action("search"); }
-      if (event.key.toLowerCase() === "r") action("random");
-      if (event.key.toLowerCase() === "g") action("index");
-      if (event.key.toLowerCase() === "i") action("digest");
-      if (event.key.toLowerCase() === "a") action("about");
-      if (event.key.toLowerCase() === "j") action("json");
-      if (event.key.toLowerCase() === "c") action("contrast");
+      if (event.key === "?") { event.preventDefault(); action("digest"); }
+      const letter = event.key.length === 1 ? event.key.toLowerCase() : "";
+      if (letter === "r") action("random");
+      if (letter === "g") action("index");
+      if (letter === "i") action("digest");
+      if (letter === "a") action("about");
+      if (letter === "j") action("json");
+      if (letter === "c") action("contrast");
     });
     window.addEventListener("hashchange", () => {
       const match = location.hash.match(/plate-(\d{1,3})/);
@@ -433,6 +446,7 @@
       searchExplainer: byId("search-explainer"),
       indexDialog: byId("index-dialog"),
       paletteIndex: byId("palette-index"),
+      indexCount: byId("index-count"),
       digestDialog: byId("digest-dialog"),
       jsonDialog: byId("json-dialog"),
       jsonCode: byId("json-code"),

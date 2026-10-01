@@ -66,7 +66,7 @@
         <button type="button" data-query="earth">EARTHY</button>
         <button type="button" id="surprise-me">NO IDEA — SURPRISE ME</button>
       </div>
-      <p id="search-explainer">Browse everything below, choose a mood, or type your own words. Search stays on this device.</p>
+      <p id="search-explainer" aria-live="polite" aria-atomic="true">Browse everything below, choose a mood, or type your own words. Search stays on this device.</p>
       <ol id="search-results" class="result-list"></ol>
       <footer class="search-footer">
         <p>Found one? Open it, then choose <strong>COPY THIS FOR YOUR AGENT</strong>. Paste the copied brief into any coding agent.</p>
@@ -85,6 +85,7 @@
         <button type="button" data-size="3" aria-pressed="false">3</button>
         <button type="button" data-size="4" aria-pressed="false">4</button>
       </div>
+      <p id="index-count" class="visually-hidden" aria-live="polite" aria-atomic="true"></p>
       <ol id="palette-index" class="palette-index"></ol>
     </dialog>
 
@@ -335,7 +336,7 @@
       </section>
     </dialog>
 
-    <script src="content.js?v=0.1.0-9"></script>
-    <script src="app.js?v=0.1.0-9"></script>
+    <script defer src="content.js?v=0.1.0-9"></script>
+    <script defer src="app.js?v=0.1.0-9"></script>
   </body>
 </html>
