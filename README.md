@@ -7,7 +7,9 @@ The current combination fills the screen. Search changes the room by colour,
 temperature, energy, medium, or intended use. A black instrument rail holds the
 few controls needed to move, search, compare, copy, and read.
 
-**Live exhibition:** `https://nonarkara.github.io/palette/`
+**Live exhibition:** <https://colors.nonarkara.org/>
+
+**GitHub Pages mirror:** <https://nonarkara.github.io/palette/>
 
 **Use it immediately:** download
 [`PALETTE-FIELD-GUIDE.md`](PALETTE-FIELD-GUIDE.md) for the controls, fork recipe,

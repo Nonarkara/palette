@@ -22,3 +22,23 @@ testable instead of merely dramatic.
 recorded in the repository's GitHub Actions history.
 
 Tags: `colour`, `exhibition`, `wada`, `accessibility`, `bauhaus`, `moma`
+
+## 2026-10-02 — Give the room a front door
+
+**What changed:** Added an explicit repository link and a one-file field guide
+to the exhibition, connected the GitHub `main` branch to Cloudflare Pages, and
+made `colors.nonarkara.org` the canonical public address. GitHub Pages remains
+as a mirror.
+
+**Why:** An exhibition that teaches a method should let a visitor leave with
+the method. The site now points back to its source and offers a Markdown guide
+that can be downloaded, copied into another project, or read without the app.
+
+**Key decision:** Cloudflare Pages deploys directly from GitHub with no build
+step. The repository is the source of truth; the custom domain is only the
+front door.
+
+**Evidence:** Content and interaction tests pass; both the Pages origin and the
+custom hostname are checked against the committed bytes during release.
+
+Tags: `cloudflare`, `github`, `field-guide`, `reuse`, `deployment`

@@ -1,5 +1,5 @@
 .DS_Store
+.wrangler/
 node_modules/
 playwright-report/
 test-results/
-
