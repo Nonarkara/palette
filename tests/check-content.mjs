@@ -18,12 +18,16 @@ for (const required of [
   "https://github.com/Nonarkara/palette",
   "PALETTE-FIELD-GUIDE.md",
   "download=\"palette-field-guide.md\"",
-  "https://colors.nonarkara.org/"
+  "https://colors.nonarkara.org/",
+  "About Dr Non and the research",
+  "classy and dangerous",
+  "How verified colour data becomes an inhabitable, accessible room.",
+  "LEGIBLE<br>≠<br>SIMPLE"
 ]) {
   assert.ok(joined.includes(required), `missing required content: ${required}`);
 }
 
 const controls = [...contents["index.html"].matchAll(/data-action=/g)].length;
-assert.equal(controls, 8, "the instrument rail must expose eight working controls");
+assert.equal(controls, 9, "the instrument rail must expose nine working controls");
 
 console.log("OK: exhibition copy, multilingual markup, interaction hooks, provenance, and anti-slop gates are present");

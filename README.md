@@ -40,6 +40,7 @@ art, publisher copy, or printed colour claims.
 | `⌕` | Search names, readings, and uses | `/` |
 | `≡` | Complete index and 2/3/4-colour filters | `G` |
 | `◐` | Grayscale value study | `C` |
+| `A` | Dr Non, the research, and the system architecture | `A` |
 | `⧉` | Copy CSS values with colour names | — |
 | `i` | Principles, provenance, and Dr Non's Digest | `I` |
 
@@ -66,6 +67,16 @@ The application computes a plain reading for every plate:
 
 These readings are original editorial metadata. They are deterministic and run
 inside the browser. They are not claims made by Wada and do not call an AI API.
+
+## About and research
+
+The `A` instrument opens Dr Non's personal colour interval—Red and Black,
+classy and dangerous—alongside the research position behind the exhibition.
+Two Bauhausian diagrams make the argument visible: architecture, anthropology,
+and civic systems converge on a test of legibility; then source data passes
+through deterministic method and application state before becoming the room.
+The Red / Black study is explicitly personal and is not presented as one of
+Wada's historical combinations.
 
 ## Three languages, one argument
 

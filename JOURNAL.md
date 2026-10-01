@@ -42,3 +42,27 @@ front door.
 custom hostname are checked against the committed bytes during release.
 
 Tags: `cloudflare`, `github`, `field-guide`, `reuse`, `deployment`
+
+## 2026-10-02 — Put the researcher inside the room
+
+**What changed:** Added an `A` instrument for Dr Non's biography, research
+position, personal Red / Black interval, and two responsive Bauhausian diagrams.
+One diagram joins architecture, anthropology, and civic systems around the
+legibility test; the other traces the real software path from source data to
+the accessible exhibition room.
+
+**Why:** The exhibition showed the method but not the person or the research
+practice that produced it. Red and black supply the personal note—classy and
+dangerous—without pretending to be a historical Wada combination.
+
+**Correction:** The first desktop pass let the word `DANGEROUS` overrun its
+narrower field. The black-field type was scaled independently. The first tablet
+pass also held the desktop three-column prose too long, so the About room now
+turns vertical at 900px while leaving the exhibition's own breakpoint intact.
+
+**Evidence:** Content and data checks pass; axe reports zero automated
+violations; the dialog opens by button and `A`, closes with Escape, focuses its
+close control, has no horizontal overflow at 375/768/1280, and renders without
+console warnings or errors.
+
+Tags: `about`, `research`, `red-black`, `bauhaus`, `architecture`, `accessibility`

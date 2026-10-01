@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@400;700&family=IBM+Plex+Sans+Thai:wght@400;600&family=JetBrains+Mono:wght@400;600&family=Noto+Sans+SC:wght@400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css?v=0.1.0-2">
+    <link rel="stylesheet" href="styles.css?v=0.1.0-3">
   </head>
   <body>
     <a class="skip-link" href="#palette-stage">Skip to the colour plate</a>
@@ -35,6 +35,7 @@
         <button type="button" data-action="search" aria-label="Search combinations" title="Search — Slash">⌕</button>
         <button type="button" data-action="index" aria-label="Open complete index" title="Index — G">≡</button>
         <button type="button" data-action="contrast" aria-pressed="false" aria-label="Toggle grayscale study" title="Grayscale study — C">◐</button>
+        <button type="button" data-action="about" aria-label="About Dr Non and the research" title="About / research — A">A</button>
         <button type="button" data-action="copy" aria-label="Copy palette values" title="Copy values">⧉</button>
         <button type="button" data-action="digest" aria-label="Read principles and Dr Non's Digest" title="Digest — I">i</button>
       </nav>
@@ -108,7 +109,100 @@
       </footer>
     </dialog>
 
-    <script src="content.js?v=0.1.0-2"></script>
-    <script src="app.js?v=0.1.0-2"></script>
+    <dialog id="about-dialog" class="sheet about-sheet">
+      <form method="dialog" class="sheet-top about-top">
+        <p>About / research</p>
+        <button value="close" aria-label="Close about and research">×</button>
+      </form>
+
+      <section class="about-chord" aria-labelledby="about-title">
+        <div class="about-red" aria-hidden="true">
+          <span>CLASSY</span>
+          <code>RED · #A72144</code>
+        </div>
+        <div class="about-black" aria-hidden="true">
+          <span>DANGEROUS</span>
+          <code>BLACK · #111314</code>
+        </div>
+        <div class="about-intro">
+          <p class="about-kicker">A personal interval</p>
+          <h2 id="about-title">Red has the appetite.<br>Black has the nerve.</h2>
+          <p>My favourite pairing is red and black: classy and dangerous. Red brings heat, appetite, and warning. Black gives it discipline, depth, and somewhere to stop. The attraction is not in either colour alone. It is in the exact point where energy becomes poise.</p>
+          <p class="about-disclosure">This is a personal study using the catalogue’s credited digital Red and Black values. It is not presented as one of Wada’s 348 combinations.</p>
+        </div>
+      </section>
+
+      <section class="about-story" aria-labelledby="story-title">
+        <h2 id="story-title">Why I keep looking</h2>
+        <div class="story-body">
+          <p>Non Arkaraprasertkul is an architect, urban anthropologist, and civic technologist based in Bangkok. His path runs from KMITL and MIT through Oxford and Harvard, ten years of fieldwork in Shanghai, and live municipal systems in Thailand.</p>
+          <p>Across buildings, cities, software, and colour, the same question returns: how can a complex system become legible without becoming simplistic? Palette is one answer. It turns a historical catalogue into a room for looking slowly, comparing relationships, and testing taste against evidence.</p>
+        </div>
+      </section>
+
+      <figure class="practice-map">
+        <figcaption>Three practices converge on one test: make complexity legible without making it simple.</figcaption>
+        <div class="practice-field" role="img" aria-label="Architecture, anthropology, and civic systems converge on the question: can complexity become legible without becoming simplistic?">
+          <div class="practice architecture-practice">
+            <strong>ARCHITECTURE</strong>
+            <span>proportion · material · movement</span>
+          </div>
+          <div class="practice anthropology-practice">
+            <strong>ANTHROPOLOGY</strong>
+            <span>meaning · context · ordinary life</span>
+          </div>
+          <div class="practice civic-practice">
+            <strong>CIVIC SYSTEMS</strong>
+            <span>operation · evidence · consequence</span>
+          </div>
+          <div class="practice-question">
+            <span>THE TEST</span>
+            <strong>LEGIBLE<br>≠<br>SIMPLE</strong>
+          </div>
+        </div>
+      </figure>
+
+      <figure class="architecture-map">
+        <figcaption>How verified colour data becomes an inhabitable, accessible room.</figcaption>
+        <div class="architecture-flow">
+          <section class="architecture-node source-node">
+            <span>01</span>
+            <h3>SOURCE</h3>
+            <p>159 named digital colours and 348 credited relationships.</p>
+          </section>
+          <span class="architecture-arrow" aria-hidden="true">→</span>
+          <section class="architecture-node method-node">
+            <span>02</span>
+            <h3>METHOD</h3>
+            <p>Deterministic readings of temperature, energy, value, and possible use.</p>
+          </section>
+          <span class="architecture-arrow" aria-hidden="true">→</span>
+          <section class="architecture-node state-node">
+            <span>03</span>
+            <h3>STATE</h3>
+            <p>Plate routing, local search, index, chance, copy, and grayscale study.</p>
+          </section>
+          <span class="architecture-arrow" aria-hidden="true">→</span>
+          <section class="architecture-node room-node">
+            <span>04</span>
+            <h3>ROOM</h3>
+            <p>Full-scale fields with names, keyboard paths, contrast, and live announcements.</p>
+          </section>
+        </div>
+      </figure>
+
+      <section class="research-position" aria-labelledby="research-title">
+        <h2 id="research-title">The research position</h2>
+        <p>This exhibition does not argue that taste is universal. It is a visual research instrument: a way to make historic relationships large, searchable, comparable, and open to disagreement. The digital readings describe this software’s method, not Wada’s intention or the exact appearance of printed ink.</p>
+        <div class="research-links">
+          <a href="https://github.com/Nonarkara/dr-non-vibecoding-skills/blob/main/ABOUT.md" rel="noreferrer">Research biography ↗</a>
+          <a href="https://github.com/Nonarkara/palette" rel="noreferrer">Inspect the system ↗</a>
+          <a href="PALETTE-FIELD-GUIDE.md" download="palette-field-guide.md">Take the method ↓</a>
+        </div>
+      </section>
+    </dialog>
+
+    <script src="content.js?v=0.1.0-3"></script>
+    <script src="app.js?v=0.1.0-3"></script>
   </body>
 </html>

@@ -5,6 +5,11 @@
 A colour plate becomes the entire room: one hard cut, one enormous plate number,
 and one black instrument rail that explains itself only when asked.
 
+The About / Research room uses the catalogue's Red and Black as Dr Non's
+personal interval: classy because restraint gives the red poise; dangerous
+because the red still carries heat. Its two Bauhausian diagrams must explain
+real relationships, never act as geometric decoration.
+
 ## References
 
 - Sanzo Wada's printed colour plates — colour as a relationship, never a loose swatch.
@@ -47,4 +52,3 @@ contrast. Every digital value is identified as a conversion, not printed truth.
 
 Plate changes use opacity and transform only, under 280ms. Reduced-motion users
 get an immediate cut. Motion confirms a state change and does nothing else.
-

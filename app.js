@@ -273,6 +273,7 @@
       openDialog(el.indexDialog, el.indexDialog.querySelector("button"));
     }
     if (name === "digest") openDialog(el.digestDialog, el.digestDialog.querySelector("button"));
+    if (name === "about") openDialog(el.aboutDialog, el.aboutDialog.querySelector("button"));
     if (name === "contrast") {
       state.grayscale = !state.grayscale;
       document.querySelector('[data-action="contrast"]').setAttribute("aria-pressed", String(state.grayscale));
@@ -305,6 +306,7 @@
       if (event.key.toLowerCase() === "r") action("random");
       if (event.key.toLowerCase() === "g") action("index");
       if (event.key.toLowerCase() === "i") action("digest");
+      if (event.key.toLowerCase() === "a") action("about");
       if (event.key.toLowerCase() === "c") action("contrast");
     });
     window.addEventListener("hashchange", () => {
@@ -329,6 +331,7 @@
       indexDialog: byId("index-dialog"),
       paletteIndex: byId("palette-index"),
       digestDialog: byId("digest-dialog"),
+      aboutDialog: byId("about-dialog"),
       analysis: byId("current-analysis")
     });
     try {

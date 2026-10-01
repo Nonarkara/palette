@@ -56,3 +56,14 @@ subject, but it is never the only way information is communicated.
 The Mama Rule remains the release ceiling: if an older, nontechnical first-time
 visitor cannot move, search, understand, and return without coaching, the room
 is not finished.
+
+## A personal interval
+
+Dr Non's favourite pairing is red and black: classy and dangerous. Red carries
+heat, appetite, and warning; black supplies discipline, depth, and a stopping
+point. The interest lies in proportion—in the moment raw energy becomes poise—
+not in treating either colour as a fixed symbol.
+
+The site's About / Research room uses the catalogue's credited digital Red and
+Black values as a personal study. It is deliberately labelled outside Wada's
+348 combinations rather than invented as a historical plate.

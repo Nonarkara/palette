@@ -27,7 +27,9 @@ values, not claims about the exact printed inks in the book.
 4. Press `◐` or `C` to remove hue and inspect the value structure.
 5. Press `⧉` to copy named CSS custom properties for the current plate.
 6. Press `i` or `I` for the English, Thai, and Simplified Chinese reading.
-7. Copy the URL. Every plate has a stable address such as `#plate-087`.
+7. Press `A` for Dr Non's Red / Black study, research position, and two system
+   diagrams.
+8. Copy the URL. Every plate has a stable address such as `#plate-087`.
 
 The complete instrument:
 
@@ -39,6 +41,7 @@ The complete instrument:
 | `⌕` | Search | `/` |
 | `≡` | Complete index | `G` |
 | `◐` | Grayscale value study | `C` |
+| `A` | About, research, and system architecture | `A` |
 | `⧉` | Copy CSS values | — |
 | `i` | Principles and Dr Non's Digest | `I` |
 
