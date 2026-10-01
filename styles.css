@@ -424,6 +424,100 @@ input:focus-visible,
   color: var(--white);
 }
 
+.json-sheet {
+  padding: 0;
+  background: var(--black);
+  color: var(--white);
+}
+
+.json-top {
+  position: sticky;
+  inset-block-start: 0;
+  z-index: 2;
+  min-height: 4rem;
+  margin: 0;
+  padding-inline: clamp(1rem, 4vw, 4rem);
+  background: var(--white);
+  color: var(--black);
+}
+
+.json-room {
+  display: grid;
+  grid-template-columns: minmax(18rem, 0.72fr) minmax(0, 1.28fr);
+  min-height: calc(100dvh - 4rem);
+}
+
+.json-intro {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: clamp(2rem, 5vw, 5rem) clamp(1rem, 4vw, 4rem);
+  background: var(--white);
+  color: var(--black);
+}
+
+.json-kicker,
+.json-caveat {
+  font-family: "JetBrains Mono", monospace;
+  font-size: var(--micro);
+  line-height: 1.55;
+}
+
+.json-kicker {
+  margin: 0 0 clamp(2rem, 7vh, 6rem);
+}
+
+.json-intro h2 {
+  max-width: 8ch;
+  margin: 0 0 1.5rem;
+  font-size: clamp(3rem, 7vw, 8rem);
+  line-height: 0.82;
+  letter-spacing: -0.055em;
+}
+
+.json-intro > p:not(.json-kicker, .json-caveat) {
+  max-width: 34rem;
+  margin: 0;
+  font-size: var(--body);
+  line-height: 1.45;
+}
+
+.json-caveat {
+  max-width: 42ch;
+  margin-block: 2rem;
+}
+
+.json-copy {
+  width: min(100%, 22rem);
+  min-height: 3.5rem !important;
+  margin-block-start: auto;
+  padding-inline: 1rem !important;
+  background: var(--black) !important;
+  color: var(--white) !important;
+  font-family: "JetBrains Mono", monospace;
+  font-size: var(--micro);
+  text-align: start;
+}
+
+.json-copy:hover,
+.json-copy:focus-visible {
+  background: var(--about-red) !important;
+}
+
+.json-code-frame {
+  min-width: 0;
+  margin: 0;
+  padding: clamp(2rem, 5vw, 5rem) clamp(1rem, 4vw, 4rem);
+  overflow: auto;
+  background: var(--black);
+  color: var(--white);
+  font-family: "JetBrains Mono", monospace;
+  font-size: clamp(0.72rem, 1vw, 0.9rem);
+  line-height: 1.65;
+  white-space: pre;
+  tab-size: 2;
+}
+
 .about-sheet {
   padding: 0;
   background: var(--white);
@@ -806,6 +900,18 @@ input:focus-visible,
   .research-links {
     grid-column: 1;
   }
+
+  .json-room {
+    grid-template-columns: 1fr;
+  }
+
+  .json-intro {
+    min-height: 42rem;
+  }
+
+  .json-code-frame {
+    min-height: 60vh;
+  }
 }
 
 @media (max-width: 760px) {
@@ -855,8 +961,20 @@ input:focus-visible,
     padding: 1rem;
   }
 
+  .json-sheet {
+    padding: 0;
+  }
+
   .sheet-top {
     margin-block-end: 3rem;
+  }
+
+  .json-top {
+    margin-block-end: 0;
+  }
+
+  .json-intro {
+    min-height: 34rem;
   }
 
   .result-button {

@@ -20,6 +20,9 @@ for (const required of [
   "download=\"palette-field-guide.md\"",
   "https://colors.nonarkara.org/",
   "About Dr Non and the research",
+  "View and copy palette JSON",
+  "Portable palette JSON",
+  "palette-exhibition/1",
   "classy and dangerous",
   "How verified colour data becomes an inhabitable, accessible room.",
   "LEGIBLE<br>≠<br>SIMPLE"
@@ -28,6 +31,6 @@ for (const required of [
 }
 
 const controls = [...contents["index.html"].matchAll(/data-action=/g)].length;
-assert.equal(controls, 9, "the instrument rail must expose nine working controls");
+assert.equal(controls, 10, "the instrument rail must expose ten working controls");
 
 console.log("OK: exhibition copy, multilingual markup, interaction hooks, provenance, and anti-slop gates are present");

@@ -25,11 +25,12 @@ values, not claims about the exact printed inks in the book.
 3. Press `⌕` or `/` and search a colour, atmosphere, medium, or use. Try
    `ochre`, `quiet`, `poster`, `night`, `อบอุ่น`, `สงบ`, `温暖`, or `安静`.
 4. Press `◐` or `C` to remove hue and inspect the value structure.
-5. Press `⧉` to copy named CSS custom properties for the current plate.
-6. Press `i` or `I` for the English, Thai, and Simplified Chinese reading.
-7. Press `A` for Dr Non's Red / Black study, research position, and two system
+5. Press `{}` or `J` to inspect and copy the current plate as portable JSON.
+6. Press `⧉` to copy named CSS custom properties for the current plate.
+7. Press `i` or `I` for the English, Thai, and Simplified Chinese reading.
+8. Press `A` for Dr Non's Red / Black study, research position, and two system
    diagrams.
-8. Copy the URL. Every plate has a stable address such as `#plate-087`.
+9. Copy the URL. Every plate has a stable address such as `#plate-087`.
 
 The complete instrument:
 
@@ -42,6 +43,7 @@ The complete instrument:
 | `≡` | Complete index | `G` |
 | `◐` | Grayscale value study | `C` |
 | `A` | About, research, and system architecture | `A` |
+| `{}` | View and copy portable plate JSON | `J` |
 | `⧉` | Copy CSS values | — |
 | `i` | Principles and Dr Non's Digest | `I` |
 
@@ -148,6 +150,13 @@ screen conversion, and the combination numbers in which it appears:
 The application reconstructs a plate by collecting every colour that names the
 same combination number. Tests assert that this produces exactly 348 unique
 plates containing two, three, or four colours.
+
+The `{}` instrument exports a self-describing `palette-exhibition/1` object. In
+addition to the colour values, it includes the plate URL, field roles and area
+shares, the exhibition's computed reading, source attribution, and caveats that
+separate software interpretation from Wada's work and screen conversion from
+printed ink. The visible code can be selected manually if clipboard permission
+is unavailable.
 
 ## Files worth reading
 

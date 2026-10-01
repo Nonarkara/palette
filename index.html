@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@400;700&family=IBM+Plex+Sans+Thai:wght@400;600&family=JetBrains+Mono:wght@400;600&family=Noto+Sans+SC:wght@400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css?v=0.1.0-3">
+    <link rel="stylesheet" href="styles.css?v=0.1.0-5">
   </head>
   <body>
     <a class="skip-link" href="#palette-stage">Skip to the colour plate</a>
@@ -36,7 +36,8 @@
         <button type="button" data-action="index" aria-label="Open complete index" title="Index — G">≡</button>
         <button type="button" data-action="contrast" aria-pressed="false" aria-label="Toggle grayscale study" title="Grayscale study — C">◐</button>
         <button type="button" data-action="about" aria-label="About Dr Non and the research" title="About / research — A">A</button>
-        <button type="button" data-action="copy" aria-label="Copy palette values" title="Copy values">⧉</button>
+        <button type="button" data-action="json" aria-label="View and copy palette JSON" title="JSON export — J"><span aria-hidden="true">{}</span></button>
+        <button type="button" data-action="copy" aria-label="Copy palette CSS values" title="Copy CSS values">⧉</button>
         <button type="button" data-action="digest" aria-label="Read principles and Dr Non's Digest" title="Digest — I">i</button>
       </nav>
 
@@ -107,6 +108,23 @@
         <a href="https://en.seigensha.com/books/978-4-86152-247-5/" rel="noreferrer">About the book ↗</a>
         <a href="https://github.com/mattdesl/dictionary-of-colour-combinations" rel="noreferrer">Dataset and method ↗</a>
       </footer>
+    </dialog>
+
+    <dialog id="json-dialog" class="sheet json-sheet">
+      <form method="dialog" class="sheet-top json-top">
+        <p>Portable palette JSON</p>
+        <button value="close" aria-label="Close JSON export">×</button>
+      </form>
+      <div class="json-room">
+        <section class="json-intro" aria-labelledby="json-title">
+          <p class="json-kicker">CURRENT RELATIONSHIP · MACHINE-READABLE</p>
+          <h2 id="json-title">Take the plate with you.</h2>
+          <p>The export carries the colours, their names, their proportions in this room, the computed reading, provenance, and a stable link back to the plate.</p>
+          <p class="json-caveat">Digital RGB and hex values are credited conversions, not claims about exact printed ink.</p>
+          <button type="button" id="copy-json" class="json-copy">COPY JSON</button>
+        </section>
+        <pre class="json-code-frame" tabindex="0" aria-label="Current palette JSON code"><code id="json-code"></code></pre>
+      </div>
     </dialog>
 
     <dialog id="about-dialog" class="sheet about-sheet">
@@ -202,7 +220,7 @@
       </section>
     </dialog>
 
-    <script src="content.js?v=0.1.0-3"></script>
-    <script src="app.js?v=0.1.0-3"></script>
+    <script src="content.js?v=0.1.0-5"></script>
+    <script src="app.js?v=0.1.0-5"></script>
   </body>
 </html>

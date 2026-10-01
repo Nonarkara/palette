@@ -129,10 +129,57 @@
     return state.palettes[state.index];
   }
 
+  function fieldWeights(count) {
+    if (count === 2) return [1.618, 1];
+    if (count === 3) return [1.45, 0.9, 0.65];
+    return [1.55, 0.85, 0.7, 0.55];
+  }
+
   function fieldColumns(count) {
-    if (count === 2) return "1.618fr 1fr";
-    if (count === 3) return "1.45fr 0.9fr 0.65fr";
-    return "1.55fr 0.85fr 0.7fr 0.55fr";
+    return fieldWeights(count).map((weight) => `${weight}fr`).join(" ");
+  }
+
+  function paletteExport(palette) {
+    const weights = fieldWeights(palette.colors.length);
+    const totalWeight = weights.reduce((sum, weight) => sum + weight, 0);
+    const shares = weights.map((weight) => Number((weight / totalWeight).toFixed(3)));
+    shares[shares.length - 1] = Number((1 - shares.slice(0, -1).reduce((sum, share) => sum + share, 0)).toFixed(3));
+    const roles = ["dominant", "counter", "support", "signal"];
+    const plate = formatPlate(palette.id);
+    return {
+      format: "palette-exhibition/1",
+      plate: palette.id,
+      url: `https://colors.nonarkara.org/#plate-${plate}`,
+      source: {
+        work: "A Dictionary of Color Combinations",
+        author: "Sanzo Wada",
+        digitalDataset: "mattdesl/dictionary-of-colour-combinations",
+        note: "RGB and hex values are credited digital conversions, not exact printed colours."
+      },
+      reading: {
+        temperature: palette.temperature,
+        energy: palette.energy,
+        light: palette.light,
+        valueInterval: palette.contrast,
+        suggestedUse: palette.use,
+        note: "The reading is computed by this exhibition; it is not attributed to Wada."
+      },
+      layoutNote: "Roles and shares describe this exhibition layout, not Wada's prescription.",
+      colors: palette.colors.map((color, index) => ({
+        name: color.name,
+        hex: color.hex.toUpperCase(),
+        rgb: color.rgb,
+        role: roles[index],
+        share: shares[index]
+      }))
+    };
+  }
+
+  function renderJson() {
+    const palette = currentPalette();
+    if (!palette) return;
+    el.jsonCode.textContent = JSON.stringify(paletteExport(palette), null, 2);
+    el.copyJsonButton.textContent = "COPY JSON";
   }
 
   function renderPalette({ announce = true } = {}) {
@@ -163,6 +210,7 @@
     document.body.classList.toggle("is-grayscale", state.grayscale);
     history.replaceState(null, "", `#plate-${plate}`);
     renderAnalysis(palette);
+    if (el.jsonDialog?.open) renderJson();
     if (announce) el.status.textContent = `Plate ${plate}. ${el.plateNames.textContent}.`;
   }
 
@@ -263,6 +311,19 @@
     }
   }
 
+  async function copyJson() {
+    const palette = currentPalette();
+    const value = JSON.stringify(paletteExport(palette), null, 2);
+    try {
+      await navigator.clipboard.writeText(value);
+      el.copyJsonButton.textContent = "COPIED";
+      el.status.textContent = `Copied plate ${formatPlate(palette.id)} JSON.`;
+    } catch {
+      el.copyJsonButton.textContent = "COPY BLOCKED";
+      el.status.textContent = "Copy was blocked by the browser. The JSON remains visible for manual selection.";
+    }
+  }
+
   function action(name) {
     if (name === "previous") goToIndex(state.index - 1);
     if (name === "next") goToIndex(state.index + 1);
@@ -274,6 +335,10 @@
     }
     if (name === "digest") openDialog(el.digestDialog, el.digestDialog.querySelector("button"));
     if (name === "about") openDialog(el.aboutDialog, el.aboutDialog.querySelector("button"));
+    if (name === "json") {
+      renderJson();
+      openDialog(el.jsonDialog, el.jsonDialog.querySelector("button"));
+    }
     if (name === "contrast") {
       state.grayscale = !state.grayscale;
       document.querySelector('[data-action="contrast"]').setAttribute("aria-pressed", String(state.grayscale));
@@ -287,6 +352,7 @@
       button.addEventListener("click", () => action(button.dataset.action));
     });
     el.searchInput.addEventListener("input", () => renderSearch(el.searchInput.value));
+    el.copyJsonButton.addEventListener("click", copyJson);
     el.indexDialog.querySelectorAll("[data-size]").forEach((button) => {
       button.addEventListener("click", () => {
         state.indexSize = button.dataset.size;
@@ -307,6 +373,7 @@
       if (event.key.toLowerCase() === "g") action("index");
       if (event.key.toLowerCase() === "i") action("digest");
       if (event.key.toLowerCase() === "a") action("about");
+      if (event.key.toLowerCase() === "j") action("json");
       if (event.key.toLowerCase() === "c") action("contrast");
     });
     window.addEventListener("hashchange", () => {
@@ -331,6 +398,9 @@
       indexDialog: byId("index-dialog"),
       paletteIndex: byId("palette-index"),
       digestDialog: byId("digest-dialog"),
+      jsonDialog: byId("json-dialog"),
+      jsonCode: byId("json-code"),
+      copyJsonButton: byId("copy-json"),
       aboutDialog: byId("about-dialog"),
       analysis: byId("current-analysis")
     });

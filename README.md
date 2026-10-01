@@ -41,12 +41,19 @@ art, publisher copy, or printed colour claims.
 | `≡` | Complete index and 2/3/4-colour filters | `G` |
 | `◐` | Grayscale value study | `C` |
 | `A` | Dr Non, the research, and the system architecture | `A` |
+| `{}` | Inspect and copy portable JSON for the current plate | `J` |
 | `⧉` | Copy CSS values with colour names | — |
 | `i` | Principles, provenance, and Dr Non's Digest | `I` |
 
 Every control is a real button. Every state change is announced to assistive
 technology. Colour names, plate numbers, and text readings remain available, so
 colour is never the only carrier of information.
+
+The `{}` instrument opens a readable JSON export for the current plate. It
+includes the named colours, RGB and hex conversions, actual field proportions,
+role suggestions, computed reading, provenance, and stable plate URL. Copy it
+into code, a design tool, an agent brief, or another project without scraping
+the screen.
 
 ## Dr Non's Digest
 

@@ -66,3 +66,23 @@ close control, has no horizontal overflow at 375/768/1280, and renders without
 console warnings or errors.
 
 Tags: `about`, `research`, `red-black`, `bauhaus`, `architecture`, `accessibility`
+
+## 2026-10-02 — Let every plate leave the room
+
+**What changed:** Added a dedicated JSON instrument and keyboard shortcut. Every
+plate now opens as readable, copyable code carrying colour names and values,
+field roles and proportions, the computed reading, provenance, caveats, and its
+stable public address.
+
+**Why:** Seeing a relationship should not trap it inside the exhibition. A
+visitor who finds a useful plate can now move it into code, a design brief, an
+agent, or another tool without reverse-engineering the interface.
+
+**Key decision:** The export records both evidence and interpretation, but keeps
+them explicitly separate. Source attribution and digital-conversion limits sit
+beside the application’s computed reading rather than disappearing in prose.
+
+**Evidence:** Source, interaction, accessibility, responsive, clipboard, live
+deployment, and byte-delivery checks are recorded with the release commit.
+
+Tags: `json`, `portability`, `colour`, `provenance`, `accessibility`
