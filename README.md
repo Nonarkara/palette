@@ -120,6 +120,7 @@ PALETTE-FIELD-GUIDE.md  standalone download-and-use handbook
 data/colors.json    credited MIT-licensed source data
 tests/              source integrity and anti-slop checks
 .github/workflows/  verification and GitHub Pages publication
+DEPLOYMENT.md       Cloudflare/GitHub release topology and proof sequence
 ```
 
 Search and classification run locally. No account, analytics service, cookie,
