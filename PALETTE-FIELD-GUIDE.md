@@ -1,0 +1,169 @@
+# Palette field guide
+
+Download this file, keep it beside a project, or give it to an agent. It is a
+standalone guide to using the Palette exhibition and its source data without
+needing a design application, account, API key, or colour subscription.
+
+Live room: <https://colors.nonarkara.org/>
+
+Repository: <https://github.com/Nonarkara/palette>
+
+## What this is
+
+Palette is an independent interactive interpretation of Sanzo Wada's 348
+historic colour combinations. It makes one relationship fill the viewport so
+you can judge proportion, temperature, value, and tension at architectural
+scale—not as tiny shopping swatches.
+
+The RGB and hex values are credited digital conversions. They are useful screen
+values, not claims about the exact printed inks in the book.
+
+## Use the exhibition in two minutes
+
+1. Open <https://colors.nonarkara.org/>.
+2. Move with `←` and `→`, or press the Left and Right Arrow keys.
+3. Press `⌕` or `/` and search a colour, atmosphere, medium, or use. Try
+   `ochre`, `quiet`, `poster`, `night`, `อบอุ่น`, `สงบ`, `温暖`, or `安静`.
+4. Press `◐` or `C` to remove hue and inspect the value structure.
+5. Press `⧉` to copy named CSS custom properties for the current plate.
+6. Press `i` or `I` for the English, Thai, and Simplified Chinese reading.
+7. Copy the URL. Every plate has a stable address such as `#plate-087`.
+
+The complete instrument:
+
+| Symbol | Action | Keyboard |
+|---|---|---|
+| `←` | Previous relationship | Left Arrow |
+| `→` | Next relationship | Right Arrow |
+| `↻` | Chance encounter | `R` |
+| `⌕` | Search | `/` |
+| `≡` | Complete index | `G` |
+| `◐` | Grayscale value study | `C` |
+| `⧉` | Copy CSS values | — |
+| `i` | Principles and Dr Non's Digest | `I` |
+
+## Turn a plate into a working interface
+
+Do not assign colours by taste alone. Give each one a job.
+
+### Two-colour plate
+
+- Dominant field: approximately 61.8% of the visual area.
+- Counter-field: approximately 38.2%.
+- Text: black or white chosen by measured contrast, not intuition.
+
+Use the dominant colour for the main surface and the counter-colour for one
+large region, navigation rail, data layer, or decisive state. Avoid sprinkling
+both colours across dozens of small components; that destroys the relationship.
+
+### Three- or four-colour plate
+
+- First colour: atmosphere and large surfaces.
+- Second colour: structural counterweight.
+- Third colour: information, annotation, or secondary state.
+- Fourth colour: rare signal only.
+
+Area is part of the palette. Equal swatches do not imply equal use.
+
+### Five-step gate
+
+1. **Enlarge it.** Judge the pairing across a whole viewport.
+2. **Remove hue.** If every region collapses into one gray, repair the value
+   structure before writing components.
+3. **Assign roles.** Name each colour's job in one sentence.
+4. **Measure text contrast.** WCAG AA body text needs at least 4.5:1. Use the
+   exact rendered foreground value in the calculation.
+5. **Test without colour.** Names, state, hierarchy, and controls must remain
+   understandable when hue disappears.
+
+## MoMA rule and Mama Rule
+
+The MoMA rule concerns judgment: let the object dominate; make labels quiet;
+use scale, alignment, spacing, and position before adding boxes or decoration.
+
+The Mama Rule concerns usability: give the working result to an older,
+nontechnical first-time visitor. Offer a goal, not instructions. If they cannot
+understand the purpose, perform the main action, recognize success, and recover
+from one ordinary mistake without coaching, the design is not finished.
+
+## Anti-slop checklist
+
+- No rounded card grid standing between the visitor and the colour.
+- No gradient, shadow, glass panel, fake texture, or decorative dashboard.
+- No colour used as the only status indicator.
+- No invented history, quotation, plate number, or printed-colour claim.
+- No fourth type family because one paragraph feels difficult.
+- No animation without a state change behind it.
+- No “AI-powered” claim: search and readings here are local and deterministic.
+- No inaccessible off-black approximation hidden behind pure-black contrast
+  math. Measure the value actually rendered.
+
+## Clone, run, and fork
+
+Requirements: Git and Python 3. Node.js is needed only for the checks.
+
+```bash
+git clone https://github.com/Nonarkara/palette.git
+cd palette
+python3 -m http.server 4173
+```
+
+Open <http://localhost:4173>. Directly opening `index.html` will not load the
+JSON data in browsers that block local-file requests.
+
+Run the integrity gates:
+
+```bash
+npm run check
+```
+
+Before publishing a fork:
+
+1. Replace the title and original editorial writing with your own voice.
+2. Preserve `THIRD_PARTY_NOTICES.md` and the upstream data attribution.
+3. Keep the distinction between digital conversion and printed ink.
+4. Test widths of 375, 768, and 1280 CSS pixels.
+5. Navigate without a mouse and test at 200% zoom.
+6. Run an automated accessibility audit, then conduct a real human walkthrough.
+7. Verify the deployed URL and the actual JavaScript/CSS bytes, not only the
+   deployment dashboard.
+
+## Data shape
+
+`data/colors.json` contains 159 named colours. Each object supplies a name,
+screen conversion, and the combination numbers in which it appears:
+
+```json
+{
+  "name": "English Red",
+  "rgb": [217, 102, 41],
+  "hex": "#d96629",
+  "combinations": [1, 19, 47]
+}
+```
+
+The application reconstructs a plate by collecting every colour that names the
+same combination number. Tests assert that this produces exactly 348 unique
+plates containing two, three, or four colours.
+
+## Files worth reading
+
+- `README.md` — public catalogue and project map.
+- `ABOUT.md` — curatorial argument and research question.
+- `context.md` — visual contract and conservation law.
+- `app.js` — reconstruction, search, classification, and interaction.
+- `content.js` — multilingual search vocabulary and suggested-use language.
+- `data/colors.json` — credited source data.
+- `THIRD_PARTY_NOTICES.md` — licence and provenance.
+- `docs/walkthroughs/` — cognitive walkthrough evidence and release roadmap.
+
+## Reuse boundary
+
+The application code and original writing are MIT licensed. The included data
+comes from Matt DesLauriers' MIT-licensed
+`dictionary-of-colour-combinations`, which credits Dain M. Blodorn Kim's
+earlier compilation. The historical combinations are credited to Sanzo Wada.
+
+This project does not reproduce book scans, cover art, publisher copy, or claim
+affiliation with Seigensha, the Wada estate, or the upstream authors. Preserve
+those boundaries when you fork it.

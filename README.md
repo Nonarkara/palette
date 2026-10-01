@@ -9,6 +9,10 @@ few controls needed to move, search, compare, copy, and read.
 
 **Live exhibition:** `https://nonarkara.github.io/palette/`
 
+**Use it immediately:** download
+[`PALETTE-FIELD-GUIDE.md`](PALETTE-FIELD-GUIDE.md) for the controls, fork recipe,
+palette-role method, accessibility gate, and attribution boundary in one file.
+
 ## The idea
 
 Colour books often become grids of small swatches. The grid is useful and keeps
@@ -112,6 +116,7 @@ index.html          semantic structure, dialogs, multilingual essay
 styles.css          field geometry, typography, motion, responsive rules
 app.js              palette reconstruction, search, readings, navigation
 content.js          search vocabulary and editorial-use modules
+PALETTE-FIELD-GUIDE.md  standalone download-and-use handbook
 data/colors.json    credited MIT-licensed source data
 tests/              source integrity and anti-slop checks
 .github/workflows/  verification and GitHub Pages publication
