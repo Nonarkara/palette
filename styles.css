@@ -5,6 +5,8 @@
   --focus: #f59e0b;
   --about-red: #a72144;
   --about-black: #111314;
+  --wada-orange: #f99d1b;
+  --wada-blue: #12354e;
   --primary-ink: #ffffff;
   --last-ink: #ffffff;
   --dominant-share: 0.618;
@@ -616,6 +618,178 @@ input:focus-visible,
   line-height: 1.55;
 }
 
+.wada-tribute {
+  background: var(--white);
+  color: var(--black);
+}
+
+.wada-header {
+  display: grid;
+  grid-template-columns: 1.618fr 1fr;
+  min-height: min(72rem, 82vh);
+}
+
+.wada-name-field,
+.wada-date-field {
+  min-width: 0;
+  padding: clamp(1rem, 4vw, 4rem);
+}
+
+.wada-name-field {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  overflow: hidden;
+  background: var(--wada-blue);
+  color: #ffffff;
+}
+
+.wada-kicker {
+  position: absolute;
+  inset-block-start: clamp(1rem, 4vw, 4rem);
+  inset-inline-start: clamp(1rem, 4vw, 4rem);
+  margin: 0;
+  font-family: "JetBrains Mono", monospace;
+  font-size: var(--micro);
+}
+
+.wada-japanese {
+  position: absolute;
+  top: 25%;
+  right: clamp(1rem, 4vw, 4rem);
+  margin: 0;
+  font-family: "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+  font-size: clamp(2rem, 4vw, 5rem);
+  writing-mode: vertical-rl;
+  transform: translateY(-50%);
+}
+
+.wada-name-field h2 {
+  margin: 0;
+  font-size: clamp(5rem, 13vw, 15rem);
+  line-height: 0.72;
+  letter-spacing: -0.07em;
+}
+
+.wada-date-field {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: var(--wada-orange);
+  color: var(--wada-blue);
+  font-family: "JetBrains Mono", monospace;
+  font-size: clamp(3rem, 8vw, 9rem);
+  font-weight: 600;
+  line-height: 0.8;
+}
+
+.wada-date-field span:nth-child(2) {
+  align-self: center;
+}
+
+.wada-date-field span:last-child {
+  align-self: flex-end;
+}
+
+.wada-position {
+  display: grid;
+  grid-template-columns: 1fr 1.45fr;
+  gap: clamp(3rem, 9vw, 10rem);
+  padding: clamp(5rem, 12vw, 12rem) clamp(1rem, 4vw, 4rem);
+}
+
+.wada-statement {
+  max-width: 11ch;
+  margin: 0;
+  color: var(--wada-blue);
+  font-size: clamp(2.8rem, 6vw, 7rem);
+  font-weight: 700;
+  line-height: 0.88;
+  letter-spacing: -0.05em;
+}
+
+.wada-prose {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(1.5rem, 4vw, 4rem);
+  align-content: end;
+}
+
+.wada-prose p {
+  margin: 0;
+  font-size: var(--body);
+  line-height: 1.55;
+}
+
+.wada-timeline {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  margin: 0;
+  padding: 0;
+  background: var(--wada-blue);
+  color: #ffffff;
+  list-style: none;
+}
+
+.wada-timeline li {
+  min-height: 24rem;
+  padding: clamp(1rem, 2.5vw, 2.5rem);
+}
+
+.wada-timeline time,
+.wada-timeline strong {
+  display: block;
+}
+
+.wada-timeline time {
+  margin-block-end: clamp(5rem, 10vw, 9rem);
+  font-family: "JetBrains Mono", monospace;
+  font-size: var(--micro);
+}
+
+.wada-timeline strong {
+  margin-block-end: 0.8rem;
+  font-size: clamp(1.25rem, 2vw, 2rem);
+  line-height: 1;
+}
+
+.wada-timeline p {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.45;
+}
+
+.wada-timeline .wada-pivot {
+  background: var(--wada-orange);
+  color: var(--wada-blue);
+}
+
+.wada-sources {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem 2rem;
+  align-items: center;
+  padding: clamp(2rem, 4vw, 4rem);
+  background: var(--wada-blue);
+  color: #ffffff;
+  font-family: "JetBrains Mono", monospace;
+  font-size: var(--micro);
+}
+
+.wada-sources p {
+  flex-basis: 100%;
+  margin: 0;
+  color: rgb(255 255 255 / 0.66);
+}
+
+.wada-sources a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: #ffffff;
+}
+
 .about-story {
   display: grid;
   grid-template-columns: 0.8fr 1.7fr;
@@ -912,6 +1086,39 @@ input:focus-visible,
   .json-code-frame {
     min-height: 60vh;
   }
+
+  .wada-position {
+    grid-template-columns: 1fr;
+  }
+
+  .wada-japanese {
+    top: 5rem;
+    right: auto;
+    left: 1rem;
+    font-size: 1.5rem;
+    writing-mode: horizontal-tb;
+    transform: none;
+  }
+
+  .wada-name-field h2 {
+    line-height: 0.84;
+  }
+
+  .wada-prose {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .wada-prose p:last-child {
+    grid-column: 1 / -1;
+  }
+
+  .wada-timeline {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .wada-timeline li:last-child {
+    grid-column: 1 / -1;
+  }
 }
 
 @media (max-width: 760px) {
@@ -961,7 +1168,8 @@ input:focus-visible,
     padding: 1rem;
   }
 
-  .json-sheet {
+  .json-sheet,
+  .about-sheet {
     padding: 0;
   }
 
@@ -1001,6 +1209,54 @@ input:focus-visible,
 
   .about-chord {
     grid-template-rows: minmax(17rem, 42vh) auto;
+  }
+
+  .wada-header {
+    grid-template-columns: 1.618fr 1fr;
+    min-height: 34rem;
+  }
+
+  .wada-name-field,
+  .wada-date-field {
+    padding: 1rem;
+  }
+
+  .wada-kicker {
+    inset-block-start: 1rem;
+    inset-inline-start: 1rem;
+    max-width: 12ch;
+  }
+
+  .wada-name-field h2 {
+    font-size: clamp(3.7rem, 20vw, 5.5rem);
+    line-height: 0.88;
+  }
+
+  .wada-date-field {
+    font-size: clamp(2rem, 11vw, 3.4rem);
+  }
+
+  .wada-position {
+    padding-block: 5rem;
+  }
+
+  .wada-prose,
+  .wada-timeline {
+    grid-template-columns: 1fr;
+  }
+
+  .wada-prose p:last-child,
+  .wada-timeline li:last-child {
+    grid-column: auto;
+  }
+
+  .wada-timeline li {
+    min-height: 19rem;
+    padding: 1.5rem 1rem;
+  }
+
+  .wada-timeline time {
+    margin-block-end: 5rem;
   }
 
   .about-red,

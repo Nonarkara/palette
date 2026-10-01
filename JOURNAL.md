@@ -86,3 +86,24 @@ beside the application’s computed reading rather than disappearing in prose.
 deployment, and byte-delivery checks are recorded with the release commit.
 
 Tags: `json`, `portability`, `colour`, `provenance`, `accessibility`
+
+## 2026-10-02 — Give the source a room of his own
+
+**What changed:** Added a full Sanzo Wada tribute inside About: an authored
+Yellow Orange / Dark Tyrian Blue field, a curatorial statement, five documented
+milestones, and direct links to Art Platform Japan, MOMAT, the Academy Awards,
+and Seigensha.
+
+**Why:** Attribution in a footer names a source but does not show the life that
+made the system possible. Wada’s colour catalogue belongs inside his wider work
+across painting, teaching, research, textiles, print, stage, and film.
+
+**Key decision:** The tribute distinguishes documented biography from this
+exhibition’s interpretation. It honours the relational method without turning
+digital values into historical claims or Wada into a decorative brand name.
+
+**Evidence:** Historical claims were checked against institutional records. The
+rendered room, responsive sequence, links, accessibility tree, and deployed
+bytes are verified with the release.
+
+Tags: `sanzo-wada`, `tribute`, `provenance`, `plate-002`, `history`

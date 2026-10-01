@@ -85,6 +85,15 @@ through deterministic method and application state before becoming the room.
 The Red / Black study is explicitly personal and is not presented as one of
 Wada's historical combinations.
 
+The same room now includes a dedicated tribute to Sanzo Wada (1883–1967),
+placing the colour dictionary inside his wider life as painter, teacher,
+researcher, kimono and costume designer, printmaker, and film colour director.
+A documented five-part chronology connects *South Wind*, the Japan Standard
+Color Association, *Haishoku Sōkan*, *Gate of Hell*, and his recognition as a
+Person of Cultural Merit. The section uses the source-verified Yellow Orange / Dark
+Tyrian Blue relationship from Plate 002 and links directly to institutional
+records rather than treating attribution as decoration.
+
 ## Three languages, one argument
 
 The principles are written in English, Thai, and Simplified Chinese. The three
