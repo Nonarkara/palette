@@ -94,6 +94,20 @@ Person of Cultural Merit. The section uses the source-verified Yellow Orange / D
 Tyrian Blue relationship from Plate 002 and links directly to institutional
 records rather than treating attribution as decoration.
 
+## Interpretation and authorship
+
+This site is **Dr Non Arkaraprasertkul’s independent interpretation of Sanzo
+Wada’s work**. Wada supplies the documented historical colour names,
+relationships, and research lineage. Dr Non supplies the selection, spatial
+proportions, interface, search vocabulary, colour roles, diagrams, prose, and
+deterministic readings of temperature, energy, value, and possible use.
+
+Those readings are not Wada’s words or intentions. The RGB and hex values are
+credited digital conversions rather than measurements of printed ink. The
+About room carries a six-part curatorial register and colophon so this boundary
+travels with the exhibition instead of living only in repository documentation.
+JSON exports repeat the same interpretation credit for downstream use.
+
 ## Three languages, one argument
 
 The principles are written in English, Thai, and Simplified Chinese. The three

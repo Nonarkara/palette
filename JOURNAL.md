@@ -107,3 +107,24 @@ rendered room, responsive sequence, links, accessibility tree, and deployed
 bytes are verified with the release.
 
 Tags: `sanzo-wada`, `tribute`, `provenance`, `plate-002`, `history`
+
+## 2026-10-02 — Make interpretation auditable
+
+**What changed:** Recast the Wada room as an explicit Dr Non interpretation and
+added a six-part curatorial register covering historic source, digital data,
+interpretive scope, computed readings, independence, and licence. The same
+credit now travels inside every JSON export.
+
+**Why:** Tribute without a visible authorship boundary can blur source and
+interpretation. The exhibition must credit Wada’s work while owning its own
+proportions, interface, role assignments, classifications, and prose.
+
+**Design law:** Fine print is evidence architecture. It uses one numeric face,
+stable identifiers, ordered labels, strict alignment, and solid fields. It does
+not imitate legal clutter or add decorative lines.
+
+**Evidence:** The register is checked at 375, 768, and 1280 pixels; the export
+credit is parsed; accessibility, deployment, and live-byte gates are recorded
+with the release.
+
+Tags: `interpretation`, `authorship`, `fine-print`, `provenance`, `design-dna`

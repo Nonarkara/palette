@@ -156,13 +156,18 @@
         digitalDataset: "mattdesl/dictionary-of-colour-combinations",
         note: "RGB and hex values are credited digital conversions, not exact printed colours."
       },
+      interpretation: {
+        by: "Dr Non Arkaraprasertkul",
+        scope: "Selection, spatial proportions, interface, search vocabulary, role assignments, and editorial reading.",
+        independence: "Not affiliated with or endorsed by the Wada estate, Seigensha, or linked institutions."
+      },
       reading: {
         temperature: palette.temperature,
         energy: palette.energy,
         light: palette.light,
         valueInterval: palette.contrast,
         suggestedUse: palette.use,
-        note: "The reading is computed by this exhibition; it is not attributed to Wada."
+        note: "Dr Non's deterministic reading for this exhibition; it is not attributed to Wada."
       },
       layoutNote: "Roles and shares describe this exhibition layout, not Wada's prescription.",
       colors: palette.colors.map((color, index) => ({

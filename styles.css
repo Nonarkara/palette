@@ -722,6 +722,85 @@ input:focus-visible,
   line-height: 1.55;
 }
 
+.interpretation-register {
+  display: grid;
+  grid-template-columns: minmax(18rem, 0.62fr) minmax(0, 1.38fr);
+  background: var(--about-black);
+  color: #ffffff;
+}
+
+.interpretation-heading {
+  display: flex;
+  flex-direction: column;
+  min-height: 42rem;
+  padding: clamp(1rem, 4vw, 4rem);
+  background: var(--wada-blue);
+}
+
+.interpretation-heading p,
+.interpretation-register dt,
+.interpretation-fineprint {
+  font-family: "JetBrains Mono", monospace;
+  font-size: var(--micro);
+  line-height: 1.55;
+}
+
+.interpretation-heading p {
+  margin: 0;
+}
+
+.interpretation-heading p:last-child {
+  margin-block-start: auto;
+  color: rgb(255 255 255 / 0.66);
+}
+
+.interpretation-heading h3 {
+  margin: clamp(5rem, 12vh, 10rem) 0 2rem;
+  color: var(--wada-orange);
+  font-size: clamp(4rem, 9vw, 10rem);
+  line-height: 0.72;
+  letter-spacing: -0.06em;
+}
+
+.interpretation-register dl {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin: 0;
+}
+
+.interpretation-register dl > div {
+  min-width: 0;
+  min-height: 14rem;
+  padding: clamp(1rem, 2.5vw, 2.5rem);
+  background: var(--white);
+  color: var(--black);
+}
+
+.interpretation-register dl > div:nth-child(3n) {
+  background: var(--wada-orange);
+  color: var(--wada-blue);
+}
+
+.interpretation-register dt {
+  margin-block-end: clamp(3rem, 7vw, 6rem);
+  font-weight: 600;
+}
+
+.interpretation-register dd {
+  max-width: 38rem;
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.45;
+}
+
+.interpretation-fineprint {
+  grid-column: 1 / -1;
+  margin: 0;
+  padding: clamp(1rem, 2.5vw, 2.5rem);
+  background: var(--about-black);
+  color: rgb(255 255 255 / 0.72);
+}
+
 .wada-timeline {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
@@ -781,6 +860,13 @@ input:focus-visible,
   flex-basis: 100%;
   margin: 0;
   color: rgb(255 255 255 / 0.66);
+}
+
+.wada-sources .wada-colophon {
+  max-width: 96ch;
+  margin-block-start: clamp(2rem, 5vw, 5rem);
+  color: rgb(255 255 255 / 0.78);
+  line-height: 1.65;
 }
 
 .wada-sources a {
@@ -1091,6 +1177,14 @@ input:focus-visible,
     grid-template-columns: 1fr;
   }
 
+  .interpretation-register {
+    grid-template-columns: 1fr;
+  }
+
+  .interpretation-heading {
+    min-height: 30rem;
+  }
+
   .wada-japanese {
     top: 5rem;
     right: auto;
@@ -1241,7 +1335,8 @@ input:focus-visible,
   }
 
   .wada-prose,
-  .wada-timeline {
+  .wada-timeline,
+  .interpretation-register dl {
     grid-template-columns: 1fr;
   }
 
@@ -1257,6 +1352,19 @@ input:focus-visible,
 
   .wada-timeline time {
     margin-block-end: 5rem;
+  }
+
+  .interpretation-register dl > div {
+    min-height: 15rem;
+    padding: 1.5rem 1rem;
+  }
+
+  .interpretation-register dt {
+    margin-block-end: 4rem;
+  }
+
+  .interpretation-fineprint {
+    padding: 1.5rem 1rem;
   }
 
   .about-red,

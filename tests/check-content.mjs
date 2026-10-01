@@ -31,6 +31,11 @@ for (const required of [
   "Gate of Hell",
   "https://artplatform.go.jp/artists/A2089",
   "https://www.oscars.org/oscars/ceremonies/1955/C",
+  "CURATORIAL REGISTER / PAL–WADA–001",
+  "Dr Non Arkaraprasertkul: selection, spatial proportions",
+  "Dr Non’s interpretation of that method",
+  "INTERPRETATION: DR NON",
+  "Dr Non's deterministic reading for this exhibition",
   "classy and dangerous",
   "How verified colour data becomes an inhabitable, accessible room.",
   "LEGIBLE<br>≠<br>SIMPLE"
