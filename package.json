@@ -1,0 +1,12 @@
+{
+  "name": "palette",
+  "version": "0.1.0",
+  "private": true,
+  "description": "A brutalist interactive edition of Sanzo Wada's colour combinations.",
+  "scripts": {
+    "dev": "python3 -m http.server 4173",
+    "test": "node --test tests/*.test.mjs",
+    "check": "npm test && node tests/check-content.mjs"
+  },
+  "license": "MIT"
+}

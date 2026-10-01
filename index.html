@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#111111">
+    <meta name="description" content="An interactive exhibition of Sanzo Wada's 348 colour combinations, with multilingual notes and Dr Non's Digest.">
+    <title>Palette — a colour exhibition</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@400;700&family=IBM+Plex+Sans+Thai:wght@400;600&family=JetBrains+Mono:wght@400;600&family=Noto+Sans+SC:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css?v=0.1.0-2">
+  </head>
+  <body>
+    <a class="skip-link" href="#palette-stage">Skip to the colour plate</a>
+
+    <main id="palette-stage" class="stage" tabindex="-1" aria-label="Current colour combination">
+      <div id="fields" class="fields" aria-hidden="true"></div>
+
+      <header class="identity">
+        <a href="#plate-001" aria-label="Palette home">PALETTE</a>
+        <span id="plate-count">001 / 348</span>
+      </header>
+
+      <section class="plate-label" aria-live="polite" aria-atomic="true">
+        <p id="plate-number">PLATE 001</p>
+        <h1 id="plate-names">Loading colour relationship</h1>
+        <p id="plate-reading">The field is preparing itself.</p>
+      </section>
+
+      <nav class="instrument" aria-label="Exhibition controls">
+        <button type="button" data-action="previous" aria-label="Previous combination" title="Previous — Left arrow">←</button>
+        <button type="button" data-action="next" aria-label="Next combination" title="Next — Right arrow">→</button>
+        <button type="button" data-action="random" aria-label="Random combination" title="Chance encounter — R">↻</button>
+        <button type="button" data-action="search" aria-label="Search combinations" title="Search — Slash">⌕</button>
+        <button type="button" data-action="index" aria-label="Open complete index" title="Index — G">≡</button>
+        <button type="button" data-action="contrast" aria-pressed="false" aria-label="Toggle grayscale study" title="Grayscale study — C">◐</button>
+        <button type="button" data-action="copy" aria-label="Copy palette values" title="Copy values">⧉</button>
+        <button type="button" data-action="digest" aria-label="Read principles and Dr Non's Digest" title="Digest — I">i</button>
+      </nav>
+
+      <p id="status" class="visually-hidden" aria-live="polite"></p>
+    </main>
+
+    <dialog id="search-dialog" class="sheet search-sheet">
+      <form method="dialog" class="sheet-top">
+        <p>Find a relationship</p>
+        <button value="close" aria-label="Close search">×</button>
+      </form>
+      <label for="search-input">Colour, atmosphere, or use</label>
+      <input id="search-input" type="search" autocomplete="off" placeholder="ochre, quiet, poster, night…">
+      <p id="search-explainer">Search names and computed readings. Nothing is generated remotely.</p>
+      <ol id="search-results" class="result-list"></ol>
+    </dialog>
+
+    <dialog id="index-dialog" class="sheet index-sheet">
+      <form method="dialog" class="sheet-top">
+        <p>348 relationships</p>
+        <button value="close" aria-label="Close index">×</button>
+      </form>
+      <div class="index-tools" role="group" aria-label="Filter by number of colours">
+        <button type="button" data-size="all" aria-pressed="true">ALL</button>
+        <button type="button" data-size="2" aria-pressed="false">2</button>
+        <button type="button" data-size="3" aria-pressed="false">3</button>
+        <button type="button" data-size="4" aria-pressed="false">4</button>
+      </div>
+      <ol id="palette-index" class="palette-index"></ol>
+    </dialog>
+
+    <dialog id="digest-dialog" class="sheet digest-sheet">
+      <form method="dialog" class="sheet-top">
+        <p>Dr Non's Digest</p>
+        <button value="close" aria-label="Close digest">×</button>
+      </form>
+      <div class="digest-lead">
+        <p class="digest-statement">A colour is not a property. It is an event between surfaces.</p>
+        <dl id="current-analysis" class="analysis-list"></dl>
+      </div>
+      <div class="languages">
+        <article lang="en">
+          <h2>Read the interval</h2>
+          <p>Sanzo Wada arranged 159 named colours into 348 combinations. The unit is the relationship. Red changes beside blue. Pale yellow changes again when it becomes the smallest part of a quartet.</p>
+          <p>This edition makes each relationship large enough to inhabit. Search is a question, chance is a method, and the index is the map back out.</p>
+          <h3>Dr Non's Digest</h3>
+          <p>Natural appetite is a useful way to think about colour. The eye wants tension, rest, temperature, and proportion. Harmony is not sameness. The good pair keeps a small disagreement alive.</p>
+        </article>
+        <article lang="th">
+          <h2>อ่านระยะห่างระหว่างสี</h2>
+          <p>ซันโซ วาดะจัดสีที่มีชื่อ 159 สีเป็นชุดสี 348 ชุด หน่วยสำคัญจึงไม่ใช่สีเดี่ยว แต่คือความสัมพันธ์ แดงเปลี่ยนไปเมื่ออยู่ข้างน้ำเงิน และเหลืองอ่อนก็ทำหน้าที่ต่างออกไปเมื่อเป็นส่วนเล็กที่สุดของชุดสี่สี</p>
+          <p>ฉบับนี้ขยายแต่ละความสัมพันธ์ให้ใหญ่พอที่เราจะเข้าไปอยู่ข้างในได้ การค้นหาคือการตั้งคำถาม ความบังเอิญคือวิธีหนึ่ง และดัชนีคือแผนที่พาเรากลับออกมา</p>
+          <h3>Dr Non's Digest</h3>
+          <p>ความอยากตามธรรมชาติช่วยให้เราเข้าใจสีได้ ดวงตาต้องการแรงตึง ช่วงพัก อุณหภูมิ และสัดส่วน ความกลมกลืนไม่ใช่ความเหมือน ชุดสีที่ดีเก็บความไม่ลงรอยเล็ก ๆ ไว้ให้ยังมีชีวิต</p>
+        </article>
+        <article lang="zh-Hans">
+          <h2>阅读色彩之间的间距</h2>
+          <p>和田三造将159种具名色彩编排成348组配色。真正的单位不是单一颜色，而是颜色之间的关系。红色与蓝色并置后会改变；浅黄色在四色组合中占据最小面积时，也会承担新的作用。</p>
+          <p>这个版本把每组关系放大到足以让人进入其中。搜索是一种提问，偶遇也是一种方法，而索引是离开展厅的地图。</p>
+          <h3>Dr Non's Digest</h3>
+          <p>可以把色彩理解为视觉的自然食欲。眼睛需要张力、停顿、温度和比例。和谐并不等于相同。好的配色会保留一点分歧，让画面继续呼吸。</p>
+        </article>
+      </div>
+      <footer class="digest-footer">
+        <p>Digital values are conversions, not claims about exact printed ink.</p>
+        <a href="https://en.seigensha.com/books/978-4-86152-247-5/" rel="noreferrer">About the book ↗</a>
+        <a href="https://github.com/mattdesl/dictionary-of-colour-combinations" rel="noreferrer">Dataset and method ↗</a>
+      </footer>
+    </dialog>
+
+    <script src="content.js?v=0.1.0-2"></script>
+    <script src="app.js?v=0.1.0-2"></script>
+  </body>
+</html>

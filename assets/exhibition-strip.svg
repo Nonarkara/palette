@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 520" role="img" aria-labelledby="title desc">
+  <title id="title">Palette exhibition strip</title>
+  <desc id="desc">Five adjoining colour fields from three Sanzo Wada combinations, arranged as a museum wall.</desc>
+  <rect width="1600" height="520" fill="#111111"/>
+  <rect x="40" y="40" width="585" height="350" fill="#ae5224"/>
+  <rect x="625" y="40" width="365" height="350" fill="#004958"/>
+  <rect x="990" y="40" width="220" height="350" fill="#e1a95f"/>
+  <rect x="1210" y="40" width="135" height="350" fill="#ab3b24"/>
+  <rect x="1345" y="40" width="215" height="350" fill="#d1b26f"/>
+  <text x="40" y="450" fill="#f7f5ef" font-family="Arial, sans-serif" font-size="44" font-weight="700">PALETTE</text>
+  <text x="1558" y="450" fill="#f7f5ef" text-anchor="end" font-family="monospace" font-size="18">A ROOM FOR 348 RELATIONSHIPS</text>
+</svg>
+
