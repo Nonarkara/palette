@@ -1,5 +1,27 @@
 # Palette — design contract
 
+## Reading-room register — 2026-10-02
+
+The Aa link opens `reading.html` in this tab. It is a separate, content-led
+reading room, not a second layer over the colour field. It keeps sharp geometry,
+native controls, script-specific type, 44px standalone targets and measured
+contrast. Yellow Orange `#f99d1b` and Dark Tyrian Blue `#12354e` are the catalogue's
+Plate 002 digital conversions; paper is a reading ground, not a third Wada swatch.
+
+The reading room retains three size tokens: display (title and section headings),
+body (prose, subheadings and controls), micro (credits and section labels).
+Weight, placement and proximity establish the finer hierarchy. Its
+solid blue navigation field belongs to this room; palette colour never encodes
+status, selected state or a different meaning between chapters. Do not apply this
+reading-room register to the plate instrument or to operational products.
+
+Canonical method: `bauhaus-human-design` in the stack repository. Run
+`node scripts/sync-design-guide.mjs /path/to/stack/skills/bauhaus-human-design`
+to regenerate the mirrored skill and single-file `DESIGN-FIELD-GUIDE.md`.
+Do not hand-edit the mirror. Coverage is selected close reading, not all five
+books completed. Original books remain private; no upstream hooks are executed.
+Automated checks are not a real-person Mama Rule or fluent-language review.
+
 ## Design read
 
 A colour plate becomes the entire room: one hard cut, one enormous plate number,

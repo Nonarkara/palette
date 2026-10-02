@@ -208,6 +208,7 @@ input:focus-visible,
 }
 
 .instrument button,
+.instrument > a,
 .sheet button,
 .index-tools button {
   min-width: 44px;
@@ -226,6 +227,9 @@ input:focus-visible,
   font-size: 1.35rem;
   transition: background-color 160ms var(--ease), color 160ms var(--ease), transform 120ms var(--ease);
 }
+
+.instrument > a { display:flex; align-items:center; justify-content:center; flex-shrink:0; width:var(--rail); height:var(--rail); color:var(--white); font-size:1.35rem; text-decoration:none; }
+.instrument > a:hover { background:var(--white); color:var(--black); }
 
 .instrument button:hover,
 .instrument button[aria-pressed="true"] {
@@ -1384,7 +1388,7 @@ input:focus-visible,
     overflow-x: auto;
   }
 
-  .instrument button {
+  .instrument button, .instrument > a {
     flex: 1 0 44px;
     width: auto;
     height: 3.5rem;

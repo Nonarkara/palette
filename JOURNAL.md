@@ -157,3 +157,19 @@ Tags: `onboarding`, `search`, `agent-handoff`, `mit`, `interaction`
 **Why:** Visitors should be able to live with a colour relationship and find it using ordinary words, without learning the catalogue's narrow tag vocabulary.
 **Diff:** [Search and geometry](palette-tools.js), [download flow](app.js), [regression tests](tests/browser.mjs), [downloadable guide](PALETTE-FIELD-GUIDE.md).
 **Tags:** `wallpaper · search · multilingual · local-first`
+
+## 2026-10-02 — A reading room, not another surface finish
+
+**What:** Added a same-tab Aa doorway to an independent design reading room,
+Thai/Chinese summaries, original source credits and a portable agent-ready
+Markdown guide with the reusable `bauhaus-human-design` skill.
+**Why:** A catalogue of tasteful defaults cannot determine what a person needs
+to understand. The new method tests task, real content, structural alternatives,
+communication and preservation before surface finish.
+**Boundary:** Selected close reading is documented honestly; the five books are
+not yet read cover to cover. Books stay private. Automated checks do not prove
+human usability, fluent translations or full WCAG conformance.
+**Review:** A fresh review found and corrected a small footer target and an
+unnecessary eight-size type hierarchy. The reading room now uses three sizes;
+weight and grouping distinguish its finer roles.
+**Tags:** `bauhaus · communication · standards · provenance · anti-slop`

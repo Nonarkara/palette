@@ -33,3 +33,17 @@ The historical colour combinations are credited to Sanzo Wada. This project is
 independent and is not affiliated with Seigensha, the Wada estate, or the data
 authors. It does not reproduce scans, cover art, or publisher text.
 
+## Design reading room — 2026-10-02
+
+The original guide credits Magdalena Droste / Bauhaus-Archiv, Steve Krug,
+Jeffrey Zeldman with Ethan Marcotte, Joel Sklar, and individual contributors to
+The Responsive Web Design Handbook, volume II. Book copyrights remain with their
+owners. No supplied book files, scans or substantial excerpts are redistributed.
+
+Repository studies: pbakaus/impeccable (Apache-2.0),
+nextlevelbuilder/ui-ux-pro-max-skill, leonxlnx/taste-skill, nutlope/hallmark and
+funboy322/avoid-ai-design (MIT). This release contains original procedural
+writing, not vendored packs or upstream code. Exact snapshot commits, coverage,
+adaptations and limits are in `skills/bauhaus-human-design/references/reading-ledger.md`
+and `DESIGN-FIELD-GUIDE.md`. No endorsement is implied. MIT covers our original
+work; it does not relicense the books or upstream projects.

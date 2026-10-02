@@ -18,6 +18,14 @@ agent and start building.
 
 **GitHub Pages mirror:** <https://nonarkara.github.io/palette/>
 
+**Design reading room:** [Made for someone](reading.html). Bauhaus-informed
+composition, communication, modern web standards and observable usability.
+Download [the self-contained design guide](DESIGN-FIELD-GUIDE.md), or give your
+agent [the reusable skill](skills/bauhaus-human-design/SKILL.md) with its two
+references. This first synthesis is based on selected close readings—not a
+completed reading of all five books. The [ledger](skills/bauhaus-human-design/references/reading-ledger.md)
+records exact coverage, upstream commits, licences and remaining work.
+
 **Wallpapers:** choose `↓` on any plate. Download a PNG for phone (1440 × 3120),
 iPad/tablet (2048 × 2732), or computer (3840 × 2160). Keep colour names, hex values
 and credits, or turn the labels off for plain fields. Generation stays on your
@@ -63,7 +71,8 @@ art, publisher copy, or printed colour claims.
 | `⧉` | Copy an agent-ready palette brief | — |
 | `i` | Principles, provenance, and Dr Non's Digest | `I` |
 
-Every control is a real button. Every state change is announced to assistive
+Actions are real buttons; the `Aa` reading-room destination is a same-tab link.
+Every state change is announced to assistive
 technology. Colour names, plate numbers, and text readings remain available, so
 colour is never the only carrier of information.
 

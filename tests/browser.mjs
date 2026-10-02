@@ -74,6 +74,45 @@ try {
     assert.ok(JSON.parse(await page.locator('#json-code').innerText()).colors.length>=2);
     await page.keyboard.press('Escape');
   }
+  await page.locator('.instrument > a[href="reading.html"]').click();
+  await page.waitForURL('**/reading.html');
+  assert.equal(browser.contexts()[0].pages().length,1,'reading link must not create another tab');
+  assert.match(await page.locator('h1').innerText(),/Made for\s+someone\./);
+  for(const width of [320,375,768,1440]) {
+    await page.setViewportSize({width,height:900});
+    await page.locator('details').evaluateAll(nodes=>nodes.forEach(node=>node.open=true));
+    assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),`Reading overflow ${width}`);
+    const target=await page.locator('footer > a').boundingBox();
+    assert.ok(target.height>=44 && target.width>=44,'footer target');
+    const typeSizes=await page.evaluate(()=>[...new Set([...document.querySelectorAll('h1,h2,h3,p,a,li,dt,dd,summary,span')].map(node=>getComputedStyle(node).fontSize))]);
+    assert.ok(typeSizes.length<=3,`Three-size hierarchy: ${typeSizes}`);
+    await page.screenshot({path:`/tmp/palette-check/reading-${width}.png`,fullPage:true});
+  }
+  await page.setViewportSize({width:375,height:900});
+  await page.addStyleTag({content:'html {font-size:200%}'});
+  assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'Reading 200% reflow');
+  const guide=await page.request.get(base+'DESIGN-FIELD-GUIDE.md');
+  assert.ok(guide.ok());
+  assert.match(await guide.text(),/Not a completed cover-to-cover/);
+  assert.match(await guide.text(),/Content-swap test/i);
+  const downloadEvent=page.waitForEvent('download');
+  await page.locator('a[download="dr-non-design-field-guide.md"]').click();
+  const guideDownload=await downloadEvent;
+  assert.equal(guideDownload.suggestedFilename(),'dr-non-design-field-guide.md');
+  await guideDownload.saveAs('/tmp/palette-check/dr-non-design-field-guide.md');
+  assert.equal(await readFile('/tmp/palette-check/dr-non-design-field-guide.md','utf8'),await guide.text());
+  for(const href of await page.locator('a[href]').evaluateAll(nodes=>nodes.map(node=>node.getAttribute('href')))) {
+    if(href.startsWith('#')) assert.equal(await page.locator(href).count(),1,href);
+    else if(!href.startsWith('http') && !href.startsWith('./')) assert.ok((await page.request.get(new URL(href,base).href)).ok(),href);
+  }
+  const noJS=await browser.newContext({javaScriptEnabled:false,viewport:{width:375,height:900}});
+  const native=await noJS.newPage();
+  await native.route(/fonts\.(googleapis|gstatic)\.com/,route=>route.abort());
+  await native.goto(base+'reading.html');
+  await native.locator('#method details[lang="th"] summary').click();
+  assert.equal(await native.locator('#method details[lang="th"]').getAttribute('open'),'');
+  await native.keyboard.press('Tab');
+  await noJS.close();
   assert.deepEqual(errors,[]);
-  console.log('PASS: phrase/multilingual/empty search; 9 PNG downloads with correct names and dimensions; raw colours; JSON regression; 375/768/1280 layout; zero JS errors.');
+  console.log('PASS: search; 9 PNG downloads; JSON; plate layout; same-tab reading; 320–1440 reflow + 200% text; native no-JS disclosures; guide download bytes; zero JS errors.');
 } finally {await browser.close(); await new Promise(resolve=>server.close(resolve));}

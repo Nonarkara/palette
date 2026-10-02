@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 
-const files = ["index.html", "styles.css", "app.js", "README.md", "context.md", "PALETTE-FIELD-GUIDE.md"];
+const files = ["index.html", "styles.css", "app.js", "README.md", "context.md", "PALETTE-FIELD-GUIDE.md", "reading.html", "reading.css", "DESIGN-FIELD-GUIDE.md"];
 const contents = Object.fromEntries(await Promise.all(files.map(async (file) => [file, await readFile(new URL(`../${file}`, import.meta.url), "utf8")])));
 const joined = Object.values(contents).join("\n");
 

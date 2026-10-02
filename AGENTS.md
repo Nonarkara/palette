@@ -5,6 +5,11 @@
 Palette is an interactive exhibition of Sanzo Wada's 348 colour combinations.
 The colour field is the product. The interface is museum hardware.
 
+For authored-design work, read `skills/bauhaus-human-design/SKILL.md`. It adds
+content-led composition, communication and observed-task gates above style
+compliance; it does not override these conservation laws. Longer design writing
+lives in `reading.html`, not over the colour field. Source-book files stay private.
+
 ## Conservation law
 
 One source-verified combination owns the viewport. Interface chrome never
@@ -35,4 +40,3 @@ npm run dev
 Commit with `Agent: codex`, push to `main`, deploy through GitHub Pages, then
 exercise search, navigation, dialogs, copy, keyboard controls, and mobile layout
 on the live URL.
-
