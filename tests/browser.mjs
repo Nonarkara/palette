@@ -75,7 +75,7 @@ try {
     await page.keyboard.press('Escape');
   }
   await page.locator('.instrument > a[href="reading.html"]').click();
-  await page.waitForURL('**/reading.html');
+  await page.waitForURL(url=>/\/reading(?:\.html)?$/.test(url.pathname));
   assert.equal(browser.contexts()[0].pages().length,1,'reading link must not create another tab');
   assert.match(await page.locator('h1').innerText(),/Made for\s+someone\./);
   for(const width of [320,375,768,1440]) {
