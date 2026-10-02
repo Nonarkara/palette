@@ -1,5 +1,11 @@
 # Palette
 
+[Type & context](https://colors.nonarkara.org/reading#typography) adds Dr Non's
+Bringhurst interpretation to the reading room. [Download the self-contained
+typography guide](TYPOGRAPHY-FIELD-GUIDE.md) or use the
+[portable skill and source ledger](skills/bringhurst-contextual-type/SKILL.md).
+Choose for task, text, medium and script—not a fashionable font pairing.
+
 ![Five adjoining colour fields arranged as an exhibition wall](assets/exhibition-strip.svg)
 
 Palette turns Sanzo Wada's 348 colour combinations into an interactive room.

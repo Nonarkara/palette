@@ -57,6 +57,13 @@ These are references, not styles to imitate literally.
 
 ## Typography
 
+Contextual selection/proof: `skills/bringhurst-contextual-type/SKILL.md`.
+The reading room keeps its existing English Arial body and Archivo Narrow
+display role. Match actual text rhythm across scripts; no blind Latin tracking
+or casing. This addition teaches judgment, not a wholesale runtime font change.
+Regenerate the mirrored skill/ledger and standalone typography download with
+`node scripts/sync-typography-guide.mjs /path/to/stack/skills/bringhurst-contextual-type`.
+
 - Display: Archivo Narrow.
 - Thai: IBM Plex Sans Thai, non-looped.
 - Chinese: Noto Sans SC.

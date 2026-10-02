@@ -1,5 +1,10 @@
 # Palette — agent contract
 
+For typography decisions, read `skills/bringhurst-contextual-type/SKILL.md`.
+Proof actual content, role and script before changing fonts. The reading-room
+chapter and `TYPOGRAPHY-FIELD-GUIDE.md` teach the method without changing the
+colour-field product or granting automatic house-rule exceptions.
+
 ## Purpose
 
 Palette is an interactive exhibition of Sanzo Wada's 348 colour combinations.

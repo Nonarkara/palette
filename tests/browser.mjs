@@ -91,6 +91,18 @@ try {
   await page.setViewportSize({width:375,height:900});
   await page.addStyleTag({content:'html {font-size:200%}'});
   assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'Reading 200% reflow');
+  await page.locator('.contents a[href="#typography"]').click();
+  assert.equal(new URL(page.url()).hash,'#typography');
+  assert.ok(await page.locator('#typography').isVisible());
+  const typeGuide=await page.request.get(base+'TYPOGRAPHY-FIELD-GUIDE.md');
+  assert.ok(typeGuide.ok());
+  assert.match(await typeGuide.text(),/Source and proof/);
+  const typeDownloadEvent=page.waitForEvent('download');
+  await page.locator('#typography a[download="dr-non-contextual-typography.md"]').click();
+  const typeDownload=await typeDownloadEvent;
+  assert.equal(typeDownload.suggestedFilename(),'dr-non-contextual-typography.md');
+  await typeDownload.saveAs('/tmp/palette-check/dr-non-contextual-typography.md');
+  assert.equal(await readFile('/tmp/palette-check/dr-non-contextual-typography.md','utf8'),await typeGuide.text());
   const guide=await page.request.get(base+'DESIGN-FIELD-GUIDE.md');
   assert.ok(guide.ok());
   assert.match(await guide.text(),/Not a completed cover-to-cover/);
@@ -111,8 +123,15 @@ try {
   await native.goto(base+'reading.html');
   await native.locator('#method details[lang="th"] summary').click();
   assert.equal(await native.locator('#method details[lang="th"]').getAttribute('open'),'');
+  await native.locator('#typography').scrollIntoViewIfNeeded();
+  await native.screenshot({path:'/tmp/palette-check/type-375.png'});
+  for(const language of ['th','zh-Hans']) {
+    await native.locator(`#typography details[lang="${language}"] summary`).click();
+    assert.equal(await native.locator(`#typography details[lang="${language}"]`).getAttribute('open'),'');
+    await native.screenshot({path:`/tmp/palette-check/type-${language}-375.png`});
+  }
   await native.keyboard.press('Tab');
   await noJS.close();
   assert.deepEqual(errors,[]);
-  console.log('PASS: search; 9 PNG downloads; JSON; plate layout; same-tab reading; 320–1440 reflow + 200% text; native no-JS disclosures; guide download bytes; zero JS errors.');
+  console.log('PASS: search; 9 PNG downloads; JSON; plate layout; same-tab reading; 320–1440 reflow + 200% text; native no-JS EN/TH/ZH typography; both guide download bytes; zero JS errors.');
 } finally {await browser.close(); await new Promise(resolve=>server.close(resolve));}
