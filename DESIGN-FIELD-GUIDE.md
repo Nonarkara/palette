@@ -159,6 +159,29 @@ development. These are contemporary interface rules, not ten quotations from
 Gropius. “Form follows function” is not attributed here as a Gropius quotation.
 Minimalism is not a warrant to erase art, warmth or cultural specificity.
 
+### Ten working commitments
+
+The user supplied ten Bauhaus-inspired tenets as the design brief. The following
+is our contemporary operational interpretation, not authentication of that list
+as a historical manifesto or a claim that Bauhaus had one unchanging style.
+
+| Commitment | Interface consequence | Evidence to ask for |
+|---|---|---|
+| Join art and craft | The person choosing the composition also checks the built result | A working prototype, not only a moodboard |
+| Master the material | Understand semantic HTML, script type and browser behaviour | The task works without a mouse and when fonts fail |
+| Let purpose shape form | Importance determines prominence; function determines the control | Explain why the arrangement serves this task |
+| Make one coherent work | Page, navigation, errors, exports and README explain the same system | Follow a complete path, including its downloaded artifact |
+| Be truthful about materials | Text remains text; links go somewhere; simulations are labelled | Select/copy/read the content; inspect what a control actually does |
+| Reduce without flattening | Remove competing signals, not earned meaning or personality | A conservation comparison plus a clearer reading order |
+| Use technology deliberately | Choose a native capability before adding a dependency | Show the smallest implementation that meets the task |
+| Spend resources intentionally | Budget bytes, rendering work and human attention | Check the slow/failed-loading path; justify an expensive element |
+| Make the action effective | Clear wording, current state, feedback and recovery | An uninstructed person completes and recovers from the task |
+| Develop through evidence | Revise the observed failure rather than defend the first design | Record what changed after a test and what remains unverified |
+
+Typography and colour are governed by the project's tokens and semantics. An
+exhibition may use expressive colour fields; a control room's closed grammar
+remains closed. None of these commitments permits a decorative “Bauhaus” skin.
+
 ### Standards as a foundation
 
 Zeldman and Marcotte make accessible, semantic structure central, not a stripped
