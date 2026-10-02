@@ -138,6 +138,37 @@ Before publishing a fork:
 7. Verify the deployed URL and the actual JavaScript/CSS bytes, not only the
    deployment dashboard.
 
+## Wallpaper downloads and search
+
+Choose `↓` to download the current combination as a PNG: phone 1440 × 3120,
+iPad/tablet 2048 × 2732, or desktop 3840 × 2160. The labelled version includes
+source colour names, hex values, plate number, and Dr Non/Wada credits. Disable
+labels for a plain colour field. The original colours are used even when the
+exhibition is in grayscale. Your device generates the image; nothing is uploaded.
+Save it to Photos or your image library, then set it as wallpaper. Your device's
+crop and zoom settings may change the visible proportions.
+
+Search accepts everyday moods, purposes, colour families in English/Thai/Chinese,
+hex values and plate numbers. Try `cozy`, `romantic`, `calm ocean`, `red and black`,
+`สีแดงสีดำ`, `红色黑色` or `plate 042`. Fillers such as “I want a palette” are ignored.
+Simple one-letter spelling errors are tolerated when there is one clear match.
+If no palette matches every meaningful word, partial matches are explicitly
+labelled **related**. Unsupported words are not silently given an invented meaning.
+Mood associations remain curatorial suggestions, not universal colour psychology.
+
+<span lang="th">กด ↓ เลือกขนาดโทรศัพท์ แท็บเล็ต หรือคอมพิวเตอร์ แล้วดาวน์โหลด PNG
+เลือกให้มีชื่อสีและค่าสี หรือปิดข้อความเพื่อใช้สีล้วน ลองค้น “สงบ” “ทะเล”
+หรือ “สีแดงสีดำ” ผลลัพธ์ที่ตรงเพียงบางคำจะบอกว่าเป็นชุดสีที่เกี่ยวข้อง</span>
+
+<span lang="zh-Hans">点击 ↓，选择手机、平板或电脑尺寸，下载 PNG。
+可保留色名与色值，也可关闭文字，使用纯色块。试试“平静”“海洋”或“红色黑色”。
+只匹配部分关键词的结果会明确标为相关配色。</span>
+
+For the browser regression suite: `npm ci`, `npx playwright install chromium`,
+then `npm run verify:browser`. It verifies real PNG downloads, names, dimensions,
+search states, JSON and responsive layouts. Playwright is a development-only
+dependency; the exhibition itself needs no package install or service.
+
 ## Data shape
 
 `data/colors.json` contains 159 named colours. Each object supplies a name,

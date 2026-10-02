@@ -6,7 +6,11 @@
   "scripts": {
     "dev": "python3 -m http.server 4173",
     "test": "node --test tests/*.test.mjs",
-    "check": "npm test && node tests/check-content.mjs"
+    "check": "npm test && node tests/check-content.mjs",
+    "verify:browser": "node tests/browser.mjs"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "playwright": "^1.63.0"
+  }
 }

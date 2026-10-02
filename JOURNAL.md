@@ -151,3 +151,9 @@ copy action, exported agent prompt, 376px layout, content checks, accessibility,
 and production bytes are verified with the release.
 
 Tags: `onboarding`, `search`, `agent-handoff`, `mit`, `interaction`
+
+**Date:** 2026-10-02
+**What:** Added phone/tablet/desktop PNG wallpaper downloads for every plate, with optional colour labels and credits; expanded local multilingual search and labelled partial matches.
+**Why:** Visitors should be able to live with a colour relationship and find it using ordinary words, without learning the catalogue's narrow tag vocabulary.
+**Diff:** [Search and geometry](palette-tools.js), [download flow](app.js), [regression tests](tests/browser.mjs), [downloadable guide](PALETTE-FIELD-GUIDE.md).
+**Tags:** `wallpaper · search · multilingual · local-first`

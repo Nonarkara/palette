@@ -98,7 +98,11 @@
       contrast,
       use,
       ...window.PALETTE_COPY.uses[use],
-      ...hsl.map(({ h }) => hueWord(h)),
+      ...hsl.flatMap(({ h, s, l },i) => {
+        const name=colors[i].name.toLowerCase();
+        const family=l<.10?'black':s<.12?(l>.82?'white':'gray'):hueWord(h);
+        return [family,...(/pink|rose|corinthian/.test(name)?['rose']:[]),...(/brown|umber|ochr|sienna|buff|fawn/.test(name)?['earth','brown']:[])];
+      }),
       ...colors.flatMap((color) => color.name.toLowerCase().split(/\s+/))
     ]);
     const concepts = new Set([light]);
@@ -262,19 +266,12 @@
   }
 
   function renderSearch(query) {
-    const terms = query.toLowerCase().trim().split(/\s+/).filter(Boolean);
-    const results = terms.length
-      ? state.palettes.filter((palette) => {
-          const haystack = [
-            ...palette.tags,
-            ...palette.colors.map((color) => color.name)
-          ].join(" ").toLowerCase();
-          return terms.every((term) => haystack.includes(term));
-        }).slice(0, 48)
-      : state.palettes.slice(0, 24);
+    const {results:matches,related,terms}=window.PALETTE_TOOLS.search(state.palettes,query);
+    const results=matches.slice(0,terms.length?48:24);
     el.searchResults.replaceChildren(...results.map((palette) => paletteResult(palette, el.searchDialog)));
     el.searchExplainer.textContent = terms.length
-      ? `${results.length}${results.length === 48 ? "+" : ""} relationships found for “${query.trim()}”. Choose one to enter the room.`
+      ? !matches.length ? `No match for “${query.trim()}”. Try a colour, mood, purpose, hex value, or plate number. The mood buttons below can start another search.`
+        : `${matches.length} ${related?'related relationships (not every word matched)':'relationships'} for “${query.trim()}”. Showing ${results.length}. Choose one to enter the room.`
       : "Browse everything below, choose a mood, or type your own words. Search stays on this device.";
   }
 
@@ -376,6 +373,62 @@
       renderPalette();
     }
     if (name === "copy") copyPalette();
+    if (name === "wallpaper") {
+      renderWallpaper();
+      openDialog(el.wallpaperDialog, el.wallpaperDevice);
+    }
+  }
+
+  function paintWallpaper(canvas,device,labels) {
+    const palette=currentPalette();
+    const plan=window.PALETTE_TOOLS.wallpaperPlan(palette,device);
+    canvas.width=plan.width; canvas.height=plan.height;
+    const ctx=canvas.getContext('2d');
+    const unit=Math.min(plan.width,plan.height)/30;
+    plan.fields.forEach((field,i)=>{
+      ctx.fillStyle=field.color.hex;
+      ctx.fillRect(field.x,field.y,field.width,field.height);
+      if(!labels) return;
+      ctx.fillStyle=readableInk(field.color.rgb);
+      ctx.font=`${unit*.7}px monospace`;
+      const name=field.color.name;
+      const maxWidth=field.width-unit*2;
+      const words=name.split(' '); const lines=[''];
+      words.forEach(word=>{const last=lines.length-1;const next=(lines[last]+' '+word).trim();if(ctx.measureText(next).width>maxWidth&&lines[last])lines.push(word);else lines[last]=next;});
+      const bottom=field.y+field.height-unit;
+      ctx.fillText(field.color.hex.toUpperCase(),field.x+unit,bottom);
+      lines.reverse().forEach((line,j)=>ctx.fillText(line,field.x+unit,bottom-unit*(j+1)));
+      if(i===0) {
+        ctx.font=`${unit}px monospace`;
+        ctx.fillText(`PLATE ${formatPlate(palette.id)}`,field.x+unit,field.y+unit*2);
+        ctx.font=`${unit*.5}px monospace`;
+        ctx.fillText('WADA / DR NON’S INTERPRETATION',field.x+unit,field.y+unit*3,maxWidth);
+        ctx.fillText('CREDITED DIGITAL COLOURS / NOT PRINT PROOFS',field.x+unit,field.y+unit*3.8,maxWidth);
+      }
+    });
+  }
+  function renderWallpaper() {
+    paintWallpaper(el.wallpaperPreview,el.wallpaperDevice.value,el.wallpaperLabels.checked);
+    const size=window.PALETTE_TOOLS.sizes[el.wallpaperDevice.value];
+    el.wallpaperInfo.textContent=`Plate ${formatPlate(currentPalette().id)} · ${size.width} × ${size.height} PNG. Portrait fields stack; desktop fields stand side by side. Downloads use original colours, even in grayscale study.`;
+    el.wallpaperStatus.textContent='';
+  }
+  function downloadWallpaper() {
+    const canvas=document.createElement('canvas');
+    const device=el.wallpaperDevice.value;
+    const plate=formatPlate(currentPalette().id);
+    paintWallpaper(canvas,device,el.wallpaperLabels.checked);
+    el.wallpaperDownload.disabled=true;
+    canvas.toBlob(blob=>{
+      el.wallpaperDownload.disabled=false;
+      if(!blob){el.wallpaperStatus.textContent='PNG could not be created. Try again.';return;}
+      const url=URL.createObjectURL(blob);
+      const link=document.createElement('a');
+      link.href=url;link.download=`palette-${plate}-${device}-${canvas.width}x${canvas.height}.png`;
+      document.body.append(link);link.click();link.remove();
+      setTimeout(()=>URL.revokeObjectURL(url),60000);
+      el.wallpaperStatus.textContent='PNG prepared. Check your browser’s downloads. On mobile, save the image to Photos before setting your wallpaper.';
+    },'image/png');
   }
 
   function bindEvents() {
@@ -383,6 +436,9 @@
       button.addEventListener("click", () => action(button.dataset.action));
     });
     el.searchInput.addEventListener("input", () => renderSearch(el.searchInput.value));
+    el.wallpaperDevice.addEventListener('change',renderWallpaper);
+    el.wallpaperLabels.addEventListener('change',renderWallpaper);
+    el.wallpaperDownload.addEventListener('click',downloadWallpaper);
     el.searchDialog.querySelectorAll("[data-query]").forEach((button) => {
       button.addEventListener("click", () => {
         el.searchInput.value = button.dataset.query;
@@ -454,7 +510,14 @@
       copyAgentButton: byId("copy-agent"),
       surpriseButton: byId("surprise-me"),
       aboutDialog: byId("about-dialog"),
-      analysis: byId("current-analysis")
+      analysis: byId("current-analysis"),
+      wallpaperDialog: byId('wallpaper-dialog'),
+      wallpaperDevice: byId('wallpaper-device'),
+      wallpaperPreview: byId('wallpaper-preview'),
+      wallpaperLabels: byId('wallpaper-labels'),
+      wallpaperDownload: byId('wallpaper-download'),
+      wallpaperInfo: byId('wallpaper-info'),
+      wallpaperStatus: byId('wallpaper-status')
     });
     try {
       const response = await fetch("data/colors.json");

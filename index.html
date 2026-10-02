@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@400;700&family=IBM+Plex+Sans+Thai:wght@400;600&family=JetBrains+Mono:wght@400;600&family=Noto+Sans+SC:wght@400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css?v=0.1.0-9">
+    <link rel="stylesheet" href="styles.css?v=0.2.0">
   </head>
   <body>
     <a class="skip-link" href="#palette-stage">Skip to the colour plate</a>
@@ -34,6 +34,7 @@
         <button type="button" data-action="next" aria-label="Next combination" title="Next — Right arrow">→</button>
         <button type="button" data-action="random" aria-label="Random combination" title="Chance encounter — R">↻</button>
         <button type="button" data-action="search" aria-label="Search combinations" title="Search — Slash">⌕</button>
+        <button type="button" data-action="wallpaper" aria-label="Download palette wallpaper" title="Wallpaper download">↓</button>
         <button type="button" data-action="index" aria-label="Open complete index" title="Index — G">≡</button>
         <button type="button" data-action="contrast" aria-pressed="false" aria-label="Toggle grayscale study" title="Grayscale study — C">◐</button>
         <button type="button" data-action="about" aria-label="About Dr Non and the research" title="About / research — A">A</button>
@@ -56,7 +57,7 @@
         <p>Bring a mood, colour, place, material, or purpose. We will find related colour schemes. No idea yet? Let chance choose your first room.</p>
       </section>
       <label for="search-input">What should it feel like?</label>
-      <input id="search-input" type="search" autocomplete="off" placeholder="quiet, red, night, poster…">
+      <input id="search-input" type="search" autocomplete="off" placeholder="calm ocean, red and black, เว็บ, 红色, #CC1236, 42…">
       <div class="mood-starters" role="group" aria-label="Browse common moods">
         <button type="button" data-query="quiet">QUIET</button>
         <button type="button" data-query="warm">WARM</button>
@@ -336,7 +337,21 @@
       </section>
     </dialog>
 
-    <script defer src="content.js?v=0.1.0-9"></script>
-    <script defer src="app.js?v=0.1.0-9"></script>
+    <dialog id="wallpaper-dialog" class="sheet wallpaper-sheet">
+      <form method="dialog" class="sheet-top"><p>Take the colours with you</p><button value="close" aria-label="Close wallpaper download">×</button></form>
+      <h2>Wallpaper / <span lang="th">วอลเปเปอร์</span> / <span lang="zh-Hans">壁纸</span></h2>
+      <p>Download this plate as a full-resolution PNG. Keep the colour names and values, or choose an uninterrupted field.</p>
+      <label for="wallpaper-device">Screen / <span lang="th">หน้าจอ</span> / <span lang="zh-Hans">屏幕</span></label>
+      <select id="wallpaper-device"><option value="phone">Phone · 1440 × 3120</option><option value="tablet">iPad / tablet · 2048 × 2732</option><option value="desktop">Computer · 3840 × 2160</option></select>
+      <label class="wallpaper-label-option"><input id="wallpaper-labels" type="checkbox" checked><span>Colour names, hex values & credits / <span lang="th">ชื่อสี ค่าสี และเครดิต</span> / <span lang="zh-Hans">色名、色值与来源</span></span></label>
+      <p id="wallpaper-info"></p>
+      <canvas id="wallpaper-preview" aria-label="Preview of the selected palette wallpaper"></canvas>
+      <button type="button" id="wallpaper-download">DOWNLOAD PNG / <span lang="th">ดาวน์โหลด</span> / <span lang="zh-Hans">下载</span></button>
+      <p id="wallpaper-status" role="status" aria-live="polite"></p>
+      <p>Generated on your device. No upload. MIT palette data; credited digital conversions, not exact printed colours. Devices may crop the image; adjust the fit in your wallpaper settings.</p>
+    </dialog>
+    <script defer src="content.js?v=0.2.0"></script>
+    <script defer src="palette-tools.js?v=0.2.0"></script>
+    <script defer src="app.js?v=0.2.0"></script>
   </body>
 </html>

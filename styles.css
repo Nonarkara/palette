@@ -36,6 +36,18 @@ input {
   font: inherit;
 }
 
+.wallpaper-sheet { max-width:100%; }
+.wallpaper-sheet h2 { font-size:var(--display); margin-block:0 1rem; }
+.wallpaper-sheet p { max-width:60ch; font-size:var(--body); line-height:1.6; }
+.wallpaper-sheet select { display:block; min-height:48px; max-width:100%; margin-block:1rem; padding:.75rem; background:var(--black); color:var(--white); border:0; font:inherit; }
+.wallpaper-sheet select:focus-visible { outline:3px solid var(--focus); }
+.wallpaper-sheet .wallpaper-label-option { display:flex; align-items:center; gap:1rem; min-height:48px; font-size:var(--body); }
+.wallpaper-label-option input { width:24px; height:24px; flex-shrink:0; accent-color:var(--black); }
+.wallpaper-sheet [lang="th"] { font-family:'IBM Plex Sans Thai','Noto Sans Thai',sans-serif; }
+.wallpaper-sheet [lang="zh-Hans"] { font-family:'Noto Sans SC',sans-serif; }
+#wallpaper-preview { display:block; width:auto; max-width:100%; height:auto; max-height:45dvh; margin-block:1.5rem; }
+.sheet #wallpaper-download { display:block; padding:1rem; background:var(--black); color:var(--white); font-size:var(--body); }
+
 button,
 a {
   -webkit-tap-highlight-color: transparent;
@@ -1366,6 +1378,7 @@ input:focus-visible,
     inset-block: auto 0;
     inset-inline: 0;
     flex-direction: row;
+    justify-content: flex-start;
     width: 100%;
     height: 3.5rem;
     overflow-x: auto;

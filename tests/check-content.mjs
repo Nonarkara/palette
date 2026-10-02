@@ -51,6 +51,6 @@ for (const required of [
 }
 
 const controls = [...contents["index.html"].matchAll(/data-action=/g)].length;
-assert.equal(controls, 10, "the instrument rail must expose ten working controls");
+assert.equal(controls, 11, "the instrument rail must expose eleven working controls");
 
 console.log("OK: exhibition copy, multilingual markup, interaction hooks, provenance, and anti-slop gates are present");

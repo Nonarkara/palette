@@ -18,6 +18,17 @@ agent and start building.
 
 **GitHub Pages mirror:** <https://nonarkara.github.io/palette/>
 
+**Wallpapers:** choose `↓` on any plate. Download a PNG for phone (1440 × 3120),
+iPad/tablet (2048 × 2732), or computer (3840 × 2160). Keep colour names, hex values
+and credits, or turn the labels off for plain fields. Generation stays on your
+device. Portrait palettes stack vertically; desktop palettes sit side by side.
+
+**Search:** try `calm ocean`, `red and black`, `minimalist website`, `สีแดงสีดำ`,
+`红色黑色`, a hex value, or a plate number. Curated synonyms and light spelling
+tolerance expand discovery. Exact all-term matches lead; otherwise the finder
+labels partial matches as related. Unknown words can still return no matches;
+there is no remote model pretending to understand everything.
+
 **Use it immediately:** download
 [`PALETTE-FIELD-GUIDE.md`](PALETTE-FIELD-GUIDE.md) for the controls, fork recipe,
 palette-role method, accessibility gate, and attribution boundary in one file.
