@@ -12,8 +12,10 @@ The colour field is the product. The interface is museum hardware.
 
 For authored-design work, read `skills/bauhaus-human-design/SKILL.md`. It adds
 content-led composition, communication and observed-task gates above style
-compliance; it does not override these conservation laws. Longer design writing
-lives in `reading.html`, not over the colour field. Source-book files stay private.
+compliance; it does not override these conservation laws. When the rules
+disagree, apply `CONFLICT-ORDER.md` in the order written there. Longer design
+writing lives in `reading.html`, not over the colour field. Source-book files
+stay private.
 
 ## Conservation law
 

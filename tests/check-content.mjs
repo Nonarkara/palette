@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 
-const files = ["index.html", "styles.css", "app.js", "README.md", "context.md", "PALETTE-FIELD-GUIDE.md", "reading.html", "reading.css", "DESIGN-FIELD-GUIDE.md"];
+const files = ["index.html", "styles.css", "app.js", "README.md", "context.md", "AGENTS.md", "CONFLICT-ORDER.md", "PALETTE-FIELD-GUIDE.md", "reading.html", "reading.css", "DESIGN-FIELD-GUIDE.md"];
 const contents = Object.fromEntries(await Promise.all(files.map(async (file) => [file, await readFile(new URL(`../${file}`, import.meta.url), "utf8")])));
 const joined = Object.values(contents).join("\n");
 
@@ -52,5 +52,23 @@ for (const required of [
 
 const controls = [...contents["index.html"].matchAll(/data-action=/g)].length;
 assert.equal(controls, 11, "the instrument rail must expose eleven working controls");
+
+const gate = contents["CONFLICT-ORDER.md"];
+const precedence = [
+  "Name the human task before adding a control. If you cannot name the task, do not add the control.",
+  "Contrast and legibility beat proportion. A golden-section split that makes text fail is wrong.",
+  "Decoration loses. If a rule only makes the surface prettier, delete it.",
+  "One combination still owns the viewport. Do not invent a second visual system.",
+];
+let cursor = -1;
+for (const line of precedence) {
+  const at = gate.indexOf(line);
+  assert.ok(at > cursor, `conflict order missing or out of sequence: ${line}`);
+  cursor = at;
+}
+assert.doesNotMatch(gate, /user-tested|usability study passed|Mama Rule passed/i, "the conflict order must not claim a user test");
+for (const file of ["context.md", "README.md", "PALETTE-FIELD-GUIDE.md", "AGENTS.md", "reading.html"]) {
+  assert.ok(contents[file].includes("CONFLICT-ORDER.md"), `${file} must point at the conflict order`);
+}
 
 console.log("OK: exhibition copy, multilingual markup, interaction hooks, provenance, and anti-slop gates are present");

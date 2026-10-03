@@ -170,6 +170,7 @@ by a short contract:
 5. Motion confirms a plate change and stops within 280 milliseconds.
 6. Digital values are conversions. Printed ink remains its own object.
 
+When these laws disagree, apply [`CONFLICT-ORDER.md`](CONFLICT-ORDER.md) in the order written there.
 Read [`context.md`](context.md) for the full design contract.
 Read [`ABOUT.md`](ABOUT.md) for the curatorial argument and
 [`JOURNAL.md`](JOURNAL.md) for the build record. The latest structured usability
@@ -199,6 +200,7 @@ styles.css          field geometry, typography, motion, responsive rules
 app.js              palette reconstruction, search, readings, navigation
 content.js          search vocabulary and editorial-use modules
 PALETTE-FIELD-GUIDE.md  standalone download-and-use handbook
+CONFLICT-ORDER.md   precedence when the design rules disagree
 data/colors.json    credited MIT-licensed source data
 tests/              source integrity and anti-slop checks
 .github/workflows/  verification and GitHub Pages publication
