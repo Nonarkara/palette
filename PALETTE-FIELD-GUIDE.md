@@ -62,6 +62,8 @@ Do not assign colours by taste alone. Give each one a job.
 - Counter-field: approximately 38.2%.
 - Text: black or white chosen by measured contrast, not intuition.
 
+If that split makes text fail, the split is wrong. Precedence: [Conflict order](CONFLICT-ORDER.md).
+
 Use the dominant colour for the main surface and the counter-colour for one
 large region, navigation rail, data layer, or decisive state. Avoid sprinkling
 both colours across dozens of small components; that destroys the relationship.
@@ -98,6 +100,7 @@ from one ordinary mistake without coaching, the design is not finished.
 
 ## Anti-slop checklist
 
+- No control without a named human task. When rules disagree, follow [Conflict order](CONFLICT-ORDER.md).
 - No rounded card grid standing between the visitor and the colour.
 - No gradient, shadow, glass panel, fake texture, or decorative dashboard.
 - No colour used as the only status indicator.
@@ -199,6 +202,7 @@ is unavailable.
 - `README.md` — public catalogue and project map.
 - `ABOUT.md` — curatorial argument and research question.
 - `context.md` — visual contract and conservation law.
+- `CONFLICT-ORDER.md` — precedence when the contract rules disagree.
 - `app.js` — reconstruction, search, classification, and interaction.
 - `content.js` — multilingual search vocabulary and suggested-use language.
 - `data/colors.json` — credited source data.

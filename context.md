@@ -32,6 +32,10 @@ personal interval: classy because restraint gives the red poise; dangerous
 because the red still carries heat. Its two Bauhausian diagrams must explain
 real relationships, never act as geometric decoration.
 
+## Conflict order
+
+When the rules in this contract disagree, apply [`CONFLICT-ORDER.md`](CONFLICT-ORDER.md) from the top. Name the task before a new control. Contrast and legibility beat proportion. Decoration loses. One combination still owns the viewport.
+
 ## References
 
 - Sanzo Wada's printed colour plates — colour as a relationship, never a loose swatch.
@@ -52,7 +56,7 @@ These are references, not styles to imitate literally.
 - Zero radius.
 - No visible borders or boxed cards.
 - Grouping comes from alignment, scale, negative space, solid fields, and text position.
-- Two colours split at 61.8 / 38.2. Trios and quartets keep one dominant field.
+- Two colours split at 61.8 / 38.2. Trios and quartets keep one dominant field. A split that makes text fail is wrong.
 - Controls live in one black instrument rail. Symbols lead; text is available to assistive technology.
 
 ## Typography
