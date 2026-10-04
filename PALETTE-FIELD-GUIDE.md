@@ -98,6 +98,8 @@ from one ordinary mistake without coaching, the design is not finished.
 
 ## Anti-slop checklist
 
+Field evidence: [`docs/design-slop-field-guide.md`](docs/design-slop-field-guide.md) — what colour got wrong in 44 AI-assisted flood apps, and a repair built from plate #139.
+
 - No rounded card grid standing between the visitor and the colour.
 - No gradient, shadow, glass panel, fake texture, or decorative dashboard.
 - No colour used as the only status indicator.
