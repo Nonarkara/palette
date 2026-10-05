@@ -5,8 +5,17 @@ const files = ["index.html", "styles.css", "app.js", "README.md", "context.md", 
 const contents = Object.fromEntries(await Promise.all(files.map(async (file) => [file, await readFile(new URL(`../${file}`, import.meta.url), "utf8")])));
 const joined = Object.values(contents).join("\n");
 
-for (const banned of ["border-radius: 8", "linear-gradient", "box-shadow", "#3b82f6", "<meta name=\"generator\"", "api.openai.com", "localhost:5173"]) {
+for (const banned of ["border-radius: 8", "linear-gradient", "radial-gradient", "box-shadow", "backdrop-filter", "background-clip: text", "#3b82f6", "<meta name=\"generator\"", "api.openai.com", "localhost:5173"]) {
   assert.ok(!joined.toLowerCase().includes(banned.toLowerCase()), `banned design/provenance tell: ${banned}`);
+}
+
+const surfaces = ["index.html", "styles.css", "app.js", "reading.html", "reading.css"].map((file) => contents[file]).join("\n");
+for (const tell of ["rounded-2xl", "shadow-lg", "get started", "supercharge", "world-class"]) {
+  assert.ok(!surfaces.toLowerCase().includes(tell), `product surface carries a slop tell: ${tell}`);
+}
+assert.doesNotMatch(contents["styles.css"] + contents["reading.css"], /font-family:[^;}]*Inter/i, "type must not fall through to Inter");
+for (const radius of (contents["styles.css"] + contents["reading.css"]).matchAll(/border-radius:\s*([^;!]+)/g)) {
+  assert.equal(radius[1].trim(), "0", `radius must stay zero, found ${radius[1].trim()}`);
 }
 
 for (const required of [
@@ -67,6 +76,23 @@ for (const line of precedence) {
   cursor = at;
 }
 assert.doesNotMatch(gate, /user-tested|usability study passed|Mama Rule passed/i, "the conflict order must not claim a user test");
+assert.ok(gate.includes("Another costume is still decoration."), "the conflict order must refuse a replacement costume");
+assert.ok(gate.includes("It does not detect authorship."), "the conflict order must not pretend to detect authorship");
+const guide = contents["PALETTE-FIELD-GUIDE.md"];
+for (const refusal of [
+  "Another costume is still decoration.",
+  "A familiar control that does a job is not a failure.",
+  "This list does not detect authorship and it does not record a user test.",
+  "Cream and terracotta",
+  "acid green",
+  "Read the text first.",
+  "motion that ignores reduced motion",
+  "No component library, font catalogue, or slop scanner",
+  "Do not replace this plate with a gradient, glass, shadow, or a second palette.",
+]) {
+  const haystack = refusal.startsWith("Do not replace") ? contents["app.js"] : guide;
+  assert.ok(haystack.includes(refusal), `missing anti-slop refusal: ${refusal}`);
+}
 for (const file of ["context.md", "README.md", "PALETTE-FIELD-GUIDE.md", "AGENTS.md", "reading.html"]) {
   assert.ok(contents[file].includes("CONFLICT-ORDER.md"), `${file} must point at the conflict order`);
 }

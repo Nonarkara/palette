@@ -322,7 +322,7 @@
       const share = Math.round((weights[index] / totalWeight) * 100);
       return `--palette-${roles[index]}: ${color.hex.toUpperCase()}; /* ${color.name} · about ${share}% */`;
     }).join("\n");
-    return `Use this colour system for the work.\n\nPalette: Plate ${formatPlate(palette.id)} — ${palette.colors.map((color) => color.name).join(" + ")}\nMood: ${palette.temperature}; ${palette.energy}; ${palette.contrast}.\nSuggested direction: ${palette.use}.\n\n:root {\n${tokens.split("\n").map((line) => `  ${line}`).join("\n")}\n}\n\nKeep the roles and unequal proportions. Choose black or white text by measured contrast on each actual background. Do not treat the digital values as exact printed ink.\n\nSource relationship: Sanzo Wada. Digital interpretation, roles, and reading: Dr Non Arkaraprasertkul.\nReference: https://colors.nonarkara.org/#plate-${formatPlate(palette.id)}\nLicense: MIT.`;
+    return `Use this colour system for the work.\n\nPalette: Plate ${formatPlate(palette.id)} — ${palette.colors.map((color) => color.name).join(" + ")}\nMood: ${palette.temperature}; ${palette.energy}; ${palette.contrast}.\nSuggested direction: ${palette.use}.\n\n:root {\n${tokens.split("\n").map((line) => `  ${line}`).join("\n")}\n}\n\nKeep the roles and unequal proportions. Choose black or white text by measured contrast on each actual background. Do not treat the digital values as exact printed ink. Do not replace this plate with a gradient, glass, shadow, or a second palette. Name the task before adding a control.\n\nSource relationship: Sanzo Wada. Digital interpretation, roles, and reading: Dr Non Arkaraprasertkul.\nReference: https://colors.nonarkara.org/#plate-${formatPlate(palette.id)}\nLicense: MIT.`;
   }
 
   async function copyPalette() {

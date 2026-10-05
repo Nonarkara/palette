@@ -100,16 +100,27 @@ from one ordinary mistake without coaching, the design is not finished.
 
 ## Anti-slop checklist
 
-- No control without a named human task. When rules disagree, follow [Conflict order](CONFLICT-ORDER.md).
-- No rounded card grid standing between the visitor and the colour.
-- No gradient, shadow, glass panel, fake texture, or decorative dashboard.
+When these rules disagree, follow [Conflict order](CONFLICT-ORDER.md). A ban list is not a new look. Another costume is still decoration. A familiar control that does a job is not a failure. This list does not detect authorship and it does not record a user test.
+
+Refuse an unexamined default. Also refuse the costume that people put on to escape the default.
+
+- No control without a named human task.
+- No rounded card grid, gradient, glow, glass, drop shadow, or a card drawn twice by a hairline and a shadow.
+- No purple-to-blue gradient, gradient-filled type, or a lavender field standing in for a plate.
+- No second palette. Cream and terracotta, near-black with acid green, neon on dark, and a single emerald accent are costumes when they replace the verified combination.
 - No colour used as the only status indicator.
 - No invented history, quotation, plate number, or printed-colour claim.
-- No fourth type family because one paragraph feels difficult.
-- No animation without a state change behind it.
+- No extra type family chosen to escape a default face. Read the text first. One italic accent word is not a hierarchy. Keep body text out of capitals. Do not crush or widen tracking on prose. Do not set interface text below a readable size. A character-count rule for Latin prose is not a law for Thai or Chinese.
+- Caps, mono, a chapter number, or a warm paper ground can stay when each one has a job. The exhibition's instrument labels and plate numbers are that case.
+- No three identical cards, a badge stacked on a centered headline, a row of logos, pricing rings, or emoji used as navigation, unless the task itself is that content.
+- No stock page order standing in for a decision: hero, logos, features, stats, pricing, call to action.
+- No fade on every section, bounce on a dialog, count-up numbers, a marquee, a blinking cursor, or motion that ignores reduced motion.
+- No empty praise in place of the action. Do not write elevate, seamless, powerful, supercharge, world-class, or get started when the control has a real name.
 - No “AI-powered” claim: search and readings here are local and deterministic.
-- No inaccessible off-black approximation hidden behind pure-black contrast
-  math. Measure the value actually rendered.
+- No inaccessible off-black approximation hidden behind pure-black contrast math. Measure the value actually rendered.
+- No component library, font catalogue, or slop scanner as a substitute for the task.
+
+Remove the names. If the arrangement would still fit any product, the composition is unfinished.
 
 ## Clone, run, and fork
 

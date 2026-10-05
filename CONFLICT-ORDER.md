@@ -7,4 +7,6 @@ Palette contract. Use when its rules disagree. An earlier line wins.
 3. Decoration loses. If a rule only makes the surface prettier, delete it.
 4. One combination still owns the viewport. Do not invent a second visual system.
 
-This order settles a disagreement. It does not record a user test.
+Naming a slop tell does not license its opposite. Another costume is still decoration.
+
+This order settles a disagreement. It does not record a user test. It does not detect authorship.

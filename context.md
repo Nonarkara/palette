@@ -34,7 +34,7 @@ real relationships, never act as geometric decoration.
 
 ## Conflict order
 
-When the rules in this contract disagree, apply [`CONFLICT-ORDER.md`](CONFLICT-ORDER.md) from the top. Name the task before a new control. Contrast and legibility beat proportion. Decoration loses. One combination still owns the viewport.
+When the rules in this contract disagree, apply [`CONFLICT-ORDER.md`](CONFLICT-ORDER.md) from the top. Name the task before a new control. Contrast and legibility beat proportion. Decoration loses. One combination still owns the viewport. Naming a slop tell does not license its opposite. Another costume is still decoration.
 
 ## References
 

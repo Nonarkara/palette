@@ -34,6 +34,7 @@ npm run dev
 
 - Never replace the full-viewport colour field with cards or a conventional gallery.
 - No rounded corners, gradients, drop shadows, visible borders, custom cursors, or decorative texture.
+- Anti-slop bans do not license a replacement font, palette, or component library. Another costume is still decoration. Read `PALETTE-FIELD-GUIDE.md` before generating a surface from a plate.
 - Keep every action keyboard-operable and every target at least 44 × 44 CSS pixels.
 - Colour is never the only carrier: plate number, names, count, and text remain available.
 - Thai uses non-looped faces and `lang="th"`; Chinese is Simplified and uses `lang="zh-Hans"`.

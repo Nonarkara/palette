@@ -170,7 +170,7 @@ by a short contract:
 5. Motion confirms a plate change and stops within 280 milliseconds.
 6. Digital values are conversions. Printed ink remains its own object.
 
-When these laws disagree, apply [`CONFLICT-ORDER.md`](CONFLICT-ORDER.md) in the order written there.
+When these laws disagree, apply [`CONFLICT-ORDER.md`](CONFLICT-ORDER.md) in the order written there. Another costume is still decoration. The working refusals are in [`PALETTE-FIELD-GUIDE.md`](PALETTE-FIELD-GUIDE.md).
 Read [`context.md`](context.md) for the full design contract.
 Read [`ABOUT.md`](ABOUT.md) for the curatorial argument and
 [`JOURNAL.md`](JOURNAL.md) for the build record. The latest structured usability
