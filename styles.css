@@ -10,6 +10,13 @@
   --primary-ink: #ffffff;
   --last-ink: #ffffff;
   --dominant-share: 0.618;
+  --plate-display: "Archivo Narrow", Arial, sans-serif;
+  --plate-body: "Archivo Narrow", Arial, sans-serif;
+  --plate-track: -0.045em;
+  --plate-case: uppercase;
+  --plate-leading: 0.88;
+  --plate-size: clamp(2rem, 5.6vw, 6.4rem);
+  --plate-weight: 400;
   --display: clamp(2rem, 5.6vw, 6.4rem);
   --body: clamp(1rem, 1.6vw, 1.25rem);
   --micro: 0.75rem;
@@ -107,6 +114,13 @@ input:focus-visible,
 
 .field span {
   inset-block-end: 2.2rem;
+  max-width: calc(100% - 1.5rem);
+  font-family: var(--plate-body);
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: 0;
+  text-transform: none;
 }
 
 .field code {
@@ -160,19 +174,24 @@ input:focus-visible,
 }
 
 .plate-label h1 {
-  max-width: 16ch;
+  max-width: 100%;
   margin: 0.35rem 0 0.6rem;
-  font-size: var(--display);
-  line-height: 0.88;
-  letter-spacing: -0.045em;
-  text-transform: uppercase;
+  font-family: var(--plate-display);
+  font-size: var(--plate-size);
+  font-weight: var(--plate-weight);
+  line-height: var(--plate-leading);
+  letter-spacing: var(--plate-track);
+  text-transform: var(--plate-case);
+  overflow-wrap: break-word;
 }
 
 .plate-label #plate-reading {
-  max-width: 56ch;
-  font-family: "Archivo Narrow", Arial, sans-serif;
+  max-width: 36ch;
+  font-family: var(--plate-body);
   font-size: var(--body);
-  line-height: 1.2;
+  line-height: 1.35;
+  letter-spacing: 0;
+  text-transform: none;
 }
 
 .copy-agent {

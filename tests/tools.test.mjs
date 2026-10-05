@@ -30,6 +30,28 @@ test('stopwords, spelling, hex, empty and unknown queries behave honestly',()=>{
   assert.equal(tools.search(palettes,'calm zzzxxyy').related,true);
   assert.equal(tools.search(palettes,'999').results.length,0);
 });
+test('every plate has one Latin type suggestion and no costume face',()=>{
+  const allowed=new Set(['Source Serif 4','Source Sans 3','Archivo Narrow','JetBrains Mono']);
+  const banned=/Inter|Space Grotesk|Instrument Serif|Geist|Fraunces/;
+  const seen=new Set();
+  for(const palette of palettes){
+    const pair=tools.typePair(palette);
+    assert.equal(tools.typeByUse[palette.use],pair.id,palette.use);
+    assert.ok(allowed.has(pair.display)&&allowed.has(pair.body));
+    assert.equal(banned.test(pair.display+pair.body),false);
+    assert.match(pair.note,/Not a Wada typeface\. Not a user test\./);
+    if(pair.display!=='Archivo Narrow'){
+      assert.equal(pair.tracking,'0');
+      assert.equal(pair.transform,'none');
+    }
+    seen.add(pair.id);
+  }
+  assert.deepEqual([...seen].sort(),['instrument','reading','signal','warm']);
+  assert.equal(tools.typePair({use:'quiet editorial'}).display,'Source Serif 4');
+  assert.equal(tools.typePair({use:'domestic warmth'}).body,'Source Sans 3');
+  assert.equal(tools.typePair({use:'night instrument'}).display,'JetBrains Mono');
+  assert.equal(tools.typePair({use:'electric argument'}).transform,'uppercase');
+});
 test('all 348 wallpaper plans cover each device exactly without invented colours',()=>{
   for(const p of palettes) for(const device of Object.keys(tools.sizes)) {
     const plan=tools.wallpaperPlan(p,device);

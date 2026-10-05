@@ -3,7 +3,9 @@
 For typography decisions, read `skills/bringhurst-contextual-type/SKILL.md`.
 Proof actual content, role and script before changing fonts. The reading-room
 chapter and `TYPOGRAPHY-FIELD-GUIDE.md` teach the method without changing the
-colour-field product or granting automatic house-rule exceptions.
+colour-field product or granting automatic house-rule exceptions. On the colour
+field, use the plate's suggested pairing from `palette-tools.js`. Do not treat
+it as a Wada typeface, a user test, or a reason to replace Thai or Chinese.
 
 ## Purpose
 

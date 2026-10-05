@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 
-const files = ["index.html", "styles.css", "app.js", "README.md", "context.md", "AGENTS.md", "CONFLICT-ORDER.md", "PALETTE-FIELD-GUIDE.md", "reading.html", "reading.css", "DESIGN-FIELD-GUIDE.md"];
+const files = ["index.html", "styles.css", "app.js", "palette-tools.js", "README.md", "context.md", "AGENTS.md", "CONFLICT-ORDER.md", "PALETTE-FIELD-GUIDE.md", "reading.html", "reading.css", "DESIGN-FIELD-GUIDE.md"];
 const contents = Object.fromEntries(await Promise.all(files.map(async (file) => [file, await readFile(new URL(`../${file}`, import.meta.url), "utf8")])));
 const joined = Object.values(contents).join("\n");
 
@@ -92,6 +92,9 @@ for (const refusal of [
 ]) {
   const haystack = refusal.startsWith("Do not replace") ? contents["app.js"] : guide;
   assert.ok(haystack.includes(refusal), `missing anti-slop refusal: ${refusal}`);
+}
+for (const mark of ["Source Serif 4", "Source Sans 3", "Not a Wada typeface. Not a user test.", "Thai stays IBM Plex Sans Thai.", "--plate-display"]) {
+  assert.ok(joined.includes(mark), `missing type system mark: ${mark}`);
 }
 for (const file of ["context.md", "README.md", "PALETTE-FIELD-GUIDE.md", "AGENTS.md", "reading.html"]) {
   assert.ok(contents[file].includes("CONFLICT-ORDER.md"), `${file} must point at the conflict order`);

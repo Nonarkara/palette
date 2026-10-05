@@ -91,7 +91,77 @@
     });
     return {...size,fields};
   }
-  const api={search,termsFor,wallpaperPlan,sizes};
+  const typeLibrary = {
+    reading: {
+      display: "Source Serif 4",
+      body: "Source Serif 4",
+      displayStack: '"Source Serif 4", Georgia, serif',
+      bodyStack: '"Source Serif 4", Georgia, serif',
+      tracking: "0",
+      transform: "none",
+      leading: "1.05",
+      size: "clamp(1.75rem, 4.2vw, 4.2rem)",
+      weight: "600",
+      reason: "The names are read on a quiet ground. One text family does both roles."
+    },
+    warm: {
+      display: "Source Serif 4",
+      body: "Source Sans 3",
+      displayStack: '"Source Serif 4", Georgia, serif',
+      bodyStack: '"Source Sans 3", Arial, sans-serif',
+      tracking: "0",
+      transform: "none",
+      leading: "1.05",
+      size: "clamp(1.75rem, 4.2vw, 4.2rem)",
+      weight: "600",
+      reason: "Serif for the short title. Sans for the names, so the serif is not a label face."
+    },
+    signal: {
+      display: "Archivo Narrow",
+      body: "Source Sans 3",
+      displayStack: '"Archivo Narrow", Arial, sans-serif',
+      bodyStack: '"Source Sans 3", Arial, sans-serif',
+      tracking: "-0.045em",
+      transform: "uppercase",
+      leading: "0.88",
+      size: "clamp(2rem, 5.6vw, 6.4rem)",
+      weight: "400",
+      reason: "Narrow caps for the short title. Names stay a text grotesque so they are not condensed."
+    },
+    instrument: {
+      display: "JetBrains Mono",
+      body: "JetBrains Mono",
+      displayStack: '"JetBrains Mono", ui-monospace, monospace',
+      bodyStack: '"JetBrains Mono", ui-monospace, monospace',
+      tracking: "0",
+      transform: "none",
+      leading: "1.15",
+      size: "clamp(1.25rem, 3vw, 2.8rem)",
+      weight: "600",
+      reason: "The names sit with the hex values. One mono family."
+    }
+  };
+  const typeByUse = {
+    "archival room": "reading",
+    "quiet editorial": "reading",
+    "botanical study": "reading",
+    "mineral calm": "reading",
+    "domestic warmth": "warm",
+    "civic daylight": "signal",
+    "electric argument": "signal",
+    "confectionery shock": "signal",
+    "night instrument": "instrument"
+  };
+  function typePair(palette) {
+    const id = typeByUse[palette && palette.use] || "signal";
+    return {
+      id,
+      use: palette ? palette.use : "",
+      ...typeLibrary[id],
+      note: "Deterministic suggestion for this plate. Not a Wada typeface. Not a user test. Latin only."
+    };
+  }
+  const api={search,termsFor,wallpaperPlan,sizes,typePair,typeByUse};
   if(typeof module!=='undefined') module.exports=api;
   if(typeof window!=='undefined') window.PALETTE_TOOLS=api;
 })();

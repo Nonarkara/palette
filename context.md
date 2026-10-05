@@ -74,6 +74,8 @@ Regenerate the mirrored skill/ledger and standalone typography download with
 - Data: JetBrains Mono.
 - Three sizes: display, body, micro.
 
+The plate shows a suggested Latin pairing on the title and the colour names. The suggestion follows that plate's reading. Quiet and editorial plates use Source Serif 4. Domestic warmth pairs that serif with Source Sans 3. Loud public plates keep Archivo Narrow for the title and Source Sans 3 for the names. A night instrument uses JetBrains Mono for both. Archivo Narrow may keep its caps and tight title spacing. The other faces do not. Thai and Chinese are not redrawn in a Latin face. The suggestion is not a Wada typeface and it does not record a user test. See `PALETTE-FIELD-GUIDE.md`.
+
 ## Colour contract
 
 The exhibition changes palette by design, so no single accent can govern the

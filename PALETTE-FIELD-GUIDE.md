@@ -88,6 +88,21 @@ Area is part of the palette. Equal swatches do not imply equal use.
 5. **Test without colour.** Names, state, hierarchy, and controls must remain
    understandable when hue disappears.
 
+## Type on the plate
+
+The large title and the colour names are the specimen. They change with the plate. The instrument, the plate number, and the hex values keep their faces.
+
+The suggestion is chosen from the plate's reading:
+
+- Quiet, archival, editorial, botanical, and mineral calm: Source Serif 4 for the title and the names.
+- Domestic warmth: Source Serif 4 for the title, Source Sans 3 for the names.
+- Civic daylight, electric argument, and confectionery shock: Archivo Narrow for the title, Source Sans 3 for the names.
+- Night instrument: JetBrains Mono for the title and the names.
+
+Archivo Narrow may keep its caps and tight title spacing. The other faces use normal spacing and no forced capitals. A crushed serif would fail the conflict order.
+
+Thai stays IBM Plex Sans Thai. Chinese stays Noto Sans SC. This suggestion is Latin. It is not a Wada typeface and it does not record a user test. A font swap is not a cure for a weak plate.
+
 ## MoMA rule and Mama Rule
 
 The MoMA rule concerns judgment: let the object dominate; make labels quiet;
@@ -110,7 +125,7 @@ Refuse an unexamined default. Also refuse the costume that people put on to esca
 - No second palette. Cream and terracotta, near-black with acid green, neon on dark, and a single emerald accent are costumes when they replace the verified combination.
 - No colour used as the only status indicator.
 - No invented history, quotation, plate number, or printed-colour claim.
-- No extra type family chosen to escape a default face. Read the text first. One italic accent word is not a hierarchy. Keep body text out of capitals. Do not crush or widen tracking on prose. Do not set interface text below a readable size. A character-count rule for Latin prose is not a law for Thai or Chinese.
+- No extra type family chosen to escape a default face. Read the text first. The plate's suggested pairing is a reading of that plate, not a replacement costume. One italic accent word is not a hierarchy. Keep body text out of capitals. Do not crush or widen tracking on prose. Do not set interface text below a readable size. A character-count rule for Latin prose is not a law for Thai or Chinese.
 - Caps, mono, a chapter number, or a warm paper ground can stay when each one has a job. The exhibition's instrument labels and plate numbers are that case.
 - No three identical cards, a badge stacked on a centered headline, a row of logos, pricing rings, or emoji used as navigation, unless the task itself is that content.
 - No stock page order standing in for a decision: hero, logos, features, stats, pricing, call to action.

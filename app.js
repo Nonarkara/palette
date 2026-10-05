@@ -162,7 +162,7 @@
       },
       interpretation: {
         by: "Dr Non Arkaraprasertkul",
-        scope: "Selection, spatial proportions, interface, search vocabulary, role assignments, and editorial reading.",
+        scope: "Selection, spatial proportions, interface, search vocabulary, role assignments, editorial reading, and the type suggestion shown on the plate.",
         independence: "Not affiliated with or endorsed by the Wada estate, Seigensha, or linked institutions."
       },
       license: "MIT",
@@ -174,6 +174,7 @@
         suggestedUse: palette.use,
         note: "Dr Non's deterministic reading for this exhibition; it is not attributed to Wada."
       },
+      type: typeRecord(palette),
       agentPrompt: agentBrief(palette),
       layoutNote: "Roles and shares describe this exhibition layout, not Wada's prescription.",
       colors: palette.colors.map((color, index) => ({
@@ -191,6 +192,36 @@
     if (!palette) return;
     el.jsonCode.textContent = JSON.stringify(paletteExport(palette), null, 2);
     el.copyJsonButton.textContent = "COPY JSON";
+  }
+
+  function typeRecord(palette) {
+    const pair = window.PALETTE_TOOLS.typePair(palette);
+    return {
+      id: pair.id,
+      display: pair.display,
+      body: pair.body,
+      reason: pair.reason,
+      note: pair.note
+    };
+  }
+
+  function typeLine(pair) {
+    return pair.display === pair.body
+      ? `${pair.display} for the title and the names.`
+      : `${pair.display} for the title, ${pair.body} for the names.`;
+  }
+
+  function applyType(palette) {
+    const pair = window.PALETTE_TOOLS.typePair(palette);
+    const root = document.documentElement.style;
+    root.setProperty("--plate-display", pair.displayStack);
+    root.setProperty("--plate-body", pair.bodyStack);
+    root.setProperty("--plate-track", pair.tracking);
+    root.setProperty("--plate-case", pair.transform);
+    root.setProperty("--plate-leading", pair.leading);
+    root.setProperty("--plate-size", pair.size);
+    root.setProperty("--plate-weight", pair.weight);
+    return pair;
   }
 
   function renderPalette({ announce = true } = {}) {
@@ -214,7 +245,8 @@
     el.plateCount.textContent = `${plate} / 348`;
     el.plateNumber.textContent = `PLATE ${plate}`;
     el.plateNames.textContent = palette.colors.map((color) => color.name).join(" + ");
-    el.plateReading.textContent = `${palette.temperature}; ${palette.energy}; ${palette.contrast}. Suggested room: ${palette.use}.`;
+    const pair = applyType(palette);
+    el.plateReading.textContent = `${palette.temperature}; ${palette.energy}; ${palette.contrast}. Suggested room: ${palette.use}. Type: ${typeLine(pair)}`;
     document.documentElement.style.setProperty("--primary-ink", readableInk(palette.colors[0].rgb));
     document.documentElement.style.setProperty("--last-ink", readableInk(palette.colors.at(-1).rgb));
     document.documentElement.style.setProperty("--dominant-share", ({ 2: 0.618, 3: 0.483, 4: 0.425 })[palette.colors.length]);
@@ -222,7 +254,7 @@
     history.replaceState(null, "", `#plate-${plate}`);
     renderAnalysis(palette);
     if (el.jsonDialog?.open) renderJson();
-    if (announce) el.status.textContent = `Plate ${plate}. ${el.plateNames.textContent}.`;
+    if (announce) el.status.textContent = `Plate ${plate}. ${el.plateNames.textContent}. Type suggestion: ${typeLine(pair)}`;
   }
 
   function renderAnalysis(palette) {
@@ -231,7 +263,8 @@
       ["Energy", palette.energy],
       ["Value interval", palette.contrast],
       ["Possible room", palette.use],
-      ["Colour count", String(palette.colors.length)]
+      ["Colour count", String(palette.colors.length)],
+      ["Type suggestion", `${typeLine(window.PALETTE_TOOLS.typePair(palette))} ${window.PALETTE_TOOLS.typePair(palette).reason} Not a Wada typeface. Not a user test.`]
     ];
     el.analysis.replaceChildren(...rows.flatMap(([term, description]) => {
       const dt = document.createElement("dt");
@@ -322,7 +355,8 @@
       const share = Math.round((weights[index] / totalWeight) * 100);
       return `--palette-${roles[index]}: ${color.hex.toUpperCase()}; /* ${color.name} · about ${share}% */`;
     }).join("\n");
-    return `Use this colour system for the work.\n\nPalette: Plate ${formatPlate(palette.id)} — ${palette.colors.map((color) => color.name).join(" + ")}\nMood: ${palette.temperature}; ${palette.energy}; ${palette.contrast}.\nSuggested direction: ${palette.use}.\n\n:root {\n${tokens.split("\n").map((line) => `  ${line}`).join("\n")}\n}\n\nKeep the roles and unequal proportions. Choose black or white text by measured contrast on each actual background. Do not treat the digital values as exact printed ink. Do not replace this plate with a gradient, glass, shadow, or a second palette. Name the task before adding a control.\n\nSource relationship: Sanzo Wada. Digital interpretation, roles, and reading: Dr Non Arkaraprasertkul.\nReference: https://colors.nonarkara.org/#plate-${formatPlate(palette.id)}\nLicense: MIT.`;
+    const pair = window.PALETTE_TOOLS.typePair(palette);
+    return `Use this colour system for the work.\n\nPalette: Plate ${formatPlate(palette.id)} — ${palette.colors.map((color) => color.name).join(" + ")}\nMood: ${palette.temperature}; ${palette.energy}; ${palette.contrast}.\nSuggested direction: ${palette.use}.\nType suggestion: ${typeLine(pair)} ${pair.reason} Not a Wada typeface. Not a user test. Thai stays IBM Plex Sans Thai. Chinese stays Noto Sans SC.\n\n:root {\n${tokens.split("\n").map((line) => `  ${line}`).join("\n")}\n}\n\nKeep the roles and unequal proportions. Choose black or white text by measured contrast on each actual background. Do not treat the digital values as exact printed ink. Do not replace this plate with a gradient, glass, shadow, or a second palette. Name the task before adding a control.\n\nSource relationship: Sanzo Wada. Digital interpretation, roles, reading, and type suggestion: Dr Non Arkaraprasertkul.\nReference: https://colors.nonarkara.org/#plate-${formatPlate(palette.id)}\nLicense: MIT.`;
   }
 
   async function copyPalette() {
