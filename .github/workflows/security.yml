@@ -1,0 +1,130 @@
+name: Security scan
+
+on:
+  pull_request:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 6 * * 1"
+
+permissions:
+  contents: read
+
+jobs:
+  scan:
+    name: Report-only scan
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: read
+      security-events: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Prepare report directory
+        run: mkdir -p security-results
+
+      # JavaScript and Node are the repo languages. HTML and CSS have no
+      # Semgrep registry packs; p/secrets still scans those files in generic
+      # mode, and p/github-actions covers the workflow YAML.
+      - name: Semgrep OSS
+        id: semgrep
+        env:
+          SEMGREP_SEND_METRICS: "off"
+        run: |
+          set +e
+          docker run --rm \
+            -v "$GITHUB_WORKSPACE:/src" \
+            -w /src \
+            -e SEMGREP_SEND_METRICS=off \
+            semgrep/semgrep:1.180.0@sha256:529ee8a277ec8adc5b534d7c74eea0a47e9de21d62852b6ba7ac6ba9566845c3 \
+            semgrep scan \
+              --metrics=off \
+              --disable-version-check \
+              --oss-only \
+              --no-secrets-validation \
+              --no-error \
+              --quiet \
+              --config p/javascript \
+              --config p/nodejs \
+              --config p/secrets \
+              --config p/github-actions \
+              --exclude security-results \
+              --sarif \
+              --output security-results/semgrep.sarif \
+              .
+          status=$?
+          echo "exit_code=$status" >> "$GITHUB_OUTPUT"
+          if [ "$status" -eq 0 ] && [ -s security-results/semgrep.sarif ]; then
+            echo "ok=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "ok=false" >> "$GITHUB_OUTPUT"
+          fi
+          exit 0
+
+      - name: Trivy filesystem scan
+        id: trivy
+        continue-on-error: true
+        uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25 # v0.36.0
+        env:
+          TRIVY_INCLUDE_DEV_DEPS: "true"
+          TRIVY_SKIP_VERSION_CHECK: "true"
+        with:
+          scan-type: fs
+          scan-ref: .
+          scanners: vuln,secret,misconfig
+          format: sarif
+          output: security-results/trivy.sarif
+          exit-code: "0"
+          cache: "false"
+          version: v0.70.0
+          skip-dirs: security-results
+
+      - name: Write job summary
+        if: always()
+        env:
+          SEMGREP_OK: ${{ steps.semgrep.outputs.ok }}
+          TRIVY_OUTCOME: ${{ steps.trivy.outcome }}
+        run: |
+          node .github/scripts/security-summary.mjs \
+            --semgrep security-results/semgrep.sarif \
+            --trivy security-results/trivy.sarif \
+            --semgrep-ok "$SEMGREP_OK" \
+            --trivy-outcome "$TRIVY_OUTCOME" \
+            --root "$GITHUB_WORKSPACE" \
+            --summary "$GITHUB_STEP_SUMMARY" \
+            --markdown security-results/summary.md \
+            --semgrep-out security-results/semgrep.sanitized.sarif \
+            --trivy-out security-results/trivy.sanitized.sarif
+
+      - name: Upload Semgrep SARIF
+        id: upload_semgrep
+        if: always() && hashFiles('security-results/semgrep.sanitized.sarif') != ''
+        continue-on-error: true
+        uses: github/codeql-action/upload-sarif@24c54180a607b1449ed407dd24f251e4e9147c8d # v4.38.3
+        with:
+          sarif_file: security-results/semgrep.sanitized.sarif
+          category: semgrep-oss
+
+      - name: Upload Trivy SARIF
+        id: upload_trivy
+        if: always() && hashFiles('security-results/trivy.sanitized.sarif') != ''
+        continue-on-error: true
+        uses: github/codeql-action/upload-sarif@24c54180a607b1449ed407dd24f251e4e9147c8d # v4.38.3
+        with:
+          sarif_file: security-results/trivy.sanitized.sarif
+          category: trivy-fs
+
+      - name: Record SARIF upload
+        if: always()
+        env:
+          SEMGREP_UPLOAD: ${{ steps.upload_semgrep.outcome }}
+          TRIVY_UPLOAD: ${{ steps.upload_trivy.outcome }}
+        run: |
+          {
+            echo ""
+            echo "## SARIF upload"
+            echo ""
+            echo "- Semgrep (\`semgrep-oss\`): ${SEMGREP_UPLOAD:-skipped}"
+            echo "- Trivy (\`trivy-fs\`): ${TRIVY_UPLOAD:-skipped}"
+          } >> "$GITHUB_STEP_SUMMARY"
