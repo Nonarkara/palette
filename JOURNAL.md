@@ -1,5 +1,19 @@
 # Journal
 
+## 2026-10-08 — Measure the plate, then name the sources
+
+**Human task:** A designer or developer stands in front of one combination and needs to know whether type will read, how the fields shift under a colour-vision preview, and how to leave with CSS, Tailwind, JSON tokens, or a link.
+
+**What changed:** A contrast sheet reports WCAG 2.2 ratios and pass/fail in words, previews grayscale and three Machado simulations on the fields, and copies CSS variables, a Tailwind theme, design tokens, and the plate URL. Credits are a page and `CREDITS.md`. Focus rings were corrected where amber sat on a light ground. Actions are pinned to commit SHAs. A static-site content security policy is set. No tracker was added.
+
+**Conserved:** One combination still owns the viewport. The rail, search, three scripts, and the anti-slop bans stay. The sheet sits on the lower part of the screen so the fields remain visible.
+
+**Rejected:** A card dashboard over the colour, a Coolors-like marketing page, and a second contrast number from APCA that would disagree with the WCAG badge.
+
+**Evidence:** `npm run check` and the browser script. Fluent-reader review of the short Thai and Chinese credit notes was not performed. The Mama Rule was not run.
+
+Tags: `contrast`, `credits`, `accessibility`, `wcag`
+
 ## 2026-10-02 — Open the room
 
 **What changed:** Built the first public exhibition: 348 source-verified colour

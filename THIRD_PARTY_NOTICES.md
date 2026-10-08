@@ -33,6 +33,14 @@ The historical colour combinations are credited to Sanzo Wada. This project is
 independent and is not affiliated with Seigensha, the Wada estate, or the data
 authors. It does not reproduce scans, cover art, or publisher text.
 
+Dain M. Blodorn Kim’s earlier compilation,
+[`dblodorn/sanzo-wada`](https://github.com/dblodorn/sanzo-wada), is also MIT
+(copyright 2024 Dain Blodorn). It is credited as lineage. Its code is not
+vendored here.
+
+The root `LICENSE` covers original exhibition code and writing only. It does
+not relicense `data/colors.json`. The borrowed-idea list is `CREDITS.md`.
+
 ## Design reading room — 2026-10-02
 
 The original guide credits Magdalena Droste / Bauhaus-Archiv, Steve Krug,

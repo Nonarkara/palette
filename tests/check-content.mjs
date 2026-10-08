@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 
-const files = ["index.html", "styles.css", "app.js", "README.md", "context.md", "PALETTE-FIELD-GUIDE.md", "reading.html", "reading.css", "DESIGN-FIELD-GUIDE.md"];
+const files = ["index.html", "styles.css", "app.js", "README.md", "context.md", "PALETTE-FIELD-GUIDE.md", "reading.html", "reading.css", "DESIGN-FIELD-GUIDE.md", "credits.html", "CREDITS.md"];
 const contents = Object.fromEntries(await Promise.all(files.map(async (file) => [file, await readFile(new URL(`../${file}`, import.meta.url), "utf8")])));
 const joined = Object.values(contents).join("\n");
 
@@ -45,12 +45,56 @@ for (const required of [
   "Dr Non's deterministic reading for this exhibition",
   "classy and dangerous",
   "How verified colour data becomes an inhabitable, accessible room.",
-  "LEGIBLE<br>≠<br>SIMPLE"
+  "LEGIBLE<br>≠<br>SIMPLE",
+  "Open contrast, colour-vision preview, and copy formats",
+  "COPY CSS",
+  "COPY TAILWIND",
+  "COPY JSON TOKENS",
+  "COPY LINK",
+  "credits.html",
+  "WCAG 2.2",
+  "Machado, Oliveira and Fernandes, 2009",
+  "Original exhibition code and writing are"
 ]) {
   assert.ok(joined.includes(required), `missing required content: ${required}`);
 }
 
 const controls = [...contents["index.html"].matchAll(/data-action=/g)].length;
-assert.equal(controls, 11, "the instrument rail must expose eleven working controls");
+assert.equal(controls, 12, "the instrument rail must expose twelve working controls");
+
+const creditNames = [
+  "Sanzo Wada",
+  "Seigensha",
+  "mattdesl/dictionary-of-colour-combinations",
+  "dblodorn/sanzo-wada",
+  "Bringhurst",
+  "IDEO",
+  "MoMA",
+  "Bauhaus",
+  "Machado",
+  "WCAG 2.2",
+  "APCA",
+  "Coolors",
+  "Adobe Color",
+  "Huemint",
+  "Realtime Colors",
+  "adobe/leonardo",
+  "Mobbin",
+  "Dark Design",
+  "Saaspo",
+  "Curated",
+  "nexu-io/open-design",
+  "Tailwind",
+  "Design Tokens",
+  "Archivo Narrow",
+  "IBM Plex Sans Thai",
+  "Noto Sans SC",
+  "JetBrains Mono",
+  "axe-core"
+];
+for (const name of creditNames) {
+  assert.ok(contents["CREDITS.md"].includes(name), `CREDITS.md missing ${name}`);
+  assert.ok(contents["credits.html"].includes(name), `credits.html missing ${name}`);
+}
 
 console.log("OK: exhibition copy, multilingual markup, interaction hooks, provenance, and anti-slop gates are present");

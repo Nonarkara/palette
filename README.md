@@ -72,6 +72,7 @@ art, publisher copy, or printed colour claims.
 | `⌕` | Search names, readings, and uses | `/` |
 | `≡` | Complete index and 2/3/4-colour filters | `G` |
 | `◐` | Grayscale value study | `C` |
+| `1:1` | Contrast, colour-vision preview, CSS / Tailwind / JSON tokens, link | `K` |
 | `A` | Dr Non, the research, and the system architecture | `A` |
 | `{}` | Inspect and copy portable JSON for the current plate | `J` |
 | `⧉` | Copy an agent-ready palette brief | — |
@@ -244,6 +245,10 @@ the upstream data authors. Automated and structured browser gates pass. The
 real-human Mama Rule remains a release gate for a future `1.0` tag; this public
 edition is deliberately numbered `0.1.0` until that first-time-user test occurs.
 
-Code and original writing: **MIT licensed—use it, fork it, change it, and ship
-your own version.** Source data: upstream MIT terms retained. Preserve the
-attribution and digital-conversion caveats recorded in `THIRD_PARTY_NOTICES.md`.
+## Licence
+
+Two different MIT grants apply, and they do not relicense each other.
+
+- **Original exhibition code and writing** — root [`LICENSE`](LICENSE). Copyright 2026 Non Arkaraprasertkul. Use it, fork it, change it, and ship your own version.
+- **Colour data** — `data/colors.json` stays under Matt DesLauriers’ MIT licence (copyright 2020), via the earlier MIT compilation by Dain M. Blodorn Kim. Those terms are copied in [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md). Do not drop the digital-conversion caveat.
+- **Everything else** — books, font files, papers, and third-party sites keep their own rights. The full list of what was borrowed, and what was not copied, is [`CREDITS.md`](CREDITS.md) and [the credits page](https://colors.nonarkara.org/credits.html).

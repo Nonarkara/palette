@@ -36,6 +36,8 @@ values, not claims about the exact printed inks in the book.
 9. Press `A` for Dr Non's Red / Black study, research position, and two system
    diagrams.
 10. Copy the URL. Every plate has a stable address such as `#plate-087`.
+11. Press `1:1` or `K` for WCAG 2.2 contrast, a colour-vision preview, and
+    copyable CSS variables, Tailwind theme keys, JSON tokens, or the plate link.
 
 The complete instrument:
 
@@ -47,6 +49,7 @@ The complete instrument:
 | `⌕` | Search | `/` |
 | `≡` | Complete index | `G` |
 | `◐` | Grayscale value study | `C` |
+| `1:1` | Contrast ratios, colour-vision preview, and copy formats | `K` |
 | `A` | About, research, and system architecture | `A` |
 | `{}` | View and copy portable plate JSON | `J` |
 | `⧉` | Copy an agent-ready implementation brief | — |

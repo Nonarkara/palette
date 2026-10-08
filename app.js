@@ -5,7 +5,7 @@
     colors: [],
     palettes: [],
     index: 0,
-    grayscale: false,
+    vision: "original",
     indexSize: "all"
   };
 
@@ -16,22 +16,11 @@
   }
 
   function relativeLuminance(rgb) {
-    const channels = rgb.map((value) => {
-      const channel = value / 255;
-      return channel <= 0.04045
-        ? channel / 12.92
-        : ((channel + 0.055) / 1.055) ** 2.4;
-    });
-    return 0.2126 * channels[0] + 0.7152 * channels[1] + 0.0722 * channels[2];
+    return window.PALETTE_MEASURE.relativeLuminance(rgb);
   }
 
   function readableInk(rgb) {
-    const luminance = relativeLuminance(rgb);
-    const lightInkLuminance = 1;
-    const darkInkLuminance = 0;
-    const lightContrast = (lightInkLuminance + 0.05) / (luminance + 0.05);
-    const darkContrast = (luminance + 0.05) / (darkInkLuminance + 0.05);
-    return darkContrast >= lightContrast ? "#000000" : "#ffffff";
+    return window.PALETTE_MEASURE.textOn(rgb).ink === "black" ? "#000000" : "#ffffff";
   }
 
   function rgbToHsl(rgb) {
@@ -197,11 +186,13 @@
     const palette = currentPalette();
     if (!palette) return;
     el.fields.style.gridTemplateColumns = fieldColumns(palette.colors.length);
+    const simulated = state.vision === "protanopia" || state.vision === "deuteranopia" || state.vision === "tritanopia";
     el.fields.replaceChildren(...palette.colors.map((color, position) => {
+      const rgb = simulated ? window.PALETTE_MEASURE.simulate(color.rgb, state.vision) : color.rgb;
       const field = document.createElement("div");
       field.className = "field";
-      field.style.backgroundColor = color.hex;
-      field.style.color = readableInk(color.rgb);
+      field.style.backgroundColor = `rgb(${rgb[0]} ${rgb[1]} ${rgb[2]})`;
+      field.style.color = readableInk(rgb);
       const name = document.createElement("span");
       name.textContent = color.name;
       const value = document.createElement("code");
@@ -211,18 +202,144 @@
       return field;
     }));
     const plate = formatPlate(palette.id);
+    const dominant = window.PALETTE_MEASURE.textOn(palette.colors[0].rgb);
+    const inkWord = dominant.ink === "black" ? "Black" : "White";
+    const preview = state.vision === "original" ? "" : `${visionLabel(state.vision)} preview · `;
     el.plateCount.textContent = `${plate} / 348`;
     el.plateNumber.textContent = `PLATE ${plate}`;
     el.plateNames.textContent = palette.colors.map((color) => color.name).join(" + ");
     el.plateReading.textContent = `${palette.temperature}; ${palette.energy}; ${palette.contrast}. Suggested room: ${palette.use}.`;
+    el.plateContrast.textContent = `${preview}${inkWord} text on the largest field · ${window.PALETTE_MEASURE.formatRatio(dominant.best)} · AA body ${dominant.body}`;
+    document.title = `Plate ${plate} — ${el.plateNames.textContent} — Palette`;
     document.documentElement.style.setProperty("--primary-ink", readableInk(palette.colors[0].rgb));
     document.documentElement.style.setProperty("--last-ink", readableInk(palette.colors.at(-1).rgb));
     document.documentElement.style.setProperty("--dominant-share", ({ 2: 0.618, 3: 0.483, 4: 0.425 })[palette.colors.length]);
-    document.body.classList.toggle("is-grayscale", state.grayscale);
+    document.body.classList.toggle("is-grayscale", state.vision === "grayscale");
     history.replaceState(null, "", `#plate-${plate}`);
     renderAnalysis(palette);
     if (el.jsonDialog?.open) renderJson();
-    if (announce) el.status.textContent = `Plate ${plate}. ${el.plateNames.textContent}.`;
+    if (el.studyDialog?.open) renderStudy();
+    if (announce) el.status.textContent = `Plate ${plate}. ${el.plateNames.textContent}. ${el.plateContrast.textContent}.`;
+  }
+
+  function visionLabel(mode) {
+    return {
+      original: "Original",
+      grayscale: "Grayscale",
+      protanopia: "Protanopia",
+      deuteranopia: "Deuteranopia",
+      tritanopia: "Tritanopia"
+    }[mode] || "Original";
+  }
+
+  function setVision(mode) {
+    const allowed = ["original", "grayscale", "protanopia", "deuteranopia", "tritanopia"];
+    state.vision = allowed.includes(mode) ? mode : "original";
+    document.querySelector('[data-action="contrast"]').setAttribute("aria-pressed", String(state.vision === "grayscale"));
+    document.querySelector('[data-action="study"]').setAttribute("aria-pressed", String(state.vision !== "original" && state.vision !== "grayscale"));
+    document.querySelectorAll("[data-vision]").forEach((button) => {
+      button.setAttribute("aria-pressed", String(button.dataset.vision === state.vision));
+    });
+    const note = state.vision === "original"
+      ? "Original colours. Names, hex values, and contrast ratios describe the credited digital conversions."
+      : state.vision === "grayscale"
+        ? "Grayscale value study. Hue is removed. Names, hex values, and contrast ratios stay with the original conversions."
+        : `${visionLabel(state.vision)} simulation on the fields. Names, hex values, and contrast ratios stay with the original conversions. Not a clinical test.`;
+    if (el.studyVisionNote) el.studyVisionNote.textContent = note;
+    renderPalette({ announce: false });
+    el.status.textContent = note;
+  }
+
+  function renderStudy() {
+    const palette = currentPalette();
+    if (!palette || !el.studyReport) return;
+    const measure = window.PALETTE_MEASURE;
+    const reports = palette.colors.map((color) => measure.textOn(color.rgb));
+    const bodyPass = reports.filter((report) => report.body === "pass").length;
+    el.studySummary.textContent = `AA body text, at 4.5:1, is possible with black or white on ${bodyPass} of ${reports.length} fields.`;
+    const fields = document.createElement("ol");
+    fields.className = "study-fields";
+    palette.colors.forEach((color, index) => {
+      const report = reports[index];
+      const item = document.createElement("li");
+      const swatch = document.createElement("span");
+      swatch.className = "study-swatch";
+      swatch.style.backgroundColor = color.hex;
+      swatch.setAttribute("aria-hidden", "true");
+      const name = document.createElement("strong");
+      name.textContent = color.name;
+      const value = document.createElement("code");
+      value.textContent = color.hex.toUpperCase();
+      const white = document.createElement("span");
+      white.className = "study-meta";
+      white.textContent = `White text ${measure.formatRatio(report.white)} · AA body ${report.whiteBody} · large ${report.whiteLarge}`;
+      const black = document.createElement("span");
+      black.className = "study-meta";
+      black.textContent = `Black text ${measure.formatRatio(report.black)} · AA body ${report.blackBody} · large ${report.blackLarge}`;
+      const used = document.createElement("span");
+      used.className = "study-meta";
+      used.textContent = `This room sets ${report.ink} text here.`;
+      item.append(swatch, name, value, white, black, used);
+      fields.append(item);
+    });
+    const pairs = document.createElement("ol");
+    pairs.className = "study-pairs";
+    for (let index = 0; index < palette.colors.length - 1; index += 1) {
+      const edge = measure.boundary(palette.colors[index].rgb, palette.colors[index + 1].rgb);
+      const item = document.createElement("li");
+      item.textContent = `${palette.colors[index].name} / ${palette.colors[index + 1].name} · ${measure.formatRatio(edge.ratio)} · AA body ${edge.body} · 3:1 boundary ${edge.ui}`;
+      pairs.append(item);
+    }
+    const heading = document.createElement("h3");
+    heading.textContent = "Where the fields meet";
+    el.studyReport.replaceChildren(fields, heading, pairs);
+    if (el.studyStatus) el.studyStatus.textContent = "";
+  }
+
+  const exportLabels = {
+    css: "COPY CSS",
+    tailwind: "COPY TAILWIND",
+    tokens: "COPY JSON TOKENS",
+    link: "COPY LINK",
+    share: "SHARE LINK"
+  };
+
+  async function copyExport(kind, button) {
+    const palette = currentPalette();
+    const measure = window.PALETTE_MEASURE;
+    const model = measure.plateModel(palette);
+    const value = {
+      css: measure.cssVariables(model),
+      tailwind: measure.tailwindTheme(model),
+      tokens: measure.designTokens(model),
+      link: model.url,
+      share: model.url
+    }[kind];
+    if (kind === "share" && navigator.share) {
+      try {
+        await navigator.share({ title: document.title, url: model.url });
+        el.studyStatus.textContent = `Share sheet opened for plate ${model.plate}.`;
+        el.status.textContent = el.studyStatus.textContent;
+      } catch (error) {
+        if (error?.name !== "AbortError") {
+          el.studyStatus.textContent = "Share was cancelled or blocked. The link can still be copied.";
+        }
+      }
+      return;
+    }
+    try {
+      await navigator.clipboard.writeText(value);
+      button.textContent = "COPIED";
+      el.studyStatus.textContent = kind === "link"
+        ? `Copied ${model.url}`
+        : `Copied plate ${model.plate} ${exportLabels[kind].replace("COPY ", "").toLowerCase()}. Original conversions, not the vision preview.`;
+      el.status.textContent = el.studyStatus.textContent;
+      window.setTimeout(() => { button.textContent = exportLabels[kind]; }, 1600);
+    } catch {
+      button.textContent = "COPY BLOCKED";
+      el.studyStatus.textContent = "Copy was blocked. Select the JSON room, or copy the address from the browser.";
+      el.status.textContent = el.studyStatus.textContent;
+    }
   }
 
   function renderAnalysis(palette) {
@@ -367,10 +484,10 @@
       renderJson();
       openDialog(el.jsonDialog, el.jsonDialog.querySelector("button"));
     }
-    if (name === "contrast") {
-      state.grayscale = !state.grayscale;
-      document.querySelector('[data-action="contrast"]').setAttribute("aria-pressed", String(state.grayscale));
-      renderPalette();
+    if (name === "contrast") setVision(state.vision === "grayscale" ? "original" : "grayscale");
+    if (name === "study") {
+      renderStudy();
+      openDialog(el.studyDialog, el.studyDialog.querySelector("[data-vision][aria-pressed='true']"));
     }
     if (name === "copy") copyPalette();
     if (name === "wallpaper") {
@@ -453,6 +570,13 @@
     });
     el.copyAgentButton.addEventListener("click", copyPalette);
     el.copyJsonButton.addEventListener("click", copyJson);
+    document.querySelectorAll("[data-vision]").forEach((button) => {
+      button.addEventListener("click", () => setVision(button.dataset.vision));
+    });
+    document.querySelectorAll("[data-export]").forEach((button) => {
+      button.addEventListener("click", () => copyExport(button.dataset.export, button));
+    });
+    if (navigator.share) document.querySelector('[data-export="share"]').hidden = false;
     el.indexDialog.querySelectorAll("[data-size]").forEach((button) => {
       button.addEventListener("click", () => {
         state.indexSize = button.dataset.size;
@@ -480,6 +604,7 @@
       if (letter === "a") action("about");
       if (letter === "j") action("json");
       if (letter === "c") action("contrast");
+      if (letter === "k") action("study");
     });
     window.addEventListener("hashchange", () => {
       const match = location.hash.match(/plate-(\d{1,3})/);
@@ -508,6 +633,12 @@
       jsonCode: byId("json-code"),
       copyJsonButton: byId("copy-json"),
       copyAgentButton: byId("copy-agent"),
+      plateContrast: byId("plate-contrast"),
+      studyDialog: byId("study-dialog"),
+      studySummary: byId("study-summary"),
+      studyReport: byId("study-report"),
+      studyVisionNote: byId("study-vision-note"),
+      studyStatus: byId("study-status"),
       surpriseButton: byId("surprise-me"),
       aboutDialog: byId("about-dialog"),
       analysis: byId("current-analysis"),
