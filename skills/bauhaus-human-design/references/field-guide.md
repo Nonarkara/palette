@@ -129,6 +129,13 @@ Pinned source versions and reading limits are in [reading-ledger.md](reading-led
    Keep design quality and functional correctness as separate obligations.
 7. **An agent “tests with mum” by role-playing.** Record a simulated walkthrough,
    not a real human test. The Mama Rule remains unverified.
+8. **A Thai teacher attendance card asks for a tap per student per status.**
+   It adds a manual save, stat tiles that restate the counts, solemn stock 3D
+   icons, and leaves the real benefit in a footnote. Reject it. The system
+   infers, defaults, and saves. Forms and lists — do: show the rows that need a
+   decision, assume the rest, and save as the person works. Don't: one control
+   per status per row, a save button, summary tiles that repeat the list, and
+   an icon that does not name a state.
 
 ## Example receipt — Palette reading room
 

@@ -40,7 +40,7 @@ input {
 .wallpaper-sheet h2 { font-size:var(--display); margin-block:0 1rem; }
 .wallpaper-sheet p { max-width:60ch; font-size:var(--body); line-height:1.6; }
 .wallpaper-sheet select { display:block; min-height:48px; max-width:100%; margin-block:1rem; padding:.75rem; background:var(--black); color:var(--white); border:0; font:inherit; }
-.wallpaper-sheet select:focus-visible { outline:3px solid var(--focus); }
+.wallpaper-sheet select:focus-visible { outline:3px solid #101010; outline-offset:2px; }
 .wallpaper-sheet .wallpaper-label-option { display:flex; align-items:center; gap:1rem; min-height:48px; font-size:var(--body); }
 .wallpaper-label-option input { width:24px; height:24px; flex-shrink:0; accent-color:var(--black); }
 .wallpaper-sheet [lang="th"] { font-family:'IBM Plex Sans Thai','Noto Sans Thai',sans-serif; }
@@ -56,8 +56,29 @@ a {
 button:focus-visible,
 a:focus-visible,
 input:focus-visible,
+select:focus-visible {
+  outline: 3px solid #101010;
+  outline-offset: 2px;
+}
+
+.instrument button:focus-visible,
+.instrument > a:focus-visible {
+  outline-color: #f7f5ef;
+  outline-offset: -3px;
+}
+
+.instrument button:hover:focus-visible,
+.instrument button[aria-pressed="true"]:focus-visible {
+  outline-color: #101010;
+}
+
 .stage:focus-visible {
-  outline: 3px solid var(--focus);
+  outline: 3px solid #101010;
+  outline-offset: -6px;
+}
+
+.stage:focus-visible .fields {
+  outline: 3px solid #f7f5ef;
   outline-offset: -3px;
 }
 
@@ -193,6 +214,8 @@ input:focus-visible,
 .copy-agent:focus-visible {
   background: var(--white);
   color: var(--black);
+  outline: 3px solid #101010;
+  outline-offset: 2px;
 }
 
 .instrument {
@@ -226,6 +249,12 @@ input:focus-visible,
   color: var(--white);
   font-size: 1.35rem;
   transition: background-color 160ms var(--ease), color 160ms var(--ease), transform 120ms var(--ease);
+}
+
+.instrument button[data-action="study"] {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.72rem;
+  font-weight: 600;
 }
 
 .instrument > a { display:flex; align-items:center; justify-content:center; flex-shrink:0; width:var(--rail); height:var(--rail); color:var(--white); font-size:1.35rem; text-decoration:none; }
@@ -389,8 +418,16 @@ input:focus-visible,
 }
 
 .search-footer a {
+  display: inline-flex;
+  align-items: center;
   min-height: 44px;
   color: var(--black);
+}
+
+.search-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.5rem;
 }
 
 .result-button {
@@ -520,7 +557,6 @@ input:focus-visible,
 
 .languages h3 {
   margin-block-start: 3rem;
-  color: var(--focus);
 }
 
 .digest-footer {
@@ -540,6 +576,9 @@ input:focus-visible,
 }
 
 .digest-footer a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
   color: var(--white);
 }
 
@@ -1332,6 +1371,121 @@ input:focus-visible,
   }
 }
 
+.study-sheet {
+  width: 100%;
+  height: auto;
+  max-height: min(46dvh, 100%);
+  margin: 0;
+  inset: auto 0 0 0;
+}
+
+.study-sheet::backdrop {
+  background: transparent;
+}
+
+.study-sheet .sheet-top {
+  position: sticky;
+  inset-block-start: 0;
+  z-index: 2;
+  margin-block-end: 1rem;
+  background: var(--white);
+}
+
+.study-kicker,
+.study-caveat,
+.study-meta,
+#study-vision-note,
+#study-status,
+.study-pairs {
+  font-family: "JetBrains Mono", monospace;
+  font-size: var(--micro);
+  line-height: 1.45;
+}
+
+.study-sheet h2 {
+  max-width: 18ch;
+  margin: 0.4rem 0 1rem;
+  font-size: var(--body);
+  line-height: 1.15;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.study-sheet h3 {
+  margin: 2rem 0 0.75rem;
+  font-size: var(--body);
+}
+
+.study-caveat,
+#study-summary,
+#study-vision-note {
+  max-width: 42rem;
+}
+
+.study-caveat a {
+  color: inherit;
+}
+
+.vision-modes,
+.study-exports {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  margin-block: 1.25rem;
+}
+
+.vision-modes button,
+.study-exports button {
+  min-height: 44px;
+  padding: 0.75rem 1rem;
+  background: var(--white);
+  color: var(--black);
+  font-family: "JetBrains Mono", monospace;
+  font-size: var(--micro);
+}
+
+.vision-modes button[aria-pressed="true"] {
+  background: var(--black);
+  color: var(--white);
+}
+
+.vision-modes button:hover,
+.study-exports button:hover {
+  background: var(--black);
+  color: var(--white);
+}
+
+.study-fields,
+.study-pairs {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.study-fields li {
+  display: grid;
+  grid-template-columns: 3rem 1fr;
+  gap: 0.2rem 1rem;
+  align-items: start;
+  max-width: 42rem;
+  padding-block: 1rem;
+}
+
+.study-swatch {
+  grid-row: 1 / span 5;
+  width: 3rem;
+  min-height: 5rem;
+}
+
+.study-fields strong {
+  font-size: var(--body);
+}
+
+.study-pairs li {
+  max-width: 42rem;
+  padding-block: 0.75rem;
+}
+
 @media (max-width: 760px) {
   :root { --rail: 100%; }
 
@@ -1392,6 +1546,11 @@ input:focus-visible,
     flex: 1 0 44px;
     width: auto;
     height: 3.5rem;
+  }
+
+  .study-sheet {
+    max-height: min(50dvh, 100%);
+    inset: auto 0 3.5rem 0;
   }
 
   .field span {

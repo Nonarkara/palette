@@ -75,6 +75,20 @@ real labels, failed font loads, long identifiers and browser text enlargement.
 Ask a fluent reader to review nuance; do not report that review as performed when
 only a model has inspected it.
 
+Don't make users do the backend's job. The system infers, defaults, and saves.
+The screen shows exceptions and the decisions only a person can make. No button
+for a thing that should already have happened. No decoration without a job.
+Lead with the real benefit; do not bury it in a footnote. Before adding a
+control, ask three questions:
+
+1. Could the system already know this?
+2. Could it be a default?
+3. Does this need a save step?
+
+Forms and lists. Do: show the rows that need a decision, assume the rest, and
+save as the person works. Don't: one control per status per row, a save button,
+summary tiles that repeat the list, and an icon that does not name a state.
+
 ## Two separate gates
 
 **Mechanical floor:** semantics, keyboard/focus, contrast, reflow, complete states,
@@ -266,6 +280,13 @@ Pinned source versions and reading limits are in [reading-ledger.md](#reading-le
    Keep design quality and functional correctness as separate obligations.
 7. **An agent “tests with mum” by role-playing.** Record a simulated walkthrough,
    not a real human test. The Mama Rule remains unverified.
+8. **A Thai teacher attendance card asks for a tap per student per status.**
+   It adds a manual save, stat tiles that restate the counts, solemn stock 3D
+   icons, and leaves the real benefit in a footnote. Reject it. The system
+   infers, defaults, and saves. Forms and lists — do: show the rows that need a
+   decision, assume the rest, and save as the person works. Don't: one control
+   per status per row, a save button, summary tiles that repeat the list, and
+   an icon that does not name a state.
 
 ## Example receipt — Palette reading room
 

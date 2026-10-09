@@ -1,8 +1,11 @@
 import assert from 'node:assert/strict';
+import {createRequire} from 'node:module';
 import {readFile,mkdir} from 'node:fs/promises';
 import http from 'node:http';
 import path from 'node:path';
 import {chromium} from 'playwright';
+import AxeBuilder from '@axe-core/playwright';
+const measure=createRequire(import.meta.url)('../palette-measure.js');
 const root=process.cwd();
 const mime={'.html':'text/html','.js':'application/javascript','.css':'text/css','.json':'application/json','.svg':'image/svg+xml'};
 const server=http.createServer(async(req,res)=>{
@@ -16,13 +19,61 @@ const server=http.createServer(async(req,res)=>{
 await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));
 const base=process.env.PALETTE_TEST_URL||`http://127.0.0.1:${server.address().port}/`;
 const browser=await chromium.launch();
-const page=await browser.newPage({acceptDownloads:true});
+const context=await browser.newContext({acceptDownloads:true});
+const page=await context.newPage();
+await context.grantPermissions(['clipboard-read','clipboard-write']);
+async function axe(label) {
+  const result=await new AxeBuilder({page})
+    .withTags(['wcag2a','wcag2aa','wcag21a','wcag21aa','wcag22aa'])
+    .exclude('.plate-label')
+    .exclude('.identity')
+    .exclude('.field')
+    .analyze();
+  assert.deepEqual(result.violations.map(item=>({id:item.id,targets:item.nodes.map(node=>node.target)})),[],label);
+}
+function parseColor(value) {
+  return value.match(/[\d.]+/g).slice(0,3).map(channel=>Math.round(Number(channel)));
+}
 const errors=[];page.on('pageerror',error=>errors.push(error.message));
 await page.route(/fonts\.(googleapis|gstatic)\.com/,route=>route.abort());
 await mkdir('/tmp/palette-check',{recursive:true});
 try {
   await page.goto(base+'#plate-001',{waitUntil:'domcontentloaded'});
   await page.locator('#plate-number').filter({hasText:'PLATE 001'}).waitFor();
+  const plateInk=await page.evaluate(()=>({
+    title:getComputedStyle(document.querySelector('#plate-names')).color,
+    field:getComputedStyle(document.querySelector('.field')).backgroundColor,
+    label:getComputedStyle(document.querySelector('.field span')).color
+  }));
+  assert.ok(measure.contrastRatio(parseColor(plateInk.title),parseColor(plateInk.field))>=4.5,'plate title contrast');
+  assert.ok(measure.contrastRatio(parseColor(plateInk.label),parseColor(plateInk.field))>=4.5,'field label contrast');
+  assert.match(await page.locator('#plate-contrast').innerText(),/AA body pass/);
+  await page.locator('[data-action="study"]').click();
+  await page.locator('#study-dialog[open]').waitFor();
+  assert.match(await page.locator('#study-report').innerText(),/AA body (pass|fail)/);
+  assert.match(await page.locator('#study-report').innerText(),/3:1 boundary/);
+  const originalFill=await page.locator('.field').first().evaluate(node=>getComputedStyle(node).backgroundColor);
+  const originalHex=await page.locator('.field code').first().innerText();
+  await page.locator('[data-vision="deuteranopia"]').click();
+  const simulatedFill=await page.locator('.field').first().evaluate(node=>getComputedStyle(node).backgroundColor);
+  assert.notEqual(simulatedFill,originalFill);
+  assert.equal(await page.locator('.field code').first().innerText(),originalHex);
+  assert.match(await page.locator('#study-vision-note').innerText(),/Not a clinical test/);
+  await page.locator('[data-vision="original"]').click();
+  assert.equal(await page.locator('.field').first().evaluate(node=>getComputedStyle(node).backgroundColor),originalFill);
+  await page.locator('[data-export="link"]').click();
+  assert.match(await page.evaluate(()=>navigator.clipboard.readText()),/#plate-001$/);
+  await page.locator('[data-export="css"]').click();
+  assert.match(await page.evaluate(()=>navigator.clipboard.readText()),/--palette-dominant:/);
+  await axe('contrast sheet');
+  await page.keyboard.press('Escape');
+  await page.keyboard.press('ArrowRight');
+  await page.locator('#plate-number').filter({hasText:'PLATE 002'}).waitFor();
+  assert.match(page.url(),/#plate-002$/);
+  await page.keyboard.press('k');
+  await page.locator('#study-dialog[open]').waitFor();
+  await page.keyboard.press('Escape');
+  await axe('plate');
   await page.locator('[data-action="search"]').click();
   for(const query of ['calm ocean','red and black','minimalist website','สีแดงสีดำ','红色黑色','purpl','#cc1236','plate 042']) {
     await page.locator('#search-input').fill(query);
@@ -89,7 +140,7 @@ try {
     await page.screenshot({path:`/tmp/palette-check/reading-${width}.png`,fullPage:true});
   }
   await page.setViewportSize({width:375,height:900});
-  await page.addStyleTag({content:'html {font-size:200%}'});
+  await page.evaluate(()=>{document.documentElement.style.fontSize='200%';});
   assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'Reading 200% reflow');
   await page.locator('.contents a[href="#typography"]').click();
   assert.equal(new URL(page.url()).hash,'#typography');
@@ -117,6 +168,15 @@ try {
     if(href.startsWith('#')) assert.equal(await page.locator(href).count(),1,href);
     else if(!href.startsWith('http') && !href.startsWith('./')) assert.ok((await page.request.get(new URL(href,base).href)).ok(),href);
   }
+  await page.goto(base+'credits.html',{waitUntil:'domcontentloaded'});
+  await page.locator('h1').filter({hasText:'Credit the work.'}).waitFor();
+  for(const width of [375,1280]) {
+    await page.setViewportSize({width,height:900});
+    assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),`Credits overflow ${width}`);
+  }
+  const creditTarget=await page.locator('footer > a').boundingBox();
+  assert.ok(creditTarget.height>=44 && creditTarget.width>=44,'credits footer target');
+  await axe('credits');
   const noJS=await browser.newContext({javaScriptEnabled:false,viewport:{width:375,height:900}});
   const native=await noJS.newPage();
   await native.route(/fonts\.(googleapis|gstatic)\.com/,route=>route.abort());
@@ -131,6 +191,9 @@ try {
     await native.screenshot({path:`/tmp/palette-check/type-${language}-375.png`});
   }
   await native.keyboard.press('Tab');
+  await native.goto(base+'credits.html');
+  await native.locator('h1').filter({hasText:'Credit the work.'}).waitFor();
+  assert.ok(await native.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'Credits no-JS overflow');
   await noJS.close();
   assert.deepEqual(errors,[]);
   console.log('PASS: search; 9 PNG downloads; JSON; plate layout; same-tab reading; 320–1440 reflow + 200% text; native no-JS EN/TH/ZH typography; both guide download bytes; zero JS errors.');

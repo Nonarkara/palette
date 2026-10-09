@@ -36,6 +36,8 @@ values, not claims about the exact printed inks in the book.
 9. Press `A` for Dr Non's Red / Black study, research position, and two system
    diagrams.
 10. Copy the URL. Every plate has a stable address such as `#plate-087`.
+11. Press `1:1` or `K` for WCAG 2.2 contrast, a colour-vision preview, and
+    copyable CSS variables, Tailwind theme keys, JSON tokens, or the plate link.
 
 The complete instrument:
 
@@ -47,6 +49,7 @@ The complete instrument:
 | `⌕` | Search | `/` |
 | `≡` | Complete index | `G` |
 | `◐` | Grayscale value study | `C` |
+| `1:1` | Contrast ratios, colour-vision preview, and copy formats | `K` |
 | `A` | About, research, and system architecture | `A` |
 | `{}` | View and copy portable plate JSON | `J` |
 | `⧉` | Copy an agent-ready implementation brief | — |
@@ -96,6 +99,27 @@ nontechnical first-time visitor. Offer a goal, not instructions. If they cannot
 understand the purpose, perform the main action, recognize success, and recover
 from one ordinary mistake without coaching, the design is not finished.
 
+## Don't make users do the backend's job
+
+The system infers, defaults, and saves. The screen shows exceptions and the
+decisions only a person can make. No button for a thing that should already
+have happened. No decoration without a job. Lead with the real benefit; do not
+bury it in a footnote.
+
+Dr Non's example of the failure is a Thai teacher attendance card: a tap per
+student per status, a manual save, stat tiles that restate the counts, solemn
+stock 3D icons, and the real benefit left in a footnote.
+
+Before a control is added, ask three questions:
+
+1. Could the system already know this?
+2. Could it be a default?
+3. Does this need a save step?
+
+Forms and lists. Do: show the rows that need a decision, assume the rest, and
+save as the person works. Don't: one control per status per row, a save button,
+summary tiles that repeat the list, and an icon that does not name a state.
+
 ## Anti-slop checklist
 
 Field evidence: [`docs/design-slop-field-guide.md`](docs/design-slop-field-guide.md) — what colour got wrong in 44 AI-assisted flood apps, and a repair built from plate #139.
@@ -105,6 +129,7 @@ Field evidence: [`docs/design-slop-field-guide.md`](docs/design-slop-field-guide
 - No colour used as the only status indicator.
 - No invented history, quotation, plate number, or printed-colour claim.
 - No fourth type family because one paragraph feels difficult.
+- No button for work the system should already have done.
 - No animation without a state change behind it.
 - No “AI-powered” claim: search and readings here are local and deterministic.
 - No inaccessible off-black approximation hidden behind pure-black contrast
