@@ -21,6 +21,8 @@ to regenerate the mirrored skill and single-file `DESIGN-FIELD-GUIDE.md`.
 Do not hand-edit the mirror. Coverage is selected close reading, not all five
 books completed. Original books remain private; no upstream hooks are executed.
 Automated checks are not a real-person Mama Rule or fluent-language review.
+Don't make users do the backend's job: the system infers, defaults, and saves.
+The check lives in `reading.html` and `PALETTE-FIELD-GUIDE.md`.
 
 ## Design read
 

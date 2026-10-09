@@ -54,7 +54,11 @@ for (const required of [
   "credits.html",
   "WCAG 2.2",
   "Machado, Oliveira and Fernandes, 2009",
-  "Original exhibition code and writing are"
+  "Original exhibition code and writing are",
+  "Don't make users do the backend's job.",
+  "Could the system already know this?",
+  "Could it be a default?",
+  "Does this need a save step?"
 ]) {
   assert.ok(joined.includes(required), `missing required content: ${required}`);
 }

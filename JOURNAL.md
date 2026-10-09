@@ -1,5 +1,13 @@
 # Journal
 
+## 2026-10-09 — Don't make users do the backend's job
+
+**What changed:** The reading room, the palette field guide, and the Bauhaus skill now carry one rule. The system infers, defaults, and saves. The screen shows exceptions and the decisions only a person can make. Three questions sit with it, and a short do/don't for forms and lists. The example is a Thai teacher attendance card.
+
+**Evidence:** `npm run check` and `npm run verify:browser` passed on this change. Fluent-reader review of the new Thai and Chinese sentences was not performed.
+
+Tags: `guidance`, `anti-slop`
+
 ## 2026-10-08 — Measure the plate, then name the sources
 
 **Human task:** A designer or developer stands in front of one combination and needs to know whether type will read, how the fields shift under a colour-vision preview, and how to leave with CSS, Tailwind, JSON tokens, or a link.
