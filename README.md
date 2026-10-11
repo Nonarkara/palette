@@ -211,10 +211,15 @@ database, or remote model is involved.
 ## Run it
 
 ```bash
-npm run dev
+bash start.sh
 ```
 
-Open `http://localhost:4173`. Directly opening `index.html` will not load the JSON
+Open `http://127.0.0.1:4173`. The launcher uses Python 3 if present, otherwise
+Node.js, and explains what is missing if neither is installed. No `npm install`,
+API key or account is needed for preview. It starts one local server and opens no
+browser tabs. Stop it with Ctrl-C. With Node.js installed, `npm run dev` also works.
+
+Directly opening `index.html` will not load the JSON
 dataset because browsers block local file requests.
 
 ## Verify it
