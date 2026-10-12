@@ -1,0 +1,54 @@
+{
+  "id": "palette-make-text-to-cad-limits",
+  "units": "mm",
+  "credit": {
+    "handle": "earthtojake",
+    "repository": "https://github.com/earthtojake/text-to-cad",
+    "licence": "MIT",
+    "takenFrom": "skills/dfam-check/references/process-limits.md"
+  },
+  "guides": [
+    "Hubs design guide",
+    "Formlabs design guide",
+    "ISO/ASTM 52910"
+  ],
+  "note": "Limits are conservative defaults from the design-for-printing guide in text-to-cad (Hubs and Formlabs guides, ISO/ASTM 52910). The 256 mm plate is an assumption; check your printer.",
+  "buildPlateMm": 256,
+  "buildPlateNote": "A common 256 mm build plate (Bambu Lab A1 / P1 / X1 class). An assumption, shown on screen.",
+  "basePrintMm": 2,
+  "scales": [50, 75, 100, 150, 200, 250],
+  "scaleSuggestion": "The biggest model that prints: walls hold and it fits the plate. Walk scales from the largest model and take the first that passes. A bridge warning does not reject a scale.",
+  "processes": {
+    "fdm": {
+      "label": "Home filament printer (FDM)",
+      "minUnsupportedWallMm": 1.6,
+      "maxBridgeMm": 10
+    },
+    "sla": {
+      "label": "Resin printer (SLA)",
+      "minUnsupportedWallMm": 1.0,
+      "maxBridgeMm": 5
+    }
+  },
+  "wall": {
+    "meaning": "A freestanding model wall is an unsupported wall.",
+    "belowMinimum": "Below the minimum, they may break or not print. Thickening them so they print means the model is not true to scale in wall thickness.",
+    "blocksDownload": true
+  },
+  "bridge": {
+    "meaning": "The beam over a door or window prints as a bridge.",
+    "overLimit": "Over the bridge limit, turn on supports in your slicer. Slicers add them.",
+    "blocksDownload": false
+  },
+  "fit": {
+    "overPlate": "Larger than the plate: choose a smaller scale.",
+    "blocksDownload": true
+  },
+  "browser": {
+    "name": "designon",
+    "url": "https://designon.nonarkara.org/",
+    "repository": "https://github.com/Nonarkara/luma-house",
+    "commit": "d4605d785c67494cb3e11fed9368df2e1ba50b3b",
+    "review": "docs/TEXT-TO-CAD-REVIEW.md"
+  }
+}

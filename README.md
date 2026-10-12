@@ -203,10 +203,18 @@ data/colors.json    credited MIT-licensed source data
 tests/              source integrity and anti-slop checks
 .github/workflows/  verification and GitHub Pages publication
 DEPLOYMENT.md       Cloudflare/GitHub release topology and proof sequence
+make/text-to-cad/   shared CAD reference; designon in the browser, CLI on an M5
 ```
 
 Search and classification run locally. No account, analytics service, cookie,
 database, or remote model is involved.
+
+[`make/text-to-cad`](make/text-to-cad/README.md) is the shared reference for
+a written part that has to leave as geometry. The live in-browser
+implementation is [designon](https://designon.nonarkara.org/). The CLI runs
+on an M5 or a cloud machine, not the M3. Upstream is
+[earthtojake/text-to-cad](https://github.com/earthtojake/text-to-cad) (MIT).
+Credit: earthtojake.
 
 ## Run it
 
