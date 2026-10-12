@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 import vm from 'node:vm';
 const ctx={window:{}};
-for(const file of ['content.js','palette-tools.js','app.js']) {
+for(const file of ['content.js','palette-tools.js','palette-measure.js','app.js']) {
   let source=await readFile(new URL('../'+file,import.meta.url),'utf8');
   if(file==='app.js') source=source.replace('  init();','  window.testPalettes = buildPalettes;');
   vm.runInNewContext(source,ctx);

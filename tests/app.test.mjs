@@ -59,7 +59,7 @@ test("keyboard handler ignores Cmd/Ctrl/Alt to avoid stealing browser shortcuts"
   // Every single-letter shortcut (r, g, i, a, j, c) sits behind a
   // metaKey/ctrlKey/altKey guard, otherwise Cmd+R would race the reload.
   const guardIndex = js.indexOf("metaKey || event.ctrlKey || event.altKey");
-  const letterHandlers = ["r", "g", "i", "a", "j", "c"].map((letter) =>
+  const letterHandlers = ["r", "g", "i", "a", "j", "c", "k"].map((letter) =>
     js.indexOf(`letter === "${letter}"`)
   );
   assert.ok(guardIndex > 0, "keydown handler must include a modifier-key guard");

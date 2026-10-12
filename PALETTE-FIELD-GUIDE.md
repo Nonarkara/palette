@@ -1,8 +1,8 @@
+English · [简体中文](PALETTE-FIELD-GUIDE.zh-CN.md) · [ไทย](PALETTE-FIELD-GUIDE.th.md)
+
 # Palette field guide
 
-Download this file, keep it beside a project, or give it to an agent. It is a
-standalone guide to using the Palette exhibition and its source data without
-needing a design application, account, API key, or colour subscription.
+Download this file, keep it beside a project, or give it to a coding agent. It explains the Palette exhibition and its source data without a design application, an account, an API key, or a colour subscription.
 
 Live room: <https://colors.nonarkara.org/>
 
@@ -13,211 +13,167 @@ Editorial method: [EDITORIAL.md](EDITORIAL.md)
 
 ## What this is
 
-Palette is an independent interactive interpretation of Sanzo Wada's 348
-historic colour combinations. It makes one relationship fill the viewport so
-you can judge proportion, temperature, value, and tension at architectural
-scale—not as tiny shopping swatches.
+Palette is an independent interactive reading of Sanzo Wada’s 348 colour combinations. One relationship fills the viewport, so proportion, temperature, value, and tension can be judged at the scale of a room.
 
-The RGB and hex values are credited digital conversions. They are useful screen
-values, not claims about the exact printed inks in the book.
+The RGB and hex values are credited digital conversions. They are useful on a screen. They are not claims about the printed inks.
 
-## Use the exhibition in two minutes
+## Use the room
 
-1. Open <https://colors.nonarkara.org/>. The finder welcomes people with an idea
-   and people with no idea at all.
-2. Choose a starting mood, type any colour, atmosphere, place, material, or use,
-   or choose **NO IDEA — SURPRISE ME**.
-3. Move with `←` and `→`, or press the Left and Right Arrow keys.
-4. Press `⌕` or `/` at any time to search again. Try
-   `ochre`, `quiet`, `poster`, `night`, `อบอุ่น`, `สงบ`, `温暖`, or `安静`.
-5. Press `◐` or `C` to remove hue and inspect the value structure.
-6. Choose **COPY THIS FOR YOUR AGENT** or press `⧉`. Paste the resulting brief
-   into any coding agent; it already contains tokens, roles, proportions,
-   contrast instructions, provenance, and the stable plate link.
-7. Press `{}` or `J` to inspect and copy the current plate as portable JSON.
-8. Press `i` or `I` for the English, Thai, and Simplified Chinese reading.
-9. Press `A` for Dr Non's Red / Black study, research position, and two system
-   diagrams.
-10. Copy the URL. Every plate has a stable address such as `#plate-087`.
+1. Open <https://colors.nonarkara.org/>. The door is for a person with an idea and a person with none.
+2. Choose a mood, type a colour, atmosphere, place, material, or use, or choose **NO IDEA — SURPRISE ME**.
+3. Move with `←` and `→`, or the arrow keys.
+4. Press `⌕` or `/` to search again. Try `ochre`, `quiet`, `poster`, `night`, `อบอุ่น`, `สงบ`, `温暖`, or `安静`.
+5. Press `◐` or `C` to remove hue and look at value.
+6. Press `1:1` or `K` for WCAG 2.2 contrast, a colour-vision preview, and copyable CSS variables, a Tailwind theme, JSON tokens, or the plate link.
+7. Choose **COPY THIS FOR YOUR AGENT** or press `⧉`. The brief already has tokens, roles, proportions, a contrast instruction, provenance, and the stable plate link.
+8. Press `{}` or `J` for the current plate as portable JSON.
+9. Press `i` or `I` (or `?`) for the English, Thai, and Simplified Chinese reading.
+10. Press `A` for the Red / Black study, the research position, and the two diagrams.
+11. Press `↓` for a PNG wallpaper. Copy the URL. Every plate has an address such as `#plate-087`.
 
-The complete instrument:
-
-| Symbol | Action | Keyboard |
+| Mark | What it does | Key |
 |---|---|---|
-| `←` | Previous relationship | Left Arrow |
-| `→` | Next relationship | Right Arrow |
-| `↻` | Chance encounter | `R` |
+| `←` | Previous relationship | Left arrow |
+| `→` | Next relationship | Right arrow |
+| `↻` | Chance | `R` |
 | `⌕` | Search | `/` |
-| `≡` | Complete index | `G` |
+| `1:1` | Contrast ratios, colour-vision preview, and copy formats | `K` |
+| `≡` | Index | `G` |
 | `◐` | Grayscale value study | `C` |
-| `A` | About, research, and system architecture | `A` |
-| `{}` | View and copy portable plate JSON | `J` |
-| `⧉` | Copy an agent-ready implementation brief | — |
-| `i` | Principles and Dr Non's Digest | `I` |
+| `↓` | Wallpaper PNG | — |
+| `A` | About, research, and the Red / Black study | `A` |
+| `{}` | Portable plate JSON | `J` |
+| `⧉` | Agent brief | — |
+| `i` | Principles and Dr Non’s Digest | `I` |
 
-## Turn a plate into a working interface
+On a narrow screen the rail sits along the bottom.
 
-Do not assign colours by taste alone. Give each one a job.
+## Give each colour a job
 
-### Two-colour plate
+Do not assign the colours by taste alone.
 
-- Dominant field: approximately 61.8% of the visual area.
-- Counter-field: approximately 38.2%.
-- Text: black or white chosen by measured contrast, not intuition.
+### Two colours
 
-Use the dominant colour for the main surface and the counter-colour for one
-large region, navigation rail, data layer, or decisive state. Avoid sprinkling
-both colours across dozens of small components; that destroys the relationship.
+Weighted 1.618 to 1, about 61.8 / 38.2. The copied brief rounds those shares to whole percents. Text is black or white by measured contrast on the actual field.
 
-### Three- or four-colour plate
+Use the dominant colour for the main surface and the other for one large region: a rail, a data layer, or one decisive state. Sprinkling both colours across dozens of small components ends the relationship.
+
+### Three or four colours
+
+Weights for three: 1.45, 0.9, 0.65. For four: 1.55, 0.85, 0.7, 0.55.
 
 - First colour: atmosphere and large surfaces.
-- Second colour: structural counterweight.
-- Third colour: information, annotation, or secondary state.
-- Fourth colour: rare signal only.
+- Second: the structural counterweight.
+- Third: information, annotation, or a secondary state.
+- Fourth: a rare signal only.
 
-Area is part of the palette. Equal swatches do not imply equal use.
+Area is part of the palette. Equal swatches do not mean equal use. These shares are this exhibition’s layout, not Wada’s instruction.
 
-### Five-step gate
+### Five checks
 
 1. **Enlarge it.** Judge the pairing across a whole viewport.
-2. **Remove hue.** If every region collapses into one gray, repair the value
-   structure before writing components.
-3. **Assign roles.** Name each colour's job in one sentence.
-4. **Measure text contrast.** WCAG AA body text needs at least 4.5:1. Use the
-   exact rendered foreground value in the calculation.
-5. **Test without colour.** Names, state, hierarchy, and controls must remain
-   understandable when hue disappears.
+2. **Remove hue.** If every region falls into one gray, repair the value structure before drawing components.
+3. **Name the job.** One sentence for each colour.
+4. **Measure the text.** WCAG 2.2 AA body text needs at least 4.5:1 against the rendered background. The `1:1` sheet does this for the plate and does not round a failure up into a pass.
+5. **Turn colour off.** Names, state, hierarchy, and controls still have to make sense.
 
-## MoMA rule and Mama Rule
+## Two rules for judgment
 
-The MoMA rule concerns judgment: let the object dominate; make labels quiet;
-use scale, alignment, spacing, and position before adding boxes or decoration.
+**MoMA.** Let the object dominate. Keep labels quiet. Use scale, alignment, spacing, and position before adding boxes.
 
-The Mama Rule concerns usability: give the working result to an older,
-nontechnical first-time visitor. Offer a goal, not instructions. If they cannot
-understand the purpose, perform the main action, recognize success, and recover
-from one ordinary mistake without coaching, the design is not finished.
+**Mama.** Hand the working result to an older, nontechnical first-time visitor. Offer a goal, not a manual. If they cannot see the purpose, do the main action, recognise success, and recover from one ordinary mistake without coaching, the design is not finished. This visit has not been run for Palette. The edition stays `0.1.0` until it has.
 
-## Anti-slop checklist
+## Don't make users do the backend's job.
 
-Field evidence: [`docs/design-slop-field-guide.md`](docs/design-slop-field-guide.md) — what colour got wrong in 44 AI-assisted flood apps, and a repair built from plate #139.
+The system infers, defaults, and saves. The screen shows exceptions and the decisions only a person can make. No button for a thing that should already have happened. No decoration without a job. Lead with the real benefit; do not bury it in a footnote.
 
-- No rounded card grid standing between the visitor and the colour.
-- No gradient, shadow, glass panel, fake texture, or decorative dashboard.
-- No colour used as the only status indicator.
-- No invented history, quotation, plate number, or printed-colour claim.
-- No fourth type family because one paragraph feels difficult.
-- No animation without a state change behind it.
-- No “AI-powered” claim: search and readings here are local and deterministic.
-- No inaccessible off-black approximation hidden behind pure-black contrast
-  math. Measure the value actually rendered.
+Dr Non’s example of the failure is a Thai teacher attendance card: a tap per student per status, a manual save, stat tiles that restate the counts, solemn stock 3D icons, and the real benefit left in a footnote.
 
-## Clone, run, and fork
+Before a control is added, ask three questions:
 
-Requirements: Git and Python 3. Node.js is needed only for the checks.
+1. Could the system already know this?
+2. Could it be a default?
+3. Does this need a save step?
+
+Forms and lists. Do: show the rows that need a decision, assume the rest, and save as the person works. Don't: one control per status per row, a save button, summary tiles that repeat the list, and an icon that does not name a state.
+
+## What not to add
+
+The field notes are in [docs/design-slop-field-guide.md](docs/design-slop-field-guide.md). Short form:
+
+- No card grid between the visitor and the colour.
+- No gradient, shadow, glass, fake texture, or decorative dashboard.
+- No colour as the only status.
+- No invented history, quotation, plate number, or printed-ink claim.
+- No extra type family because one paragraph feels difficult.
+- No button for work the system should already have done.
+- No animation without a state change. The plate animation is 260ms, and reduced motion nearly removes it.
+- No “AI-powered” claim. Search and readings here are local and deterministic.
+- No off-black passed off as pure black. Measure the value that is actually rendered.
+
+## Run a fork
+
+Git is enough to look, with Python 3 or Node.js.
 
 ```bash
 git clone https://github.com/Nonarkara/palette.git
 cd palette
-python3 -m http.server 4173
+bash start.sh
 ```
 
-Open <http://localhost:4173>. Directly opening `index.html` will not load the
-JSON data in browsers that block local-file requests.
+The launcher uses Python 3 if it is present, otherwise Node.js. It starts one local server and opens no browser tabs. Open <http://127.0.0.1:4173>. Opening `index.html` as a file will not load the JSON.
 
-Run the integrity gates:
+With Node.js, `npm run dev` serves the same address through `scripts/serve.mjs`. `npm run check` runs the tests and confirms `tokens/palette.tokens.json`. `npm run build` writes that file for Penpot and Tokens Studio. The note is [tokens/README.md](tokens/README.md).
 
 ```bash
 npm run check
 ```
 
-Before publishing a fork:
+Before publishing a fork: replace the title and the editorial writing with your own voice; keep [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) and the upstream attribution; keep the difference between digital conversion and printed ink; test 375, 768, and 1280 CSS pixels; navigate without a mouse at 200% zoom; run an automated accessibility check, then a real walkthrough; verify the deployed URL and the actual JavaScript and CSS, not only the dashboard.
 
-1. Replace the title and original editorial writing with your own voice.
-2. Preserve `THIRD_PARTY_NOTICES.md` and the upstream data attribution.
-3. Keep the distinction between digital conversion and printed ink.
-4. Test widths of 375, 768, and 1280 CSS pixels.
-5. Navigate without a mouse and test at 200% zoom.
-6. Run an automated accessibility audit, then conduct a real human walkthrough.
-7. Verify the deployed URL and the actual JavaScript/CSS bytes, not only the
-   deployment dashboard.
+`npm run verify:browser` needs `npm ci` and Playwright’s Chromium. It checks PNG downloads, names, dimensions, search, JSON, and layout. Playwright does not ship in the exhibition.
 
-## Wallpaper downloads and search
+## Search and wallpapers
 
-Choose `↓` to download the current combination as a PNG: phone 1440 × 3120,
-iPad/tablet 2048 × 2732, or desktop 3840 × 2160. The labelled version includes
-source colour names, hex values, plate number, and Dr Non/Wada credits. Disable
-labels for a plain colour field. The original colours are used even when the
-exhibition is in grayscale. Your device generates the image; nothing is uploaded.
-Save it to Photos or your image library, then set it as wallpaper. Your device's
-crop and zoom settings may change the visible proportions.
+Search takes moods, uses, colour families in English, Thai, and Chinese, hex values, and plate numbers. Try `cozy`, `romantic`, `calm ocean`, `red and black`, `สีแดงสีดำ`, `红色黑色`, or `plate 042`. Filler such as “I want a palette” is ignored. A one-letter English misspelling is tolerated only when one alias fits. Partial matches are labelled related. An unsupported word is not given an invented meaning. Mood links are curatorial suggestions, not universal colour psychology.
 
-Search accepts everyday moods, purposes, colour families in English/Thai/Chinese,
-hex values and plate numbers. Try `cozy`, `romantic`, `calm ocean`, `red and black`,
-`สีแดงสีดำ`, `红色黑色` or `plate 042`. Fillers such as “I want a palette” are ignored.
-Simple one-letter spelling errors are tolerated when there is one clear match.
-If no palette matches every meaningful word, partial matches are explicitly
-labelled **related**. Unsupported words are not silently given an invented meaning.
-Mood associations remain curatorial suggestions, not universal colour psychology.
+`↓` downloads the current combination: phone 1440 × 3120, tablet 2048 × 2732, desktop 3840 × 2160. Labels include the source names, hex values, plate number, and the Wada / Dr Non credit. Turn labels off for a plain field. Original colours are used even in grayscale. The image is made on the device. A phone’s crop may change what you see.
 
-<span lang="th">กด ↓ เลือกขนาดโทรศัพท์ แท็บเล็ต หรือคอมพิวเตอร์ แล้วดาวน์โหลด PNG
-เลือกให้มีชื่อสีและค่าสี หรือปิดข้อความเพื่อใช้สีล้วน ลองค้น “สงบ” “ทะเล”
-หรือ “สีแดงสีดำ” ผลลัพธ์ที่ตรงเพียงบางคำจะบอกว่าเป็นชุดสีที่เกี่ยวข้อง</span>
+## Data
 
-<span lang="zh-Hans">点击 ↓，选择手机、平板或电脑尺寸，下载 PNG。
-可保留色名与色值，也可关闭文字，使用纯色块。试试“平静”“海洋”或“红色黑色”。
-只匹配部分关键词的结果会明确标为相关配色。</span>
-
-For the browser regression suite: `npm ci`, `npx playwright install chromium`,
-then `npm run verify:browser`. It verifies real PNG downloads, names, dimensions,
-search states, JSON and responsive layouts. Playwright is a development-only
-dependency; the exhibition itself needs no package install or service.
-
-## Data shape
-
-`data/colors.json` contains 159 named colours. Each object supplies a name,
-screen conversion, and the combination numbers in which it appears:
+`data/colors.json` holds 159 named colours. Each object has a name, a screen conversion, and the combination numbers it belongs to. English Red, as it actually appears:
 
 ```json
 {
   "name": "English Red",
   "rgb": [217, 102, 41],
   "hex": "#d96629",
-  "combinations": [1, 19, 47]
+  "combinations": [1, 131, 190, 308, 339]
 }
 ```
 
-The application reconstructs a plate by collecting every colour that names the
-same combination number. Tests assert that this produces exactly 348 unique
-plates containing two, three, or four colours.
+A plate is every colour that lists the same combination number. The tests require exactly 348 unique plates of two, three, or four colours: 120, 120, and 108.
 
-The `{}` instrument exports a self-describing `palette-exhibition/1` object. In
-addition to the colour values, it includes the plate URL, field roles and area
-shares, the exhibition's computed reading, a ready-to-paste agent prompt, source attribution, and caveats that
-separate software interpretation from Wada's work and screen conversion from
-printed ink. The visible code can be selected manually if clipboard permission
-is unavailable.
+`{}` exports `palette-exhibition/1`. Besides the colours it carries the plate URL, field roles and area shares, the computed reading, an agent prompt, attribution, and the caveat that separates this software from Wada’s work and the screen conversion from printed ink. The visible code can be selected if the clipboard is blocked.
 
-## Files worth reading
+## Files
 
-- `README.md` — public catalogue and project map.
+- `README.md`, `README.zh-CN.md`, `README.th.md` — the public entrance.
+- `ABOUT.md` and its Chinese and Thai siblings — the question.
+- `context.md` — the visual contract, in English.
+- `app.js` — reconstruction, search, classification, interaction.
+- `palette-measure.js` — contrast, colour-vision preview, copy formats.
+- `palette-tools.js` — search and wallpaper geometry.
+- `content.js` — search vocabulary and suggested-use words.
+- `data/colors.json` — the credited source.
+- `THIRD_PARTY_NOTICES.md` and `CREDITS.md` — licence and the borrowed-idea list.
+- `credits.html` — the same credit, as a page.
 - `EDITORIAL.md` — review a sentence before rewriting it. Chinese and Thai sit beside it.
-- `ABOUT.md` — curatorial argument and research question.
-- `context.md` — visual contract and conservation law.
-- `app.js` — reconstruction, search, classification, and interaction.
-- `content.js` — multilingual search vocabulary and suggested-use language.
-- `data/colors.json` — credited source data.
-- `THIRD_PARTY_NOTICES.md` — licence and provenance.
-- `docs/walkthroughs/` — cognitive walkthrough evidence and release roadmap.
+- `make/text-to-cad/` — shared CAD reference. designon in the browser, CLI on an M5.
+- `tokens/README.md` — the 348 combinations as Penpot and Tokens Studio JSON.
 
-## Reuse boundary
+## Reuse
 
-The application code and original writing are MIT licensed. The included data
-comes from Matt DesLauriers' MIT-licensed
-`dictionary-of-colour-combinations`, which credits Dain M. Blodorn Kim's
-earlier compilation. The historical combinations are credited to Sanzo Wada.
+Application code and original writing are MIT, copyright 2026 Non Arkaraprasertkul, in [LICENSE](LICENSE). That file does not relicense the colour data. The data stays under Matt DesLauriers’ MIT licence (copyright 2020), via Dain M. Blodorn Kim’s earlier MIT compilation (copyright 2024). Historical combinations are credited to Sanzo Wada.
 
-This project does not reproduce book scans, cover art, publisher copy, or claim
-affiliation with Seigensha, the Wada estate, or the upstream authors. Preserve
-those boundaries when you fork it.
+No book scans, cover art, or publisher copy. No affiliation with Seigensha, the Wada estate, or the upstream authors. Keep those boundaries in a fork.

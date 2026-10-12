@@ -1,5 +1,49 @@
 # Journal
 
+## 2026-10-12 — Main joined the contrast branch
+
+**What changed:** `main` was merged into this branch after pull requests #5, #6, and #7 had landed. Pull request #2 landed on `main` during the same merge and is included: report-only security scanning, and Dependabot groups with an open-pull-request limit of 3. The contrast sheet, colour-vision preview, copy formats, and `CREDITS.md` stay. So do the English, Simplified Chinese, and Thai entrances. The editorial method, `make/text-to-cad`, and the Penpot token file come in with `main`. The run notes now say `bash start.sh` first. `npm run dev` serves through `scripts/serve.mjs`. `npm run check` also confirms `tokens/palette.tokens.json`.
+
+**Conserved:** One combination still owns the viewport. The new sentences point at the added files. They do not sit on the colour field.
+
+**Evidence:** `npm run check` on this revision. A fluent reader has not signed the new Thai or Chinese sentences. The Mama Rule was not run. This revision was not merged to `main` and was not deployed.
+
+Tags: `merge`, `docs`
+
+## 2026-10-12 — Three entrances, one room
+
+**Human task:** A person arrives from GitHub in English, Simplified Chinese, or Thai, and needs to know what the room is, how to enter it, and who the colours belong to, without a translated brochure voice.
+
+**What changed:** `README.md`, `ABOUT.md`, and `PALETTE-FIELD-GUIDE.md` were rewritten, and each now has a sibling in Simplified Chinese and Thai, with a language line at the top. The old exhibition-strip drawing is no longer the entrance image. The new one is a local render of Plate 002. A closing plate, a cat with an umbrella and a small robot, sits at the end of each README. Claims in the English text were checked against `app.js`, `palette-measure.js`, `palette-tools.js`, `content.js`, and `data/colors.json`. The field guide’s example for English Red now uses the combination numbers in the file: 1, 131, 190, 308, 339.
+
+**Conserved:** The colour field, the rail, and the code are unchanged. This branch is the contrast-study branch, so the entrance describes `1:1`, the credits page, and `python3 -m http.server 4173`, which is what `npm run dev` ran on this revision. A later merge on the same day points the entrance at `bash start.sh`.
+
+**Evidence:** `npm run check` on this revision. A fluent reader has not reviewed the Thai or the Chinese. The Mama Rule was not run.
+
+Tags: `docs`, `thai`, `chinese`, `type`
+
+## 2026-10-09 — Don't make users do the backend's job
+
+**What changed:** The reading room, the palette field guide, and the Bauhaus skill now carry one rule. The system infers, defaults, and saves. The screen shows exceptions and the decisions only a person can make. Three questions sit with it, and a short do/don't for forms and lists. The example is a Thai teacher attendance card.
+
+**Evidence:** `npm run check` and `npm run verify:browser` passed on this change. Fluent-reader review of the new Thai and Chinese sentences was not performed.
+
+Tags: `guidance`, `anti-slop`
+
+## 2026-10-08 — Measure the plate, then name the sources
+
+**Human task:** A designer or developer stands in front of one combination and needs to know whether type will read, how the fields shift under a colour-vision preview, and how to leave with CSS, Tailwind, JSON tokens, or a link.
+
+**What changed:** A contrast sheet reports WCAG 2.2 ratios and pass/fail in words, previews grayscale and three Machado simulations on the fields, and copies CSS variables, a Tailwind theme, design tokens, and the plate URL. Credits are a page and `CREDITS.md`. Focus rings were corrected where amber sat on a light ground. Actions are pinned to commit SHAs. A static-site content security policy is set. No tracker was added.
+
+**Conserved:** One combination still owns the viewport. The rail, search, three scripts, and the anti-slop bans stay. The sheet sits on the lower part of the screen so the fields remain visible.
+
+**Rejected:** A card dashboard over the colour, a Coolors-like marketing page, and a second contrast number from APCA that would disagree with the WCAG badge.
+
+**Evidence:** `npm run check` and the browser script. Fluent-reader review of the short Thai and Chinese credit notes was not performed. The Mama Rule was not run.
+
+Tags: `contrast`, `credits`, `accessibility`, `wcag`
+
 ## 2026-10-02 — Open the room
 
 **What changed:** Built the first public exhibition: 348 source-verified colour

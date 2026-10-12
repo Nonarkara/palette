@@ -5,11 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#111111">
     <meta name="description" content="An interactive exhibition of Sanzo Wada's 348 colour combinations, with multilingual notes and Dr Non's Digest.">
+    <meta name="referrer" content="no-referrer">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self'; base-uri 'self'; form-action 'self'; object-src 'none'">
     <title>Palette — a colour exhibition</title>
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" href="data/colors.json" as="fetch" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@400;700&family=IBM+Plex+Sans+Thai:wght@400;600&family=JetBrains+Mono:wght@400;600&family=Noto+Sans+SC:wght@400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css?v=0.3.0">
+    <link rel="stylesheet" href="styles.css?v=0.4.0">
   </head>
   <body>
     <a class="skip-link" href="#palette-stage">Skip to the colour plate</a>
@@ -26,6 +30,7 @@
         <p id="plate-number">PLATE 001</p>
         <h1 id="plate-names">Loading colour relationship</h1>
         <p id="plate-reading">The field is preparing itself.</p>
+        <p id="plate-contrast">Contrast is being measured.</p>
         <button type="button" id="copy-agent" class="copy-agent">COPY THIS FOR YOUR AGENT</button>
       </section>
 
@@ -35,9 +40,10 @@
         <button type="button" data-action="next" aria-label="Next combination" title="Next — Right arrow">→</button>
         <button type="button" data-action="random" aria-label="Random combination" title="Chance encounter — R">↻</button>
         <button type="button" data-action="search" aria-label="Search combinations" title="Search — Slash">⌕</button>
+        <button type="button" data-action="study" aria-pressed="false" aria-label="Open contrast, colour-vision preview, and copy formats" title="Contrast study — K"><span aria-hidden="true">1:1</span></button>
+        <button type="button" data-action="contrast" aria-pressed="false" aria-label="Toggle grayscale study" title="Grayscale study — C">◐</button>
         <button type="button" data-action="wallpaper" aria-label="Download palette wallpaper" title="Wallpaper download">↓</button>
         <button type="button" data-action="index" aria-label="Open complete index" title="Index — G">≡</button>
-        <button type="button" data-action="contrast" aria-pressed="false" aria-label="Toggle grayscale study" title="Grayscale study — C">◐</button>
         <button type="button" data-action="about" aria-label="About Dr Non and the research" title="About / research — A">A</button>
         <button type="button" data-action="json" aria-label="View and copy palette JSON" title="JSON export — J"><span aria-hidden="true">{}</span></button>
         <button type="button" data-action="copy" aria-label="Copy palette instructions for an agent" title="Copy for your agent">⧉</button>
@@ -72,7 +78,7 @@
       <ol id="search-results" class="result-list"></ol>
       <footer class="search-footer">
         <p>Found one? Open it, then choose <strong>COPY THIS FOR YOUR AGENT</strong>. Paste the copied brief into any coding agent.</p>
-        <a href="https://github.com/Nonarkara/palette/blob/main/LICENSE" rel="noreferrer">MIT LICENSE · FORK IT · MAKE IT YOURS ↗</a>
+        <span class="search-links"><a href="credits.html">CREDITS</a><a href="https://github.com/Nonarkara/palette/blob/main/LICENSE" rel="noreferrer">MIT LICENSE · FORK IT · MAKE IT YOURS ↗</a></span>
       </footer>
     </dialog>
 
@@ -125,6 +131,7 @@
       </div>
       <footer class="digest-footer">
         <a href="reading.html">Design standards &amp; anti-slop reading room →</a>
+        <a href="credits.html">Credits</a>
         <p>Digital values are conversions, not claims about exact printed ink.</p>
         <a href="https://github.com/Nonarkara/palette" rel="noreferrer">Use the repository ↗</a>
         <a href="PALETTE-FIELD-GUIDE.md" download="palette-field-guide.md">Download field guide ↓</a>
@@ -339,6 +346,35 @@
       </section>
     </dialog>
 
+    <dialog id="study-dialog" class="sheet study-sheet" aria-labelledby="study-title">
+      <form method="dialog" class="sheet-top">
+        <p>Contrast and export</p>
+        <button value="close" aria-label="Close contrast study">×</button>
+      </form>
+      <p class="study-kicker">THIS PLATE · WCAG 2.2 AA</p>
+      <h2 id="study-title">Can type sit on these fields?</h2>
+      <p id="study-summary"></p>
+      <p class="study-caveat">Ratios use the WCAG 2.2 relative-luminance formula on the credited digital conversions. They are not measurements of printed ink, and they do not judge the colour relationship. A pass means black or white text can meet the threshold. Touching fields are reported separately at 4.5:1 for body text and 3:1 for a non-text boundary.</p>
+      <div class="vision-modes" role="group" aria-label="Colour-vision preview">
+        <button type="button" data-vision="original" aria-pressed="true">AS GIVEN</button>
+        <button type="button" data-vision="grayscale" aria-pressed="false">GRAYSCALE</button>
+        <button type="button" data-vision="protanopia" aria-pressed="false">PROTANOPIA</button>
+        <button type="button" data-vision="deuteranopia" aria-pressed="false">DEUTERANOPIA</button>
+        <button type="button" data-vision="tritanopia" aria-pressed="false">TRITANOPIA</button>
+      </div>
+      <p id="study-vision-note">Original colours. Close this sheet to judge the plate.</p>
+      <div id="study-report"></div>
+      <div class="study-exports" role="group" aria-label="Copy this combination">
+        <button type="button" data-export="css">COPY CSS</button>
+        <button type="button" data-export="tailwind">COPY TAILWIND</button>
+        <button type="button" data-export="tokens">COPY JSON TOKENS</button>
+        <button type="button" data-export="link">COPY LINK</button>
+        <button type="button" data-export="share" hidden>SHARE LINK</button>
+      </div>
+      <p id="study-status" role="status" aria-live="polite"></p>
+      <p class="study-caveat">Simulation: Machado, Oliveira and Fernandes, 2009, severity 1.0, linear sRGB. Not a clinical test. Names and hex values stay the original conversions. Exports copy those originals, not the preview. <a href="credits.html">Sources</a></p>
+    </dialog>
+
     <dialog id="wallpaper-dialog" class="sheet wallpaper-sheet">
       <form method="dialog" class="sheet-top"><p>Take the colours with you</p><button value="close" aria-label="Close wallpaper download">×</button></form>
       <h2>Wallpaper / <span lang="th">วอลเปเปอร์</span> / <span lang="zh-Hans">壁纸</span></h2>
@@ -354,6 +390,7 @@
     </dialog>
     <script defer src="content.js?v=0.2.0"></script>
     <script defer src="palette-tools.js?v=0.2.0"></script>
-    <script defer src="app.js?v=0.2.0"></script>
+    <script defer src="palette-measure.js?v=0.4.0"></script>
+    <script defer src="app.js?v=0.4.0"></script>
   </body>
 </html>
