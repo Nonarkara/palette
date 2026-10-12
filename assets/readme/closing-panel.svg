@@ -1,0 +1,120 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000" role="img" aria-labelledby="panel-title panel-desc">
+  <title id="panel-title">Closing plate: a cat with an umbrella and a small robot</title>
+  <desc id="panel-desc">A single panel in Palette's flat colour, not an ink wash. Plate 002 fills the room: Yellow Orange #F99D1B and Dark Tyrian Blue #12354E, split about 61.8 / 38.2, with the black instrument rail at the right. A black cat holds an umbrella. Its inner ears are Hermosa Pink #F9C1CE and its nose is the catalogue Red #A72144. The collar tag reads 348. A smaller paper-white robot stands on the blue field, chest marked with braces, offering a card that reads 1:1. Its backpack is Plate 001, English Red #D96629 and Cerulian Blue #0093A5. A floor ticket reads NO IDEA. These details are drawings, not new Wada combinations. Hex values are the credited digital conversion.</desc>
+  <rect width="1600" height="1000" fill="#101010"/>
+  <rect x="0" y="0" width="954" height="1000" fill="#f99d1b"/>
+  <rect x="954" y="0" width="582" height="1000" fill="#12354e"/>
+  <rect x="1536" y="0" width="64" height="1000" fill="#101010"/>
+
+  <!-- sparse hard rain, not drops -->
+  <rect x="168" y="120" width="10" height="210" fill="#111314"/>
+  <rect x="292" y="168" width="10" height="120" fill="#111314"/>
+  <rect x="1188" y="140" width="10" height="160" fill="#f7f5ef"/>
+
+  <!-- tail -->
+  <path d="M590 760 C470 760 430 640 470 560 C500 500 560 530 548 590 C536 650 500 660 560 690" fill="none" stroke="#111314" stroke-width="36" stroke-linecap="butt" stroke-linejoin="miter"/>
+
+  <!-- ears sit under the canopy, not through it -->
+  <polygon points="560,500 630,400 700,505" fill="#111314"/>
+  <polygon points="720,500 810,392 860,510" fill="#111314"/>
+  <polygon points="590,492 640,424 682,498" fill="#f9c1ce"/>
+  <polygon points="748,490 798,422 836,500" fill="#f9c1ce"/>
+  <ellipse cx="700" cy="530" rx="132" ry="112" fill="#111314"/>
+
+  <!-- body -->
+  <path d="M575 640 C555 730 575 830 640 878 L900 878 L948 760 L900 640 C820 575 680 575 575 640 Z" fill="#111314"/>
+  <ellipse cx="700" cy="530" rx="132" ry="112" fill="#111314"/>
+
+  <!-- collar and 348 -->
+  <path d="M590 625 H830" stroke="#12354e" stroke-width="16" stroke-linecap="butt"/>
+  <rect x="742" y="608" width="64" height="36" fill="#f7f5ef"/>
+  <text x="774" y="633" text-anchor="middle" fill="#111314" font-family="JetBrains Mono, Liberation Mono, monospace" font-size="18" font-weight="600">348</text>
+
+  <!-- paw, drawn again after the shaft -->
+
+  <!-- face: flat lids, no gloss -->
+  <rect x="610" y="500" width="62" height="26" fill="#f7f5ef"/>
+  <rect x="610" y="500" width="62" height="10" fill="#111314"/>
+  <rect x="654" y="508" width="10" height="16" fill="#111314"/>
+  <rect x="720" y="496" width="62" height="26" fill="#f7f5ef"/>
+  <rect x="720" y="496" width="62" height="10" fill="#111314"/>
+  <rect x="764" y="504" width="10" height="16" fill="#111314"/>
+  <ellipse cx="730" cy="575" rx="40" ry="26" fill="#f7f5ef"/>
+  <polygon points="716,566 744,566 730,584" fill="#a72144"/>
+  <rect x="718" y="590" width="24" height="4" fill="#111314"/>
+  <line x1="600" y1="560" x2="500" y2="540" stroke="#f7f5ef" stroke-width="3" stroke-linecap="butt"/>
+  <line x1="598" y1="578" x2="488" y2="578" stroke="#f7f5ef" stroke-width="3" stroke-linecap="butt"/>
+  <line x1="604" y1="596" x2="508" y2="616" stroke="#f7f5ef" stroke-width="3" stroke-linecap="butt"/>
+  <line x1="770" y1="560" x2="840" y2="548" stroke="#f7f5ef" stroke-width="3" stroke-linecap="butt"/>
+  <line x1="772" y1="578" x2="846" y2="578" stroke="#f7f5ef" stroke-width="3" stroke-linecap="butt"/>
+  <line x1="768" y1="596" x2="838" y2="608" stroke="#f7f5ef" stroke-width="3" stroke-linecap="butt"/>
+
+  <!-- umbrella in front of the cat: gores 1.618 : 1, shaft meets the paw -->
+  <path d="M500 348 Q660 150 875 188 L875 332 L520 368 Z" fill="#12354e"/>
+  <path d="M875 188 Q1000 160 1140 344 L1116 366 L875 332 Z" fill="#f7f5ef"/>
+  <path d="M520 368 L875 332 L875 348 L536 384 Z" fill="#111314"/>
+  <path d="M875 332 L1116 366 L1104 382 L875 348 Z" fill="#f99d1b"/>
+  <line x1="875" y1="210" x2="500" y2="348" stroke="#111314" stroke-width="5" stroke-linecap="butt"/>
+  <line x1="875" y1="188" x2="875" y2="348" stroke="#111314" stroke-width="5" stroke-linecap="butt"/>
+  <line x1="875" y1="210" x2="1140" y2="344" stroke="#12354e" stroke-width="5" stroke-linecap="butt"/>
+  <rect x="863" y="168" width="24" height="22" fill="#111314"/>
+  <line x1="875" y1="300" x2="830" y2="640" stroke="#111314" stroke-width="12" stroke-linecap="butt"/>
+  <polyline points="830,640 830,708 890,708" fill="none" stroke="#111314" stroke-width="12" stroke-linecap="butt" stroke-linejoin="miter"/>
+  <ellipse cx="836" cy="648" rx="30" ry="18" fill="#111314"/>
+  <rect x="824" y="640" width="10" height="8" fill="#f9c1ce"/>
+
+  <!-- robot, smaller, on the blue -->
+  <rect x="1228" y="668" width="34" height="86" fill="#d96629"/>
+  <rect x="1262" y="668" width="22" height="86" fill="#0093a5"/>
+  <rect x="1088" y="560" width="112" height="84" fill="#f7f5ef"/>
+  <rect x="1110" y="586" width="24" height="24" fill="#a72144"/>
+  <rect x="1150" y="586" width="24" height="24" fill="#111314"/>
+  <rect x="1128" y="622" width="32" height="8" fill="#111314"/>
+  <line x1="1144" y1="560" x2="1144" y2="508" stroke="#f7f5ef" stroke-width="6" stroke-linecap="butt"/>
+  <rect x="1144" y="484" width="52" height="28" fill="#f7f5ef"/>
+  <text x="1170" y="504" text-anchor="middle" fill="#111314" font-family="JetBrains Mono, Liberation Mono, monospace" font-size="16" font-weight="600">002</text>
+  <rect x="1072" y="656" width="144" height="120" fill="#f7f5ef"/>
+  <rect x="1096" y="676" width="96" height="52" fill="#111314"/>
+  <text x="1144" y="712" text-anchor="middle" fill="#f7f5ef" font-family="JetBrains Mono, Liberation Mono, monospace" font-size="26" font-weight="600">{ }</text>
+  <rect x="1096" y="776" width="36" height="100" fill="#f7f5ef"/>
+  <rect x="1160" y="776" width="36" height="100" fill="#f7f5ef"/>
+  <rect x="1088" y="868" width="52" height="14" fill="#f7f5ef"/>
+  <rect x="1152" y="868" width="52" height="14" fill="#f7f5ef"/>
+  <rect x="1048" y="728" width="80" height="12" fill="#111314"/>
+  <rect x="960" y="676" width="120" height="72" fill="#f7f5ef"/>
+  <text x="1020" y="722" text-anchor="middle" fill="#111314" font-family="JetBrains Mono, Liberation Mono, monospace" font-size="32" font-weight="600">1:1</text>
+
+  <!-- floor ticket, the same words as the door -->
+  <rect x="72" y="800" width="210" height="44" fill="#111314"/>
+  <text x="177" y="828" text-anchor="middle" fill="#f7f5ef" font-family="JetBrains Mono, Liberation Mono, monospace" font-size="16" font-weight="600">NO IDEA</text>
+
+  <!-- wall label -->
+  <text x="40" y="58" fill="#111314" font-family="JetBrains Mono, Liberation Mono, monospace" font-size="20" font-weight="600">PALETTE</text>
+  <text x="40" y="104" fill="#111314" font-family="JetBrains Mono, Liberation Mono, monospace" font-size="16" font-weight="600">PLATE 002</text>
+  <text x="1512" y="58" text-anchor="end" fill="#f7f5ef" font-family="JetBrains Mono, Liberation Mono, monospace" font-size="20" font-weight="600">002 / 348</text>
+  <text x="40" y="948" fill="#111314" font-family="Liberation Sans, sans-serif" font-size="18" font-weight="600">Yellow Orange</text>
+  <text x="40" y="974" fill="#111314" font-family="JetBrains Mono, Liberation Mono, monospace" font-size="16">#F99D1B</text>
+  <text x="978" y="948" fill="#f7f5ef" font-family="Liberation Sans, sans-serif" font-size="18" font-weight="600">Dark Tyrian Blue</text>
+  <text x="978" y="974" fill="#f7f5ef" font-family="JetBrains Mono, Liberation Mono, monospace" font-size="16">#12354E</text>
+
+  <!-- sheet close, the same control as the room -->
+  <rect x="1452" y="88" width="44" height="44" fill="#f7f5ef"/>
+  <path d="M1464 100 L1484 120 M1484 100 L1464 120" stroke="#111314" stroke-width="3" stroke-linecap="butt"/>
+
+  <!-- instrument, bottom-aligned like the room -->
+  <g fill="#f7f5ef" font-family="Liberation Sans, sans-serif" font-size="22" text-anchor="middle">
+    <text x="1568" y="360">Aa</text>
+    <text x="1568" y="412">�</text>
+    <text x="1568" y="464">�</text>
+    <text x="1568" y="516">�</text>
+    <text x="1568" y="568">'</text>
+    <text x="1568" y="620" font-family="JetBrains Mono, Liberation Mono, monospace" font-size="14" font-weight="600">1:1</text>
+    <text x="1568" y="672">�</text>
+    <text x="1568" y="724">�</text>
+    <text x="1568" y="776">a</text>
+    <text x="1568" y="828">A</text>
+    <text x="1568" y="880" font-family="JetBrains Mono, Liberation Mono, monospace" font-size="18">{ }</text>
+    <text x="1568" y="932">�</text>
+    <text x="1568" y="984">i</text>
+  </g>
+</svg>
