@@ -22,7 +22,7 @@ test("Destockd is the named source for archival motion, with the rights warning 
     assert.match(text, /https:\/\/archive\.org\/details\/FedFlix/);
     assert.match(text, /41,000\+/);
     assert.match(text, /no account and no card/i);
-    assert.match(text, /visual text search/i);
+    assert.match(text, /visual text\s+search/i);
     assert.match(text, /downloads as an MP4/);
     assert.match(text, /mostly public domain/);
     assert.match(text, /There is no warranty/);
@@ -61,7 +61,7 @@ test("Destockd is the named source for archival motion, with the rights warning 
   assert.match(notices, /https:\/\/archive\.org\/details\/FedFlix/);
   assert.match(notices, /no warranty/i);
   assert.match(contract, /The colour field stays a colour field/);
-  assert.match(contract, credit);
+  assert.ok(contract.includes(credit), "design contract missing the footage credit line");
   assert.match(readme, /CREDITS\.md/);
   assert.match(readme, /https:\/\/www\.destockd\.com\//);
   assert.match(journal, /Destockd/);
