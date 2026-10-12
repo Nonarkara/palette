@@ -61,3 +61,33 @@ test("cad.sh exits 1 when uv is missing", () => {
   assert.equal(result.status, 1);
   assert.match(result.stderr, /Needs uv: https:\/\/docs\.astral\.sh\/uv\//);
 });
+
+test("limits.json is the only printability table, worded as designon", () => {
+  const limits = JSON.parse(readFileSync(new URL("../make/text-to-cad/limits.json", import.meta.url), "utf8"));
+  const readme = readFileSync(new URL("../make/text-to-cad/README.md", import.meta.url), "utf8");
+  const root = readFileSync(new URL("../README.md", import.meta.url), "utf8");
+  assert.equal(limits.processes.fdm.minUnsupportedWallMm, 1.6);
+  assert.equal(limits.processes.fdm.maxBridgeMm, 10);
+  assert.equal(limits.processes.sla.minUnsupportedWallMm, 1.0);
+  assert.equal(limits.processes.sla.maxBridgeMm, 5);
+  assert.equal(limits.bridge.blocksDownload, false);
+  assert.equal(limits.wall.blocksDownload, true);
+  assert.equal(limits.fit.blocksDownload, true);
+  assert.deepEqual(limits.scales, [50, 75, 100, 150, 200, 250]);
+  assert.equal(limits.buildPlateMm, 256);
+  assert.equal(limits.basePrintMm, 2);
+  assert.equal(limits.credit.handle, "earthtojake");
+  assert.equal(limits.browser.url, "https://designon.nonarkara.org/");
+  assert.equal(limits.browser.commit, "d4605d785c67494cb3e11fed9368df2e1ba50b3b");
+  assert.match(readme, /1\.6 mm/);
+  assert.match(readme, /10 mm/);
+  assert.match(readme, /warning, not a blocker/);
+  assert.match(readme, /biggest model that prints/);
+  assert.match(readme, /https:\/\/designon\.nonarkara\.org\//);
+  assert.match(readme, /limits\.json/);
+  assert.doesNotMatch(readme, /Thompson Labs/);
+  assert.doesNotMatch(readme, /\bJake\b/);
+  assert.match(root, /https:\/\/designon\.nonarkara\.org\//);
+  assert.match(root, /Credit: earthtojake/);
+  assert.doesNotMatch(root, /Thompson Labs/);
+});

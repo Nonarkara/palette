@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
-# Palette make — wrapper for cadgen (https://github.com/earthtojake/text-to-cad, MIT).
+# Palette make — CLI wrapper for cadgen (earthtojake/text-to-cad, MIT).
+# The shared printability numbers are limits.json beside this file. designon
+# (designon.nonarkara.org) is the in-browser implementation. This script does
+# not apply the numbers.
 # DO_NOT_TRACK and CADGEN_TELEMETRY cover this process. The build daemon and a
 # detached viewer follow the saved choice and do not inherit those variables,
 # so the first run writes that choice with `cadgen telemetry off`.
