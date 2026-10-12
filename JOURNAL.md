@@ -1,12 +1,22 @@
 # Journal
 
+## 2026-10-12 — Main joined the contrast branch
+
+**What changed:** `main` was merged into this branch after pull requests #5, #6, and #7 had landed. The contrast sheet, colour-vision preview, copy formats, and `CREDITS.md` stay. So do the English, Simplified Chinese, and Thai entrances. The editorial method, `make/text-to-cad`, and the Penpot token file come in with `main`. The run notes now say `bash start.sh` first. `npm run dev` serves through `scripts/serve.mjs`. `npm run check` also confirms `tokens/palette.tokens.json`.
+
+**Conserved:** One combination still owns the viewport. The new sentences point at the added files. They do not sit on the colour field.
+
+**Evidence:** `npm run check` on this revision. A fluent reader has not signed the new Thai or Chinese sentences. The Mama Rule was not run. This revision was not merged to `main` and was not deployed.
+
+Tags: `merge`, `docs`
+
 ## 2026-10-12 — Three entrances, one room
 
 **Human task:** A person arrives from GitHub in English, Simplified Chinese, or Thai, and needs to know what the room is, how to enter it, and who the colours belong to, without a translated brochure voice.
 
 **What changed:** `README.md`, `ABOUT.md`, and `PALETTE-FIELD-GUIDE.md` were rewritten, and each now has a sibling in Simplified Chinese and Thai, with a language line at the top. The old exhibition-strip drawing is no longer the entrance image. The new one is a local render of Plate 002. A closing plate, a cat with an umbrella and a small robot, sits at the end of each README. Claims in the English text were checked against `app.js`, `palette-measure.js`, `palette-tools.js`, `content.js`, and `data/colors.json`. The field guide’s example for English Red now uses the combination numbers in the file: 1, 131, 190, 308, 339.
 
-**Conserved:** The colour field, the rail, and the code are unchanged. This branch is the contrast-study branch, so the entrance describes `1:1`, the credits page, and `python3 -m http.server 4173`, which is what `npm run dev` runs here.
+**Conserved:** The colour field, the rail, and the code are unchanged. This branch is the contrast-study branch, so the entrance describes `1:1`, the credits page, and `python3 -m http.server 4173`, which is what `npm run dev` ran on this revision. A later merge on the same day points the entrance at `bash start.sh`.
 
 **Evidence:** `npm run check` on this revision. A fluent reader has not reviewed the Thai or the Chinese. The Mama Rule was not run.
 

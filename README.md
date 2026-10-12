@@ -34,6 +34,10 @@ The working method, in three languages:
 - [PALETTE-FIELD-GUIDE.zh-CN.md](PALETTE-FIELD-GUIDE.zh-CN.md)
 - [PALETTE-FIELD-GUIDE.th.md](PALETTE-FIELD-GUIDE.th.md)
 
+**Editorial method:** [EDITORIAL.md](EDITORIAL.md)
+([简体中文](EDITORIAL.zh-CN.md), [ไทย](EDITORIAL.th.md)).
+Review a sentence before rewriting it. The colour field stays as it is.
+
 ## The instrument
 
 The rail is the only chrome. At widths up to 760px it moves to the bottom and can scroll sideways. Every control is a button or a link, at least 44 × 44 CSS pixels, with a name for assistive technology. The plate change animates for 260ms. `prefers-reduced-motion` cuts animation and transition to a negligible duration.
@@ -90,21 +94,37 @@ Books, papers, and the sites that were studied and not copied are named in [CRED
 
 The visual contract for people changing the room is [context.md](context.md). It is in English.
 
+## Geometry
+
+[`make/text-to-cad`](make/text-to-cad/README.md) is the shared reference for a written part that has to leave as geometry. The live in-browser implementation is [designon](https://designon.nonarkara.org/). The CLI runs on an M5 or a cloud machine, not the M3. Upstream is [earthtojake/text-to-cad](https://github.com/earthtojake/text-to-cad) (MIT). Credit: earthtojake.
+
+## Tokens
+
+`tokens/palette.tokens.json` is the catalogue of 348 combinations in the design-token JSON that Penpot’s Tokens panel imports. Tokens Studio for Figma reads the same file. `npm run build` writes it. The note is [tokens/README.md](tokens/README.md). The `1:1` sheet’s JSON is one plate. This file is all 348. Hex values in both are the credited digital conversion.
+
 ## Run
 
-Python 3 serves the room. Opening `index.html` as a file will not load the JSON.
+Opening `index.html` as a file will not load the JSON.
 
 ```bash
-python3 -m http.server 4173
+bash start.sh
 ```
 
-`npm run dev` runs that command. Open <http://127.0.0.1:4173>. Stop the server with Ctrl-C.
+The launcher uses Python 3 if it is present, otherwise Node.js, and says what is missing if neither is installed. No `npm install`, API key, or account is needed to look. It starts one local server and opens no browser tabs. Open <http://127.0.0.1:4173>. Stop the server with Ctrl-C.
+
+With Node.js, `npm run dev` serves the same address through `scripts/serve.mjs`. Python alone can still serve the room:
+
+```bash
+python3 -m http.server 4173 --bind 127.0.0.1
+```
 
 Node.js is for the checks:
 
 ```bash
 npm run check
 ```
+
+That command also fails when `tokens/palette.tokens.json` is missing or does not match the catalogue.
 
 The checks hold the dataset at 159 unique named colours and 348 plates, each plate two, three, or four colours: 120, 120, and 108. They also hold the multilingual markup, the provenance lines, and the bans on gradients, shadows, and a few other tells. They do not judge the room.
 

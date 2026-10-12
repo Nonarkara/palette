@@ -8,6 +8,9 @@ Live room: <https://colors.nonarkara.org/>
 
 Repository: <https://github.com/Nonarkara/palette>
 
+Editorial method: [EDITORIAL.md](EDITORIAL.md)
+([简体中文](EDITORIAL.zh-CN.md), [ไทย](EDITORIAL.th.md)).
+
 ## What this is
 
 Palette is an independent interactive reading of Sanzo Wada’s 348 colour combinations. One relationship fills the viewport, so proportion, temperature, value, and tension can be judged at the scale of a room.
@@ -110,15 +113,17 @@ The field notes are in [docs/design-slop-field-guide.md](docs/design-slop-field-
 
 ## Run a fork
 
-Git and Python 3 are enough to look. Node.js is for the checks.
+Git is enough to look, with Python 3 or Node.js.
 
 ```bash
 git clone https://github.com/Nonarkara/palette.git
 cd palette
-python3 -m http.server 4173
+bash start.sh
 ```
 
-`npm run dev` runs the same Python command. Open <http://127.0.0.1:4173>. Opening `index.html` as a file will not load the JSON.
+The launcher uses Python 3 if it is present, otherwise Node.js. It starts one local server and opens no browser tabs. Open <http://127.0.0.1:4173>. Opening `index.html` as a file will not load the JSON.
+
+With Node.js, `npm run dev` serves the same address through `scripts/serve.mjs`. `npm run check` runs the tests and confirms `tokens/palette.tokens.json`. `npm run build` writes that file for Penpot and Tokens Studio. The note is [tokens/README.md](tokens/README.md).
 
 ```bash
 npm run check
@@ -163,6 +168,9 @@ A plate is every colour that lists the same combination number. The tests requir
 - `data/colors.json` — the credited source.
 - `THIRD_PARTY_NOTICES.md` and `CREDITS.md` — licence and the borrowed-idea list.
 - `credits.html` — the same credit, as a page.
+- `EDITORIAL.md` — review a sentence before rewriting it. Chinese and Thai sit beside it.
+- `make/text-to-cad/` — shared CAD reference. designon in the browser, CLI on an M5.
+- `tokens/README.md` — the 348 combinations as Penpot and Tokens Studio JSON.
 
 ## Reuse
 

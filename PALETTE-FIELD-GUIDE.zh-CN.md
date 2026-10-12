@@ -8,6 +8,9 @@
 
 仓库：<https://github.com/Nonarkara/palette>
 
+审句的方法：[EDITORIAL.md](EDITORIAL.md)
+（[简体中文](EDITORIAL.zh-CN.md)，[ไทย](EDITORIAL.th.md)）。
+
 ## 这是什么
 
 Palette 是对和田三造 348 组配色的独立阅读。一组关系占满视口，比例、温度、明度和张力可以按一间房间的尺度来判断。
@@ -110,15 +113,17 @@ Dr Non 举过的失败是一张泰国教师的考勤卡：每个学生的每种�
 
 ## 运行一个分叉
 
-看一眼只需要 Git 和 Python 3。Node.js 用来做检查。
+看一眼需要 Git，再加上 Python 3 或 Node.js。
 
 ```bash
 git clone https://github.com/Nonarkara/palette.git
 cd palette
-python3 -m http.server 4173
+bash start.sh
 ```
 
-`npm run dev` 跑的是同一句 Python。打开 <http://127.0.0.1:4173>。把 `index.html` 当文件打开，JSON 不会加载。
+启动器用 Python 3，如果有的话；否则用 Node.js。它只开一个本地服务器，不打开浏览器标签。打开 <http://127.0.0.1:4173>。把 `index.html` 当文件打开，JSON 不会加载。
+
+装了 Node.js 时，`npm run dev` 通过 `scripts/serve.mjs` 提供同一个地址。`npm run check` 跑测试，并确认 `tokens/palette.tokens.json` 与色表一致。`npm run build` 写出这份给 Penpot 和 Tokens Studio 的文件。说明在 [tokens/README.md](tokens/README.md)。
 
 ```bash
 npm run check
@@ -163,6 +168,9 @@ npm run check
 - `data/colors.json` — 有出处的源数据。
 - `THIRD_PARTY_NOTICES.md` 和 `CREDITS.md` — 许可，以及借来的想法。
 - `credits.html` — 同一份署名，做成一页。
+- `EDITORIAL.md` — 改写之前先审一句。中文和泰文放在旁边。
+- `make/text-to-cad/` — 共用的 CAD 参考。浏览器里是 designon，命令行在 M5 上。
+- `tokens/README.md` — 348 组配色，写成 Penpot 和 Tokens Studio 的 JSON。
 
 ## 再用
 

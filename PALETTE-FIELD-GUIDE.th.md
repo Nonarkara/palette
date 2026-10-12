@@ -8,6 +8,9 @@
 
 คลัง: <https://github.com/Nonarkara/palette>
 
+วิธีตรวจประโยค: [EDITORIAL.md](EDITORIAL.md)
+([简体中文](EDITORIAL.zh-CN.md), [ไทย](EDITORIAL.th.md))
+
 ## นี่คืออะไร
 
 Palette คือการอ่านชุดสี 348 ชุดของซันโซ วาดะ อย่างอิสระ ความสัมพันธ์หนึ่งชุดเต็มจอ เพื่อให้ตัดสินสัดส่วน อุณหภูมิ ค่าความสว่าง และแรงตึง ได้ในขนาดของห้อง
@@ -110,15 +113,17 @@ Palette คือการอ่านชุดสี 348 ชุดของซ�
 
 ## รันสำเนาที่แยกออกมา
 
-ดูได้ด้วย Git กับ Python 3 Node.js ใช้สำหรับการตรวจ
+ดูได้ด้วย Git ถ้ามี Python 3 หรือ Node.js
 
 ```bash
 git clone https://github.com/Nonarkara/palette.git
 cd palette
-python3 -m http.server 4173
+bash start.sh
 ```
 
-`npm run dev` สั่ง Python คำสั่งเดียวกัน เปิด <http://127.0.0.1:4173> เปิด `index.html` เป็นไฟล์ แล้ว JSON จะไม่โหลด
+ตัวเปิดใช้ Python 3 ถ้ามี ไม่งั้นใช้ Node.js มันเปิดเซิร์ฟเวอร์ท้องถิ่นตัวเดียว และไม่เปิดแท็บเบราว์เซอร์ เปิด <http://127.0.0.1:4173> เปิด `index.html` เป็นไฟล์ แล้ว JSON จะไม่โหลด
+
+ถ้ามี Node.js `npm run dev` เสิร์ฟที่อยู่เดียวกันผ่าน `scripts/serve.mjs` `npm run check` รันการทดสอบ และตรวจว่า `tokens/palette.tokens.json` ตรงกับบัญชีชุดสี `npm run build` เขียนไฟล์นั้นให้ Penpot และ Tokens Studio คำอธิบายอยู่ที่ [tokens/README.md](tokens/README.md)
 
 ```bash
 npm run check
@@ -163,6 +168,9 @@ npm run check
 - `data/colors.json` — ข้อมูลต้นทางที่มีที่มา
 - `THIRD_PARTY_NOTICES.md` และ `CREDITS.md` — สัญญาอนุญาต และรายการความคิดที่ยืม
 - `credits.html` — เครดิตเดียวกัน ในรูปหน้าเว็บ
+- `EDITORIAL.md` — ตรวจประโยคก่อนจะเขียนใหม่ ฉบับจีนและไทยอยู่ข้างกัน
+- `make/text-to-cad/` — ที่อ้างอิง CAD ร่วม designon ในเบราว์เซอร์ บรรทัดคำสั่งบน M5
+- `tokens/README.md` — ชุดสี 348 ชุด เป็น JSON สำหรับ Penpot และ Tokens Studio
 
 ## การเอาไปใช้ต่อ
 

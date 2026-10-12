@@ -34,6 +34,10 @@
 - [PALETTE-FIELD-GUIDE.zh-CN.md](PALETTE-FIELD-GUIDE.zh-CN.md)
 - [PALETTE-FIELD-GUIDE.th.md](PALETTE-FIELD-GUIDE.th.md)
 
+审句的方法：[EDITORIAL.md](EDITORIAL.md)
+（[简体中文](EDITORIAL.zh-CN.md)，[ไทย](EDITORIAL.th.md)）。
+先审一句，再改写。整屏的配色保持原样。
+
 ## 工具轨
 
 轨是唯一的界面零件。宽度到 760px 为止，它改到屏幕底部，并且可以横着滑。每个控制都是按钮或链接，至少 44 × 44 CSS 像素，并且有辅助技术能读到的名字。换一块色板时，动画是 260 毫秒。系统打开 `prefers-reduced-motion` 时，动画和过渡会被压到可以忽略的时长。
@@ -90,21 +94,37 @@
 
 改这间屋子的视觉约定在 [context.md](context.md)，是英文。
 
+## 几何
+
+[`make/text-to-cad`](make/text-to-cad/README.md) 是一份共用参考：一段写成文字的零件，要离开页面，成为几何体。浏览器里的实现是 [designon](https://designon.nonarkara.org/)。命令行跑在 M5 或云端机器上，不在 M3 上。上游是 [earthtojake/text-to-cad](https://github.com/earthtojake/text-to-cad)（MIT）。署名：earthtojake。
+
+## 令牌
+
+`tokens/palette.tokens.json` 是 348 组配色的设计令牌 JSON，Penpot 的 Tokens 面板可以导入。Figma 的 Tokens Studio 读同一份文件。`npm run build` 写出它。说明在 [tokens/README.md](tokens/README.md)。`1:1` 表里的 JSON 是一块色板。这个文件是全部 348 组。两处的十六进制值都是有出处的屏幕换算。
+
 ## 在自己的机器上打开
 
-用 Python 3 把房间端出来。把 `index.html` 当文件打开，JSON 加载不了。
+把 `index.html` 当文件打开，JSON 加载不了。
 
 ```bash
-python3 -m http.server 4173
+bash start.sh
 ```
 
-`npm run dev` 跑的就是这一句。打开 <http://127.0.0.1:4173>。Ctrl-C 停止。
+启动器用 Python 3，如果有的话；否则用 Node.js。两者都没有时，它会说明缺什么。不需要 `npm install`，不需要 API 密钥，也不需要账号。它只开一个本地服务器，不打开浏览器标签。打开 <http://127.0.0.1:4173>。Ctrl-C 停止。
+
+装了 Node.js 时，`npm run dev` 通过 `scripts/serve.mjs` 提供同一个地址。只有 Python 时，仍可以这样打开房间：
+
+```bash
+python3 -m http.server 4173 --bind 127.0.0.1
+```
 
 Node.js 用来做检查：
 
 ```bash
 npm run check
 ```
+
+`tokens/palette.tokens.json` 缺失，或与色表不一致时，这条命令也会失败。
 
 检查把数据钉在 159 个不重复的具名颜色、348 块色板，每块两色、三色或四色，分别是 120、120、108。也钉住多语言标记、出处句子，以及对渐变、阴影和另外几个痕迹的禁止。检查判断不了这间房间好不好。
 
