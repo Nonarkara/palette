@@ -203,10 +203,17 @@ data/colors.json    credited MIT-licensed source data
 tests/              source integrity and anti-slop checks
 .github/workflows/  verification and GitHub Pages publication
 DEPLOYMENT.md       Cloudflare/GitHub release topology and proof sequence
+make/text-to-cad/   written part to STEP and STL; M5 or cloud, not the M3
 ```
 
 Search and classification run locally. No account, analytics service, cookie,
 database, or remote model is involved.
+
+[`make/text-to-cad`](make/text-to-cad/README.md) is separate from the
+exhibition. It wraps
+[earthtojake/text-to-cad](https://github.com/earthtojake/text-to-cad)
+(MIT, copyright 2026 Thompson Labs LLC). Run it on an M5 or a cloud machine,
+not the M3.
 
 ## Run it
 
