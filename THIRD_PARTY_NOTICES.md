@@ -47,3 +47,23 @@ writing, not vendored packs or upstream code. Exact snapshot commits, coverage,
 adaptations and limits are in `skills/bauhaus-human-design/references/reading-ledger.md`
 and `DESIGN-FIELD-GUIDE.md`. No endorsement is implied. MIT covers our original
 work; it does not relicense the books or upstream projects.
+
+## Editorial method — 2026-10-12
+
+`EDITORIAL.md`, `EDITORIAL.zh-CN.md`, and `EDITORIAL.th.md` are original
+writing. They adapt two MIT sources and do not vendor those repositories.
+
+- Peter Yang, no-ai-slop, commit `000650b156983f5159695b441477f4e63b25dc85`,
+  <https://github.com/petergyang/no-ai-slop>. Copyright (c) 2026 Peter Yang.
+  Taken: quote the sentence, say why it fails the reader, propose the smallest
+  change, and do not score the draft. Not taken: the outright word ban.
+- Jakub Krehel, make-interfaces-feel-better, commit
+  `35545ea1512ad59fa463e6b1f95ca9c052981fe6`,
+  <https://github.com/jakubkrehel/make-interfaces-feel-better>. Copyright (c)
+  2026 Jakub Krehel. Taken: labels, optical alignment, visible focus, and a
+  44 × 44 CSS pixel hit area. Not taken: concentric corner radius and layered
+  shadows, which conflict with this exhibition's conservation law.
+
+Both upstream works are MIT. The permission text is the LICENSE file at each
+commit above. That licence covers those works. It does not relicense Palette,
+and Palette's MIT licence does not relicense them. No endorsement is implied.

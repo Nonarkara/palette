@@ -8,6 +8,9 @@ Live room: <https://colors.nonarkara.org/>
 
 Repository: <https://github.com/Nonarkara/palette>
 
+Editorial method: [EDITORIAL.md](EDITORIAL.md)
+([简体中文](EDITORIAL.zh-CN.md), [ไทย](EDITORIAL.th.md)).
+
 ## What this is
 
 Palette is an independent interactive interpretation of Sanzo Wada's 348
@@ -199,6 +202,7 @@ is unavailable.
 ## Files worth reading
 
 - `README.md` — public catalogue and project map.
+- `EDITORIAL.md` — review a sentence before rewriting it. Chinese and Thai sit beside it.
 - `ABOUT.md` — curatorial argument and research question.
 - `context.md` — visual contract and conservation law.
 - `app.js` — reconstruction, search, classification, and interaction.

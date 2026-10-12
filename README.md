@@ -47,6 +47,10 @@ there is no remote model pretending to understand everything.
 [`PALETTE-FIELD-GUIDE.md`](PALETTE-FIELD-GUIDE.md) for the controls, fork recipe,
 palette-role method, accessibility gate, and attribution boundary in one file.
 
+**Editorial method:** [EDITORIAL.md](EDITORIAL.md)
+([简体中文](EDITORIAL.zh-CN.md), [ไทย](EDITORIAL.th.md)).
+Review a sentence before rewriting it. The colour field stays as it is.
+
 ## The idea
 
 Colour books often become grids of small swatches. The grid is useful and keeps
