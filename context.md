@@ -82,6 +82,28 @@ contrast. Every digital value is identified as a conversion, not printed truth.
 Plate changes use opacity and transform only, under 280ms. Reduced-motion users
 get an immediate cut. Motion confirms a state change and does nothing else.
 
+### Archival footage — 2026-10-12
+
+A retro or archival motion hero, on a surface that asked for one, comes from
+[Destockd](https://www.destockd.com/): a free search of 41,000+ FedFlix shots,
+US government films on the Internet Archive
+(<https://archive.org/details/FedFlix>). No account and no card. Visual text
+search. Each shot downloads as an MP4. The clips are mostly public domain.
+There is no warranty. Check that clip’s archive.org record for third-party
+music or footage before serious use.
+
+Ship a 3–6 second loop, `muted` `autoplay` `loop` `playsinline`, as WebM/AV1
+with an MP4 fallback, 720p or smaller, under about 1.5 MB, with a poster frame.
+`prefers-reduced-motion` shows the poster only. Colour-grade or duotone with
+that plate’s Palette tokens. A crayon rotoscope at about 8 fps may be added.
+The sumi-e ink style stays unused.
+
+Credit: `Footage: '[Film]' (US Government, public domain) via FedFlix / Internet Archive, found with Destockd.`
+
+The working text, in English, Simplified Chinese, and Thai, is in
+`PALETTE-FIELD-GUIDE.md` and `CREDITS.md`. Do not lay footage over a plate.
+The colour field stays a colour field.
+
 ## Wallpaper and discovery — 2026-10-02
 
 One verified plate remains the unit. PNG exports preserve source colours and
