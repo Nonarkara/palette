@@ -1,5 +1,17 @@
 # Journal
 
+## 2026-10-12 — Three entrances, one room
+
+**Human task:** A person arrives from GitHub in English, Simplified Chinese, or Thai, and needs to know what the room is, how to enter it, and who the colours belong to, without a translated brochure voice.
+
+**What changed:** `README.md`, `ABOUT.md`, and `PALETTE-FIELD-GUIDE.md` were rewritten, and each now has a sibling in Simplified Chinese and Thai, with a language line at the top. The old exhibition-strip drawing is no longer the entrance image. The new one is a local render of Plate 002. A closing plate, a cat with an umbrella and a small robot, sits at the end of each README. Claims in the English text were checked against `app.js`, `palette-measure.js`, `palette-tools.js`, `content.js`, and `data/colors.json`. The field guide’s example for English Red now uses the combination numbers in the file: 1, 131, 190, 308, 339.
+
+**Conserved:** The colour field, the rail, and the code are unchanged. This branch is the contrast-study branch, so the entrance describes `1:1`, the credits page, and `python3 -m http.server 4173`, which is what `npm run dev` runs here.
+
+**Evidence:** `npm run check` on this revision. A fluent reader has not reviewed the Thai or the Chinese. The Mama Rule was not run.
+
+Tags: `docs`, `thai`, `chinese`, `type`
+
 ## 2026-10-09 — Don't make users do the backend's job
 
 **What changed:** The reading room, the palette field guide, and the Bauhaus skill now carry one rule. The system infers, defaults, and saves. The screen shows exceptions and the decisions only a person can make. Three questions sit with it, and a short do/don't for forms and lists. The example is a Thai teacher attendance card.
