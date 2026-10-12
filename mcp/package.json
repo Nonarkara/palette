@@ -1,0 +1,15 @@
+{
+  "name": "palette-humanized-design-mcp",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Stdio MCP: human-curated design references, humanized-design rules and Wada palettes.",
+  "bin": {
+    "humanized-design": "index.mjs"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.32.1",
+    "zod": "^4.6.6"
+  }
+}

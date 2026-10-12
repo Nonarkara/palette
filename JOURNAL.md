@@ -173,3 +173,17 @@ human usability, fluent translations or full WCAG conformance.
 unnecessary eight-size type hierarchy. The reading room now uses three sizes;
 weight and grouping distinguish its finer roles.
 **Tags:** `bauhaus · communication · standards · provenance · anti-slop`
+
+## 2026-10-12 — References made by people, on call
+
+**What:** Added a stdio MCP (`mcp/`) and the `humanized-nostalgia-design` skill.
+`design_brief` returns era-matched references from CARI, Design Reviewed,
+Gurafiku, Artvee and eMuseum, the humanized-design rules with house overrides,
+and three Wada plates found by the site's own search.
+**Why:** A ban list alone converges on the average. A named, dated, credited
+artefact gives an agent something to reason about.
+**Boundary:** The snapshot stores metadata and links only. Artvee (robots
+disallows AI crawlers) and the eMuseum demo (challenge) are link lists that were
+never fetched. Design Reviewed artefact records were blocked and not bypassed.
+**Tags:** `mcp · references · nostalgia · provenance · anti-slop`
+

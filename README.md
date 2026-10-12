@@ -6,6 +6,13 @@ typography guide](TYPOGRAPHY-FIELD-GUIDE.md) or use the
 [portable skill and source ledger](skills/bringhurst-contextual-type/SKILL.md).
 Choose for task, text, medium and script—not a fashionable font pairing.
 
+**Humanized-design MCP:** [`mcp/`](mcp/index.mjs) gives any agent era-matched
+references from five human-curated archives, plus three Wada plates, in one
+`design_brief` call. Method and rights:
+[humanized-nostalgia-design](skills/humanized-nostalgia-design/SKILL.md).
+Install: `npm ci --prefix mcp`, then
+`claude mcp add --scope user humanized-design -- node "$PWD/mcp/index.mjs"`.
+
 ![Five adjoining colour fields arranged as an exhibition wall](assets/exhibition-strip.svg)
 
 Palette turns Sanzo Wada's 348 colour combinations into an interactive room.

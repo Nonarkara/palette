@@ -5,6 +5,10 @@ Proof actual content, role and script before changing fonts. The reading-room
 chapter and `TYPOGRAPHY-FIELD-GUIDE.md` teach the method without changing the
 colour-field product or granting automatic house-rule exceptions.
 
+For era, nostalgia or any surface without a named reference, read
+`skills/humanized-nostalgia-design/SKILL.md` and call the `humanized-design`
+MCP (`mcp/index.mjs`) before styling.
+
 ## Purpose
 
 Palette is an interactive exhibition of Sanzo Wada's 348 colour combinations.
