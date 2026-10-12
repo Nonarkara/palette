@@ -67,3 +67,17 @@ writing. They adapt two MIT sources and do not vendor those repositories.
 Both upstream works are MIT. The permission text is the LICENSE file at each
 commit above. That licence covers those works. It does not relicense Palette,
 and Palette's MIT licence does not relicense them. No endorsement is implied.
+
+## Motion source — Destockd / FedFlix — 2026-10-12
+
+[Destockd](https://www.destockd.com/) is the named source for a retro or archival
+motion hero. It searches 41,000+ shots from FedFlix, US government films on the
+Internet Archive: <https://archive.org/details/FedFlix>. Palette does not host
+the files. No account and no card are required to search. Each shot downloads
+as an MP4.
+
+The clips are mostly public domain. There is no warranty. Before serious use,
+check that clip’s archive.org record for third-party music or footage. The
+credit line, and the same notice in Simplified Chinese and Thai, is in
+[`CREDITS.md`](CREDITS.md). Destockd, FedFlix, the Internet Archive, and the
+US Government are not asked to endorse this exhibition.

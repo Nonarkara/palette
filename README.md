@@ -215,6 +215,7 @@ tests/              source integrity and anti-slop checks
 .github/workflows/  verification and GitHub Pages publication
 DEPLOYMENT.md       Cloudflare/GitHub release topology and proof sequence
 make/text-to-cad/   shared CAD reference; designon in the browser, CLI on an M5
+CREDITS.md          Destockd / FedFlix credit for archival motion heroes
 ```
 
 Search and classification run locally. No account, analytics service, cookie,
@@ -226,6 +227,12 @@ implementation is [designon](https://designon.nonarkara.org/). The CLI runs
 on an M5 or a cloud machine, not the M3. Upstream is
 [earthtojake/text-to-cad](https://github.com/earthtojake/text-to-cad) (MIT).
 Credit: earthtojake.
+
+**Archival motion.** A retro or archival motion hero comes from
+[Destockd](https://www.destockd.com/), a free search of FedFlix shots on the
+Internet Archive. The loop, the poster, the grade, and the credit line are in
+[`PALETTE-FIELD-GUIDE.md`](PALETTE-FIELD-GUIDE.md) and [`CREDITS.md`](CREDITS.md),
+in English, Simplified Chinese, and Thai. The colour field stays a colour field.
 
 ## Run it
 

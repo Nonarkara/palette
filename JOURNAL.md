@@ -187,3 +187,17 @@ disallows AI crawlers) and the eMuseum demo (challenge) are link lists that were
 never fetched. Design Reviewed artefact records were blocked and not bypassed.
 **Tags:** `mcp · references · nostalgia · provenance · anti-slop`
 
+## 2026-10-12 — Name the footage source
+
+**What:** Named Destockd as the source for a retro or archival motion hero.
+The field guide, `CREDITS.md`, the design contract, and the third-party notice
+record the FedFlix search, the loop limits, and the credit line in English,
+Simplified Chinese, and Thai.
+**Why:** An agent asked for old footage needs one named place to look, and a
+credit that survives the download.
+**Boundary:** The colour field stays a colour field. Palette does not host the
+clips. The clips are mostly public domain, with no warranty; the archive.org
+record still has to be checked for third-party music or footage. A fluent
+reader has not signed the Chinese or Thai.
+**Tags:** `destockd · fedflix · motion · credits · provenance`
+
