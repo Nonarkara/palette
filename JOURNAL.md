@@ -2,7 +2,7 @@
 
 ## 2026-10-12 — Main joined the contrast branch
 
-**What changed:** `main` was merged into this branch after pull requests #5, #6, and #7 had landed. The contrast sheet, colour-vision preview, copy formats, and `CREDITS.md` stay. So do the English, Simplified Chinese, and Thai entrances. The editorial method, `make/text-to-cad`, and the Penpot token file come in with `main`. The run notes now say `bash start.sh` first. `npm run dev` serves through `scripts/serve.mjs`. `npm run check` also confirms `tokens/palette.tokens.json`.
+**What changed:** `main` was merged into this branch after pull requests #5, #6, and #7 had landed. Pull request #2 landed on `main` during the same merge and is included: report-only security scanning, and Dependabot groups with an open-pull-request limit of 3. The contrast sheet, colour-vision preview, copy formats, and `CREDITS.md` stay. So do the English, Simplified Chinese, and Thai entrances. The editorial method, `make/text-to-cad`, and the Penpot token file come in with `main`. The run notes now say `bash start.sh` first. `npm run dev` serves through `scripts/serve.mjs`. `npm run check` also confirms `tokens/palette.tokens.json`.
 
 **Conserved:** One combination still owns the viewport. The new sentences point at the added files. They do not sit on the colour field.
 
