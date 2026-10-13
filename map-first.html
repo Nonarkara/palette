@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Map-first dashboards</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@400;700&family=IBM+Plex+Sans+Thai:wght@400;600&family=Noto+Sans+SC:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="map-first.css">
+    <style>
+      .failure {
+        display: grid;
+        height: 100dvh;
+        overflow: hidden;
+        background: #101010;
+        color: #f7f5ef;
+        grid-template-rows: 72px 56px 52px 48px 96px 88px minmax(0, 1fr) 80px;
+      }
+      .failure-row {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 12px 16px;
+        overflow: hidden;
+        background: #1c1c1c;
+      }
+      .failure-row + .failure-row { margin-top: 0; }
+      .failure-chip {
+        display: inline-flex;
+        align-items: center;
+        min-height: 36px;
+        padding: 12px 16px;
+        background: #f7f5ef;
+        color: #101010;
+        white-space: nowrap;
+      }
+      .failure-panel { margin: 0; padding: 12px 16px; overflow: hidden; background: #2a2a2a; }
+      .failure-map {
+        min-height: 0;
+        overflow: auto;
+        background: #f7f5ef;
+        color: #101010;
+        padding: 8px 16px;
+      }
+      .failure-map a {
+        display: inline-flex;
+        align-items: center;
+        min-height: 44px;
+        min-width: 44px;
+        color: inherit;
+      }
+      .failure-bottom {
+        display: flex;
+        align-items: stretch;
+        gap: 8px;
+        padding: 12px 16px;
+        overflow: hidden;
+      }
+    </style>
+  </head>
+  <body>
+    <a class="map-skip" id="skip" href="#map">Skip to the map</a>
+    <main>
+      <h1 class="visually-hidden">Map-first dashboards</h1>
+      <div id="do" class="map-dashboard">
+        <header class="map-bar map-bar-top" data-bar="top">
+          <p class="map-title">Malaysia</p>
+          <form class="map-search" role="search">
+            <label>
+              <span class="visually-hidden">Search a state, district, town, river gauge</span>
+              <input id="search" type="search" placeholder="Search a state, district, town, river gauge">
+            </label>
+          </form>
+          <button type="button" class="map-button" lang="en" data-lang="en" aria-pressed="true">EN</button>
+          <button type="button" class="map-button" lang="ms" data-lang="ms" aria-pressed="false">BM</button>
+          <button type="button" class="map-button" lang="zh-Hans" data-lang="zh-Hans" aria-pressed="false">中文</button>
+        </header>
+        <div class="map-stage" id="map" data-region="map">
+          <p class="map-caption" id="map-status" lang="en">Map</p>
+          <a href="#failure">Show the cramped bars</a>
+          <div class="map-drawer" id="drawer" hidden>
+            <p>Alerts and gauges sit over the map.</p>
+            <p lang="zh-Hans">警报和读数盖在地图上。流利的读者尚未签字确认这段中文。</p>
+            <p lang="th">การแจ้งเตือนและค่าวัดทับอยู่บนแผนที่ ผู้อ่านที่คล่องภาษายังไม่ได้ลงชื่อรับรองข้อความไทยนี้</p>
+            <div class="map-drawer-actions">
+              <button type="button" class="map-button" data-section="Nation">Nation</button>
+              <button type="button" class="map-button" data-section="Water">Water</button>
+              <button type="button" class="map-button" data-section="Mobility">Mobility</button>
+              <button type="button" class="map-button" data-section="Sea &amp; Air">Sea &amp; Air</button>
+            </div>
+          </div>
+        </div>
+        <nav class="map-bar map-bar-bottom" data-bar="bottom" aria-label="Map sections">
+          <button type="button" class="map-button" data-section="Map" aria-pressed="true">Map</button>
+          <button type="button" class="map-button" data-section="Brief" aria-pressed="false">Brief</button>
+          <button type="button" class="map-button" data-section="Place" aria-pressed="false">Place</button>
+          <button type="button" class="map-button" id="alerts" data-section="Alerts" aria-expanded="false" aria-controls="drawer">Alerts</button>
+          <button type="button" class="map-button" data-section="Reach" aria-pressed="false">Reach</button>
+        </nav>
+      </div>
+
+      <div id="failure" class="failure" hidden>
+        <div class="failure-row" data-bar="top"><span class="failure-chip">Malaysia · God Mode</span></div>
+        <div class="failure-row"><span class="failure-chip">Search a state, district, town, river gauge</span></div>
+        <div class="failure-row"><span class="failure-chip">KL 3D</span><span class="failure-chip">Research</span><span class="failure-chip">EN</span><span class="failure-chip">BM</span><span class="failure-chip" lang="zh-Hans">中文</span></div>
+        <div class="failure-row"><span class="failure-chip">Nation</span><span class="failure-chip">Water</span><span class="failure-chip">Mobility</span><span class="failure-chip">Sea &amp; Air</span></div>
+        <p class="failure-panel">Alert. Two gauges at alert level. This band is stacked, so it takes height from the map.</p>
+        <p class="failure-panel">Gauges. Rivers, MET, Air, Fires. This band is another stacked panel.</p>
+        <div class="failure-map" id="failure-map" data-region="map">
+          <p>Don't. The map is the remainder.</p>
+          <p lang="zh-Hans">不要这样做。地图被挤成一小块。流利的读者尚未签字确认这段中文。</p>
+          <p lang="th">อย่าทำแบบนี้ แผนที่ถูกบีบให้เหลือช่องเล็ก ผู้อ่านที่คล่องภาษายังไม่ได้ลงชื่อรับรองข้อความไทยนี้</p>
+          <a href="#map">Show the map-first bars</a>
+        </div>
+        <div class="failure-bottom" data-bar="bottom">
+          <span class="failure-chip">Map</span>
+          <span class="failure-chip">Brief</span>
+          <span class="failure-chip">Place</span>
+          <span class="failure-chip">Alerts</span>
+          <span class="failure-chip">Reach</span>
+        </div>
+      </div>
+    </main>
+    <script>
+      const view = document.getElementById("do");
+      const failure = document.getElementById("failure");
+      const drawer = document.getElementById("drawer");
+      const alerts = document.getElementById("alerts");
+      const status = document.getElementById("map-status");
+      const skip = document.getElementById("skip");
+      const searchForm = document.querySelector(".map-search");
+      const lines = {
+        en: "Map",
+        ms: "BM",
+        "zh-Hans": "地图",
+        th: "แผนที่"
+      };
+
+      function setSection(name, pressed) {
+        status.textContent = name;
+        for (const button of view.querySelectorAll(".map-bar-bottom [data-section]")) {
+          if (button === alerts) continue;
+          button.setAttribute("aria-pressed", String(button === pressed));
+        }
+      }
+
+      function setDrawer(open) {
+        drawer.hidden = !open;
+        alerts.setAttribute("aria-expanded", String(open));
+      }
+
+      function applyHash() {
+        const showFailure = location.hash === "#failure";
+        view.hidden = showFailure;
+        failure.hidden = !showFailure;
+        skip.href = showFailure ? "#failure-map" : "#map";
+        document.title = showFailure ? "Cramped bars" : "Map-first dashboards";
+      }
+
+      searchForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const query = new FormData(searchForm).get("q") || document.getElementById("search").value.trim();
+        status.textContent = query ? "Search: " + query : "Map";
+      });
+
+      for (const button of view.querySelectorAll("[data-lang]")) {
+        button.addEventListener("click", () => {
+          const code = button.dataset.lang;
+          status.lang = code === "ms" ? "en" : code;
+          status.textContent = lines[code] || button.textContent;
+          for (const peer of view.querySelectorAll("[data-lang]")) {
+            peer.setAttribute("aria-pressed", String(peer === button));
+          }
+        });
+      }
+
+      for (const button of view.querySelectorAll("[data-section]")) {
+        button.addEventListener("click", () => {
+          if (button === alerts) {
+            const willOpen = drawer.hidden;
+            setDrawer(willOpen);
+            setSection("Alerts", null);
+            alerts.setAttribute("aria-expanded", String(willOpen));
+            return;
+          }
+          setDrawer(false);
+          setSection(button.dataset.section, button);
+        });
+      }
+
+      for (const button of drawer.querySelectorAll("[data-section]")) {
+        button.addEventListener("click", () => {
+          setDrawer(false);
+          setSection(button.dataset.section, null);
+        });
+      }
+
+      window.addEventListener("hashchange", applyHash);
+      applyHash();
+    </script>
+  </body>
+</html>
