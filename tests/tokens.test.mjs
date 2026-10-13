@@ -70,10 +70,10 @@ test("catalogue, plates, themes, and metadata are complete", () => {
   assert.equal(Object.keys(document.catalogue.colour).length, 159);
   assert.equal(plates.length, 348);
   const setNames = Object.keys(document).filter((key) => !key.startsWith("$"));
-  assert.deepEqual(setNames.slice(0, 3), ["catalogue", "interface", "reading"]);
-  assert.equal(setNames.length, 351);
+  assert.deepEqual(setNames.slice(0, 4), ["catalogue", "interface", "reading", "map"]);
+  assert.equal(setNames.length, 352);
   assert.deepEqual(
-    setNames.slice(3),
+    setNames.slice(4),
     plates.map((plate) => `plate/${plateId(plate.id)}`)
   );
   assert.deepEqual(document.$metadata.tokenSetOrder, setNames);
@@ -106,6 +106,7 @@ test("catalogue, plates, themes, and metadata are complete", () => {
       reading: "enabled",
       [`plate/${label}`]: "enabled",
     });
+    assert.equal("map" in theme.selectedTokenSets, false);
     const roles = ["dominant", "counter", "support", "signal"].slice(0, plate.colors.length);
     assert.deepEqual(Object.keys(set.role), roles);
     assert.deepEqual(Object.keys(set.share), roles);

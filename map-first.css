@@ -1,0 +1,210 @@
+/* Map-first dashboards. Limits for a screen whose job is a map.
+   The colour field does not load this file. Plate themes leave the map token set off. */
+
+:root {
+  --map-bar-top-desktop: 48px;
+  --map-bar-top-mobile: 44px;
+  --map-bar-bottom: 56px;
+  --map-button-pad-block: 0px;
+  --map-button-pad-inline: 8px;
+  --map-button-border: 1px;
+  --map-share-floor: 0.65;
+  --map-share-mobile: 0.70;
+  --map-target: 44px;
+}
+
+* { box-sizing: border-box; }
+
+[hidden] { display: none !important; }
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  background: #101010;
+  color: #f7f5ef;
+}
+
+body {
+  font-family: "Archivo Narrow", Arial, sans-serif;
+  font-size: 0.875rem;
+  line-height: 1.2;
+}
+
+[lang="th"] { font-family: "IBM Plex Sans Thai", "Noto Sans Thai", sans-serif; }
+[lang="zh-Hans"] { font-family: "Noto Sans SC", sans-serif; }
+
+.map-skip {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--map-target);
+  min-width: var(--map-target);
+  padding: var(--map-button-pad-block) var(--map-button-pad-inline);
+  background: #101010;
+  color: #f7f5ef;
+  transform: translateY(-110%);
+}
+
+.map-skip:focus { transform: none; }
+
+main { height: 100%; }
+
+.map-dashboard {
+  display: grid;
+  grid-template-rows: var(--map-bar-top-desktop) minmax(0, 1fr) var(--map-bar-bottom);
+  height: 100dvh;
+  overflow: hidden;
+  background: #101010;
+  color: #f7f5ef;
+}
+
+.map-bar {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+.map-bar-top {
+  height: var(--map-bar-top-desktop);
+  max-height: var(--map-bar-top-desktop);
+}
+
+.map-bar-bottom {
+  height: var(--map-bar-bottom);
+  max-height: var(--map-bar-bottom);
+}
+
+.map-title {
+  margin: 0;
+  padding-inline: var(--map-button-pad-inline);
+  white-space: nowrap;
+  font-size: 0.875rem;
+  line-height: 1;
+}
+
+.map-search {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  height: 100%;
+  margin: 0;
+}
+
+.map-search label {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  min-width: 0;
+}
+
+.map-bar-top .map-button { flex: 0 0 auto; }
+
+.map-button,
+.map-search input {
+  box-sizing: border-box;
+  height: var(--map-target);
+  min-height: var(--map-target);
+  min-width: var(--map-target);
+  max-height: var(--map-target);
+  margin: 0;
+  padding: var(--map-button-pad-block) var(--map-button-pad-inline);
+  border: var(--map-button-border) solid currentColor;
+  border-radius: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: 0.875rem;
+  line-height: 1;
+  text-decoration: none;
+}
+
+.map-search input {
+  width: 100%;
+  max-width: 100%;
+}
+
+.map-bar-bottom .map-button {
+  flex: 1 1 0;
+}
+
+.map-button:focus-visible,
+.map-search input:focus-visible,
+.map-skip:focus-visible,
+.map-stage a:focus-visible {
+  outline: 3px solid currentColor;
+  outline-offset: -3px;
+}
+
+.map-stage {
+  position: relative;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  background: #f7f5ef;
+  color: #101010;
+}
+
+.map-caption,
+.map-status {
+  margin: 0;
+  padding: 8px;
+}
+
+.map-stage a {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--map-target);
+  min-width: var(--map-target);
+  margin: 0 8px;
+  color: inherit;
+}
+
+.map-drawer {
+  position: absolute;
+  z-index: 1;
+  inset-inline: 0;
+  inset-block-end: 0;
+  max-height: 40%;
+  overflow: auto;
+  background: #101010;
+  color: #f7f5ef;
+}
+
+.map-drawer p { margin: 8px; }
+
+.map-drawer-actions {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (max-width: 760px) {
+  .map-dashboard {
+    grid-template-rows: var(--map-bar-top-mobile) minmax(0, 1fr) var(--map-bar-bottom);
+  }
+
+  .map-bar-top {
+    height: var(--map-bar-top-mobile);
+    max-height: var(--map-bar-top-mobile);
+  }
+}
