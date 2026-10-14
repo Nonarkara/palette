@@ -856,6 +856,26 @@
         "$value": "{colour.white}",
         "$type": "color",
         "$description": "Custom property --last-ink from styles.css. Alias of catalogue colour White. The hex is the credited digital conversion. app.js replaces this with black or white from measured contrast on the last field."
+      },
+      "ink": {
+        "$value": "{colour.black}",
+        "$type": "color",
+        "$description": "Custom property --ink from layout.css. Alias of catalogue colour Black. The hex is the credited digital conversion."
+      },
+      "ground": {
+        "$value": "{colour.ivory-buff}",
+        "$type": "color",
+        "$description": "Custom property --ground from layout.css. Alias of catalogue colour Ivory Buff. The hex is the credited digital conversion."
+      },
+      "bright": {
+        "$value": "{colour.english-red}",
+        "$type": "color",
+        "$description": "Custom property --bright from layout.css. Alias of catalogue colour English Red. The hex is the credited digital conversion."
+      },
+      "mass": {
+        "$value": "{colour.black}",
+        "$type": "color",
+        "$description": "Custom property --mass from layout.css. Alias of catalogue colour Black. The hex is the credited digital conversion."
       }
     },
     "number": {
@@ -863,6 +883,21 @@
         "$value": "0.618",
         "$type": "number",
         "$description": "Custom property --dominant-share from styles.css. This is the two-colour split. app.js changes it for three- and four-colour plates. The proportion is the exhibition layout, not a Wada prescription."
+      },
+      "grid-columns": {
+        "$value": "12",
+        "$type": "number",
+        "$description": "Custom property --grid-columns from layout.css. Desktop column count."
+      },
+      "grid-columns-mobile": {
+        "$value": "4",
+        "$type": "number",
+        "$description": "Custom property --grid-columns-mobile from layout.css. Mobile column count."
+      },
+      "rule-max": {
+        "$value": "3",
+        "$type": "number",
+        "$description": "Custom property --rule-max from layout.css. Most distinct rule weights allowed on one page."
       }
     },
     "dimension": {
@@ -909,6 +944,76 @@
         "$value": "3.5rem",
         "$type": "dimension",
         "$description": "Custom property --rail from styles.css. At max-width 760px, styles.css sets --rail to 100%."
+      },
+      "space-4": {
+        "$value": "4px",
+        "$type": "dimension",
+        "$description": "Custom property --space-4 from layout.css. Half-module on the space scale. The rhythm unit is 8px."
+      },
+      "space-8": {
+        "$value": "8px",
+        "$type": "dimension",
+        "$description": "Custom property --space-8 from layout.css. Rhythm unit. Gaps step from this."
+      },
+      "space-16": {
+        "$value": "16px",
+        "$type": "dimension",
+        "$description": "Custom property --space-16 from layout.css. Two rhythm units. The gap under text that comes before a rule."
+      },
+      "space-24": {
+        "$value": "24px",
+        "$type": "dimension",
+        "$description": "Custom property --space-24 from layout.css. Three rhythm units."
+      },
+      "space-32": {
+        "$value": "32px",
+        "$type": "dimension",
+        "$description": "Custom property --space-32 from layout.css. Four rhythm units. One baseline."
+      },
+      "space-48": {
+        "$value": "48px",
+        "$type": "dimension",
+        "$description": "Custom property --space-48 from layout.css. Six rhythm units."
+      },
+      "space-64": {
+        "$value": "64px",
+        "$type": "dimension",
+        "$description": "Custom property --space-64 from layout.css. Eight rhythm units."
+      },
+      "space-96": {
+        "$value": "96px",
+        "$type": "dimension",
+        "$description": "Custom property --space-96 from layout.css. Twelve rhythm units."
+      },
+      "gutter": {
+        "$value": "24px",
+        "$type": "dimension",
+        "$description": "Custom property --gutter from layout.css. Grid gutter. Equals the 24px minimum of reading.gutter."
+      },
+      "baseline": {
+        "$value": "2rem",
+        "$type": "dimension",
+        "$description": "Custom property --baseline from layout.css. Body line-height as a length. Reading body is 1.25rem at line-height 1.6, which is 2rem."
+      },
+      "rule-1": {
+        "$value": "1px",
+        "$type": "dimension",
+        "$description": "Custom property --rule-1 from layout.css. Lightest rule weight."
+      },
+      "rule-2": {
+        "$value": "2px",
+        "$type": "dimension",
+        "$description": "Custom property --rule-2 from layout.css. Middle rule weight."
+      },
+      "rule-3": {
+        "$value": "3px",
+        "$type": "dimension",
+        "$description": "Custom property --rule-3 from layout.css. Heaviest rule weight."
+      },
+      "optical-centre-offset": {
+        "$value": "4%",
+        "$type": "dimension",
+        "$description": "Custom property --optical-centre-offset from layout.css. How far the optical centre sits above the geometric centre."
       }
     },
     "string": {
@@ -962,6 +1067,16 @@
         ],
         "$type": "fontFamilies",
         "$description": "Typeface stack from styles.css. First family: JetBrains Mono."
+      },
+      "geometric": {
+        "$value": [
+          "Jost",
+          "Archivo Narrow",
+          "Arial",
+          "sans-serif"
+        ],
+        "$type": "fontFamilies",
+        "$description": "Typeface stack from layout.css. First family: Jost. Display and wordmarks only. Body text keeps its existing face. Thai and Chinese do not use this stack."
       }
     }
   },

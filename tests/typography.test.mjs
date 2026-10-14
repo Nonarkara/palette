@@ -17,9 +17,16 @@ test('typography reading chapter has navigation, three scripts and source bounda
 test('download embeds its reference and portable skill matches the mechanical export', () => {
   const skill = readFileSync('skills/bringhurst-contextual-type/SKILL.md', 'utf8');
   const reference = readFileSync('skills/bringhurst-contextual-type/references/source-and-proof.md', 'utf8');
+  const bayer = readFileSync('docs/bayer-universal.md', 'utf8');
   const expected = [skill, reference].join('\n\n---\n\n').replaceAll(
     '(references/source-and-proof.md)', '(#source-and-proof--2026-10-02)');
-  assert.equal(readFileSync('TYPOGRAPHY-FIELD-GUIDE.md', 'utf8'), expected);
+  const guide = readFileSync('TYPOGRAPHY-FIELD-GUIDE.md', 'utf8');
+  const marker = "\n\n---\n\n# Bayer's Universal (1925)\n";
+  const index = guide.indexOf(marker);
+  assert.ok(index > 0);
+  assert.equal(guide.slice(0, index).trimEnd(), expected.trimEnd());
+  assert.equal(guide.slice(index + marker.length).trimEnd(), bayer.replace(/^# Bayer's Universal \(1925\)\n/, '').trimEnd());
   assert.ok(expected.includes('# Source and proof / 2026-10-02'));
   assert.ok(!expected.includes('(references/source-and-proof.md)'));
+  assert.ok(guide.includes("Bayer's Universal (1925)"));
 });

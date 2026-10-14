@@ -67,3 +67,22 @@ writing. They adapt two MIT sources and do not vendor those repositories.
 Both upstream works are MIT. The permission text is the LICENSE file at each
 commit above. That licence covers those works. It does not relicense Palette,
 and Palette's MIT licence does not relicense them. No endorsement is implied.
+
+## Jost and Anuphan — 2026-10-14
+
+`fonts/jost/jost-latin.woff2` is a Latin subset of Jost Medium (weight 500),
+made from `fonts/ttf/Jost-500-Medium.ttf` in
+[indestructible-type/Jost](https://github.com/indestructible-type/Jost).
+Jost is drawn by Owen Earl of indestructible type*. The licence file shipped
+beside the subset is that repository's `OFL.txt`: SIL Open Font License 1.1,
+copyright 2020 The Jost Project Authors. The subset stays under that licence.
+It is a display stand-in, not Herbert Bayer's Universal alphabet. P22 Bayer
+Universal, Architype Bayer, and CTAN `universa` are not included.
+
+`fonts/anuphan/anuphan-thai.woff2` is a Thai subset of Anuphan Medium for one
+trial line. Anuphan is by Mint Tantisuwanna at Cadson Demak. The licence file
+is from [cadsondemak/Anuphan](https://github.com/cadsondemak/Anuphan): SIL Open
+Font License 1.1, copyright 2019 The Anuphan Project Authors. The project
+describes the face as loopless Thai drawn with IBM Plex Latin, not as a
+modification of IBM Plex Sans Thai. The house Thai face remains IBM Plex Sans
+Thai. IBM Plex and Noto Sans SC keep the terms already used by the exhibition.

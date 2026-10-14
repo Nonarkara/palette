@@ -187,3 +187,21 @@ disallows AI crawlers) and the eMuseum demo (challenge) are link lists that were
 never fetched. Design Reviewed artefact records were blocked and not bypassed.
 **Tags:** `mcp · references · nostalgia · provenance · anti-slop`
 
+## 2026-10-14 — A display stand-in and a layout scale
+
+**What:** Added a self-hosted Latin subset of Jost for display and wordmarks,
+the class `lowercase-display`, and an English / Thai / Chinese specimen.
+Added spacing, grid, baseline, rule-weight and optical-centre tokens, plus
+`LAYOUT-FIELD-GUIDE.md` in English, Thai and Simplified Chinese. The balance
+plate is CSS on Plate 190.
+
+**Why:** Bayer's Universal alphabet has no open webfont we can ship. The token
+file had no spacing, grid, baseline, rule weight or balance values.
+
+**Boundary:** Body, Thai and Chinese faces stay as they were. P22, Architype
+Bayer and CTAN universa are not included. Desizn Circle pictures are not
+copied. A fluent reader has not signed the Thai or Chinese. The colour field
+was not redeployed.
+
+**Tags:** `type · jost · layout · grid · balance`
+
