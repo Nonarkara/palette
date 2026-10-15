@@ -299,6 +299,18 @@ export function buildTokenDocument({ colors, stylesCss, readingCss, appJs }) {
   if (readingTree.color.ink) {
     readingTree.color.ink.$description += " Reading ink.";
   }
+  if (readingTree.number["measure-ch"]) {
+    readingTree.number["measure-ch"].$description +=
+      " Latin body measure, in ch. Kept from 50 to 75. A ch is the width of a zero, not a word count. Thai and Chinese are not forced into this count. Display type is outside the gate.";
+  }
+  if (readingTree.number.leading) {
+    readingTree.number.leading.$description +=
+      " Body line-height. Kept from 1.4 to 1.6. Display headings are outside this gate.";
+  }
+  if (readingTree.number["field-share"]) {
+    readingTree.number["field-share"].$description +=
+      " Dominant share of the balance example. Same two-colour split as the exhibition. Not a Wada prescription.";
+  }
   const readingSet = compact(readingTree);
   readingSet.font = fontGroup(readingCss, READING_FONTS, "reading.css");
 

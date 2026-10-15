@@ -988,6 +988,23 @@
         "$description": "Custom property --deep from reading.css. Alias of catalogue colour Dark Tyrian Blue. The hex is the credited digital conversion."
       }
     },
+    "number": {
+      "measure-ch": {
+        "$value": "64",
+        "$type": "number",
+        "$description": "Custom property --measure-ch from reading.css. Latin body measure, in ch. Kept from 50 to 75. A ch is the width of a zero, not a word count. Thai and Chinese are not forced into this count. Display type is outside the gate."
+      },
+      "leading": {
+        "$value": "1.6",
+        "$type": "number",
+        "$description": "Custom property --leading from reading.css. Body line-height. Kept from 1.4 to 1.6. Display headings are outside this gate."
+      },
+      "field-share": {
+        "$value": "0.618",
+        "$type": "number",
+        "$description": "Custom property --field-share from reading.css. Dominant share of the balance example. Same two-colour split as the exhibition. Not a Wada prescription."
+      }
+    },
     "dimension": {
       "gutter": {
         "min": {

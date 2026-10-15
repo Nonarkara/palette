@@ -1,7 +1,7 @@
-:root { color-scheme: light; --paper:#fff4d8; --ink:#181525; --chord:#f99d1b; --deep:#12354e; --gutter:clamp(24px,5vw,80px); --display:clamp(2.75rem,6vw,6rem); --body:1.25rem; --micro:1rem; }
+:root { color-scheme: light; --paper:#fff4d8; --ink:#181525; --chord:#f99d1b; --deep:#12354e; --gutter:clamp(24px,5vw,80px); --display:clamp(2.75rem,6vw,6rem); --body:1.25rem; --micro:1rem; --measure-ch:64; --leading:1.6; --field-share:0.618; }
 * { box-sizing:border-box; }
 html { scroll-padding-top:24px; }
-body { margin:0; font-family:Arial,sans-serif; background:var(--paper); color:var(--ink); font-size:1.25rem; line-height:1.6; }
+body { margin:0; font-family:Arial,sans-serif; background:var(--paper); color:var(--ink); font-size:1.25rem; line-height:var(--leading); }
 [lang="th"] { font-family:'IBM Plex Sans Thai','Noto Sans Thai',sans-serif; }
 [lang="zh-Hans"] { font-family:'Noto Sans SC',sans-serif; }
 a { color:inherit; text-underline-offset:.2em; }
@@ -22,7 +22,16 @@ h1 { margin:0; font-size:var(--display); line-height:.93; letter-spacing:-.035em
 .chapter-label p { font-size:var(--micro); margin:0 0 16px; }
 h2 { font-size:var(--display); line-height:1.05; margin:0; }
 h3 { font-size:var(--body); line-height:1.2; margin:2rem 0 .75rem; }
-.prose { min-width:0; max-width:64ch; }
+.prose { min-width:0; max-width:calc(var(--measure-ch) * 1ch); }
+.balance { margin:2rem 0 2.5rem; }
+.balance-stage { display:grid; grid-template-columns:calc(var(--field-share) * 1fr) calc((1 - var(--field-share)) * 1fr); min-height:22rem; background:var(--deep); }
+.balance-dominant { position:relative; background:var(--chord); color:var(--deep); }
+.balance-counter { background:var(--deep); }
+.balance-cluster { position:absolute; inset-inline-start:1rem; inset-block-end:1rem; display:flex; flex-direction:column; align-items:flex-start; gap:.2rem; max-width:calc(100% - 2rem); }
+.balance-cluster p { margin:0; font-family:'Archivo Narrow',Arial,sans-serif; font-weight:700; line-height:1.05; }
+.balance-cluster p:first-child { font-size:var(--body); }
+.balance figcaption { margin-top:.75rem; font-size:var(--micro); max-width:calc(var(--measure-ch) * 1ch); }
+.source-embed { display:block; width:min(100%,540px); height:720px; margin:1rem 0 1.5rem; border:0; background:var(--paper); }
 .prose > p:first-child { margin-top:0; }
 p { margin:0 0 1.25em; }
 li { margin-bottom:.75em; }
