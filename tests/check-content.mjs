@@ -45,7 +45,10 @@ for (const required of [
   "Dr Non's deterministic reading for this exhibition",
   "classy and dangerous",
   "How verified colour data becomes an inhabitable, accessible room.",
-  "LEGIBLE<br>≠<br>SIMPLE"
+  "LEGIBLE<br>≠<br>SIMPLE",
+  "https://www.instagram.com/p/DeUfRznEv59/",
+  "@desizncircle",
+  "embed/captioned"
 ]) {
   assert.ok(joined.includes(required), `missing required content: ${required}`);
 }

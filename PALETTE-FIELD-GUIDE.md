@@ -89,6 +89,58 @@ Area is part of the palette. Equal swatches do not imply equal use.
 5. **Test without colour.** Names, state, hierarchy, and controls must remain
    understandable when hue disappears.
 
+## Composition — where the line goes
+
+The colour field stays full-bleed. These rules govern the cut, the cluster and
+the body text. They are checked by `composition.mjs`. A failure names a
+placement fault. It is not a taste score.
+
+Credit: [@desizncircle](https://www.instagram.com/desizncircle/),
+[The Psychology of Design](https://www.instagram.com/p/DeUfRznEv59/), slide 10
+of the carousel (`img_index=10`). Read 15 October 2026 from Instagram’s
+captioned embed. The wording below is ours. Their pictures are not in this
+repository. See [CREDITS.md](CREDITS.md). The reading room shows the official
+embed: <https://www.instagram.com/p/DeUfRznEv59/embed/captioned/>.
+
+### Adopted
+
+| Check | Rule | How a test fails |
+|---|---|---|
+| `focal-mass` | One field is strictly the largest, at least 1.15 times the next. | Two equal halves. |
+| `line-to-edge` | A cut runs from one side of its frame to the other. | A line that stops in open colour. |
+| `alignment` | Boxes in one group share a left edge or a top edge. | Marks that share neither. |
+| `anchor` | That shared edge sits within 112px of the frame or a field edge. | A cluster floating in the middle of a field. |
+| `proximity` | The gap inside a group is smaller than the gap to the next group. | A group with a hole larger than the space around it. |
+| `cluster-too-large` | The label cluster stays under 42% of the focal field. | A caption block that rivals the colour. |
+| `cluster-off-focal` | The cluster sits on the focal field. | Labels parked on the counter-field. |
+| `cluster-not-denser` | The cluster packs more information per area than the quiet field. | An empty box pretending to balance the plate. |
+| `field-not-heavier` | The field still weighs more than the cluster. Weight grows with area, with distance from a middle value, and with density. | Tuning the label until it matches the field. |
+| Latin body | `--measure-ch` is 50–75 and `--leading` is 1.4–1.6. | A prose column outside that range. |
+
+`--field-share` is 0.618, the same two-colour split as the exhibition. The
+balance figure in [reading.html](reading.html#balance) uses Plate 002: Yellow
+Orange and Dark Tyrian Blue, credited digital conversions.
+
+A `ch` is the width of a zero. Do not force that count onto Thai or Chinese.
+Display type is outside the leading gate.
+
+### Trial
+
+- Symmetrical balance, only as a formal study. It is not the exhibition default.
+- A baseline grid for reading text. Not for the colour field.
+- The weight function as a pass/fail comparison in review. Never as a percentage of balance.
+
+### Skipped
+
+- A Z-shaped poster with the action in the last corner. That is a template, and this room has no corner call to action.
+- A rule that the subject must sit in the centre. The plate is an unequal split.
+- Closure, incomplete circles, and other logo devices.
+- A chart that assigns urgency, trust or luxury to a hue. Wada colours are relationships. Colour is never the only signal.
+- A 60-30-10 recipe in place of the exhibition shares.
+- Radial balance.
+- A 12-column template. Columns may align type. They do not slice the field into cards.
+- Gradients, stock icons, drop shadows and rounded cards. Already forbidden.
+
 ## MoMA rule and Mama Rule
 
 The MoMA rule concerns judgment: let the object dominate; make labels quiet;
@@ -209,6 +261,8 @@ is unavailable.
 - `content.js` — multilingual search vocabulary and suggested-use language.
 - `data/colors.json` — credited source data.
 - `THIRD_PARTY_NOTICES.md` — licence and provenance.
+- `CREDITS.md` — the composition source, @desizncircle, and what was left out.
+- `composition.mjs` — the placement checks named above.
 - `docs/walkthroughs/` — cognitive walkthrough evidence and release roadmap.
 
 ## Reuse boundary

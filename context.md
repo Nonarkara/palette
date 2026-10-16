@@ -10,6 +10,10 @@ Plate 002 digital conversions; paper is a reading ground, not a third Wada swatc
 
 The reading room retains three size tokens: display (title and section headings),
 body (prose, subheadings and controls), micro (credits and section labels).
+Latin body measure and leading are `--measure-ch` (50–75) and `--leading`
+(1.4–1.6). The balance chapter uses Plate 002’s unequal split: one full-height
+cut, one dense cluster on the large field. `composition.mjs` checks that
+arrangement. It does not score taste.
 Weight, placement and proximity establish the finer hierarchy. Its
 solid blue navigation field belongs to this room; palette colour never encodes
 status, selected state or a different meaning between chapters. Do not apply this

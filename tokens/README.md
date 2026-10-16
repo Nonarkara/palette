@@ -12,7 +12,7 @@ The file has 159 colours and 348 combinations. Hex values are the credited digit
 
 `plate/001` through `plate/348` are one set per combination. The roles are `dominant`, `counter`, `support`, and `signal`, in the same order as the exhibition. The shares are the exhibition proportions from `app.js`. Those roles and shares are Dr Non's layout, not a prescription from Wada.
 
-`interface` is the first `:root` in `styles.css`: the rail, the type sizes, the focus colour, and the instrument colours. Where a custom property uses a catalogue hex, the token is an alias. `reading` is the reading room's `:root` in `reading.css`. Yellow Orange and Dark Tyrian Blue on that page are the Plate 002 conversions.
+`interface` is the first `:root` in `styles.css`: the rail, the type sizes, the focus colour, and the instrument colours. Where a custom property uses a catalogue hex, the token is an alias. `reading` is the reading room's `:root` in `reading.css`. Yellow Orange and Dark Tyrian Blue on that page are the Plate 002 conversions. That set also carries `measure-ch`, `leading` and `field-share`: the Latin body gate and the two-colour split used by the balance example.
 
 ## Import into Penpot
 

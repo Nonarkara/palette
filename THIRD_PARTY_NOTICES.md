@@ -48,6 +48,14 @@ adaptations and limits are in `skills/bauhaus-human-design/references/reading-le
 and `DESIGN-FIELD-GUIDE.md`. No endorsement is implied. MIT covers our original
 work; it does not relicense the books or upstream projects.
 
+## Composition — 2026-10-15
+
+Placement rules for the colour field are credited in [`CREDITS.md`](CREDITS.md).
+They were read from a public carousel by [@desizncircle](https://www.instagram.com/desizncircle/),
+[The Psychology of Design](https://www.instagram.com/p/DeUfRznEv59/). The reading
+room shows that post only through Instagram’s embed. No image from the post is
+stored here. The author is not asked to endorse this exhibition.
+
 ## Editorial method — 2026-10-12
 
 `EDITORIAL.md`, `EDITORIAL.zh-CN.md`, and `EDITORIAL.th.md` are original

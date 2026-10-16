@@ -1,5 +1,26 @@
 # Journal
 
+## 2026-10-15 — Where the weight sits
+
+**What:** Added placement checks for one focal field, a cut that meets the
+frame, a single anchored cluster, and a Latin body measure. The reading room
+shows the rule on Plate 002. Tokens `measure-ch`, `leading` and `field-share`
+come from that page.
+
+**Why:** The colour relationship was already unequal. The missing piece was a
+test for where the cut stops and where the names sit.
+
+**Source:** A public carousel by @desizncircle, slide 10. Named in `CREDITS.md`.
+The post is embedded from Instagram. No image from it is stored here.
+
+**Left out:** Z-pattern posters, hue-to-emotion charts, 60-30-10, radial
+balance, and a 12-column template.
+
+**Evidence:** `tests/composition.test.mjs`. The weight function is a pass/fail
+gate, not a score.
+
+Tags: `composition`, `balance`, `provenance`, `type`
+
 ## 2026-10-02 — Open the room
 
 **What changed:** Built the first public exhibition: 348 source-verified colour
