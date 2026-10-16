@@ -83,6 +83,8 @@ HTML and WCAG guidance; old browser hacks and edition-era legal claims are not
 current requirements. House targets such as 44px touch controls are design policy,
 not a claim that every WCAG AA control must be 44px.
 
+**Real estate (Dr Non, 2026-10-16, hard rule):** the hero surface, whether that is the colour field, the map or the canvas, outranks blank chrome. A control is the size of its label plus padding. It is never as wide as its container, and a choice group wraps as chips. A panel shrinks to its content, and when it has nothing to show it collapses and gives the space back. A selected state is a solid ink fill with inverted text. Check it on the rendered pixels: a button far larger than its label, an overlay that is mostly empty, or a squeezed or clipped label is a fail. Touch targets of 44 px are met by height, not by width. The source case was the Jakarta atlas rain panel: full-width 88 px buttons, gold-on-white selection, and an hour label squeezed to "n".
+
 **Authored quality:** inspect actual pixels and the flow. Answer:
 
 1. **Content-swap test:** if another product's names replaced ours, what important
