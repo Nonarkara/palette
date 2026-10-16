@@ -113,6 +113,12 @@ function stackFor(css, family, label) {
   return stack;
 }
 
+function longestStack(css, family, label) {
+  const stacks = fontStacks(css).filter((parts) => parts[0] === family);
+  if (stacks.length === 0) throw new Error(`${label} has no font-family stack beginning with ${family}`);
+  return stacks.sort((left, right) => right.length - left.length)[0];
+}
+
 function isHex(value) {
   return /^#[0-9a-fA-F]{6}$/.test(value);
 }
@@ -203,6 +209,34 @@ function emptyTree() {
   return { color: {}, number: {}, dimension: {}, string: {} };
 }
 
+const LAYOUT_NOTES = {
+  "space-4": "Half-module on the space scale. The rhythm unit is 8px.",
+  "space-8": "Rhythm unit. Gaps step from this.",
+  "space-16": "Two rhythm units. The gap under text that comes before a rule.",
+  "space-24": "Three rhythm units.",
+  "space-32": "Four rhythm units. One baseline.",
+  "space-48": "Six rhythm units.",
+  "space-64": "Eight rhythm units.",
+  "space-96": "Twelve rhythm units.",
+  gutter: "Grid gutter. Equals the 24px minimum of reading.gutter.",
+  "grid-columns": "Desktop column count.",
+  "grid-columns-mobile": "Mobile column count.",
+  baseline: "Body line-height as a length. Reading body is 1.25rem at line-height 1.6, which is 2rem.",
+  "rule-1": "Lightest rule weight.",
+  "rule-2": "Middle rule weight.",
+  "rule-3": "Heaviest rule weight.",
+  "rule-max": "Most distinct rule weights allowed on one page.",
+  "optical-centre-offset": "How far the optical centre sits above the geometric centre.",
+};
+
+function noteLayout(tree) {
+  for (const [name, note] of Object.entries(LAYOUT_NOTES)) {
+    for (const bucket of ["number", "dimension", "string", "color"]) {
+      if (tree[bucket][name]) tree[bucket][name].$description += ` ${note}`;
+    }
+  }
+}
+
 function compact(tree) {
   const out = {};
   for (const [key, value] of Object.entries(tree)) {
@@ -225,7 +259,7 @@ export function combinationsFrom(colors) {
     .map(([id, paletteColors]) => ({ id, colors: paletteColors }));
 }
 
-export function buildTokenDocument({ colors, stylesCss, readingCss, appJs }) {
+export function buildTokenDocument({ colors, stylesCss, readingCss, appJs, layoutCss }) {
   if (colors.length !== 159) throw new Error(`expected 159 colours, received ${colors.length}`);
   const slugs = new Map();
   const byHex = new Map();
@@ -286,8 +320,19 @@ export function buildTokenDocument({ colors, stylesCss, readingCss, appJs }) {
     interfaceTree.color["last-ink"].$description +=
       " app.js replaces this with black or white from measured contrast on the last field.";
   }
+  if (!layoutCss) throw new Error("layout.css is required");
+  for (const [name, value] of declarations(rootBlock(layoutCss, "layout.css"))) {
+    if (name === "dominant-share") continue;
+    addCustomProperty(interfaceTree, name, value, "layout.css", byHex, "Layout");
+  }
+  noteLayout(interfaceTree);
   const interfaceSet = compact(interfaceTree);
   interfaceSet.font = fontGroup(stylesCss, EXHIBITION_FONTS, "styles.css");
+  interfaceSet.font.geometric = token(
+    longestStack(layoutCss, "Jost", "layout.css"),
+    "fontFamilies",
+    "Typeface stack from layout.css. First family: Jost. Display and wordmarks only. Body text keeps its existing face. Thai and Chinese do not use this stack."
+  );
 
   const readingTree = emptyTree();
   for (const [name, value] of declarations(rootBlock(readingCss, "reading.css"))) {
@@ -361,13 +406,14 @@ export function serializeTokenDocument(document) {
 }
 
 export async function loadTokenSources() {
-  const [colors, stylesCss, readingCss, appJs] = await Promise.all([
+  const [colors, stylesCss, readingCss, appJs, layoutCss] = await Promise.all([
     readFile(new URL("../data/colors.json", import.meta.url), "utf8").then(JSON.parse),
     readFile(new URL("../styles.css", import.meta.url), "utf8"),
     readFile(new URL("../reading.css", import.meta.url), "utf8"),
     readFile(new URL("../app.js", import.meta.url), "utf8"),
+    readFile(new URL("../layout.css", import.meta.url), "utf8"),
   ]);
-  return { colors, stylesCss, readingCss, appJs };
+  return { colors, stylesCss, readingCss, appJs, layoutCss };
 }
 
 export async function renderedTokens() {

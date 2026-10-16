@@ -14,6 +14,8 @@ The file has 159 colours and 348 combinations. Hex values are the credited digit
 
 `interface` is the first `:root` in `styles.css`: the rail, the type sizes, the focus colour, and the instrument colours. Where a custom property uses a catalogue hex, the token is an alias. `reading` is the reading room's `:root` in `reading.css`. Yellow Orange and Dark Tyrian Blue on that page are the Plate 002 conversions.
 
+Layout tokens in the same `interface` set come from the `:root` in `layout.css`: the space scale, `gutter` (24px, the minimum of `reading.gutter`), `grid-columns` (12) and `grid-columns-mobile` (4), `baseline`, `rule-1` through `rule-3`, `rule-max`, and `optical-centre-offset`. `interface.font.geometric` is the Jost display stack from that file. `interface.number.dominant-share` stays the exhibition value and is not rewritten from `layout.css`. The checks are in `LAYOUT-FIELD-GUIDE.md`.
+
 ## Import into Penpot
 
 Penpot documents this file under Design Tokens, in [Importing and Exporting Tokens](https://help.penpot.app/user-guide/design-systems/design-tokens/). A single JSON file is imported from the Tokens tab: **Tools**, then **Import**. The first-level keys are the set names because `$metadata.tokenSetOrder` lists them. [Laura Kalbag's guide](https://penpot.app/blog/a-practical-guide-to-the-design-tokens-json-format/) (14 April 2026) shows the same shape: `$value`, `$type`, and `$description` on every token, with `$themes` and `$metadata` beside the sets.

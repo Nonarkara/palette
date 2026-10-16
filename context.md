@@ -97,3 +97,15 @@ value. Keep all eleven rail controls reachable on narrow screens.
 `npm run verify:browser` verifies search, actual PNG downloads, dimensions, JSON
 and layout in isolated Chromium. `PALETTE_TEST_URL=https://colors.nonarkara.org/`
 runs the same flows against production. The dev dependency is not a site runtime.
+
+## Type and layout — 2026-10-14
+
+Herbert Bayer's Universal alphabet drawing, 1925: one lowercase geometric
+alphabet for Latin display. Jost is the open stand-in. Plate 190 (Ivory Buff,
+English Red, Black) is the ink on the balance plate. The colour field stays
+one combination to a viewport.
+
+Design Reviewed lists Bayer at <https://designreviewed.com/designer/herbert-bayer/>
+and the 1920s at <https://designreviewed.com/decade/1920s/>. The balance plate
+uses the Wada combination returned for this brief. Layout checks are in
+`LAYOUT-FIELD-GUIDE.md`. The specimen is `specimen.html`.

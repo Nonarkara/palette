@@ -12,8 +12,14 @@ for (const file of files) {
   await writeFile(target, text);
   parts.push(text);
 }
-const guide = parts.join('\n\n---\n\n').replaceAll(
+let guide = parts.join('\n\n---\n\n').replaceAll(
   '(references/source-and-proof.md)', '(#source-and-proof--2026-10-02)'
 );
-await writeFile('TYPOGRAPHY-FIELD-GUIDE.md', guide);
+try {
+  const bayer = await readFile('docs/bayer-universal.md', 'utf8');
+  guide = `${guide.trimEnd()}\n\n---\n\n${bayer.trim()}\n`;
+} catch {
+  // The Bayer section is local. A sync from the skill tree still writes the mechanical guide.
+}
+await writeFile('TYPOGRAPHY-FIELD-GUIDE.md', guide.endsWith('\n') ? guide : `${guide}\n`);
 console.log('Exported contextual typography skill, ledger and standalone guide.');

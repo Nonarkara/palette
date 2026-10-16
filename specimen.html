@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Type and layout specimen — Palette</title>
+    <meta name="description" content="A Jost display trial for Bayer's Universal alphabet, with English, Thai and Chinese at one visual size, and a balance plate.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@400;700&family=IBM+Plex+Sans+Thai:wght@400;600&family=Noto+Sans+SC:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="layout.css">
+  </head>
+  <body>
+    <a class="skip" href="#specimen">Skip to the specimen</a>
+    <main>
+      <section class="screen" id="specimen" aria-labelledby="wordmark">
+        <div class="grid">
+          <nav class="nav span-page" aria-label="Specimen pages">
+            <a href="index.html">Colour field</a>
+            <a href="reading.html">Reading room</a>
+            <a href="LAYOUT-FIELD-GUIDE.md">Layout guide</a>
+            <a href="LAYOUT-FIELD-GUIDE.th.md" lang="th">คู่มือเลย์เอาต์</a>
+            <a href="LAYOUT-FIELD-GUIDE.zh-CN.md" lang="zh-Hans">版式指南</a>
+            <a href="#balance">Balance plate</a>
+          </nav>
+          <p class="micro span-display">Latin display trial. Body text stays in Arial.</p>
+          <div class="rule rule-3 span-display" aria-hidden="true"></div>
+          <h1 id="wordmark" class="wordmark lowercase-display span-display" lang="en">Palette</h1>
+          <div class="samples span-display">
+            <div class="sample-row">
+              <p class="micro">English</p>
+              <p class="sample sample-en lowercase-display" lang="en">Read the interval</p>
+            </div>
+            <div class="sample-row">
+              <p class="micro" lang="th">ไทย</p>
+              <p class="sample sample-th" lang="th">อ่านระยะห่างระหว่างสี</p>
+            </div>
+            <div class="sample-row">
+              <p class="micro" lang="zh-Hans">中文</p>
+              <p class="sample sample-zh" lang="zh-Hans">阅读色彩之间的间距</p>
+            </div>
+          </div>
+          <div class="trial span-display">
+            <p class="micro">Anuphan trial. Loopless Thai. Not the house face.</p>
+            <p class="sample sample-trial" lang="th">อ่านระยะห่างระหว่างสี</p>
+          </div>
+          <div class="rule rule-2 span-page" aria-hidden="true"></div>
+          <div class="prose span-prose">
+            <p>Jost stands in for Herbert Bayer’s Universal alphabet of 1925. That drawing is a lowercase geometric proposal. It was not cast as metal type. This page does not include P22 Bayer Universal, Architype Bayer, or the CTAN universa fonts.</p>
+            <p>The English lines are set in lowercase with CSS. The words underneath keep ordinary capitals. Thai stays in IBM Plex Sans Thai. Chinese stays in Noto Sans SC. Body text on this page is Arial.</p>
+            <p>The three script lines share one line box. Their sizes are adjusted so the letter bodies look close, not so the pixel sizes match. A fluent reader has not signed this page.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="screen" id="balance" aria-labelledby="balance-title">
+        <div class="grid">
+          <h2 id="balance-title" class="micro span-display">Balance plate</h2>
+          <div class="rule rule-1 span-page" aria-hidden="true"></div>
+          <div class="plate span-page" role="img" aria-label="Asymmetric balance on plate 190. A black mass at 61.8 percent of the width. Two smaller English Red forms sit in an ivory field of about the same area. An axis with a dot at each end sits 4 percent above the centre.">
+            <div class="negative-field"></div>
+            <div class="mass"></div>
+            <div class="bright bright-a"></div>
+            <div class="bright bright-b"></div>
+            <div class="axis">
+              <span class="axis-line axis-line-ground"></span>
+              <span class="axis-line axis-line-ink"></span>
+              <span class="dot dot-ground"></span>
+              <span class="dot dot-ink"></span>
+            </div>
+          </div>
+          <div class="prose span-prose">
+            <p>Plate 190. Ivory Buff, English Red, and Black. The hex values are the credited digital conversion, not the printed ink. The black mass uses the dominant share, 0.618. The ivory field on the right has the same area. The red forms are smaller, brighter, and set apart inside that field. The axis sits 4 percent above the geometric centre.</p>
+            <p><a class="text-link" href="index.html#plate-190">Open plate 190</a></p>
+          </div>
+          <ul class="credits micro span-prose">
+            <li>Herbert Bayer, Universal alphabet, 1925.</li>
+            <li>Jost by Owen Earl / indestructible type*. SIL Open Font License.</li>
+            <li>IBM Plex Sans Thai. Noto Sans SC. Anuphan trial by Cadson Demak, SIL Open Font License.</li>
+            <li>Not shipped: P22 Bayer Universal; Architype Bayer, The Foundry (Freda Sack and David Quay); CTAN universa by Christian Holm.</li>
+            <li>Prompts only, pictures not copied: Desizn Circle, <a class="text-link" href="https://www.instagram.com/p/DeYHElAEoM8/">DeYHElAEoM8</a> and <a class="text-link" href="https://www.instagram.com/p/Ddx-GPxEkBi/">Ddx-GPxEkBi</a>. OMORO is named with those prompts.</li>
+          </ul>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

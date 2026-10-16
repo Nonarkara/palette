@@ -1,0 +1,279 @@
+/* Layout specimen. Plate 190 ink: Ivory Buff #ebd3a2, English Red #d96629, Black #111314.
+   Hex values are the credited digital conversion, not the printed ink.
+   Dots on the axis are true circles. Nothing else is rounded. */
+
+:root {
+  color-scheme: light;
+  --space-4: 4px;
+  --space-8: 8px;
+  --space-16: 16px;
+  --space-24: 24px;
+  --space-32: 32px;
+  --space-48: 48px;
+  --space-64: 64px;
+  --space-96: 96px;
+  --gutter: 24px;
+  --grid-columns: 12;
+  --grid-columns-mobile: 4;
+  --baseline: 2rem;
+  --rule-1: 1px;
+  --rule-2: 2px;
+  --rule-3: 3px;
+  --rule-max: 3;
+  --optical-centre-offset: 4%;
+  /* interface.number.dominant-share. Not re-exported. */
+  --dominant-share: 0.618;
+  --ink: #111314;
+  --ground: #ebd3a2;
+  --bright: #d96629;
+  --mass: #111314;
+}
+
+@font-face {
+  font-family: "Jost";
+  src: url("fonts/jost/jost-latin.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+2013-2014, U+2018-201D, U+2022, U+2026, U+2122;
+}
+
+@font-face {
+  font-family: "Anuphan";
+  src: url("fonts/anuphan/anuphan-thai.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0020, U+0E07, U+0E19, U+0E22-0E23, U+0E27, U+0E2A-0E2B, U+0E2D, U+0E30, U+0E32, U+0E35, U+0E48;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-padding-top: var(--space-24); }
+
+body {
+  margin: 0;
+  background: var(--ground);
+  color: var(--ink);
+  font-family: Arial, sans-serif;
+  font-size: 1.25rem;
+  line-height: var(--baseline);
+  font-synthesis: none;
+}
+
+[lang="th"] { font-family: "IBM Plex Sans Thai", "Noto Sans Thai", sans-serif; }
+[lang="zh-Hans"] { font-family: "Noto Sans SC", sans-serif; }
+
+.lowercase-display {
+  font-family: "Jost", "Archivo Narrow", Arial, sans-serif;
+  font-weight: 500;
+  font-synthesis: none;
+  text-transform: lowercase;
+  letter-spacing: 0;
+}
+
+.lowercase-display:lang(th) {
+  font-family: "IBM Plex Sans Thai", "Noto Sans Thai", sans-serif;
+  font-weight: 400;
+  text-transform: none;
+}
+
+.lowercase-display:lang(zh-Hans) {
+  font-family: "Noto Sans SC", sans-serif;
+  font-weight: 400;
+  text-transform: none;
+}
+
+h1, h2, p, ul { margin: 0; }
+ul { padding: 0; list-style: none; }
+.sample-row p + p,
+.trial p + p { margin-block-start: 0; }
+.prose p + p { margin-block-start: var(--baseline); }
+
+a { color: inherit; }
+a:focus-visible {
+  outline: var(--rule-3) solid var(--ink);
+  outline-offset: var(--space-4);
+}
+
+.skip {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  z-index: 2;
+  padding: var(--space-8) var(--space-16);
+  background: var(--ground);
+  transform: translateY(-200%);
+}
+.skip:focus { transform: none; }
+
+.nav a,
+.skip,
+.text-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--space-48);
+  min-width: var(--space-48);
+  padding-inline: var(--space-8);
+}
+
+.screen {
+  min-height: 100vh;
+  padding-block: var(--space-48);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(var(--grid-columns-mobile), minmax(0, 1fr));
+  column-gap: var(--gutter);
+  row-gap: 0;
+  padding-inline: var(--gutter);
+}
+
+.span-page { grid-column: 1 / -1; }
+.span-display { grid-column: 1 / -1; }
+.span-prose { grid-column: 1 / -1; }
+
+.nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-16);
+  margin-block-end: var(--space-32);
+}
+
+.micro {
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: var(--baseline);
+}
+
+.rule {
+  height: var(--rule-1);
+  margin-block-start: var(--space-16);
+  margin-block-end: var(--space-8);
+  background: var(--ink);
+}
+.rule-1 { height: var(--rule-1); }
+.rule-2 { height: var(--rule-2); }
+.rule-3 { height: var(--rule-3); }
+
+.wordmark {
+  font-size: var(--space-64);
+  line-height: var(--space-96);
+}
+
+.samples {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-16);
+  margin-block-start: var(--space-64);
+}
+
+.sample-row {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+}
+
+.sample {
+  font-size: var(--space-64);
+  line-height: var(--space-96);
+}
+
+.sample-th { font-weight: 600; }
+.sample-zh { font-size: 3.5rem; font-weight: 600; }
+
+.trial {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  margin-block-start: var(--space-32);
+}
+
+.sample-trial {
+  font-family: "Anuphan", "IBM Plex Sans Thai", "Noto Sans Thai", sans-serif;
+  font-weight: 500;
+  font-synthesis: none;
+}
+
+.prose { max-width: 38rem; }
+.credits { margin-block-start: var(--space-32); }
+.credits li + li { margin-block-start: var(--space-8); }
+
+.plate {
+  position: relative;
+  min-height: calc(var(--baseline) * 12);
+  background: var(--ground);
+}
+
+.negative-field {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: calc((1 - var(--dominant-share)) * 100%);
+  background: var(--ground);
+}
+
+.mass {
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  width: calc(var(--dominant-share) * 100%);
+  height: calc(var(--dominant-share) * 100%);
+  top: calc(50% - var(--optical-centre-offset) - 50% * var(--dominant-share));
+  background: var(--mass);
+}
+
+.bright { position: absolute; z-index: 2; background: var(--bright); }
+.bright-a { left: 70%; top: 18%; width: 11%; height: 22%; }
+.bright-b { left: 86%; top: 62%; width: 7%; height: 9%; }
+
+.axis {
+  position: absolute;
+  z-index: 3;
+  left: 0;
+  right: 0;
+  top: calc(50% - var(--optical-centre-offset));
+  height: var(--rule-1);
+}
+
+.axis-line-ground {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: calc(var(--dominant-share) * 100%);
+  height: var(--rule-1);
+  background: var(--ground);
+}
+
+.axis-line-ink {
+  position: absolute;
+  left: calc(var(--dominant-share) * 100%);
+  right: 0;
+  top: 0;
+  height: var(--rule-1);
+  background: var(--ink);
+}
+
+.dot {
+  position: absolute;
+  top: 50%;
+  width: var(--space-8);
+  height: var(--space-8);
+  border-radius: 50%;
+  transform: translateY(-50%);
+}
+.dot-ground { left: 0; background: var(--ground); }
+.dot-ink { right: 0; background: var(--ink); }
+
+@media (min-width: 760px) {
+  .grid { grid-template-columns: repeat(var(--grid-columns), minmax(0, 1fr)); }
+  .span-display { grid-column: 1 / 9; }
+  .span-prose { grid-column: 1 / 7; }
+  .wordmark { font-size: var(--space-96); line-height: calc(var(--baseline) * 4); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
