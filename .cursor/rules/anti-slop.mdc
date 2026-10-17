@@ -1,0 +1,17 @@
+---
+description: Anti-slop rules for Palette. Do not re-create these patterns.
+alwaysApply: true
+---
+
+# Anti-slop
+
+Follow `ANTI-SLOP.md`. The colour field keeps its current faces and layout.
+
+- Text boxes fit their text. Use `--pad` (it scales with the line box). No fixed min-height on a text container.
+- Prose uses `--measure` (`65ch`). Thai and Chinese keep that physical width.
+- New Latin type is Jost (`--font-geometric`). New Thai is Prompt, then Kanit (`--font-thai-geometric`, `lang="th"`). Chinese is Noto Sans SC (`--font-hans`, `lang="zh-Hans"`).
+- Banned as a design face: Inter, Poppins, Montserrat, Roboto, Open Sans, Lato, DM Sans, Space Grotesk, Geist, Plus Jakarta Sans, Manrope, Nunito, and system-ui.
+- Something on the page must win. New steps are `--type-body`, `--type-title`, `--type-display`, at least 1.5 times apart. No equal-weight cards. No boxes, gradients, or shadows added to fill space.
+- Do not restyle the exhibition off Archivo Narrow, IBM Plex Sans Thai, Noto Sans SC, JetBrains Mono, or the reading room's Arial.
+
+`npm run check` runs `scripts/check-anti-slop.mjs`.

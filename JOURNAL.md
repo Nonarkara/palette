@@ -187,3 +187,10 @@ disallows AI crawlers) and the eMuseum demo (challenge) are link lists that were
 never fetched. Design Reviewed artefact records were blocked and not bypassed.
 **Tags:** `mcp · references · nostalgia · provenance · anti-slop`
 
+## 2026-10-17 — Anti-slop rules, wired in
+
+**What:** Added `ANTI-SLOP.md` and made the rules the default path: a `65ch` measure, padding that follows the line box, a type step of at least 1.5, and Jost / Prompt / Noto Sans SC for new surfaces. Agent files, the copied plate brief, and `scripts/check-anti-slop.mjs` carry the same ban on Inter, Poppins, Montserrat, Roboto, and the rest of the slop list.
+**Why:** A written ban that lives only in a chat is re-created on the next page. The check fails the build when a face, a line length, or a text-box floor slips.
+**Boundary:** The colour field keeps Archivo Narrow, IBM Plex Sans Thai, Noto Sans SC, and JetBrains Mono. The reading room keeps Arial. The new stacks are the path for new work, not a restyle of this room.
+**Tags:** `anti-slop · type · measure · agents`
+

@@ -15,6 +15,15 @@
   --micro: 0.75rem;
   --rail: 3.5rem;
   --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --measure: 65ch;
+  --leading: 1.5;
+  --pad: calc(0.75 * var(--leading) * 1em);
+  --type-body: 1.125rem;
+  --type-title: 2rem;
+  --type-display: 3.5rem;
+  --font-geometric: "Jost", "Josefin Sans", "League Spartan", sans-serif;
+  --font-thai-geometric: "Prompt", "Kanit", sans-serif;
+  --font-hans: "Noto Sans SC", sans-serif;
 }
 
 * {
@@ -38,7 +47,7 @@ input {
 
 .wallpaper-sheet { max-width:100%; }
 .wallpaper-sheet h2 { font-size:var(--display); margin-block:0 1rem; }
-.wallpaper-sheet p { max-width:60ch; font-size:var(--body); line-height:1.6; }
+.wallpaper-sheet p { max-width:var(--measure); font-size:var(--body); line-height:1.6; }
 .wallpaper-sheet select { display:block; min-height:48px; max-width:100%; margin-block:1rem; padding:.75rem; background:var(--black); color:var(--white); border:0; font:inherit; }
 .wallpaper-sheet select:focus-visible { outline:3px solid var(--focus); }
 .wallpaper-sheet .wallpaper-label-option { display:flex; align-items:center; gap:1rem; min-height:48px; font-size:var(--body); }
@@ -325,7 +334,7 @@ input:focus-visible,
 
 .search-lead > p:last-child {
   grid-column: 2;
-  max-width: 38rem;
+  max-width: min(38rem, var(--measure));
   margin: 0;
   font-size: var(--body);
   line-height: 1.45;
@@ -360,7 +369,7 @@ input:focus-visible,
 }
 
 .search-sheet > p {
-  max-width: 48rem;
+  max-width: var(--measure);
   font-size: var(--body);
 }
 
@@ -383,7 +392,7 @@ input:focus-visible,
 }
 
 .search-footer p {
-  max-width: 65ch;
+  max-width: var(--measure);
   margin: 0;
   line-height: 1.6;
 }
@@ -497,7 +506,7 @@ input:focus-visible,
 }
 
 .languages article {
-  max-width: 42rem;
+  max-width: min(42rem, var(--measure));
   font-size: var(--body);
   line-height: 1.55;
 }
@@ -725,6 +734,7 @@ input:focus-visible,
 }
 
 .about-intro > p:not(.about-kicker, .about-disclosure) {
+  max-width: var(--measure);
   margin: 0;
   font-size: var(--body);
   line-height: 1.45;
@@ -834,6 +844,7 @@ input:focus-visible,
 }
 
 .wada-prose p {
+  max-width: var(--measure);
   margin: 0;
   font-size: var(--body);
   line-height: 1.55;
@@ -904,7 +915,7 @@ input:focus-visible,
 }
 
 .interpretation-register dd {
-  max-width: 38rem;
+  max-width: min(38rem, var(--measure));
   margin: 0;
   font-size: 1rem;
   line-height: 1.45;
@@ -951,6 +962,7 @@ input:focus-visible,
 }
 
 .wada-timeline p {
+  max-width: var(--measure);
   margin: 0;
   font-size: 1rem;
   line-height: 1.45;
@@ -980,7 +992,7 @@ input:focus-visible,
 }
 
 .wada-sources .wada-colophon {
-  max-width: 96ch;
+  max-width: var(--measure);
   margin-block-start: clamp(2rem, 5vw, 5rem);
   color: rgb(255 255 255 / 0.78);
   line-height: 1.65;
@@ -1009,7 +1021,7 @@ input:focus-visible,
 }
 
 .story-body p {
-  max-width: 42rem;
+  max-width: min(42rem, var(--measure));
   margin: 0;
   font-size: clamp(1.25rem, 2vw, 2rem);
   line-height: 1.4;
@@ -1139,6 +1151,7 @@ input:focus-visible,
 }
 
 .architecture-node p {
+  max-width: var(--measure);
   margin: 0;
   font-size: var(--body);
   line-height: 1.35;
@@ -1176,7 +1189,7 @@ input:focus-visible,
 }
 
 .research-position > p {
-  max-width: 48rem;
+  max-width: min(48rem, var(--measure));
   margin: 0;
   font-size: clamp(1.25rem, 2vw, 2rem);
   line-height: 1.45;
