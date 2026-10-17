@@ -863,6 +863,11 @@
         "$value": "0.618",
         "$type": "number",
         "$description": "Custom property --dominant-share from styles.css. This is the two-colour split. app.js changes it for three- and four-colour plates. The proportion is the exhibition layout, not a Wada prescription."
+      },
+      "leading": {
+        "$value": "1.5",
+        "$type": "number",
+        "$description": "Custom property --leading from styles.css. Body line height. Padding is a fraction of this line box."
       }
     },
     "dimension": {
@@ -909,6 +914,26 @@
         "$value": "3.5rem",
         "$type": "dimension",
         "$description": "Custom property --rail from styles.css. At max-width 760px, styles.css sets --rail to 100%."
+      },
+      "measure": {
+        "$value": "65ch",
+        "$type": "dimension",
+        "$description": "Custom property --measure from styles.css. Prose measure for an A4/A5 line, about 65 characters. Wide screens keep this width."
+      },
+      "type-body": {
+        "$value": "1.125rem",
+        "$type": "dimension",
+        "$description": "Custom property --type-body from styles.css. Body step for new surfaces."
+      },
+      "type-title": {
+        "$value": "2rem",
+        "$type": "dimension",
+        "$description": "Custom property --type-title from styles.css. Title step for new surfaces. At least 1.5 times the body step."
+      },
+      "type-display": {
+        "$value": "3.5rem",
+        "$type": "dimension",
+        "$description": "Custom property --type-display from styles.css. Display step for new surfaces. At least 1.5 times the title step."
       }
     },
     "string": {
@@ -926,6 +951,26 @@
         "$value": "cubic-bezier(0.2, 0.8, 0.2, 1)",
         "$type": "string",
         "$description": "Custom property --ease from styles.css. Kept as written. Penpot does not apply this as a colour or a dimension."
+      },
+      "pad": {
+        "$value": "calc(0.75 * var(--leading) * 1em)",
+        "$type": "string",
+        "$description": "Custom property --pad from styles.css. Kept as written. Penpot does not apply this as a colour or a dimension. Text-container padding. 0.75 times the line box, so it scales with the type. Keep padding between half a line box and one and a half."
+      },
+      "font-geometric": {
+        "$value": "\"Jost\", \"Josefin Sans\", \"League Spartan\", sans-serif",
+        "$type": "string",
+        "$description": "Custom property --font-geometric from styles.css. Kept as written. Penpot does not apply this as a colour or a dimension. Latin default for new surfaces. Jost is the free geometric Bauhaus / Universal lookalike. Josefin Sans and League Spartan are the same role if Jost is not installed. The exhibition instrument keeps Archivo Narrow."
+      },
+      "font-thai-geometric": {
+        "$value": "\"Prompt\", \"Kanit\", sans-serif",
+        "$type": "string",
+        "$description": "Custom property --font-thai-geometric from styles.css. Kept as written. Penpot does not apply this as a colour or a dimension. Thai default for new surfaces. Prompt, then Kanit. Non-looped. Use with lang=\"th\". The exhibition instrument keeps IBM Plex Sans Thai."
+      },
+      "font-hans": {
+        "$value": "\"Noto Sans SC\", sans-serif",
+        "$type": "string",
+        "$description": "Custom property --font-hans from styles.css. Kept as written. Penpot does not apply this as a colour or a dimension. Simplified Chinese stack for new surfaces. Use with lang=\"zh-Hans\"."
       }
     },
     "font": {
@@ -962,6 +1007,25 @@
         ],
         "$type": "fontFamilies",
         "$description": "Typeface stack from styles.css. First family: JetBrains Mono."
+      },
+      "geometric": {
+        "$value": [
+          "Jost",
+          "Josefin Sans",
+          "League Spartan",
+          "sans-serif"
+        ],
+        "$type": "fontFamilies",
+        "$description": "Geometric Latin stack from styles.css. First family: Jost, a free Bauhaus / Universal lookalike. At most one Latin family on a new surface."
+      },
+      "thaiGeometric": {
+        "$value": [
+          "Prompt",
+          "Kanit",
+          "sans-serif"
+        ],
+        "$type": "fontFamilies",
+        "$description": "Geometric Thai stack from styles.css. First family: Prompt. Non-looped. Use with lang=\"th\"."
       }
     }
   },
@@ -986,6 +1050,13 @@
         "$value": "{colour.dark-tyrian-blue}",
         "$type": "color",
         "$description": "Custom property --deep from reading.css. Alias of catalogue colour Dark Tyrian Blue. The hex is the credited digital conversion."
+      }
+    },
+    "number": {
+      "leading": {
+        "$value": "1.5",
+        "$type": "number",
+        "$description": "Custom property --leading from reading.css. Body line height. Padding is a fraction of this line box."
       }
     },
     "dimension": {
@@ -1032,6 +1103,26 @@
         "$value": "1rem",
         "$type": "dimension",
         "$description": "Custom property --micro from reading.css."
+      },
+      "measure": {
+        "$value": "65ch",
+        "$type": "dimension",
+        "$description": "Custom property --measure from reading.css. Prose measure for an A4/A5 line, about 65 characters. Wide screens keep this width."
+      },
+      "type-body": {
+        "$value": "1.125rem",
+        "$type": "dimension",
+        "$description": "Custom property --type-body from reading.css. Body step for new surfaces."
+      },
+      "type-title": {
+        "$value": "2rem",
+        "$type": "dimension",
+        "$description": "Custom property --type-title from reading.css. Title step for new surfaces. At least 1.5 times the body step."
+      },
+      "type-display": {
+        "$value": "3.5rem",
+        "$type": "dimension",
+        "$description": "Custom property --type-display from reading.css. Display step for new surfaces. At least 1.5 times the title step."
       }
     },
     "string": {
@@ -1044,6 +1135,26 @@
         "$value": "clamp(2.75rem,6vw,6rem)",
         "$type": "string",
         "$description": "Custom property --display from reading.css. The stylesheet uses this clamp(). The min, preferred, and max lengths are dimension tokens beside it."
+      },
+      "pad": {
+        "$value": "calc(0.75 * var(--leading) * 1em)",
+        "$type": "string",
+        "$description": "Custom property --pad from reading.css. Kept as written. Penpot does not apply this as a colour or a dimension. Text-container padding. 0.75 times the line box, so it scales with the type. Keep padding between half a line box and one and a half."
+      },
+      "font-geometric": {
+        "$value": "\"Jost\", \"Josefin Sans\", \"League Spartan\", sans-serif",
+        "$type": "string",
+        "$description": "Custom property --font-geometric from reading.css. Kept as written. Penpot does not apply this as a colour or a dimension. Latin default for new surfaces. Jost is the free geometric Bauhaus / Universal lookalike. Josefin Sans and League Spartan are the same role if Jost is not installed. The exhibition instrument keeps Archivo Narrow."
+      },
+      "font-thai-geometric": {
+        "$value": "\"Prompt\", \"Kanit\", sans-serif",
+        "$type": "string",
+        "$description": "Custom property --font-thai-geometric from reading.css. Kept as written. Penpot does not apply this as a colour or a dimension. Thai default for new surfaces. Prompt, then Kanit. Non-looped. Use with lang=\"th\". The exhibition instrument keeps IBM Plex Sans Thai."
+      },
+      "font-hans": {
+        "$value": "\"Noto Sans SC\", sans-serif",
+        "$type": "string",
+        "$description": "Custom property --font-hans from reading.css. Kept as written. Penpot does not apply this as a colour or a dimension. Simplified Chinese stack for new surfaces. Use with lang=\"zh-Hans\"."
       }
     },
     "font": {
@@ -1080,6 +1191,25 @@
         ],
         "$type": "fontFamilies",
         "$description": "Typeface stack from reading.css. First family: Noto Sans SC. Simplified Chinese uses this stack with lang=\"zh-Hans\"."
+      },
+      "geometric": {
+        "$value": [
+          "Jost",
+          "Josefin Sans",
+          "League Spartan",
+          "sans-serif"
+        ],
+        "$type": "fontFamilies",
+        "$description": "Geometric Latin stack from reading.css. First family: Jost, a free Bauhaus / Universal lookalike. At most one Latin family on a new surface."
+      },
+      "thaiGeometric": {
+        "$value": [
+          "Prompt",
+          "Kanit",
+          "sans-serif"
+        ],
+        "$type": "fontFamilies",
+        "$description": "Geometric Thai stack from reading.css. First family: Prompt. Non-looped. Use with lang=\"th\"."
       }
     }
   },

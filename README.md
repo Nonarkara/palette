@@ -168,6 +168,8 @@ texts carry the same argument but are typeset for their own scripts:
 - Noto Sans SC for region-correct Simplified Chinese;
 - JetBrains Mono only for plate numbers and digital values.
 
+New surfaces follow [`ANTI-SLOP.md`](ANTI-SLOP.md): prose near `65ch`, padding that scales with the type, and a step of at least 1.5 between type sizes. Latin defaults to Jost. Thai defaults to Prompt, then Kanit. Chinese stays Noto Sans SC. Inter, Poppins, Montserrat, Roboto, and system-ui are not design faces. The four exhibition faces above stay on this room.
+
 ## Design law
 
 The page follows four references: Wada's plates, Rothko's scale, Bauhaus
@@ -207,6 +209,7 @@ The exhibition has no framework and no backend:
 ```text
 index.html          semantic structure, dialogs, multilingual essay
 styles.css          field geometry, typography, motion, responsive rules
+ANTI-SLOP.md        hard rules against AI design slop, enforced by the check
 app.js              palette reconstruction, search, readings, navigation
 content.js          search vocabulary and editorial-use modules
 PALETTE-FIELD-GUIDE.md  standalone download-and-use handbook
@@ -250,6 +253,8 @@ npm run check
 The checks prove that the source still contains 159 unique colours and all 348
 plates, that every plate has two to four colours, and that the interface retains
 its multilingual, accessibility, provenance, and anti-slop invariants.
+`scripts/check-anti-slop.mjs` fails the build on a banned face, a prose line
+past 75 characters, or a fixed floor under a text container.
 
 Automated checks cannot judge the room. Before a release, also test:
 

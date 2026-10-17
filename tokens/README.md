@@ -14,6 +14,8 @@ The file has 159 colours and 348 combinations. Hex values are the credited digit
 
 `interface` is the first `:root` in `styles.css`: the rail, the type sizes, the focus colour, and the instrument colours. Where a custom property uses a catalogue hex, the token is an alias. `reading` is the reading room's `:root` in `reading.css`. Yellow Orange and Dark Tyrian Blue on that page are the Plate 002 conversions.
 
+Both sets also carry the anti-slop defaults from [`ANTI-SLOP.md`](../ANTI-SLOP.md): `--measure` at `65ch`, `--pad` as a fraction of the line box, a type scale whose steps are at least 1.5 times apart, and the geometric stacks. `font.geometric` starts with Jost. `font.thaiGeometric` starts with Prompt, then Kanit. Chinese stays Noto Sans SC. The exhibition faces stay on `font.display`, `font.thai`, `font.hans`, and `font.data`. Banned design faces — Inter, Poppins, Montserrat, Roboto, Open Sans, Lato, DM Sans, Space Grotesk, Geist, Plus Jakarta Sans, Manrope, Nunito, and system-ui — are not in those stacks.
+
 ## Import into Penpot
 
 Penpot documents this file under Design Tokens, in [Importing and Exporting Tokens](https://help.penpot.app/user-guide/design-systems/design-tokens/). A single JSON file is imported from the Tokens tab: **Tools**, then **Import**. The first-level keys are the set names because `$metadata.tokenSetOrder` lists them. [Laura Kalbag's guide](https://penpot.app/blog/a-practical-guide-to-the-design-tokens-json-format/) (14 April 2026) shows the same shape: `$value`, `$type`, and `$description` on every token, with `$themes` and `$metadata` beside the sets.

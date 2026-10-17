@@ -70,6 +70,8 @@ Regenerate the mirrored skill/ledger and standalone typography download with
 - Data: JetBrains Mono.
 - Three sizes: display, body, micro.
 
+New surfaces use the anti-slop defaults in `ANTI-SLOP.md`: a `65ch` measure, padding that follows the line box, and a type step of at least 1.5. Latin is Jost. Thai is Prompt, then Kanit. Chinese stays Noto Sans SC. Inter, Poppins, Montserrat, Roboto, Open Sans, Lato, DM Sans, Space Grotesk, Geist, Plus Jakarta Sans, Manrope, Nunito, and system-ui are not design faces. Those defaults do not replace the faces listed above.
+
 ## Colour contract
 
 The exhibition changes palette by design, so no single accent can govern the

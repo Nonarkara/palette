@@ -44,6 +44,17 @@ npm run dev
 - User-facing prose must stay plain. No AI marketing language.
 - Preserve upstream attribution in `THIRD_PARTY_NOTICES.md` and `data/colors.json`.
 
+## Anti-slop
+
+Read `ANTI-SLOP.md` before designing, building, or reviewing a surface. These patterns must not be re-created. `npm run check` runs `scripts/check-anti-slop.mjs`.
+
+- A text box fits its text. Padding uses `--pad`, which scales with the line box. No fixed min-height on a text container. A 44px target is the height of a control.
+- Prose uses `--measure` (`65ch`). Thai and Chinese keep that physical width.
+- New Latin type uses `--font-geometric` (Jost, then Josefin Sans or League Spartan). New Thai uses `--font-thai-geometric` (Prompt, then Kanit) with `lang="th"`. Chinese uses `--font-hans` (Noto Sans SC) with `lang="zh-Hans"`.
+- Banned as a design face: Inter, Poppins, Montserrat, Roboto, Open Sans, Lato, DM Sans, Space Grotesk, Geist, Plus Jakarta Sans, Manrope, Nunito, and system-ui.
+- No ornament added only to balance a page. One thing on the page must win. New surfaces step type with `--type-body`, `--type-title`, and `--type-display` (at least 1.5 times between steps).
+- The colour field keeps Archivo Narrow, IBM Plex Sans Thai, Noto Sans SC, and JetBrains Mono. The reading room keeps Arial and Archivo Narrow. Do not restyle them to apply the new defaults.
+
 ## Ship
 
 Commit with `Agent: codex`, push to `main`, deploy through GitHub Pages, then

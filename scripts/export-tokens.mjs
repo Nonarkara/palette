@@ -122,7 +122,7 @@ function isNumber(value) {
 }
 
 function isLength(value) {
-  return /^-?\d+(?:\.\d+)?(?:px|rem|em|vw|vh|%)$/.test(value);
+  return /^-?\d+(?:\.\d+)?(?:px|rem|em|ch|vw|vh|%)$/.test(value);
 }
 
 function clampParts(value) {
@@ -178,6 +178,52 @@ function addCustomProperty(tree, name, value, origin, catalogueByHex, place) {
     value,
     "string",
     `${base} Kept as written. Penpot does not apply this as a colour or a dimension.`
+  );
+}
+
+const ANTI_SLOP_NOTES = {
+  measure: " Prose measure for an A4/A5 line, about 65 characters. Wide screens keep this width.",
+  leading: " Body line height. Padding is a fraction of this line box.",
+  pad: " Text-container padding. 0.75 times the line box, so it scales with the type. Keep padding between half a line box and one and a half.",
+  "type-body": " Body step for new surfaces.",
+  "type-title": " Title step for new surfaces. At least 1.5 times the body step.",
+  "type-display": " Display step for new surfaces. At least 1.5 times the title step.",
+  "font-geometric": " Latin default for new surfaces. Jost is the free geometric Bauhaus / Universal lookalike. Josefin Sans and League Spartan are the same role if Jost is not installed. The exhibition instrument keeps Archivo Narrow.",
+  "font-thai-geometric": " Thai default for new surfaces. Prompt, then Kanit. Non-looped. Use with lang=\"th\". The exhibition instrument keeps IBM Plex Sans Thai.",
+  "font-hans": " Simplified Chinese stack for new surfaces. Use with lang=\"zh-Hans\".",
+};
+
+function annotateAntiSlop(tree) {
+  for (const [name, note] of Object.entries(ANTI_SLOP_NOTES)) {
+    for (const group of ["color", "number", "dimension", "string"]) {
+      const leaf = tree[group]?.[name];
+      if (leaf?.$description) leaf.$description += note;
+    }
+  }
+}
+
+function stackFromCustomProperty(css, property) {
+  const match = rootBlock(css, property).match(new RegExp(`--${property}\\s*:\\s*([^;]+);`));
+  if (!match) throw new Error(`missing --${property}`);
+  return match[1].split(",").map((part) => part.trim().replace(/^['"]|['"]$/g, "")).filter(Boolean);
+}
+
+function addGeometricFonts(font, css, origin) {
+  const geometric = stackFromCustomProperty(css, "font-geometric");
+  const thai = stackFromCustomProperty(css, "font-thai-geometric");
+  if (geometric[0] !== "Jost") throw new Error(`${origin} geometric stack must start with Jost`);
+  if (!["Prompt", "Kanit"].includes(thai[0])) {
+    throw new Error(`${origin} Thai geometric stack must start with Prompt or Kanit`);
+  }
+  font.geometric = token(
+    geometric,
+    "fontFamilies",
+    `Geometric Latin stack from ${origin}. First family: Jost, a free Bauhaus / Universal lookalike. At most one Latin family on a new surface.`
+  );
+  font.thaiGeometric = token(
+    thai,
+    "fontFamilies",
+    `Geometric Thai stack from ${origin}. First family: ${thai[0]}. Non-looped. Use with lang="th".`
   );
 }
 
@@ -286,8 +332,10 @@ export function buildTokenDocument({ colors, stylesCss, readingCss, appJs }) {
     interfaceTree.color["last-ink"].$description +=
       " app.js replaces this with black or white from measured contrast on the last field.";
   }
+  annotateAntiSlop(interfaceTree);
   const interfaceSet = compact(interfaceTree);
   interfaceSet.font = fontGroup(stylesCss, EXHIBITION_FONTS, "styles.css");
+  addGeometricFonts(interfaceSet.font, stylesCss, "styles.css");
 
   const readingTree = emptyTree();
   for (const [name, value] of declarations(rootBlock(readingCss, "reading.css"))) {
@@ -299,8 +347,10 @@ export function buildTokenDocument({ colors, stylesCss, readingCss, appJs }) {
   if (readingTree.color.ink) {
     readingTree.color.ink.$description += " Reading ink.";
   }
+  annotateAntiSlop(readingTree);
   const readingSet = compact(readingTree);
   readingSet.font = fontGroup(readingCss, READING_FONTS, "reading.css");
+  addGeometricFonts(readingSet.font, readingCss, "reading.css");
 
   const document = {
     catalogue,

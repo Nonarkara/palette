@@ -171,6 +171,17 @@ test("interface and reading sets keep the stylesheet custom properties", () => {
   assert.deepEqual(document.interface.font.thai.$value[0], "IBM Plex Sans Thai");
   assert.deepEqual(document.interface.font.hans.$value[0], "Noto Sans SC");
   assert.deepEqual(document.interface.font.data.$value[0], "JetBrains Mono");
+  assert.equal(document.interface.dimension.measure.$value, "65ch");
+  assert.equal(document.reading.dimension.measure.$value, "65ch");
+  assert.match(document.interface.string.pad.$value, /var\(--leading\)/);
+  assert.match(document.interface.string.pad.$value, /em/);
+  assert.deepEqual(document.interface.font.geometric.$value[0], "Jost");
+  assert.deepEqual(document.interface.font.thaiGeometric.$value[0], "Prompt");
+  assert.deepEqual(document.reading.font.geometric.$value[0], "Jost");
+  assert.deepEqual(document.reading.font.thaiGeometric.$value[0], "Prompt");
+  const ratio = (left, right) => parseFloat(left) / parseFloat(right);
+  assert.ok(ratio(document.interface.dimension["type-title"].$value, document.interface.dimension["type-body"].$value) >= 1.5);
+  assert.ok(ratio(document.interface.dimension["type-display"].$value, document.interface.dimension["type-title"].$value) >= 1.5);
   assert.match(document.interface.font.thai.$description, /lang="th"/);
   assert.match(document.interface.font.hans.$description, /lang="zh-Hans"/);
 });
