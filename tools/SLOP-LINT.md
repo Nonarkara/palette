@@ -8,7 +8,7 @@ node tools/slop-lint.mjs https://example.org                   # one line per UR
 node tools/slop-lint.mjs https://a.example https://b.example --json --shots=shots
 ```
 
-Add `--strict` to exit with code 1 on a SLOP verdict or a ship-basics FAIL, so it can gate a deploy script. `--no-basics` runs only the slop score.
+Add `--strict` to exit with code 1 on a SLOP verdict, a ship-basics FAIL, or a page it couldn't load or measure (blocked, empty, error), so it can gate a deploy script. `--no-basics` runs only the slop score.
 
 Slop verdicts:
 - **≥6 points = SLOP**: fix before shipping.

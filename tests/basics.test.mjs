@@ -32,6 +32,10 @@ test('judgeBasics: clean metrics pass, each failure is named', () => {
   assert.deepEqual(w.warns.map(x => x.id).sort(), ['cls-some', 'en-th-zh', 'lcp-slow']);
   const oneSlow = judgeBasics({ ...clean, perf: { lcpMs: 4740, cls: 0 } }, { perf: { lcpMs: 340, cls: 0 } });
   assert.deepEqual([oneSlow.fails.length, oneSlow.warns.map(x => x.id)], [0, ['lcp-slow']], 'one slow load is a warning, not a failure');
+  const onlyOne = judgeBasics({ ...clean, perf: { lcpMs: 6000, cls: 0 } }, {});
+  assert.deepEqual([onlyOne.fails.length, onlyOne.warns.map(x => x.id)], [0, ['lcp-slow']], 'a single measurement can only warn');
+  const broken = judgeBasics({ ...clean, interactive: { get noFocus() { throw new Error('boom'); } } }, {});
+  assert.ok(broken.warns.some(x => x.id === 'check-error' && /focus-visible/.test(x.detail)), 'a broken check is reported, not passed silently');
 });
 
 test('imageIssues flags heavy, oversized and too-many-bytes images, and ignores small ones', () => {
@@ -77,6 +81,18 @@ test('browser: a careful page passes the basics', { skip: !browser && 'Playwrigh
     assert.deepEqual(r.fails, [], JSON.stringify(r.fails));
     assert.deepEqual(r.warns, [], JSON.stringify(r.warns));
     assert.equal(r.verdict, 'PASS');
+  } finally { srv.close(); }
+});
+
+test('browser: a project site (user.github.io/name/) links home one level down', { skip: !browser && 'Playwright Chromium not installed' }, async () => {
+  const { srv, base } = await serve();
+  try {
+    const page = await browser.newPage();
+    await page.route('**/proj/**', route => route.fulfill({ contentType: 'text/html', body: '<!doctype html><html lang="en"><body><a href="/proj/">Name</a><a href="/proj/about.html">About</a></body></html>' }));
+    await page.goto(base + 'proj/about.html');
+    const d = await page.evaluate(`(${inPageBasics})(${contrastRatio}, {})`);
+    assert.equal(d.homeLink, true);
+    await page.close();
   } finally { srv.close(); }
 });
 

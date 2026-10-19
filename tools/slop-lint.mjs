@@ -311,11 +311,11 @@ export async function lintUrl(browser, url, { shotsDir, slug, settleMs = 7000, s
       const { dom, shot } = await measure(page);
       res[vp] = dom; res.finalUrl = page.url();
       if (shotsDir && saveShots) fs.writeFileSync(`${shotsDir}/${slug}-${vp}.png`, shot);
-      if (basics) { // after the screenshot: these checks move focus and the mouse
+      if (basics) try { // after the screenshot: these checks move focus and the mouse
         const b = await page.evaluate(`(${inPageBasics})(${contrastRatio}, ${JSON.stringify({ mobile })})`);
         if (!mobile) { b.interactive = await measureInteractive(page); b.imageIssues = imageIssues(await imgs.done(), b.images); }
         delete b.images; res[vp + 'Basics'] = b;
-      }
+      } catch (e) { res.basicsError = `${vp}: ${String(e.message || e).split('\n')[0].slice(0, 160)}`; }
     } catch (e) { res[vp + 'Error'] = String(e.message || e).split('\n')[0].slice(0, 200); }
     await ctx.close();
   }
@@ -326,6 +326,7 @@ export async function lintUrl(browser, url, { shotsDir, slug, settleMs = 7000, s
   if (res.desktop && res.status === 'OK') res.lint = score(res.desktop, res.mobile || {});
   if (res.lint) res.lint.verdict = res.lint.points >= SLOP_THRESHOLD_POINTS ? 'SLOP' : res.lint.points >= REVIEW_THRESHOLD_POINTS ? 'REVIEW' : 'OK';
   if (res.desktopBasics && res.status === 'OK') res.basics = judgeBasics(res.desktopBasics, res.mobileBasics || {});
+  if (basics && res.status === 'OK' && (res.basicsError || !res.basics)) res.basics = { verdict: 'FAIL', fails: [{ id: 'basics-error', detail: res.basicsError || 'not measured' }], warns: res.basics?.warns || [] };
   return res;
 }
 

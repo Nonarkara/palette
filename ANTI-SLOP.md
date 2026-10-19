@@ -49,9 +49,9 @@ The rules above ask whether each thing should be there. These ask whether the pa
 | tap-targets | Every phone tap target is at least 44×44 CSS px. A link inside a sentence is exempt. | FAIL |
 | img-alt | Every `<img>` has `alt`, saying what the image tells you. Use `alt=""` for decoration. | FAIL |
 | control-names, form-labels | Every button and link has a name. Every field has a `<label>`; a placeholder is not a label. | FAIL |
-| focus-visible | Pressing Tab shows where you are on every control. No `outline: none` without a replacement. | FAIL |
+| focus-visible | Pressing Tab shows where you are on every control (the linter samples the first 15 Tab stops). No `outline: none` without a replacement. | FAIL |
 | html-lang, viewport-meta | `<html lang>` is set, and the viewport is `width=device-width`. | FAIL |
-| lcp, cls | Largest paint within 4 s (aim for 2.5 s), layout shift under 0.25 (aim for 0.1). These are lab numbers. | FAIL, warn |
+| lcp, cls | Largest paint within 4 s on both the desktop and phone loads (aim for 2.5 s), layout shift under 0.25 (aim for 0.1). These are lab numbers. | FAIL, warn |
 | image-weight | No image over 300 KB, no more than 2 MB of images on first load, and none served over 2.5× its shown width. Use AVIF or WebP, `srcset`, `width` and `height`, and `loading="lazy"` below the fold. | warn |
 | zoom-blocked | Pinch zoom works. | warn |
 | hover-states | Links and buttons change on hover, as well as on focus. | warn |
@@ -82,7 +82,7 @@ The rules above ask whether each thing should be there. These ask whether the pa
 
 ```bash
 npm i -D playwright pngjs && npx playwright install chromium
-node tools/slop-lint.mjs https://your-site.example   # add --json, --shots=dir, or --strict (exit 1 on SLOP or a basics FAIL)
+node tools/slop-lint.mjs https://your-site.example   # add --json, --shots=dir, or --strict (exit 1 on SLOP, a basics FAIL, or a page it couldn't measure)
 ```
 
 It loads the page at 1440×900 and 390×844, runs the ship basics above (PASS, WARN or FAIL), and scores the slop rules in points:

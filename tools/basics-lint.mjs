@@ -110,9 +110,14 @@ export function inPageBasics(ratio, opts = {}) {
 
   // conventions: a way home near the top; EN/TH/ZH reachable
   const here = new URL(location.href);
+  const seg1 = here.pathname.split('/')[1] || ''; // a project site such as user.github.io/palette/ has its home one level down
+  const roots = ['/'].concat(seg1 && here.pathname.length > seg1.length + 1 ? ['/' + seg1 + '/'] : []);
   out.homeLink = [...document.querySelectorAll('a[href]')].some(a => {
     const r = a.getBoundingClientRect(); if (r.width < 1 || r.top > 200 || r.bottom < 0) return false;
-    try { const u = new URL(a.href, here); return u.origin === here.origin && /^\/((en|th|zh|zh-cn|zh-hans)\/?)?(index\.html?)?$/i.test(u.pathname) && !u.hash.slice(1); } catch { return false; }
+    try {
+      const u = new URL(a.href, here); if (u.origin !== here.origin || u.hash.slice(1)) return false;
+      return roots.some(root => u.pathname.startsWith(root) && /^((en|th|zh|zh-cn|zh-hans)\/?)?(index\.html?)?$/i.test(u.pathname.slice(root.length)));
+    } catch { return false; }
   });
   const langs = new Set();
   for (const e of document.querySelectorAll('[hreflang],[lang]')) { const l = (e.getAttribute('hreflang') || e.getAttribute('lang') || '').toLowerCase(); if (/^th/.test(l)) langs.add('th'); if (/^zh/.test(l)) langs.add('zh'); if (/^en/.test(l)) langs.add('en'); }
@@ -182,7 +187,8 @@ export async function measureInteractive(page, { maxTabs = 15, maxHover = 8 } = 
 export const BUDGETS = { tap: 44, lcpWarnMs: 2500, lcpFailMs: 4000, clsWarn: 0.1, clsFail: 0.25, imageWarnBytes: 300e3, imagesTotalWarnBytes: 2e6, oversizeFactor: 2.5, oversizeMinBytes: 100e3 };
 
 // LCP is noisy in a lab: FAIL only when both loads are slow (the faster of the two is over budget).
-const lcpBoth = (d, m) => { const a = d.perf?.lcpMs, b = m.perf?.lcpMs; return a && b ? Math.min(a, b) : (a || b || 0); };
+// With only one measurement there is no second load to confirm it, so it can only warn.
+const lcpBoth = (d, m) => { const a = d.perf?.lcpMs, b = m.perf?.lcpMs; return a && b ? Math.min(a, b) : 0; };
 
 // Each check: id, level (fail|warn), plain description, test(desktop, mobile) -> detail string or '' (pass).
 export const BASICS = [
@@ -219,6 +225,10 @@ export function imageIssues(sizes = [], shown = []) {
 
 export function judgeBasics(d = {}, m = {}) {
   const fails = [], warns = [];
-  for (const b of BASICS) { let detail = ''; try { detail = b.test(d, m) || ''; } catch { detail = ''; } if (detail) (b.level === 'fail' ? fails : warns).push({ id: b.id, detail }); }
+  for (const b of BASICS) {
+    let detail = '';
+    try { detail = b.test(d, m) || ''; } catch (e) { warns.push({ id: 'check-error', detail: `${b.id}: ${String(e.message || e).slice(0, 80)}` }); continue; }
+    if (detail) (b.level === 'fail' ? fails : warns).push({ id: b.id, detail });
+  }
   return { verdict: fails.length ? 'FAIL' : warns.length ? 'WARN' : 'PASS', fails, warns };
 }
