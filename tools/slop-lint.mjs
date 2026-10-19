@@ -3,7 +3,7 @@
 // Usage: node slop-lint.mjs <url> [more urls...] [--json] [--shots=dir] [--strict] [--no-basics]
 // Setup once: npm i -D playwright pngjs && npx playwright install chromium   (or set CHROME=/path/to/chrome)
 // Verdict: >=6 points SLOP (fix before shipping) · 3-5 REVIEW (a person checks the hits) · <3 OK. Rules: see ANTI-SLOP.md.
-// Ship basics (tools/basics-lint.mjs) run alongside: PASS / WARN / FAIL, separate from the slop score. --strict exits 1 on SLOP or basics FAIL.
+// Ship basics (tools/basics-lint.mjs) run alongside: PASS / WARN / FAIL, separate from the slop score. --strict exits 1 on SLOP, a basics FAIL, or a page it couldn't load or measure.
 // Exports: measurePage(page), pixelStats(pngBuffer), score(desktop, mobile), lintUrl(browser,url,opts)
 import { chromium } from 'playwright';
 import { PNG } from 'pngjs';
@@ -326,7 +326,7 @@ export async function lintUrl(browser, url, { shotsDir, slug, settleMs = 7000, s
   if (res.desktop && res.status === 'OK') res.lint = score(res.desktop, res.mobile || {});
   if (res.lint) res.lint.verdict = res.lint.points >= SLOP_THRESHOLD_POINTS ? 'SLOP' : res.lint.points >= REVIEW_THRESHOLD_POINTS ? 'REVIEW' : 'OK';
   if (res.desktopBasics && res.status === 'OK') res.basics = judgeBasics(res.desktopBasics, res.mobileBasics || {});
-  if (basics && res.status === 'OK' && (res.basicsError || !res.basics)) res.basics = { verdict: 'FAIL', fails: [{ id: 'basics-error', detail: res.basicsError || 'not measured' }], warns: res.basics?.warns || [] };
+  if (basics && res.status === 'OK' && (res.basicsError || !res.basics)) res.basics = { verdict: 'FAIL', fails: [{ id: 'basics-error', detail: res.basicsError || 'not measured' }, ...(res.basics?.fails || [])], warns: res.basics?.warns || [] };
   return res;
 }
 

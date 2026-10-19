@@ -35,7 +35,8 @@ test('judgeBasics: clean metrics pass, each failure is named', () => {
   const onlyOne = judgeBasics({ ...clean, perf: { lcpMs: 6000, cls: 0 } }, {});
   assert.deepEqual([onlyOne.fails.length, onlyOne.warns.map(x => x.id)], [0, ['lcp-slow']], 'a single measurement can only warn');
   const broken = judgeBasics({ ...clean, interactive: { get noFocus() { throw new Error('boom'); } } }, {});
-  assert.ok(broken.warns.some(x => x.id === 'check-error' && /focus-visible/.test(x.detail)), 'a broken check is reported, not passed silently');
+  assert.ok(broken.fails.some(x => x.id === 'check-error' && /focus-visible/.test(x.detail)), 'a broken FAIL-level check fails, not passes silently');
+  assert.equal(broken.verdict, 'FAIL');
 });
 
 test('imageIssues flags heavy, oversized and too-many-bytes images, and ignores small ones', () => {
@@ -84,16 +85,17 @@ test('browser: a careful page passes the basics', { skip: !browser && 'Playwrigh
   } finally { srv.close(); }
 });
 
-test('browser: a project site (user.github.io/name/) links home one level down', { skip: !browser && 'Playwright Chromium not installed' }, async () => {
-  const { srv, base } = await serve();
+test('browser: a project site (user.github.io/name/) links home one level down; elsewhere a section link is not home', { skip: !browser && 'Playwright Chromium not installed' }, async () => {
+  const page = await browser.newPage();
+  const body = '<!doctype html><html lang="en"><body><a href="/proj/">Name</a><a href="/proj/about.html">About</a></body></html>';
+  await page.route(/example\.(github\.io|org)\//, route => route.fulfill({ contentType: 'text/html', body }));
   try {
-    const page = await browser.newPage();
-    await page.route('**/proj/**', route => route.fulfill({ contentType: 'text/html', body: '<!doctype html><html lang="en"><body><a href="/proj/">Name</a><a href="/proj/about.html">About</a></body></html>' }));
-    await page.goto(base + 'proj/about.html');
-    const d = await page.evaluate(`(${inPageBasics})(${contrastRatio}, {})`);
-    assert.equal(d.homeLink, true);
-    await page.close();
-  } finally { srv.close(); }
+    for (const [url, want] of [['https://example.github.io/proj/about.html', true], ['https://example.org/proj/about.html', false]]) {
+      await page.goto(url);
+      const d = await page.evaluate(`(${inPageBasics})(${contrastRatio}, {})`);
+      assert.equal(d.homeLink, want, url);
+    }
+  } finally { await page.close(); }
 });
 
 test('browser: a careless page fails each basic it breaks', { skip: !browser && 'Playwright Chromium not installed' }, async () => {

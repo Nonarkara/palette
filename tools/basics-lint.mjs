@@ -110,8 +110,8 @@ export function inPageBasics(ratio, opts = {}) {
 
   // conventions: a way home near the top; EN/TH/ZH reachable
   const here = new URL(location.href);
-  const seg1 = here.pathname.split('/')[1] || ''; // a project site such as user.github.io/palette/ has its home one level down
-  const roots = ['/'].concat(seg1 && here.pathname.length > seg1.length + 1 ? ['/' + seg1 + '/'] : []);
+  const seg1 = here.pathname.split('/')[1] || ''; // a GitHub/GitLab project site (user.github.io/palette/) has its home one level down
+  const roots = ['/'].concat(seg1 && /\.(github|gitlab)\.io$/.test(here.hostname) && here.pathname.length > seg1.length + 1 ? ['/' + seg1 + '/'] : []);
   out.homeLink = [...document.querySelectorAll('a[href]')].some(a => {
     const r = a.getBoundingClientRect(); if (r.width < 1 || r.top > 200 || r.bottom < 0) return false;
     try {
@@ -227,7 +227,7 @@ export function judgeBasics(d = {}, m = {}) {
   const fails = [], warns = [];
   for (const b of BASICS) {
     let detail = '';
-    try { detail = b.test(d, m) || ''; } catch (e) { warns.push({ id: 'check-error', detail: `${b.id}: ${String(e.message || e).slice(0, 80)}` }); continue; }
+    try { detail = b.test(d, m) || ''; } catch (e) { (b.level === 'fail' ? fails : warns).push({ id: 'check-error', detail: `${b.id}: ${String(e.message || e).slice(0, 80)}` }); continue; }
     if (detail) (b.level === 'fail' ? fails : warns).push({ id: b.id, detail });
   }
   return { verdict: fails.length ? 'FAIL' : warns.length ? 'WARN' : 'PASS', fails, warns };
