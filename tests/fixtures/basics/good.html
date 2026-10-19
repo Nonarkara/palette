@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Basics: passing page</title>
+<style>
+  body { margin: 0; font: 18px/1.5 Georgia, serif; color: #1a1a1a; background: #fbf7ef; }
+  header { display: flex; gap: 8px; align-items: center; padding: 0 16px; min-height: 56px; }
+  a, button { display: inline-flex; align-items: center; min-height: 44px; min-width: 44px; padding: 0 8px; color: #7a2418; }
+  a:hover, button:hover { text-decoration: underline; color: #4a140c; }
+  :focus-visible { outline: 2px solid #7a2418; outline-offset: 2px; }
+  button { font: inherit; background: #fbf7ef; border: 1px solid #7a2418; }
+  main { max-width: 62ch; padding: 16px; }
+  label { display: inline-flex; align-items: center; min-height: 44px; gap: 8px; }
+  input { min-height: 44px; font: inherit; }
+</style>
+</head>
+<body>
+<header>
+  <a href="/">Home</a>
+  <a href="/th/" hreflang="th" lang="th">ไทย</a>
+  <a href="/zh/" hreflang="zh-Hans" lang="zh-Hans">中文</a>
+</header>
+<main>
+  <h1>Rain gauges near you</h1>
+  <p>Twenty-two gauges are over the bank. This sentence has <a href="/about.html" style="display:inline;min-height:0;min-width:0;padding:0">an inline link</a> that is allowed to be small because it sits inside running text.</p>
+  <img src="dot.svg" alt="" width="40" height="40">
+  <label for="q">Province</label> <input id="q" name="q">
+  <button type="button">Search</button>
+</main>
+</body>
+</html>

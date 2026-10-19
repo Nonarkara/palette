@@ -3,4 +3,4 @@ description: Dr Non's anti-slop design rules. Read ANTI-SLOP.md before any UI wo
 alwaysApply: true
 ---
 
-Before designing or changing any page, component, style or chart, read `ANTI-SLOP.md` at the repo root and follow its hard limits: empty space is a decision, subtract before you add, the map comes first. Run `node tools/slop-lint.mjs <url>` before calling UI work done.
+Before designing or changing any page, component, style or chart, read `ANTI-SLOP.md` at the repo root and follow its hard limits: empty space is a decision, subtract before you add, the map comes first. Then check its "Ship basics" section (contrast, 44px tap targets, alt text, labels, visible focus, image weight, LCP/CLS, a way home, EN/TH/ZH). Run `node tools/slop-lint.mjs <url> --strict` before calling UI work done: no SLOP verdict and no basics FAIL.

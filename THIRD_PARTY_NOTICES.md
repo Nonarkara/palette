@@ -67,3 +67,12 @@ writing. They adapt two MIT sources and do not vendor those repositories.
 Both upstream works are MIT. The permission text is the LICENSE file at each
 commit above. That licence covers those works. It does not relicense Palette,
 and Palette's MIT licence does not relicense them. No endorsement is implied.
+
+## Ideas credited, no code copied
+
+The "Ship basics" section of `ANTI-SLOP.md` and the checks in
+`tools/basics-lint.mjs` follow Harsh Vijay, *11 Website Design Best Practices
+To Follow In 2026*, ruttl, 9 August 2026,
+<https://www.ruttl.com/blog/web-design-best-practices>. Thresholds come from
+WCAG 2.2 and Google's Core Web Vitals. Where the article disagrees with the
+house rules, the house rules win, and `ANTI-SLOP.md` says where.

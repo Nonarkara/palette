@@ -37,16 +37,55 @@ On any map or data product the map is the operating table, and everything else i
 - Panels are compact, collapsible and sized to their content, docked at the edges. Nothing covers the map on load.
 - Numbers sit next to the place they describe. They don't go in a separate card grid.
 
+## Ship basics: the things we keep forgetting
+
+The rules above ask whether each thing should be there. These ask whether the page works. They don't judge style, and `STYLE.md` can't exempt them. If a deliberate choice fails one, such as a signature grey that fails contrast, keep the choice and ask the owner for a fix that keeps it (a darker shade of the same hue, a bigger size). Never quietly delete it.
+
+**Checked by slop-lint.** A FAIL blocks shipping. A warn needs one sentence in the PR saying why it's fine.
+
+| Check | Rule | Level |
+|---|---|---|
+| contrast | Text is at least 4.5:1 against what it sits on (3:1 at 24px, or 18.66px bold). | FAIL |
+| tap-targets | Every phone tap target is at least 44×44 CSS px. A link inside a sentence is exempt. | FAIL |
+| img-alt | Every `<img>` has `alt`, saying what the image tells you. Use `alt=""` for decoration. | FAIL |
+| control-names, form-labels | Every button and link has a name. Every field has a `<label>`; a placeholder is not a label. | FAIL |
+| focus-visible | Pressing Tab shows where you are on every control. No `outline: none` without a replacement. | FAIL |
+| html-lang, viewport-meta | `<html lang>` is set, and the viewport is `width=device-width`. | FAIL |
+| lcp, cls | Largest paint within 4 s (aim for 2.5 s), layout shift under 0.25 (aim for 0.1). These are lab numbers. | FAIL, warn |
+| image-weight | No image over 300 KB, no more than 2 MB of images on first load, and none served over 2.5× its shown width. Use AVIF or WebP, `srcset`, `width` and `height`, and `loading="lazy"` below the fold. | warn |
+| zoom-blocked | Pinch zoom works. | warn |
+| hover-states | Links and buttons change on hover, as well as on focus. | warn |
+| home-link | The name or logo at the top links home. | warn |
+| en-th-zh | Public frontends offer EN, TH and ZH. | warn |
+
+**Checked by a person**, because the linter can't:
+1. **Phone first.** Build at 390px wide, then let the extra width earn its place. Open it on a real phone before calling it done ([phone-first](https://github.com/Nonarkara/dr-non-vibecoding-skills/blob/main/skills/phone-first/SKILL.md)).
+2. **The first screen says what this is.** A first-time visitor can say what the page is for, and what to do next, within five seconds in each of EN, TH and ZH. A different agent plays the first-timer, never the builder.
+3. **Conventions sit where people look for them.** The name or logo is top-left and links home. Navigation is at the top or left, in a slim bar of 56px or less (the map rule wins). Anything that looks clickable is clickable, and nothing else looks it. Carousels have manual controls and don't auto-advance. Break a convention only on purpose, and write the reason in `STYLE.md`.
+4. **One primary action per screen**, labelled with a verb and its object ("Download the CSV", "See my district") and sized to its label.
+5. **The same thing looks and behaves the same on every page:** buttons, links, headings, the logo and the language switch. The radius, type-size and colour limits above are the part a machine can count.
+6. **Copy gets to the point.** Give the answer first, in short sentences and active voice ([no-ai-tells](https://github.com/Nonarkara/dr-non-vibecoding-skills/blob/main/skills/no-ai-tells/SKILL.md)).
+7. **Changes are announced, not only animated.** Errors appear in text next to their field, and colour never carries meaning alone ([accessible-by-default](https://github.com/Nonarkara/dr-non-vibecoding-skills/blob/main/skills/accessible-by-default/SKILL.md)).
+8. **Keyboard and zoom pass.** Do the main task with no mouse, then again at 200% zoom and 320px wide.
+
+**Where the source article and these rules disagree, these rules win:**
+- "Power verbs" such as optimize, streamline and boost are the filler copy banned above. Say what happens instead.
+- "Avoid words of uncertainty." Cut hedges, not honesty. When a number is a projection, say so and how sure it is ([honest-envelope](https://github.com/Nonarkara/dr-non-vibecoding-skills/blob/main/skills/honest-envelope/SKILL.md)).
+- "Place CTAs throughout the site." No: one primary action per screen. Subtract before you add.
+- "Ample space around key elements." Yes, when the space is decided. Never as stretch-to-fill or dead space.
+- "Consistency over experiment." Consistency means the same thing behaves the same way. It never flattens a style somebody chose.
+- A/B testing and the article's review tool are skipped. Pages are reviewed by a different agent and a first-timer playtest, at $0.
+
 ## Check it: slop-lint
 
 `tools/slop-lint.mjs` lives in Nonarkara/palette and Nonarkara/dr-non-vibecoding-skills.
 
 ```bash
 npm i -D playwright pngjs && npx playwright install chromium
-node tools/slop-lint.mjs https://your-site.example   # add --json or --shots=dir
+node tools/slop-lint.mjs https://your-site.example   # add --json, --shots=dir, or --strict (exit 1 on SLOP or a basics FAIL)
 ```
 
-It loads the page at 1440×900 and 390×844 and scores the rules above in points:
+It loads the page at 1440×900 and 390×844, runs the ship basics above (PASS, WARN or FAIL), and scores the slop rules in points:
 - **≥6 = SLOP**: fix it before shipping.
 - **3–5 = REVIEW**: a person checks each hit.
 - **<3 = OK.**
@@ -56,5 +95,7 @@ It's a screen, not a judge. On our study set it caught 91% of slop with 95% prec
 ## Evidence base and credit
 
 These rules come from measuring the 46 citizen-built flood apps listed on FloodDash's *About → Citizen-built apps* page (flood.nonarkara.org) on 18 Oct 2026. Of those, 37 were reachable, and 31 were labelled by eye and checked with DOM and pixel metrics. People built these tools during a flood, often overnight and for free. Many of them help people, and we're grateful to every builder. The study is about visual patterns only, not about people or how useful the tools are.
+
+The ship basics follow [*11 Website Design Best Practices To Follow In 2026*](https://www.ruttl.com/blog/web-design-best-practices) by Harsh Vijay at ruttl (9 Aug 2026), filtered through the rules above. The contrast and target sizes come from WCAG 2.2, and the LCP and CLS lines from Google's Core Web Vitals.
 
 Apps whose maps show victims' or reporters' personal data were not pictured or quoted. The clean exceptions worth learning from are Thailand Flooder, พิกัดน้ำท่วมสมุทรปราการ (paddypure), น้ำคลอง (namkhlong), Floodboard, น้ำบนถนน บางมด (taokaetech), Floraville Flood Forecast and Meanam. They let the map win, use few boxes and one radius, keep lines short, and each has a point of view.
