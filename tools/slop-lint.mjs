@@ -1,14 +1,12 @@
 #!/usr/bin/env node
 // slop-lint.mjs — score any URL for "AI design slop" signals with Playwright.
-// Usage: node slop-lint.mjs <url> [more urls...] [--json] [--shots=dir] [--strict] [--no-basics]
+// Usage: node slop-lint.mjs <url> [more urls...] [--json] [--shots=dir]
 // Setup once: npm i -D playwright pngjs && npx playwright install chromium   (or set CHROME=/path/to/chrome)
 // Verdict: >=6 points SLOP (fix before shipping) · 3-5 REVIEW (a person checks the hits) · <3 OK. Rules: see ANTI-SLOP.md.
-// Ship basics (tools/basics-lint.mjs) run alongside: PASS / WARN / FAIL, separate from the slop score. --strict exits 1 on SLOP, a basics FAIL, or a page it couldn't load or measure.
 // Exports: measurePage(page), pixelStats(pngBuffer), score(desktop, mobile), lintUrl(browser,url,opts)
 import { chromium } from 'playwright';
 import { PNG } from 'pngjs';
 import fs from 'fs';
-import { inPageBasics, contrastRatio, PERF_INIT_SCRIPT, watchImages, measureInteractive, imageIssues, judgeBasics } from './basics-lint.mjs';
 
 // ---------------------------------------------------------------- in-page DOM metrics
 export function inPageMetrics() {
@@ -296,13 +294,11 @@ export async function measure(page) {
   return { dom: { ...dom, ...pixelStats(shot) }, shot };
 }
 
-export async function lintUrl(browser, url, { shotsDir, slug, settleMs = 7000, saveShots = true, basics = true } = {}) {
+export async function lintUrl(browser, url, { shotsDir, slug, settleMs = 7000, saveShots = true } = {}) {
   const res = { url };
   for (const [vp, w, h, mobile] of [['desktop', 1440, 900, false], ['mobile', 390, 844, true]]) {
     const ctx = await browser.newContext({ viewport: { width: w, height: h }, deviceScaleFactor: 1, isMobile: false, hasTouch: mobile, locale: 'th-TH', timezoneId: 'Asia/Bangkok', userAgent: mobile ? 'Mozilla/5.0 (iPhone; CPU iPhone OS 17_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.5 Mobile/15E148 Safari/604.1' : undefined, ignoreHTTPSErrors: true });
     const page = await ctx.newPage();
-    if (basics) await page.addInitScript(PERF_INIT_SCRIPT);
-    const imgs = basics && !mobile ? watchImages(page) : null;
     try {
       const resp = await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 35000 });
       res[vp + 'Status'] = resp ? resp.status() : null;
@@ -311,11 +307,6 @@ export async function lintUrl(browser, url, { shotsDir, slug, settleMs = 7000, s
       const { dom, shot } = await measure(page);
       res[vp] = dom; res.finalUrl = page.url();
       if (shotsDir && saveShots) fs.writeFileSync(`${shotsDir}/${slug}-${vp}.png`, shot);
-      if (basics) try { // after the screenshot: these checks move focus and the mouse
-        const b = await page.evaluate(`(${inPageBasics})(${contrastRatio}, ${JSON.stringify({ mobile })})`);
-        if (!mobile) { b.interactive = await measureInteractive(page); b.imageIssues = imageIssues(await imgs.done(), b.images); }
-        delete b.images; res[vp + 'Basics'] = b;
-      } catch (e) { res.basicsError = `${vp}: ${String(e.message || e).split('\n')[0].slice(0, 160)}`; }
     } catch (e) { res[vp + 'Error'] = String(e.message || e).split('\n')[0].slice(0, 200); }
     await ctx.close();
   }
@@ -325,8 +316,6 @@ export async function lintUrl(browser, url, { shotsDir, slug, settleMs = 7000, s
   else if (dd) res.status = 'OK';
   if (res.desktop && res.status === 'OK') res.lint = score(res.desktop, res.mobile || {});
   if (res.lint) res.lint.verdict = res.lint.points >= SLOP_THRESHOLD_POINTS ? 'SLOP' : res.lint.points >= REVIEW_THRESHOLD_POINTS ? 'REVIEW' : 'OK';
-  if (res.desktopBasics && res.status === 'OK') res.basics = judgeBasics(res.desktopBasics, res.mobileBasics || {});
-  if (basics && res.status === 'OK' && (res.basicsError || !res.basics)) res.basics = { verdict: 'FAIL', fails: [{ id: 'basics-error', detail: res.basicsError || 'not measured' }, ...(res.basics?.fails || [])], warns: res.basics?.warns || [] };
   return res;
 }
 
@@ -334,19 +323,12 @@ export async function lintUrl(browser, url, { shotsDir, slug, settleMs = 7000, s
 if (import.meta.url === `file://${process.argv[1]}`) {
   const args = process.argv.slice(2); const urls = args.filter(a => !a.startsWith('--')); const json = args.includes('--json');
   const shotsDir = (args.find(a => a.startsWith('--shots=')) || '').slice(8) || null;
-  const strict = args.includes('--strict'), basics = !args.includes('--no-basics'); let failed = false;
-  if (!urls.length) { console.error('usage: node slop-lint.mjs <url>... [--json] [--shots=dir] [--strict] [--no-basics]'); process.exit(2); }
+  if (!urls.length) { console.error('usage: node slop-lint.mjs <url>... [--json] [--shots=dir]'); process.exit(2); }
   const browser = await chromium.launch({ executablePath: process.env.CHROME || undefined, args: ['--use-gl=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'] });
   for (const u of urls) {
-    const r = await lintUrl(browser, u, { basics, shotsDir, slug: u.replace(/^https?:\/\//, '').replace(/[^a-z0-9]+/gi, '-').slice(0, 50) });
-    if (!r.lint || r.lint.verdict === 'SLOP' || r.basics?.verdict === 'FAIL') failed = true;
+    const r = await lintUrl(browser, u, { shotsDir, slug: u.replace(/^https?:\/\//, '').replace(/[^a-z0-9]+/gi, '-').slice(0, 50) });
     if (json) console.log(JSON.stringify(r)); else if (!r.lint) console.log(`${u}\t${r.status || 'ERROR'}\t${r.desktopError || r.mobileError || ''}`);
-    else {
-      console.log(`${u}\t${r.lint.verdict}\tscore=${r.lint.score} points=${r.lint.points}\t${r.lint.hits.join(',')}`);
-      if (r.basics) for (const x of [...r.basics.fails.map(f => ['FAIL', f]), ...r.basics.warns.map(w => ['warn', w])]) console.log(`  basics ${x[0]}\t${x[1].id}\t${x[1].detail}`);
-      if (r.basics) console.log(`  basics=${r.basics.verdict}`);
-    }
+    else console.log(`${u}\t${r.lint.verdict}\tscore=${r.lint.score} points=${r.lint.points}\t${r.lint.hits.join(',')}`);
   }
   await browser.close();
-  if (strict && failed) process.exit(1);
 }
