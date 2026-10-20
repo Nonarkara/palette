@@ -64,7 +64,6 @@ Everything here was chosen on purpose. Agents and reviewers read this before any
 The **rendered** check (`non-slop render`) does **not** read `## Allow`. Only the static scan does.
 So the plate view reports a permanent REVIEW of 5 points. These three are the known,
 verified findings, and re-deriving them wastes an hour:
-
 | finding | points | why it is a false positive here |
 |---|---|---|
 | `void` | 2 | The dominant field of a Wada combination is one flat colour covering ≥35% of the screen. That flat region is the work. |
@@ -91,3 +90,31 @@ So a marker comment buys a clean scan with no trace. That is the highest-risk
 exclusion in the tool, because it is the one a person or agent can use to silence
 a finding. Until it is fixed upstream, check `--json` → `filesScanned` after adding
 a marker and confirm the count moved.
+## Known results of the spatial audit
+
+`node tools/spatial-audit.mjs <url>` measures the six spatial-hallucination
+modes. Unlike the non-slop render, this tool reports geometry, not a verdict.
+Verified 21 Oct 2026 at 1440×900.
+
+- **The plate view (`index.html`) is clean: 0 of 6 modes flagged.** A vertical
+  instrument rail is an arrangement, not a split nav, and the full-viewport
+  colour field is not an orphan. The auditor knows both.
+- **The reading room (`reading.html`) reports 2 modes, both honest:**
+  `one-size-for-all-prose` (3,781 characters of prose at a single 20px) and
+  `deep-scroll` (11 screens). Neither is a defect: it is a long essay with one
+  deliberate body size. It does *not* report `no-way-to-jump` — the reading
+  room has a contents nav above the fold, which is what makes the length
+  affordable.
+- The `tests/fixtures/spatial-hallucination.html` fixture triggers all six
+  modes. `tests/spatial-audit.test.mjs` asserts that, and asserts the plate
+  view stays clean. If you change a threshold, both must still hold.
+
+The auditor's known blind spots, so nobody trusts it too far:
+
+- It reads the first four viewports only, so a failure further down the page
+  is not seen.
+- It measures the DOM, not the pixels. A background image that reads as a
+  picture in the eye may not be a `background-image` in the DOM.
+- It cannot tell an intentional empty column from a careless one. Only a
+  person can. That is why it reports rectangles and asks a question instead
+  of returning a score.

@@ -23,8 +23,9 @@ const server=http.createServer((req,res)=>{
     if(req.method==='HEAD')res.end();else fs.createReadStream(filename).pipe(res);
   } catch {res.writeHead(404);res.end();}
 });
+const port=Number(process.env.PORT||process.argv[2]||4173);
 server.on('error',err=>{
-  console.error(err.code==='EADDRINUSE' ? 'Port 4173 is already in use. Stop the other preview before starting Palette.' : err.message);
+  console.error(err.code==='EADDRINUSE' ? `Port ${port} is already in use. Stop the other preview or pass a different PORT.` : err.message);
   process.exitCode=1;
 });
-server.listen(4173,'127.0.0.1',()=>console.log('Palette: http://127.0.0.1:4173 — Ctrl-C to stop.'));
+server.listen(port,'127.0.0.1',()=>console.log(`Palette: http://127.0.0.1:${port} — Ctrl-C to stop.`));

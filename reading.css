@@ -27,6 +27,10 @@ h3 { font-size:var(--body); line-height:1.2; margin:2rem 0 .75rem; }
 p { margin:0 0 1.25em; }
 li { margin-bottom:.75em; }
 .standards { background:var(--deep); color:var(--paper); }
+.composition { background:var(--paper); }
+.composition em { font-style:italic; }
+.composition code { font-family:ui-monospace,'SF Mono',Menlo,monospace; font-size:.95em; }
+.composition .digest { color:var(--chord); }
 .defaults { background:var(--paper); }
 .defaults code { font-family:ui-monospace,'SF Mono',Menlo,monospace; font-size:.95em; }
 .defaults h3 { border-top:1px solid currentColor; padding-top:1.25rem; }

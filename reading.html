@@ -19,7 +19,7 @@
       <div class="opening-note"><p>A colour can change the room. It cannot rescue an unclear task.</p><p>This is Dr Non's reading of design craft: make the subject visible, make the action obvious, and test the result.</p></div>
     </section>
     <nav class="contents" aria-label="Reading sections">
-      <a href="#method">The method</a><a href="#standards">Standards</a><a href="#defaults">The defaults</a><a href="#language">Language</a><a href="#typography">Type &amp; context</a><a href="#sources">Reading &amp; credits</a><a href="#take">Use with your agent</a>
+      <a href="#method">The method</a><a href="#standards">Standards</a><a href="#composition">Composition</a><a href="#defaults">The defaults</a><a href="#language">Language</a><a href="#typography">Type &amp; context</a><a href="#sources">Reading &amp; credits</a><a href="#take">Use with your agent</a>
     </nav>
     <section id="method" class="chapter">
       <div class="chapter-label"><p>01 / CRAFT</p><h2>Structure before finish.</h2></div>
@@ -44,8 +44,34 @@
         <details lang="zh-Hans"><summary>中文 — Web 标准</summary><p>美观必须建立在可用性上。跳转用链接，操作用按钮。标题要表达结构，控件要有名称，完整任务应能通过键盘完成，并始终看得见焦点。</p><p>允许文字放大与重新排版。测试长标签、英泰中三种文字以及字体加载失败。检查实际对比度、操作反馈、无结果、错误和恢复路径。尊重减少动态效果的设置。自动检查通过并不等于全面无障碍认证。</p></details>
       </div>
     </section>
+    <section id="composition" class="chapter">
+      <div class="chapter-label"><p>03 / COMPOSITION</p><h2>Core first.<br>Then the style.</h2></div>
+      <div class="prose">
+        <p>There is a way of working that produces a plausible page and gives you nothing to defend. You name a style, you prompt for it, and what comes back is competent, generic, and could belong to any product. It is fast. It is also the reason the same three layouts appear in every AI-made site.</p>
+
+        <h3>Name the core first.</h3>
+        <p>One sentence, and it must be a sentence a competitor could not use. Not “a colour palette tool” — that describes a thousand products, and every style will fit it equally well. “A room where one source-verified colour combination owns the whole viewport, and the interface never competes with it” — that is a core. It has a constraint in it. You can now tell which styles serve it and which contradict it.</p>
+        <p>If your sentence would survive being pasted onto a competitor's homepage, it is not yet the core. Keep going.</p>
+
+        <h3>Find the tension.</h3>
+        <p>Every serious piece of design holds one thing it will not negotiate. Here it is the conservation law: one source-verified combination owns the viewport, and interface chrome never competes with it. Write yours down. A constraint is what makes a design yours rather than a genre — and it is the thing a reviewer can hold you to.</p>
+
+        <h3>Then pick from the toolbox.</h3>
+        <p>Only now does a style mean anything. Two or three, not one. A single style is a costume — the costume of something that already exists. Two in tension is a composition: <em>Bauhaus</em> meets the colour book, <em>Wabi Sabi</em> meets a utility panel, <em>Art Deco</em> against <em>Brutalism</em>. The catalogue in <a href="DESIGN-STYLES.md">Fifty design styles</a> holds fifty of them, each with its own core elements and the mood it evokes, and it names which of them are on this project's ban list.</p>
+
+        <h3>Break one rule on purpose.</h3>
+        <p>A style copied whole reads as a pastiche, because the reader recognises the costume and not the person wearing it. The interesting move is to keep the structure and refuse one of its rules. Keep the grid, lose the symmetry. Keep the serif, lose the gold. Say in the brief which rule you are breaking and why — otherwise it looks like an accident, and accidents are what the spatial auditor is looking for.</p>
+
+        <h3>Then measure the geometry.</h3>
+        <p>A style can be chosen and still be laid out without an intention. That is spatial hallucination: the page looks composed and cannot explain its own geometry. Six failure modes — unjustified gaps, orphan elements, scattered actions, false hierarchy, accidental wrapping, and information that costs a long scroll to reach. One test covers them all: <strong>“Why is this here, why this size, and why this far from that?”</strong> If the answer is only “the grid put it there”, the layout has failed. <code>tools/spatial-audit.mjs</code> measures all six and hands you the rectangles, so you know where to look. It never hands you a verdict, because it cannot tell an intentional emptiness from a careless one. That is a job for a person.</p>
+
+        <p class="digest">Dr Non's Digest: choose the style last, and you will be choosing for everyone.</p>
+        <details lang="th"><summary>อ่านภาษาไทย — แก่นก่อน แล้วค่อยเลือกสไตล์</summary><p>วิธีที่ให้ผลลัพธ์เร็วที่สุดคือเริ่มจากชื่อสไตล์ แล้วสั่งให้เครื่องมือสร้าง สิ่งที่ได้จะดูดีแต่ไม่มีอะไรให้ป้องกัน เพราะทุกผลิตภัณฑ์จะได้หน้าตาเหมือนกันหมด</p><p>ให้เริ่มจากแก่นก่อน ประโยคเดียว ที่คู่แข่งของคุณใช้ไม่ได้ จากนั้นจึงหาแรงเสียดทานของงาน อย่างเช่น ห้ามให้ส่วนประกอบของหน้าจอแย่งพื้นที่จากสีของจานสี แล้วจึงค่อยเลือกสไตล์จากกล่องเครื่องมือ เลือกสองหรือสามสไตล์ ไม่ใช่หนึ่ง แล้วตั้งใจทำลายกฎข้อหนึ่งข้อของสไตล์นั้นอย่างตั้งใจ</p><p>สุดท้าย ให้วัดเรขาคณิตด้วยเครื่องมือ หกข้อที่ผิดพลาดได้ ไม่ว่าช่องว่างที่ไม่มีเหตุผล รูปที่ถูกทิ้งไว้ข้างความว่างเปล่า ปุ่มที่กระจายไปคนละที่ ลำดับที่ไม่ช่วยให้เลือก การตัดบรรทัดที่เกิดเพราะที่ว่างไม่พอ หรือข้อมูลที่ต้องเลื่อนยาวไปกว่าจะตัดสินใจ คำถามเดียวครอบคลุมทั้งหมด คือ “ทำไมต้องอยู่ที่นี่ ทำไมต้องใหญ่แค่นี้ และทำไมต้องอยู่ห่างจากอันนั้นเท่านี้”</p></details>
+        <details lang="zh-Hans"><summary>中文 — 先有内核，再选风格</summary><p>最快的方法是先说出一个风格名称，再让工具生成。得到的东西看起来不错，却没有任何可辩护之处——因为每个产品都会长得一样。</p><p>先写内核：一句话，竞争者用不了。例如「一个房间，一种经来源核实的配色占据整个视口，界面绝不与之争夺」。然后写下你不会让步的约束。只有到了这一步，风格才有意义。选两到三个，不要只选一个——单一风格是戏服，两种风格相互冲突才是构图。</p><p>然后有意识地打破其中一条规则：保留网格，去掉对称；保留衬线体，去掉金色。最后测量几何。空间幻觉有六种表现：无正当理由的空隙、被遗弃在空白旁的元素、散落的操作、虚假的层级、意外的换行，以及需要长距离滚动才能到达的信息。唯一的问题覆盖全部六种：「它为什么在这里，为什么这么大，为什么离那个这么远？」如果答案只是「网格放它在那儿」，这个布局就失败了。</p></details>
+      </div>
+    </section>
     <section id="defaults" class="chapter defaults">
-      <div class="chapter-label"><p>03 / THE DEFAULTS</p><h2>Slop is a default<br>nobody chose.</h2></div>
+      <div class="chapter-label"><p>04 / THE DEFAULTS</p><h2>Slop is a default<br>nobody chose.</h2></div>
       <div class="prose">
         <p>Most bad interface is not a mistake. It is an omission. Nobody sat down and decided to make the top bar taller than the thing it labels — the framework simply did that, and nobody removed it. This chapter is the list of what to check because it arrived for free.</p>
 
@@ -76,7 +102,7 @@
       </div>
     </section>
     <section id="language" class="chapter">
-      <div class="chapter-label"><p>04 / COMMUNICATION</p><h2>Don't make clarity a puzzle.</h2></div>
+      <div class="chapter-label"><p>05 / COMMUNICATION</p><h2>Don't make clarity a puzzle.</h2></div>
       <div class="prose">
         <p>A distinctive page can still use ordinary search, Back and scrolling. Spend the surprise on the work—not on making people decode the controls.</p>
         <p>Write the words a person would use to find something. Put a heading nearer the text it introduces than the text it follows. Remove ceremony, but keep context and uncertainty. An essay needs room to be read, not a forced conversion into slogans.</p>
@@ -88,7 +114,7 @@
       </div>
     </section>
     <section id="typography" class="chapter">
-      <div class="chapter-label"><p>05 / TYPOGRAPHY</p><h2>A voice for<br>this text.</h2></div>
+      <div class="chapter-label"><p>06 / TYPOGRAPHY</p><h2>A voice for<br>this text.</h2></div>
       <div class="prose">
         <p>Read the words before choosing their face. A chapter asks for sustained reading; a route label asks to be found quickly. Neither becomes more human simply by wearing an unusual font.</p>
         <h3>Choose the body first.</h3><p>Proof the approved family on real paragraphs, controls, captions and numbers. A display face can be wonderful at a large size and exhausting in a paragraph. Keep one family if it supplies the roles. A companion earns its place through a different task or script—not fashion.</p>
@@ -102,7 +128,7 @@
       </div>
     </section>
     <section id="sources" class="chapter sources">
-      <div class="chapter-label"><p>06 / READING</p><h2>Borrow the reason.<br>Credit the mind.</h2></div>
+      <div class="chapter-label"><p>07 / READING</p><h2>Borrow the reason.<br>Credit the mind.</h2></div>
       <div class="prose">
         <p>This first guide draws on selected close readings. <strong>The five books have not yet been read cover to cover.</strong> The <a href="skills/bauhaus-human-design/references/reading-ledger.md">reading ledger</a> records passages inspected, edition details, OCR limits and remaining work.</p>
         <dl><dt>Magdalena Droste / Bauhaus-Archiv</dt><dd><cite>Bauhaus 1919–1933</cite>, 2015 Italian edition. Workshops connect design with execution; the school changes over time. The typography spread at printed pp. 148–149 is visually inspected. Our tenets are a modern interpretation, not ten historical quotations.</dd><dt>Steve Krug</dt><dd><cite>Don't Make Me Think, Revisited</cite>, 2014. Chapters 1–3 ground clarity and hierarchy; chapter 9 grounds observing tasks rather than collecting opinions.</dd><dt>Jeffrey Zeldman with Ethan Marcotte</dt><dd><cite>Designing with Web Standards</cite>, third edition. Chapter 14 places accessibility at the foundation. Its historical browser and legal guidance is not treated as current authority.</dd><dt>Joel Sklar</dt><dd><cite>Principles of Web Design</cite>, fifth edition. Chapter 2 distinguishes active space, content balance and a unified navigation grammar. Its 960px-era examples are not a required grid.</dd><dt>The Responsive Web Design Handbook / Volume II</dt><dd>Noah Stokes on character; Steve Fisher on core content; Dan Tello on phone-first experience; Clarissa Peterson on type, leading and measure. Each is credited separately in the field guide.</dd></dl>
@@ -114,12 +140,14 @@
       </div>
     </section>
     <section id="take" class="chapter take">
-      <div class="chapter-label"><p>07 / MAKE SOMETHING</p><h2>Take the method.</h2></div>
+      <div class="chapter-label"><p>08 / MAKE SOMETHING</p><h2>Take the method.</h2></div>
       <div class="prose"><p>Download one Markdown file and give it to any agent alongside your actual content. Or install the skill folder with its two references. No API key, framework or design service is required.</p>
         <a class="download" href="DESIGN-FIELD-GUIDE.md" download="dr-non-design-field-guide.md">DOWNLOAD THE COMPLETE GUIDE / .MD</a>
         <a class="download" href="skills/bauhaus-human-design/SKILL.md" download="SKILL.md">DOWNLOAD THE SKILL / .MD</a>
         <a class="download" href="TYPOGRAPHY-FIELD-GUIDE.md" download="dr-non-contextual-typography.md">DOWNLOAD THE CONTEXTUAL TYPE GUIDE / .MD</a>
         <a class="download" href="FIGMA-PRINCIPLES.md" download="twelve-principles-field-note.md">DOWNLOAD THE TWELVE PRINCIPLES / .MD</a>
+        <a class="download" href="DESIGN-STYLES.md" download="fifty-design-styles.md">DOWNLOAD THE FIFTY STYLES / .MD</a>
+        <a class="download" href="ANTI-SPATIAL-HALLUCINATION.md" download="anti-spatial-hallucination.md">DOWNLOAD THE SPATIAL DOCTRINE / .MD</a>
         <a class="download" href="STYLE.md" download="style.md">DOWNLOAD THIS ROOM'S STYLE CONTRACT / .MD</a>
         <p><a href="https://github.com/Nonarkara/palette/tree/main/skills/bringhurst-contextual-type">Bringhurst skill + source ledger</a> · <a href="https://github.com/Nonarkara/dr-non-vibecoding-skills/tree/main/skills/bringhurst-contextual-type">Canonical typography skill</a></p>
         <p><a href="https://github.com/Nonarkara/palette/tree/main/skills/bauhaus-human-design">Skill + references on GitHub</a> · <a href="https://github.com/Nonarkara/dr-non-vibecoding-skills/tree/main/skills/bauhaus-human-design">Canonical reusable skill</a></p>

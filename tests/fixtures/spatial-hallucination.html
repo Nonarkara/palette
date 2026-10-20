@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Spatial hallucination fixture</title>
+<style>
+  body { margin:0; font-family: system-ui, sans-serif; background:#fff; color:#111; }
+  .bar { display:flex; justify-content:space-between; align-items:center; padding:8px 20px; background:#eee; }
+  .bar a { color:#111; }
+  .hero { display:grid; grid-template-columns: 1fr 1fr; gap:40px; padding:60px 40px; min-height:520px; }
+  .hero .copy { display:flex; flex-direction:column; justify-content:flex-start; }
+  .hero .copy p { margin:0; }
+  .hero .photo { background:#cde; min-height:200px; }
+  /* a card that stretches to fill a tall column for no reason */
+  .stretch { display:flex; flex-direction:column; justify-content:space-between; min-height:420px; background:#f6f6f6; padding:20px; }
+  .actions { display:flex; gap:8px; padding:20px 40px; }
+  .scattered { display:flex; justify-content:space-between; padding:20px 40px; }
+  .scattered button { min-width:120px; }
+  .flat { padding:20px 40px; }
+  .flat h1, .flat h2, .flat h3 { font-size:20px; margin:0 0 8px; }
+  .long { padding:20px 40px 600px; }
+</style>
+</head>
+<body>
+  <header class="bar">
+    <a href="#">HOME</a>
+    <a href="#">DOCS</a>
+    <a href="#">BLOG</a>
+  </header>
+
+  <section class="hero">
+    <div class="copy">
+      <h1>Ship faster</h1>
+      <p>The platform your team already uses, with the analytics you already want, at a price you already approved. Start free, scale when you need to, and keep every feature on day one.</p>
+    </div>
+    <div class="photo"></div>
+  </section>
+
+  <!-- mode 1: unjustified gap — a card stretched to fill a tall column -->
+  <section class="hero">
+    <div class="stretch"><strong>3</strong><span>Nothing else here.</span></div>
+    <div class="stretch"><strong>7</strong><span>Also nothing.</span></div>
+  </section>
+
+  <!-- mode 3: scattered actions — related buttons pushed to opposite edges -->
+  <section class="scattered">
+    <button type="button">Save</button>
+    <button type="button">Duplicate</button>
+    <button type="button">Delete</button>
+  </section>
+
+  <!-- mode 4: false hierarchy — three different ranks, all rendered at one size -->
+  <section class="flat">
+    <h1>Overview</h1>
+    <h2>Usage</h2>
+    <h3>Billing</h3>
+    <p>Some ordinary body copy so the block has real weight in the measurement.</p>
+  </section>
+
+  <!-- mode 5: accidental wrapping — a nav that breaks because it ran out of room -->
+  <nav class="tabs" style="display:flex;flex-wrap:wrap;gap:8px 20px;padding:20px 40px;border-top:1px solid #ddd;max-width:520px">
+    <a href="#">Documentation</a>
+    <a href="#">API reference</a>
+    <a href="#">Examples</a>
+    <a href="#">Changelog</a>
+    <a href="#">Support</a>
+    <a href="#">Pricing</a>
+    <a href="#">Status</a>
+  </nav>
+
+  <!-- mode 2: orphan element — a photo stranded beside an empty column -->
+  <section class="hero" style="align-items:start">
+    <img src="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='660' height='200'%3E%3Crect width='660' height='200' fill='%23cde'/%3E%3C/svg%3E" alt="A picture with nothing beside it">
+    <div style="min-height:420px"></div>
+  </section>
+
+  <!-- mode 6: spatially expensive — a long tail below the fold -->
+  <section class="long">
+    <p>Filler that pushes the interesting decision far below the fold of every screen.</p>
+  </section>
+  <section class="long">
+    <p>More filler, so the page needs many screens to reach the thing that matters.</p>
+  </section>
+  <section class="long">
+    <p>Still filler. The reader scrolls past all of it to find one small decision.</p>
+  </section>
+  <section class="long">
+    <p>The last screen of filler before the actual content appears.</p>
+  </section>
+  <section class="long">
+    <h2>A heading that finally arrives</h2>
+    <p>Below every screen of filler, with nothing above to point the way.</p>
+  </section>
+  <section class="long">
+    <h2>Another one, even further down</h2>
+    <p>Still no table of contents and no way to jump.</p>
+  </section>
+</body>
+</html>

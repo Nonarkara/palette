@@ -1,6 +1,9 @@
 > **Read [ANTI-SLOP.md](ANTI-SLOP.md) before any design or frontend work.** These are Dr Non's hard rules against AI design slop: empty space is a decision, subtract before you add, and the map comes first. Run `tools/slop-lint.mjs` on any page you ship.
 
 For composition and image-placement reviews, read [Anti-spatial-hallucination](ANTI-SPATIAL-HALLUCINATION.md). Its hero patterns do not override Palette’s full-viewport colour field, instrument rail or prohibition on decorative effects.
+Measure the geometry with `node tools/spatial-audit.mjs <url>` before shipping a page. It reports the six failure modes as rectangles; the numbers are not a verdict, but a mode that never fires is a mode nobody looked at.
+
+For a visual register, read [Fifty design styles](DESIGN-STYLES.md) — but name the abstract core **before** the style, never after. A style chosen before the subject produces the same page for everyone.
 
 # Palette — agent contract
 
