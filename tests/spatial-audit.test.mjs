@@ -1,8 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { readFile } from "node:fs/promises";
+import { readFile, readFile as read } from "node:fs/promises";
 import { createServer } from "node:http";
-import { readFile as read } from "node:fs/promises";
 import { extname, join, normalize } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -25,14 +24,24 @@ const server = createServer(async (req, res) => {
 await new Promise((r) => server.listen(0, "127.0.0.1", r));
 const base = `http://127.0.0.1:${server.address().port}`;
 
-let chromium;
+// The browser is optional. CI installs the Chromium binary AFTER the test
+// run, so a test that requires a launched browser fails there for a reason
+// that has nothing to do with the code under test. Everything that needs a
+// browser is skipped when one cannot start.
+//
+// NOTE: `skip: null` SKIPS a test in node:test — only `false` or `undefined`
+// mean "do not skip". Use `browserSkip` (a boolean), not a reason string,
+// when a browser IS available.
+let browser = null;
+let browserSkip = "playwright not installed";
 try {
-  ({ chromium } = await import("playwright"));
-} catch {
-  chromium = null;
+  const { chromium } = await import("playwright");
+  browser = await chromium.launch();
+  browserSkip = false;
+} catch (e) {
+  browserSkip = `no usable browser: ${e.message.split("\n")[0]}`;
 }
 
-const browser = chromium ? await chromium.launch() : null;
 test.after(async () => {
   if (browser) await browser.close();
   server.close();
@@ -58,7 +67,7 @@ test("the litmus test is stated in the doctrine and in the tool", async () => {
   assert.match(tool, /Why is this here, why this size, and why this far from that\?/, "the tool must carry the litmus test");
 });
 
-test("the auditor flags all six modes on a deliberately broken layout", { skip: !browser && "playwright not installed" }, async () => {
+test("the auditor flags all six modes on a deliberately broken layout", { skip: browserSkip }, async () => {
   const r = await audit.auditUrl(browser, `${base}/tests/fixtures/spatial-hallucination.html`, { settleMs: 300 });
   const flagged = r.summary.modes.filter((m) => m.count > 0).map((m) => m.id);
   for (const id of ["unjustifiedGaps", "orphanElements", "scatteredActions", "falseHierarchy", "accidentalWrapping", "spatiallyExpensive"]) {
@@ -67,14 +76,14 @@ test("the auditor flags all six modes on a deliberately broken layout", { skip: 
   assert.ok(r.summary.points >= 8, `the broken fixture should score at least 8, got ${r.summary.points}`);
 });
 
-test("the auditor stays quiet on the plate view", { skip: !browser && "playwright not installed" }, async () => {
+test("the auditor stays quiet on the plate view", { skip: browserSkip }, async () => {
   const r = await audit.auditUrl(browser, `${base}/index.html`, { settleMs: 2500 });
   // The plate view is a full-viewport colour field. The auditor must not read
   // that deliberate emptiness as a failure.
   assert.equal(r.summary.flagged, 0, `the plate view must not be flagged, got: ${JSON.stringify(r.summary.modes.filter((m) => m.count).map((m) => [m.id, m.count]))}`);
 });
 
-test("the auditor does not call a vertical instrument rail a split nav", { skip: !browser && "playwright not installed" }, async () => {
+test("the auditor does not call a vertical instrument rail a split nav", { skip: browserSkip }, async () => {
   const r = await audit.auditUrl(browser, `${base}/index.html`, { settleMs: 2500 });
   const scattered = r.geometry.scatteredActions;
   assert.equal(scattered.length, 0, "a column of controls is an arrangement, not a split nav");
@@ -89,7 +98,7 @@ test("a vertical control stack is never reported as split across rows", async ()
   assert.match(src, /flexDirection === "column"/, "the auditor must exempt column layouts");
 });
 
-test("the reading room's findings are honest, and are recorded as such", { skip: !browser && "playwright not installed" }, async () => {
+test("the reading room's findings are honest, and are recorded as such", { skip: browserSkip }, async () => {
   const r = await audit.auditUrl(browser, `${base}/reading.html`, { settleMs: 2500 });
   // The reading room is a long essay. It has a jump nav, so the "no way to
   // jump" signal must not fire — length alone is not a failure.

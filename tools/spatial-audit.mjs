@@ -17,7 +17,17 @@
 // not guilty of spatial hallucination because a number crossed a threshold; the
 // numbers tell a person where to look. Use them to start a review, not to end one.
 
-import { chromium } from "playwright";
+import { createRequire } from "node:module";
+
+// Playwright is loaded lazily so this file can be imported (and its pure
+// functions unit-tested) on a machine that has no browser installed. A static
+// import would make the whole module unusable there, including the parts that
+// need no browser at all.
+const require = createRequire(import.meta.url);
+async function loadChromium() {
+  const pw = require("playwright");
+  return pw.chromium;
+}
 
 // ---------------------------------------------------------------- in-page metrics
 //
@@ -650,6 +660,7 @@ if (import.meta.url === `file://${process.argv[1]}`) {
     console.error("usage: node tools/spatial-audit.mjs <url> [more urls...] [--json] [--settle=ms]");
     process.exit(1);
   }
+  const chromium = await loadChromium();
   const browser = await chromium.launch();
   const results = [];
   for (const url of urls) {
