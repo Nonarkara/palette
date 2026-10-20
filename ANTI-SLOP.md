@@ -58,3 +58,7 @@ It's a screen, not a judge. On our study set it caught 91% of slop with 95% prec
 These rules come from measuring the 46 citizen-built flood apps listed on FloodDash's *About → Citizen-built apps* page (flood.nonarkara.org) on 18 Oct 2026. Of those, 37 were reachable, and 31 were labelled by eye and checked with DOM and pixel metrics. People built these tools during a flood, often overnight and for free. Many of them help people, and we're grateful to every builder. The study is about visual patterns only, not about people or how useful the tools are.
 
 Apps whose maps show victims' or reporters' personal data were not pictured or quoted. The clean exceptions worth learning from are Thailand Flooder, พิกัดน้ำท่วมสมุทรปราการ (paddypure), น้ำคลอง (namkhlong), Floodboard, น้ำบนถนน บางมด (taokaetech), Floraville Flood Forecast and Meanam. They let the map win, use few boxes and one radius, keep lines short, and each has a point of view.
+
+## Composition and image placement
+
+Read [Anti-spatial-hallucination](ANTI-SPATIAL-HALLUCINATION.md) when layout is aligned but still feels arbitrary. Preserve the colour field as the subject; narrative-image patterns apply only where the page’s task and STYLE.md permit them.

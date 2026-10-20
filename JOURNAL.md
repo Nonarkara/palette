@@ -187,3 +187,11 @@ disallows AI crawlers) and the eMuseum demo (challenge) are link lists that were
 never fetched. Design Reviewed artefact records were blocked and not bypassed.
 **Tags:** `mcp · references · nostalgia · provenance · anti-slop`
 
+
+## 2026-10-20 — Give spatial decisions a contract
+
+**What changed:** Added the anti-spatial-hallucination guide and linked agent, anti-slop and composition entrypoints.
+**Why:** Alignment alone cannot explain an image’s role or justify unused space. Narrative heroes are one option, with a contrast and responsive fallback gate.
+**Conservation:** No product UI, colour field, tokens or rail changed. The guide explicitly preserves Palette’s field-first constraints.
+**Evidence:** Documentation/link and repository checks are recorded with this change; no UI render is claimed for a documentation-only update.
+Tags: `composition`, `spatial-hallucination`, `documentation`

@@ -271,3 +271,7 @@ edition is deliberately numbered `0.1.0` until that first-time-user test occurs.
 Code and original writing: **MIT licensed—use it, fork it, change it, and ship
 your own version.** Source data: upstream MIT terms retained. Preserve the
 attribution and digital-conversion caveats recorded in `THIRD_PARTY_NOTICES.md`.
+
+## Anti-spatial-hallucination
+
+[The composition guide](ANTI-SPATIAL-HALLUCINATION.md) asks why each element is here, this size and this far from its neighbour. It covers image roles, narrative heroes, readable overlays, purposeful whitespace, action grouping and responsive evidence. Hero treatment is a choice to justify, not a new template.

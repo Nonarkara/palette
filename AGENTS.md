@@ -1,5 +1,7 @@
 > **Read [ANTI-SLOP.md](ANTI-SLOP.md) before any design or frontend work.** These are Dr Non's hard rules against AI design slop: empty space is a decision, subtract before you add, and the map comes first. Run `tools/slop-lint.mjs` on any page you ship.
 
+For composition and image-placement reviews, read [Anti-spatial-hallucination](ANTI-SPATIAL-HALLUCINATION.md). Its hero patterns do not override Palette’s full-viewport colour field, instrument rail or prohibition on decorative effects.
+
 # Palette — agent contract
 
 For typography decisions, read `skills/bringhurst-contextual-type/SKILL.md`.

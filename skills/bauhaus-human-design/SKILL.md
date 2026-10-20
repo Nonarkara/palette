@@ -131,3 +131,7 @@ Repository ideas studied, not installed or copied wholesale:
 
 Original procedure and writing: MIT. Source books, artworks, fonts and third-party
 repositories keep their own rights. No endorsement by the authors or institutions.
+
+## Spatial relationships
+
+Read [Anti-spatial-hallucination](../../ANTI-SPATIAL-HALLUCINATION.md) for image roles, narrative composition, overlay acceptance and responsive review. Palette’s field remains primary; this is not permission to add a hero or backing panel over it.
