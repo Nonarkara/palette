@@ -19,7 +19,7 @@
       <div class="opening-note"><p>A colour can change the room. It cannot rescue an unclear task.</p><p>This is Dr Non's reading of design craft: make the subject visible, make the action obvious, and test the result.</p></div>
     </section>
     <nav class="contents" aria-label="Reading sections">
-      <a href="#method">The method</a><a href="#standards">Standards</a><a href="#language">Language</a><a href="#typography">Type &amp; context</a><a href="#sources">Reading &amp; credits</a><a href="#take">Use with your agent</a>
+      <a href="#method">The method</a><a href="#standards">Standards</a><a href="#defaults">The defaults</a><a href="#language">Language</a><a href="#typography">Type &amp; context</a><a href="#sources">Reading &amp; credits</a><a href="#take">Use with your agent</a>
     </nav>
     <section id="method" class="chapter">
       <div class="chapter-label"><p>01 / CRAFT</p><h2>Structure before finish.</h2></div>
@@ -44,8 +44,39 @@
         <details lang="zh-Hans"><summary>中文 — Web 标准</summary><p>美观必须建立在可用性上。跳转用链接，操作用按钮。标题要表达结构，控件要有名称，完整任务应能通过键盘完成，并始终看得见焦点。</p><p>允许文字放大与重新排版。测试长标签、英泰中三种文字以及字体加载失败。检查实际对比度、操作反馈、无结果、错误和恢复路径。尊重减少动态效果的设置。自动检查通过并不等于全面无障碍认证。</p></details>
       </div>
     </section>
+    <section id="defaults" class="chapter defaults">
+      <div class="chapter-label"><p>03 / THE DEFAULTS</p><h2>Slop is a default<br>nobody chose.</h2></div>
+      <div class="prose">
+        <p>Most bad interface is not a mistake. It is an omission. Nobody sat down and decided to make the top bar taller than the thing it labels — the framework simply did that, and nobody removed it. This chapter is the list of what to check because it arrived for free.</p>
+
+        <h3>A box may not be much bigger than its text.</h3>
+        <p>A tile holding the number <em>8</em> at 240 pixels wide is not a design. It is a number that lost its container. Size a small thing to its content, then let the surrounding space do the work. The test: if you deleted the box, would anything be harder to understand? If not, delete it.</p>
+
+        <h3>The font is never an accident either.</h3>
+        <p>Inter, Roboto and <code>system-ui</code> are what a machine reaches for when nobody answered the question. They are not forbidden because they are bad — they are flagged because they mean <em>unanswered</em>. Either choose a face for this product and be able to say why, or choose the system face on purpose so the font disappears into the device. What is not acceptable is arriving there by accident.</p>
+
+        <h3>A top bar taller than the page is absurd.</h3>
+        <p>This is the most reliable single tell. Chrome has become the subject of the screen instead of a frame around it, so navigation crowds out the work. On a map or a chart, the data is the operating table and the bar is an instrument at its edge: bars stay at 56 pixels or less, the content takes the rest. If you squint at the silhouette and the bar is the heaviest thing, the bar is too big.</p>
+
+        <h3>A line of text is a physical object.</h3>
+        <p>You can finish a line of ordinary reading and find the start of the next one instantly, because the length matches what your eye does with a book. Past roughly thirty words, or beyond about 65 characters, the return sweep fails — the eye arrives at the right margin with no idea which row it wants. So a reading column is set in <code>ch</code>, not <code>rem</code>: <code>rem</code> gives a 12-pixel caption a physically longer line than 16-pixel body text, which is the same defect one level down and invisible unless you measure at both sizes.</p>
+        <p>Measure the longest rendered line, not the average. A section that is correct except for one ribbon of prose at 208 characters will not report itself to you.</p>
+
+        <h3>Judge the stack, not the item.</h3>
+        <p>One serif, one emoji in a sentence, one gradient with a job, one rounded corner — those are choices. Inter plus a purple gradient plus three identical cards plus the word <em>seamless</em> is a fingerprint. Restraint is not the absence of design; it is design with the budget spent in one place.</p>
+
+        <h3>Then the twelve neighbours.</h3>
+        <p>These five are the ones that recur. The trade vocabulary for the rest is stable and public, and it is worth learning because the names make critique precise: <strong>alignment</strong> (a common edge, centre or baseline), <strong>contrast</strong> (a real difference — size, weight, colour, shape), <strong>balance</strong> (even or deliberately asymmetric weight), <strong>hierarchy</strong> (what wins first, second, third), <strong>colour</strong> (theory <em>and</em> psychology, checked for colour-vision deficiency), <strong>white space</strong> (breathing room with a purpose), <strong>proportion</strong> (size relative to other things), <strong>repetition</strong>, <strong>rhythm</strong> (regular, random, flowing or progressive), <strong>movement</strong> (how the eye travels), <strong>emphasis</strong>, <strong>proximity</strong> (closeness means relationship), <strong>unity</strong>.</p>
+        <p>Two of those deserve a warning. Proximity becomes a lie the moment a gap lies: a label separated from its value by more air than separates the value from its neighbour has told the reader they are unrelated. And white space stops being generosity when nothing has earned it.</p>
+        <p>Our twelve-point version of the vocabulary lives in <a href="FIGMA-PRINCIPLES.md">a one-page field note</a>, with the source and the licence.</p>
+
+        <p class="digest">Dr Non's Digest: a design that could belong to any product has not decided anything yet.</p>
+        <details lang="th"><summary>อ่านภาษาไทย — ค่าเริ่มต้นที่ไม่มีใครเลือก</summary><p>หน้าจอที่ดูไม่ดีส่วนใหญ่ไม่ได้เกิดจากความผิดพลาด แต่เกิดจากการที่ไม่มีใครตัดสินใจ ไม่มีใครตั้งใจทำให้แถบบนใหญ่กว่าตัวเนื้อหาที่มันควบคุม เฟรมเวิร์กทำแบบนั้นแล้วก็ไม่มีใครลบออก</p><p>กล่องต้องไม่ใหญ่ไปมากเมื่อเทียบกับตัวอักษรที่อยู่ข้างใน ฟอนต์ที่ใช้ต้องเป็นตัวเลือก ไม่ใช่ค่าเริ่มต้นที่โปรแกรมเลือกให้ แถบด้านบนต้องไม่สูงเกิน 56 พิกเซล บรรทัดข้อความยาวประมาณ 30 คำหรือน้อยกว่า และความยาวบรรทัดควรกำหนดเป็นหน่วย ch ไม่ใช่ rem เพื่อให้ตัวอักษรเล็กมีความยาวบรรทัดที่พอเหมาะเสมอ</p><p>ประเมินภาพรวมของงาน ไม่ใช่แค่รายชิ้น การมีเซริฟตัวเดียวหรือมุมโค้งมนหนึ่งจุดคือการตัดสินใจ แต่การใช้ฟอนต์สำเร็จร่วมกับไล่สีม่วงและการ์ดสามใบที่เหมือนกันหมดคือลายนิ้วมือของงานที่ยังไม่ได้ตัดสินใจอะไร</p></details>
+        <details lang="zh-Hans"><summary>中文 — 无人选择的默认值</summary><p>大多数糟糕的界面不是错误，而是遗漏。没有人决定让顶部导航比它所标注的内容更高——框架只是这样做了，然后没有人把它删掉。</p><p>盒子不应远大于其中的文字。字体必须是选择，而不是程序的默认答案。顶部栏不应超过 56 像素。一行文字大约三十个单词以内，长度用 ch 而不是 rem 计算，这样小号说明文字也能得到合适的行宽。</p><p>要判断整件作品，而不是单个元素。一个衬线字、一处圆角是一项决定；默认字体加上紫色渐变、三张一模一样的卡片，就是还没有做出任何决定的指纹。</p></details>
+      </div>
+    </section>
     <section id="language" class="chapter">
-      <div class="chapter-label"><p>03 / COMMUNICATION</p><h2>Don't make clarity a puzzle.</h2></div>
+      <div class="chapter-label"><p>04 / COMMUNICATION</p><h2>Don't make clarity a puzzle.</h2></div>
       <div class="prose">
         <p>A distinctive page can still use ordinary search, Back and scrolling. Spend the surprise on the work—not on making people decode the controls.</p>
         <p>Write the words a person would use to find something. Put a heading nearer the text it introduces than the text it follows. Remove ceremony, but keep context and uncertainty. An essay needs room to be read, not a forced conversion into slogans.</p>
@@ -57,7 +88,7 @@
       </div>
     </section>
     <section id="typography" class="chapter">
-      <div class="chapter-label"><p>04 / TYPOGRAPHY</p><h2>A voice for<br>this text.</h2></div>
+      <div class="chapter-label"><p>05 / TYPOGRAPHY</p><h2>A voice for<br>this text.</h2></div>
       <div class="prose">
         <p>Read the words before choosing their face. A chapter asks for sustained reading; a route label asks to be found quickly. Neither becomes more human simply by wearing an unusual font.</p>
         <h3>Choose the body first.</h3><p>Proof the approved family on real paragraphs, controls, captions and numbers. A display face can be wonderful at a large size and exhausting in a paragraph. Keep one family if it supplies the roles. A companion earns its place through a different task or script—not fashion.</p>
@@ -71,7 +102,7 @@
       </div>
     </section>
     <section id="sources" class="chapter sources">
-      <div class="chapter-label"><p>05 / READING</p><h2>Borrow the reason.<br>Credit the mind.</h2></div>
+      <div class="chapter-label"><p>06 / READING</p><h2>Borrow the reason.<br>Credit the mind.</h2></div>
       <div class="prose">
         <p>This first guide draws on selected close readings. <strong>The five books have not yet been read cover to cover.</strong> The <a href="skills/bauhaus-human-design/references/reading-ledger.md">reading ledger</a> records passages inspected, edition details, OCR limits and remaining work.</p>
         <dl><dt>Magdalena Droste / Bauhaus-Archiv</dt><dd><cite>Bauhaus 1919–1933</cite>, 2015 Italian edition. Workshops connect design with execution; the school changes over time. The typography spread at printed pp. 148–149 is visually inspected. Our tenets are a modern interpretation, not ten historical quotations.</dd><dt>Steve Krug</dt><dd><cite>Don't Make Me Think, Revisited</cite>, 2014. Chapters 1–3 ground clarity and hierarchy; chapter 9 grounds observing tasks rather than collecting opinions.</dd><dt>Jeffrey Zeldman with Ethan Marcotte</dt><dd><cite>Designing with Web Standards</cite>, third edition. Chapter 14 places accessibility at the foundation. Its historical browser and legal guidance is not treated as current authority.</dd><dt>Joel Sklar</dt><dd><cite>Principles of Web Design</cite>, fifth edition. Chapter 2 distinguishes active space, content balance and a unified navigation grammar. Its 960px-era examples are not a required grid.</dd><dt>The Responsive Web Design Handbook / Volume II</dt><dd>Noah Stokes on character; Steve Fisher on core content; Dan Tello on phone-first experience; Clarissa Peterson on type, leading and measure. Each is credited separately in the field guide.</dd></dl>
@@ -83,11 +114,13 @@
       </div>
     </section>
     <section id="take" class="chapter take">
-      <div class="chapter-label"><p>06 / MAKE SOMETHING</p><h2>Take the method.</h2></div>
+      <div class="chapter-label"><p>07 / MAKE SOMETHING</p><h2>Take the method.</h2></div>
       <div class="prose"><p>Download one Markdown file and give it to any agent alongside your actual content. Or install the skill folder with its two references. No API key, framework or design service is required.</p>
         <a class="download" href="DESIGN-FIELD-GUIDE.md" download="dr-non-design-field-guide.md">DOWNLOAD THE COMPLETE GUIDE / .MD</a>
         <a class="download" href="skills/bauhaus-human-design/SKILL.md" download="SKILL.md">DOWNLOAD THE SKILL / .MD</a>
         <a class="download" href="TYPOGRAPHY-FIELD-GUIDE.md" download="dr-non-contextual-typography.md">DOWNLOAD THE CONTEXTUAL TYPE GUIDE / .MD</a>
+        <a class="download" href="FIGMA-PRINCIPLES.md" download="twelve-principles-field-note.md">DOWNLOAD THE TWELVE PRINCIPLES / .MD</a>
+        <a class="download" href="STYLE.md" download="style.md">DOWNLOAD THIS ROOM'S STYLE CONTRACT / .MD</a>
         <p><a href="https://github.com/Nonarkara/palette/tree/main/skills/bringhurst-contextual-type">Bringhurst skill + source ledger</a> · <a href="https://github.com/Nonarkara/dr-non-vibecoding-skills/tree/main/skills/bringhurst-contextual-type">Canonical typography skill</a></p>
         <p><a href="https://github.com/Nonarkara/palette/tree/main/skills/bauhaus-human-design">Skill + references on GitHub</a> · <a href="https://github.com/Nonarkara/dr-non-vibecoding-skills/tree/main/skills/bauhaus-human-design">Canonical reusable skill</a></p>
         <p lang="th">ดาวน์โหลดคู่มือ Markdown แล้วส่งให้เอเจนต์พร้อมเนื้อหาจริงของคุณ ใช้ได้โดยไม่ต้องมี API key</p><p lang="zh-Hans">下载 Markdown 指南，连同真实内容交给任何代理使用。不需要 API 密钥。</p>

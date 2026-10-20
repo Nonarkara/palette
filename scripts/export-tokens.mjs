@@ -1,3 +1,5 @@
+// non-slop-skip-file: token export source, not UI. It contains the string
+// "font-family:" inside a regex, which the static scan reads as a declaration.
 // Writes tokens/palette.tokens.json for Penpot and Tokens Studio.
 // Colour values are the credited digital conversions in data/colors.json.
 import { createHash } from "node:crypto";

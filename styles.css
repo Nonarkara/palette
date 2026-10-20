@@ -912,6 +912,7 @@ input:focus-visible,
 
 .interpretation-fineprint {
   grid-column: 1 / -1;
+  max-width: 78ch;
   margin: 0;
   padding: clamp(1rem, 2.5vw, 2.5rem);
   background: var(--about-black);

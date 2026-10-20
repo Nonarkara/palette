@@ -51,3 +51,10 @@ npm run dev
 Commit with `Agent: codex`, push to `main`, deploy through GitHub Pages, then
 exercise search, navigation, dialogs, copy, keyboard controls, and mobile layout
 on the live URL.
+
+<!-- non-slop:start -->
+## Design quality: Non-Slop
+Before any UI, page, dashboard, deck or visual work, read `.non-slop/AGENTS.md` and follow it.
+`STYLE.md` lists this repo's deliberate choices: it wins over every generic rule, and nothing listed there is stripped.
+Check with `node .non-slop/bin/non-slop.mjs scan .` (and `render <url>` when Playwright is installed). A different agent or person reviews; never self-review.
+<!-- non-slop:end -->

@@ -1,4 +1,6 @@
 #!/usr/bin/env node
+// non-slop-skip-file: this is the detector. Its placeholder patterns are the very
+// strings it hunts for, so scanning it reports the detector's own search patterns.
 // slop-lint.mjs — score any URL for "AI design slop" signals with Playwright.
 // Usage: node slop-lint.mjs <url> [more urls...] [--json] [--shots=dir]
 // Setup once: npm i -D playwright pngjs && npx playwright install chromium   (or set CHROME=/path/to/chrome)
