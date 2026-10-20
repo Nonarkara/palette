@@ -1,8 +1,12 @@
 <!doctype html>
+<!-- non-slop-example: a deliberately broken layout, used as the positive
+     control for tools/spatial-audit.mjs. It is supposed to trip every one of
+     the six spatial-hallucination modes. The defaults below (system-ui, no
+     viewport meta) are part of the slop being demonstrated. -->
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Spatial hallucination fixture</title>
+<title>Spatial hallucination fixture — a deliberately broken layout</title>
 <style>
   body { margin:0; font-family: system-ui, sans-serif; background:#fff; color:#111; }
   .bar { display:flex; justify-content:space-between; align-items:center; padding:8px 20px; background:#eee; }

@@ -97,4 +97,19 @@ for (const finding of ["void", "hero-no-data", "modal-on-load"]) {
 }
 assert.match(style, /does \*\*not\*\* read `## Allow`/, "STYLE.md must state that render ignores the allowlist");
 
+// A skip marker must never buy a clean scan with no trace. This is the
+// vendored copy of the fix, so assert the copy is actually the fixed one —
+// otherwise a re-vendor silently reintroduces the bug.
+{
+  const scan = await readFile(new URL("../.non-slop/lib/scan.mjs", import.meta.url), "utf8");
+  assert.ok(
+    /marker[\s\S]{0,400}skipped\(/.test(scan),
+    "the vendored scanner must route a skip marker through skipped(), not drop it with a bare return null"
+  );
+  assert.ok(
+    !/non-slop-skip-file[^\n]*\) && !process\.env\.NON_SLOP_INCLUDE_EXAMPLES\) return null/.test(scan),
+    "the vendored scanner must not drop a marked file silently"
+  );
+}
+
 console.log("OK: conservation law, measure, header height, the five defaults and provenance are enforced");

@@ -78,18 +78,29 @@ Everything else the rendered check reports on this repo is a real pass:
 0 contrast failures of 14, 0 small targets of 49, 0 invisible focus of 14 tabbed,
 no 320px overflow, longest prose line 27.7em.
 
-### The skip marker is silent upstream
+### The skip marker is reported — fixed 21 Oct 2026
 
-`scripts/export-tokens.mjs` and `tools/slop-lint.mjs` carry `non-slop-skip-file:`
-because they are detectors and exporters, not UI. The marker works, but it is the
-one exclusion that does **not** appear in the scan's `not scanned:` line:
-`lib/scan.mjs:73` returns `null` directly instead of going through `skipped()`.
-Verified against upstream commit `99a6215` (19 Oct 2026) — still open.
+`scripts/export-tokens.mjs`, `tools/slop-lint.mjs` and `tools/spatial-audit.mjs`
+carry `non-slop-skip-file:` because they are detectors and exporters, not UI.
 
-So a marker comment buys a clean scan with no trace. That is the highest-risk
-exclusion in the tool, because it is the one a person or agent can use to silence
-a finding. Until it is fixed upstream, check `--json` → `filesScanned` after adding
-a marker and confirm the count moved.
+Until 21 Oct 2026 the marker was the **only silent** exclusion: `lib/scan.mjs:73`
+returned `null` directly instead of going through `skipped()`, so a marker
+comment bought a clean scan with no trace in the output. Every other exclusion
+— binary, oversized, denied symlink, broken symlink, the file cap — was already
+named under `not scanned:`.
+
+Fixed upstream in [Nonarkara/Non-Slop#7](https://github.com/Nonarkara/Non-Slop/pull/7).
+The marker now routes through `skipped()` and is reported by name:
+
+```
+note: not scanned: scripts/export-tokens.mjs (marked skip), tools/slop-lint.mjs (marked skip)
+```
+
+and `filesScanned` drops by one, so the count and the note agree.
+
+**Until that lands in a release, check both.** After adding a marker, confirm
+`--json` → `filesScanned` moved and `note` is not empty. If the note is empty
+while a marker exists, the vendored copy is the old one.
 ## Known results of the spatial audit
 
 `node tools/spatial-audit.mjs <url>` measures the six spatial-hallucination
