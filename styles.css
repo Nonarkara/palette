@@ -1375,6 +1375,28 @@ input:focus-visible,
     margin-inline-start: 0;
   }
 
+  /* Below 480px the six mood chips cannot share one line, and a wrapped row
+     that breaks 4+2+1 or 5+1+1 is exactly the accidental wrapping the doctrine
+     names. So they become a deliberate 3-column grid: three even rows, never an
+     orphan. The chips stay content-width (justify-self:start) so nothing is
+     stretched to fill a track. */
+  @media (max-width: 479px) {
+    .mood-starters {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.25rem;
+    }
+
+    .mood-starters button {
+      justify-self: start;
+    }
+
+    #surprise-me {
+      grid-column: 1 / -1;
+      justify-self: stretch;
+    }
+  }
+
   .search-footer {
     grid-template-columns: 1fr;
   }

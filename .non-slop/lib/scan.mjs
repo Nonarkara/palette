@@ -74,7 +74,7 @@ export function fileCtx(abs, base, text) {
   // every other exclusion — otherwise it is the one path that can silence a
   // finding without a trace. Route it through skipped() so it lands in the
   // "not scanned:" line.
-  const marker = /non-slop-skip-file|non-slop-example|slop-example/.exec(text.slice(0, 400));
+  const marker = /(non-slop-skip-file|non-slop-example|slop-example)/.exec(text.slice(0, 400));
   if (marker && !process.env.NON_SLOP_INCLUDE_EXAMPLES) {
     return skipped(rel, abs, text.length, marker[1] === "non-slop-example" || marker[1] === "slop-example" ? "example" : "marked skip");
   }

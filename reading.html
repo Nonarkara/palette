@@ -7,7 +7,7 @@
   <title>Reading room — Palette</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@400;700&family=IBM+Plex+Sans+Thai:wght@400;600&family=Noto+Sans+SC:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="reading.css?v=1">
+  <link rel="stylesheet" href="reading.css?v=2">
 </head>
 <body>
   <a class="skip" href="#reading">Skip to the guide</a>
@@ -19,7 +19,7 @@
       <div class="opening-note"><p>A colour can change the room. It cannot rescue an unclear task.</p><p>This is Dr Non's reading of design craft: make the subject visible, make the action obvious, and test the result.</p></div>
     </section>
     <nav class="contents" aria-label="Reading sections">
-      <a href="#method">The method</a><a href="#standards">Standards</a><a href="#composition">Composition</a><a href="#defaults">The defaults</a><a href="#language">Language</a><a href="#typography">Type &amp; context</a><a href="#sources">Reading &amp; credits</a><a href="#take">Use with your agent</a>
+      <a href="#method">Method</a><a href="#standards">Standards</a><a href="#composition">Composition</a><a href="#defaults">Defaults</a><a href="#language">Language</a><a href="#typography">Type</a><a href="#destinations">Destinations</a><a href="#sources">Credits</a><a href="#take">Use it</a>
     </nav>
     <section id="method" class="chapter">
       <div class="chapter-label"><p>01 / CRAFT</p><h2>Structure before finish.</h2></div>
@@ -127,6 +127,33 @@
         <a class="download" href="TYPOGRAPHY-FIELD-GUIDE.md" download="dr-non-contextual-typography.md">DOWNLOAD THE TYPE GUIDE / .MD</a>
       </div>
     </section>
+    <section id="destinations" class="chapter destinations">
+      <div class="chapter-label"><p>08 / DESTINATIONS</p><h2>Name the failure.<br>Name the place.</h2></div>
+      <div class="prose">
+        <p>A doctrine that only says “no” leaves the reader to invent the alternative — and inventing an alternative under time pressure is how you get a purple gradient. So every rule in this room has a destination: what to do instead, and a real place to look.</p>
+
+        <h3>Three columns.</h3>
+        <p><strong>Failure</strong> — what it looks like on screen. <strong>Destination</strong> — what to do instead, in words you can act on. <strong>Source</strong> — a named place to look, with its address, checked by hand on the day it was written.</p>
+        <p>The index of them is <a href="REMEDIES.md">REMEDIES.md</a>: sixty-odd real places, grouped under the twelve failures that actually matter, each carrying a verdict for this project. Reference it, use it, or it is banned here and the law is named in the row. A gradient library is banned here. So is AI-generated imagery. So is the shelf of stock animation effects. Knowing that before you open the link saves you an argument later.</p>
+
+        <h3>Two limits, stated plainly.</h3>
+        <p>A reference is not a style. Copy a site's composition and you have a page that could belong to anyone, which is the disease this room exists against. Look at one thing — the grid, the type, the density, the way a state is signalled — then build your own.</p>
+        <p>And the catalogue itself is not above suspicion. The public list it came from drew its own examples with purple gradients and pill buttons and centred heroes: the disease, illustrated. It is used here as a map of destinations, never as an authority on how to look.</p>
+
+        <h3>Start at the brief.</h3>
+        <p>Most slop is decided before a pixel exists. “Make it more premium” asks for a sensation. A sensation cannot be met, so the machine invents one — and the invention is always the same: a default font, a purple gradient, three identical cards.</p>
+        <p>So the brief is checked first, because the brief is the cause. <code>node tools/brief-lint.mjs docs/design-brief.md</code> reads a design brief and reports every vague directive that carries no anchor: no number, no material, no named reference, no file. It quotes the line, says what the line promises without a subject, and asks the smallest question that would name the real thing. It never writes the sentence for you, and it never invents a number.</p>
+        <p>The fix is not a longer adjective. It is an anchor on the same line.</p>
+        <p><em>Before:</em> “Make it more premium.”<br>
+        <em>After:</em> “The instrument rail is 56px wide and never grows, because it is hardware and not chrome — see <code>styles.css</code>.”</p>
+        <p>The second line can be checked. Someone can measure the rail, argue about the 56, and say no. The first line cannot be checked by anyone, which is exactly why every agent answers it in the same way.</p>
+
+        <p class="digest">Dr Non's Digest: an instruction nobody can check is a request for somebody else's answer.</p>
+        <details lang="th"><summary>อ่านภาษาไทย — ปลายทางและบรีฟ</summary><p>หลักการที่พูดแค่ว่า “ห้าม” เท่านั้น จะทิ้งหน้าที่ให้ผู้อ่านไปคิดทางแก้เอง และการคิดทางแก้ภายใต้เวลาจำกัดนั้นแหละที่ทำให้ได้ไล่สีม่วง ทุกข้อในห้องนี้จึงมีปลายทางด้วย คือ ทำอะไรแทน และไปดูที่ไหนจริง</p><p>ดัชนีของปลายทางเหล่านั้นอยู่ใน REMEDIES.md ราวหกสิบแห่ง จัดตามความล้มเหลวสิบสองแบบที่พบบ่อยที่สุด แต่ละรายการมีคำตัดสินสำหรับโปรเจกต์นี้ คือ ใช้ดูเป็นแบบอย่าง ใช้ได้ หรือ ห้ามในที่นี้ พร้อมระบุกฎที่ห้าม ไล่รางที่มีสีไล่และปุ่มเม็ดกลมคือห้ามในที่นี้ ภาพที่สร้างด้วย AI ก็ห้ามเช่นกัน</p><p>มีข้อจำกัดสองข้อที่ต้องพูดตรงๆ ประการแรก ของอ้างอิงไม่ใช่สไตล์ ถ้าคัดเลย์เอาต์มา หน้าก็จะเป็นหน้าที่ใครก็ทำได้ ประการที่สอง ตัวแคตตาล็อกเองก็ไม่ได้เหนือกว่า รายการสาธารณะที่มาของแหล่งนี้วาดตัวอย่างของตัวเองด้วยไล่สีม่วงและปุ่มทรงเม็ดกลม ซึ่งคือโรคที่เรากำลังพูดถึงอยู่ เราใช้มันเป็นแผนที่ของปลายทาง ไม่ใช่ผู้เชี่ยวชาญเรื่องความสวย</p><p>เริ่มจากบรีฟ เพราะสไลปส่วนใหญ่ถูกตัดสินใจก่อนมีพิกเซลแม้แต่หนึ่งจุด คำว่า “ทำให้ดูพรีเมียมขึ้น” เป็นคำขอความรู้สึก ความรู้สึกตอบสนองไม่ได้ เครื่องจึงต้องแต่งขึ้นเอง และสิ่งที่แต่งออกมาก็เหมือนกันทุกครั้ง คือฟอนต์ค่าเริ่มต้น ไล่สีม่วง และการ์ดสามใบที่เหมือนกันหมด</p><p>เครื่องมือ brief-lint จึงอ่านบรีฟก่อน แล้วรายงานทุกประโยคที่กล่าวคุณภาพอย่างเดียวโดยไม่มีสิ่งยึด ไม่มีตัวเลข ไม่มีวัสดุ ไม่มีชื่อสิ่งอ้างอิง เครื่องมือจะอ้างบรรทัดนั้น บอกว่ามันสัญญาอะไรโดยไม่มีตัวตน และถามคำถามเล็กๆ ที่จะทำให้มันชี้ของจริง มันไม่เขียนประโยคแทนคุณ และไม่กุคัวเลขขึ้นมาเอง</p><p>ทางแก้ไม่ใช่คำคุณภาพที่ยาวขึ้น แต่คือสิ่งที่ยึดอยู่บนบรรทัดเดียวกัน</p></details>
+        <details lang="zh-Hans"><summary>中文 — 去哪里，以及简报</summary><p>只说「不要」的规则，会把想出替代方案的责任留给读者；而在时间压力下临时想出的替代方案，往往就是一条紫色渐变。所以这里每一条规则都配有目的地：应该怎么做，以及去哪里真的能看到。</p><p>这些目的地的索引在 REMEDIES.md 里：约六十个真实站点，按最常见的十二种失败分组，每条都给出对本项目的判定——仅供参考、可以使用，或在此禁止并注明依据。渐变库在这里被禁止，AI 生成图像也是，成套的动效素材同样被禁。事先知道，比事后争论省事。</p><p>有两个限制必须说清。第一，参考不是风格。抄来别人的版式，得到的页面谁都能用，恰恰是我们要对抗的病。第二，这份目录本身也并非无懈可击：它来源的公开清单里，示例图画的是紫色渐变、胶囊按钮和居中大标题——正是我们谈论的病。所以我们把它当作目的地的地图，而不是审美的权威。</p><p>从简报开始，因为多数偷工减料在第一个像素之前就已经决定了。「做得更有高级感」是在要求一种感觉；感觉无法被满足，于是机器只好编造，而编造的结果每次都一样：默认字体、紫色渐变、三张一模一样的卡片。</p><p>所以要先检查简报。brief-lint 会读设计简报，报告每一句没有任何着落点的含糊指令——没有数字、没有材质、没有具名参考、没有文件。它引用原句，说明它在没有主体的情况下承诺了什么，并提出一个最小的、能把真实之物指出来的问题。它不替你改写句子，也不会替你编造数字。</p><p>解法不是更长的形容词，而是同一行里的着落点。</p></details>
+        <a class="download" href="REMEDIES.md" download="remedies.md">DOWNLOAD THE REMEDY INDEX / .MD</a>
+      </div>
+    </section>
     <section id="sources" class="chapter sources">
       <div class="chapter-label"><p>07 / READING</p><h2>Borrow the reason.<br>Credit the mind.</h2></div>
       <div class="prose">
@@ -140,7 +167,7 @@
       </div>
     </section>
     <section id="take" class="chapter take">
-      <div class="chapter-label"><p>08 / MAKE SOMETHING</p><h2>Take the method.</h2></div>
+      <div class="chapter-label"><p>09 / MAKE SOMETHING</p><h2>Take the method.</h2></div>
       <div class="prose"><p>Download one Markdown file and give it to any agent alongside your actual content. Or install the skill folder with its two references. No API key, framework or design service is required.</p>
         <a class="download" href="DESIGN-FIELD-GUIDE.md" download="dr-non-design-field-guide.md">DOWNLOAD THE COMPLETE GUIDE / .MD</a>
         <a class="download" href="skills/bauhaus-human-design/SKILL.md" download="SKILL.md">DOWNLOAD THE SKILL / .MD</a>
@@ -148,6 +175,8 @@
         <a class="download" href="FIGMA-PRINCIPLES.md" download="twelve-principles-field-note.md">DOWNLOAD THE TWELVE PRINCIPLES / .MD</a>
         <a class="download" href="DESIGN-STYLES.md" download="fifty-design-styles.md">DOWNLOAD THE FIFTY STYLES / .MD</a>
         <a class="download" href="ANTI-SPATIAL-HALLUCINATION.md" download="anti-spatial-hallucination.md">DOWNLOAD THE SPATIAL DOCTRINE / .MD</a>
+        <a class="download" href="REMEDIES.md" download="remedies.md">DOWNLOAD THE REMEDY INDEX / .MD</a>
+        <a class="download" href="docs/design-brief.md" download="palette-design-brief.md">DOWNLOAD THIS PROJECT'S OWN BRIEF / .MD</a>
         <a class="download" href="STYLE.md" download="style.md">DOWNLOAD THIS ROOM'S STYLE CONTRACT / .MD</a>
         <p><a href="https://github.com/Nonarkara/palette/tree/main/skills/bringhurst-contextual-type">Bringhurst skill + source ledger</a> · <a href="https://github.com/Nonarkara/dr-non-vibecoding-skills/tree/main/skills/bringhurst-contextual-type">Canonical typography skill</a></p>
         <p><a href="https://github.com/Nonarkara/palette/tree/main/skills/bauhaus-human-design">Skill + references on GitHub</a> · <a href="https://github.com/Nonarkara/dr-non-vibecoding-skills/tree/main/skills/bauhaus-human-design">Canonical reusable skill</a></p>

@@ -16,7 +16,10 @@ h1,h2,h3 { font-family:'Archivo Narrow',Arial,sans-serif; }
 h1 { margin:0; font-size:var(--display); line-height:.93; letter-spacing:-.035em; }
 .opening-note { max-width:32ch; font-size:var(--body); line-height:1.4; }
 .opening-note p:first-child { font-weight:700; }
-.contents { display:flex; flex-wrap:wrap; gap:8px 32px; background:var(--deep); color:var(--paper); padding:24px var(--gutter); }
+.contents { display:flex; flex-wrap:wrap; gap:8px 24px; background:var(--deep); color:var(--paper); padding:24px var(--gutter); font-size:var(--micro); }
+/* Below 900px nine chapter links cannot share one line, so the contents becomes a
+   deliberate 3-column grid — three even rows, never a ragged 3+4+2 with an orphan. */
+@media(max-width:899px) { .contents { display:grid; grid-template-columns:repeat(3,1fr); gap:0 16px; } .contents a { justify-content:flex-start; } }
 .contents a { display:flex; align-items:center; min-height:44px; }
 .chapter { display:grid; gap:24px; padding:56px var(--gutter); }
 .chapter-label p { font-size:var(--micro); margin:0 0 16px; }
@@ -41,6 +44,12 @@ details { margin-top:24px; }
 summary { padding:12px 0; cursor:pointer; min-height:48px; font-size:var(--body); }
 details p { font-size:1.25rem; margin-top:12px; }
 .sources { background:var(--chord); color:var(--deep); }
+.destinations { background:var(--deep); color:var(--paper); }
+.destinations code { font-family:ui-monospace,'SF Mono',Menlo,monospace; font-size:.95em; }
+.destinations h3 { border-top:1px solid currentColor; padding-top:1.25rem; }
+.destinations h3:first-of-type { border-top:0; padding-top:0; }
+.destinations .digest { color:var(--chord); }
+.destinations em { font-style:italic; }
 dt { font-weight:700; margin-top:2rem; }
 dd { margin:8px 0 0; }
 .download { display:block; padding:16px 0; min-height:48px; font-weight:700; }

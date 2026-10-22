@@ -67,3 +67,23 @@ writing. They adapt two MIT sources and do not vendor those repositories.
 Both upstream works are MIT. The permission text is the LICENSE file at each
 commit above. That licence covers those works. It does not relicense Palette,
 and Palette's MIT licence does not relicense them. No endorsement is implied.
+
+## Remedy index — 2026-10-22
+
+`REMEDIES.md` and reading-room chapter 08 were prompted by a public Instagram
+carousel by **Aashish Pahwa (@okaashish)**, "60+ Free Websites Every Vibe Coder
+Should Know About", posted 21 Oct 2026.
+
+Taken: the twelve failure phrases, which are the best plain-language statement
+of the failure list this project had found, and the destinations those phrases
+point at. Not taken: the carousel's own mockups, which are textbook slop — a
+purple gradient with a pill button and a centred hero, which is exactly what
+section 1 of the index tells you to delete. It is used as a map of destinations,
+never as an authority on style.
+
+Nothing was copied from the carousel. Its images are not reproduced, its slide
+text is not quoted, and the descriptions of each linked site are this project's
+own. The names and addresses of the linked sites belong to their owners and are
+listed as attribution for a public directory. Every address was checked by hand
+on 22 Oct 2026, and the four that had moved or died were corrected — see the
+corrections table at the end of `REMEDIES.md`.

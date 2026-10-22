@@ -638,8 +638,8 @@ export function summarise(geometry) {
 }
 
 // ---------------------------------------------------------------- CLI
-export async function auditUrl(browser, url, { settleMs = 3000 } = {}) {
-  const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
+export async function auditUrl(browser, url, { settleMs = 3000, width = 1440, height = 900 } = {}) {
+  const page = await browser.newPage({ viewport: { width, height } });
   try {
     await page.goto(url, { waitUntil: "domcontentloaded", timeout: 30000 });
     await page.waitForTimeout(settleMs);

@@ -193,6 +193,119 @@ export function inPageMetrics() {
   // content column width (phone layout on a desktop?)
   const xs = []; { const w2 = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT); let t, c = 0; const rg = document.createRange(); while ((t = w2.nextNode()) && c < 3000) { if (!t.textContent.trim() || !t.parentElement || inMap(t.parentElement)) continue; rg.selectNodeContents(t); for (const q of rg.getClientRects()) if (q.top >= 0 && q.top < VH && q.width > 0 && q.right > 0 && q.left < VW) { xs.push(Math.max(0, q.left), Math.min(VW, q.right)); c++; } } }
   xs.sort((a, b) => a - b); out.textColumnShare = xs.length > 10 ? +((xs[Math.floor(xs.length * 0.97)] - xs[Math.floor(xs.length * 0.03)]) / VW).toFixed(2) : null;
+  // ---- "a website squeezed into a phone": a desktop composition carried to 390px unchanged.
+  // Three signals, all measured, none of them a verdict:
+  //   smallTextShare — share of visible text set below 12px (the desktop size, shrunk)
+  //   trioRowsWide   — rows of >=3 items still side by side, each >=25% of the viewport
+  //   wideGrids      — grid containers still holding >=3 tracks
+  {
+    let small = 0, total = 0;
+    const sw = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+    let sn;
+    while ((sn = sw.nextNode())) {
+      const t = sn.textContent.trim(); if (!t) continue;
+      const pe = sn.parentElement; if (!pe || pe.closest('script,style,noscript')) continue;
+      const cs = getComputedStyle(pe); if (cs.display === 'none' || cs.visibility === 'hidden' || +cs.opacity < 0.05) continue;
+      const r = pe.getBoundingClientRect(); if (!r.width || !r.height || r.top > docTopLimit) continue;
+      total += t.length; if (parseFloat(cs.fontSize) < 12) small += t.length;
+    }
+    out.smallTextShare = total ? +(small / total).toFixed(3) : 0;
+    out.smallTextChars = small; out.visibleTextChars = total;
+    // rows of >=3 siblings still side by side
+    const kidRows = new Map();
+    for (const el of els) {
+      const r = el.getBoundingClientRect();
+      if (r.width < 25 || r.height < 2 || r.top > docTopLimit) continue;
+      const p = el.parentElement; if (!p) continue;
+      let a = kidRows.get(p); if (!a) { a = []; kidRows.set(p, a); }
+      a.push(r);
+    }
+    let trioRows = 0, trioRowsWide = 0;
+    for (const [, rs] of kidRows) {
+      const byTop = new Map();
+      for (const r of rs) { const t = Math.round(r.top / 3); let a = byTop.get(t); if (!a) { a = []; byTop.set(t, a); } a.push(r); }
+      for (const [, line] of byTop) {
+        if (line.length < 3) continue;
+        trioRows++;
+        if (line.every(r => r.width >= 0.25 * VW)) trioRowsWide++;
+      }
+    }
+    out.trioRows = trioRows; out.trioRowsWide = trioRowsWide;
+    let wideGrids = 0;
+    for (const el of document.querySelectorAll('*')) {
+      const cs = getComputedStyle(el);
+      if (!cs.display.includes('grid')) continue;
+      const r = el.getBoundingClientRect(); if (r.width < 120 || r.top > docTopLimit) continue;
+      if ((cs.gridTemplateColumns || '').split(/\s+/).filter(Boolean).length >= 3) wideGrids++;
+    }
+    out.wideGrids = wideGrids;
+    // A squeezed desktop keeps its two-column split: a wide main beside a
+    // narrow strip. Equal columns are a phone's own arrangement, so the test
+    // is not "there are columns" but "one column stayed narrow beside a much
+    // wider one" — the side panel that never collapsed. Grid tracks are
+    // measured from the resolved template, so a spanning item cannot make a
+    // real column look narrow.
+    let narrowStrips = 0;
+    const stripExamples = [];
+    for (const el of document.querySelectorAll('*')) {
+      const cs = getComputedStyle(el);
+      if (!cs.display.includes('grid') && !cs.display.includes('flex')) continue;
+      const r = el.getBoundingClientRect();
+      if (r.width < 120 || r.top > docTopLimit) continue;
+      const kids = [...el.children].filter((c) => {
+        const k = getComputedStyle(c);
+        const b = c.getBoundingClientRect();
+        return k.display !== 'none' && k.position !== 'absolute' && k.position !== 'fixed' && b.width > 2 && b.height > 2;
+      });
+      if (kids.length < 2) continue;
+      const contentW = el.clientWidth - (parseFloat(cs.paddingLeft) || 0) - (parseFloat(cs.paddingRight) || 0);
+      if (!(contentW > 0)) continue;
+      let cols;
+      if (cs.display.includes('grid')) {
+        const tracks = (cs.gridTemplateColumns || '').split(/\s+/).filter(Boolean).map(parseFloat).filter((n) => !Number.isNaN(n) && n > 0);
+        if (tracks.length < 2) continue;
+        // Put each child in the track its centre falls in.
+        const texts = tracks.map(() => '');
+        for (const c of kids) {
+          const b = c.getBoundingClientRect();
+          const centre = b.left + b.width / 2 - r.left;
+          let acc = 0, idx = 0;
+          for (let i = 0; i < tracks.length; i++) { acc += tracks[i]; if (centre <= acc) { idx = i; break; } idx = i; }
+          texts[idx] += (c.innerText || '').trim();
+        }
+        cols = tracks.map((width, i) => ({ width, text: texts[i] }));
+      } else {
+        // A flex row: only a fixed-basis column can be a "panel that never
+        // collapsed". A row of equal links is not a split.
+        cols = kids
+          .filter((c) => {
+            const k = getComputedStyle(c);
+            return parseFloat(k.flexGrow) === 0 && /px$/.test(k.flexBasis);
+          })
+          .map((c) => ({ width: c.getBoundingClientRect().width, text: (c.innerText || '').trim() }));
+        if (cols.length < 1) continue;
+      }
+      for (const c of cols) {
+        if (!c.text) continue;
+        if (c.width < 60 || c.width > 0.4 * contentW) continue;
+        const widest = Math.max(...cols.filter((o) => o !== c).map((o) => o.width), 0);
+        if (widest < 1.8 * c.width) continue;
+        narrowStrips++;
+        if (stripExamples.length < 6) stripExamples.push({ container: el.tagName.toLowerCase() + (el.className && typeof el.className === 'string' ? '.' + el.className.trim().split(/\s+/)[0] : ''), stripWidth: Math.round(c.width), widest: Math.round(widest), containerWidth: Math.round(contentW) });
+        break;
+      }
+    }
+    out.narrowStrips = narrowStrips;
+    out.narrowStripExamples = stripExamples;
+    let tiny = 0, interactives = 0;
+    for (const el of document.querySelectorAll('a,button,input,select,textarea,[role="button"],[tabindex]')) {
+      const r = el.getBoundingClientRect(); if (!r.width || !r.height) continue;
+      if (getComputedStyle(el).visibility === 'hidden') continue;
+      interactives++;
+      if (r.width < 44 || r.height < 44) tiny++;
+    }
+    out.tinyTargets = tiny; out.interactives = interactives;
+  }
   // neon glow + big-number tiles + dark theme
   let glow = 0, bigNum = 0;
   for (const b of boxes) { const sh = b.cs.boxShadow || ''; const m = sh.match(/rgba?\([^)]+\)/g) || []; if (m.some(c => { const q = parseC(c); if (!q) return false; const [, s2, l2] = hsl(q); return s2 > .5 && l2 > .3 && q[3] > .2; }) && /\d+px\s+\d+px\s+([1-9]\d|[4-9])px/.test(sh)) glow++; }
@@ -278,6 +391,8 @@ export const RULES = [
   { id: 'type-chaos', w: 1, desc: '≥9 distinct font sizes (no type scale)', test: d => d.fontSizes >= 9 },
   { id: 'boxed-everything', w: 0, desc: '≥70% of first-screen text sits inside cards or boxes (reported only: map apps put text in panels by necessity)', test: d => (d.boxedTextShare || 0) >= 0.7 },
   { id: 'mobile-overflow', w: 1, desc: 'Phone layout scrolls sideways', test: (d, m) => !!m.hOverflow },
+  { id: 'phone-squeezed', w: 1, desc: 'Phone layout is the desktop layout shrunk: ≥25% of the visible text on a 390px screen is set below 12px', test: (d, m) => (m.smallTextShare || 0) >= 0.25 },
+  { id: 'desktop-columns-on-phone', w: 1, desc: 'The desktop split survived at 390px: a narrow column stayed beside a much wider one instead of collapsing', test: (d, m) => (m.narrowStrips || 0) >= 1 },
   { id: 'broken-placeholder', w: 1, desc: 'Visible undefined/NaN, lorem ipsum or mock/sample data', test: d => (d.placeholderHits?.broken || 0) + (d.placeholderHits?.lorem || 0) + (d.placeholderHits?.sample || 0) >= 1 },
   { id: 'default-font', w: 0, desc: 'Primary face is a stock default (reported only: clean apps use them too)', test: d => !!d.defaultFont },
 ];

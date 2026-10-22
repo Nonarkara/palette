@@ -78,6 +78,58 @@ Everything else the rendered check reports on this repo is a real pass:
 0 contrast failures of 14, 0 small targets of 49, 0 invisible focus of 14 tabbed,
 no 320px overflow, longest prose line 27.7em.
 
+### The reading room, measured 22 Oct 2026
+
+`tools/slop-lint.mjs` on `reading.html`: **OK, 0 points.** One hit, `default-font`,
+which is a reported-only rule (weight 0) and is already listed under `## Allow`
+above: the reading room's prose face is Archivo Narrow, and Arial is the fallback
+a machine gets without the webfont.
+
+### The phone, measured 22 Oct 2026 at 390 × 844
+
+Two new rules check that a phone layout is a different composition rather than a
+smaller desktop. Both are clear on both pages, so neither fires here:
+
+| metric | plate view | reading room | rule |
+|---|---|---|---|
+| share of visible text under 12px | 0 | 0 | `phone-squeezed` fires at ≥0.25 |
+| narrow columns left beside a much wider one (a split that never collapsed) | 0 | 0 | `desktop-columns-on-phone` fires at ≥1 |
+
+The two rules answer two different questions. `phone-squeezed` catches the
+desktop type size carried over and shrunk. `desktop-columns-on-phone` catches
+the desktop's two-column split that never collapsed — a narrow strip beside a
+wide main. Equal columns are *not* a squeezed desktop: the reading room's own
+three-column contents grid and the plate view's three-column mood grid are
+deliberate phone arrangements, and neither rule fires on them.
+
+The thresholds were calibrated against `tests/fixtures/phone-squeezed.html`, a
+deliberately broken layout that fires all three signals. `tests/slop-lint.test.mjs`
+asserts both directions: the fixture fires, the plate view does not.
+
+### The phone arrangements, measured 22 Oct 2026 at 390 × 844
+
+The spatial auditor was also run at 390 × 844, and it found two ragged
+arrangements that the desktop never shows. Both were **fixed**, not allowed:
+
+| group | before | after |
+|---|---|---|
+| reading room `nav.contents` | 3+4+2, then 3+3+3 | **3+3+3** — a deliberate 3-column grid below 900px |
+| plate view `.mood-starters` | 5+1+1, then 4+2+1 | **3+3+1** — a 3-column grid below 480px, the last row being the full-width "surprise me" action |
+
+At 1440 the contents nav is **one row of nine** (92px tall). Below 900 it is a
+3-column grid of three even rows (180px). At 320 it still overflows nothing.
+
+A row of controls that breaks 5+1+1 is the accidental wrapping the doctrine
+names; an even arrangement is a decision. `tests/phone-layout.test.mjs` asserts
+both, so the ragged break cannot come back.
+
+### These sections are read back by `npm run audit`
+
+`npm run audit` treats the two "Known results" sections below as **allowlists**,
+not as prose. Any rendered hit or spatial mode that is *not* recorded here fails
+the audit. A documented false positive is a liability, not a pardon: if a rule
+is renamed, retuned or deleted, the audit goes red until this file is corrected.
+
 ### The skip marker is reported — fixed 21 Oct 2026
 
 `scripts/export-tokens.mjs`, `tools/slop-lint.mjs` and `tools/spatial-audit.mjs`
@@ -101,6 +153,34 @@ and `filesScanned` drops by one, so the count and the note agree.
 **Until that lands in a release, check both.** After adding a marker, confirm
 `--json` → `filesScanned` moved and `note` is not empty. If the note is empty
 while a marker exists, the vendored copy is the old one.
+
+### The marker's reason was wrong — fixed 22 Oct 2026
+
+The vendored copy read the marker with a pattern that had **no capture group**,
+so `marker[1]` was always `undefined` and the ternary that chooses the reason
+never produced `example`. Every deliberate example was reported as a plain
+"marked skip" — true, but it loses the distinction a reviewer needs: an
+example is deliberate test data, a marked skip is a file the owner excluded.
+
+The pattern now captures the marker name, so the report reads:
+
+```
+note: not scanned: tests/brief-lint.test.mjs (example),
+tests/fixtures/phone-squeezed.html (example),
+tools/brief-lint.mjs (marked skip)
+```
+
+`tests/house-rules.test.mjs` asserts the vendored copy carries the capture, so
+a re-vendor cannot silently reintroduce it.
+
+**This repo names its examples; upstream keeps them silent.** Upstream's current
+`lib/scan.mjs` returns `null` for an example marker on the grounds that example
+fixtures are deliberate test data rather than something the scan could not read.
+That is a fair argument, but it is not this repo's rule: `AGENTS.md` says a
+scanner must never drop an exclusion without naming it, because a scanner that
+skips silently is a false-success signal. A full-tree scan also skips `tests/`
+by the scanner's own example-directory rule, so the honest statement of what
+was not read lives in the staged scan, where every marker is named.
 ## Known results of the spatial audit
 
 `node tools/spatial-audit.mjs <url>` measures the six spatial-hallucination
@@ -111,14 +191,24 @@ Verified 21 Oct 2026 at 1440×900.
   instrument rail is an arrangement, not a split nav, and the full-viewport
   colour field is not an orphan. The auditor knows both.
 - **The reading room (`reading.html`) reports 2 modes, both honest:**
-  `one-size-for-all-prose` (3,781 characters of prose at a single 20px) and
-  `deep-scroll` (11 screens). Neither is a defect: it is a long essay with one
-  deliberate body size. It does *not* report `no-way-to-jump` — the reading
-  room has a contents nav above the fold, which is what makes the length
+  `falseHierarchy` (kind `one-size-for-all-prose`: 3,937 characters of prose at
+  a single 20px) and `spatiallyExpensive` (kind `deep-scroll`: 13.2 screens).
+  Neither is a defect: it is a long essay with one deliberate body size, and a
+  contents nav above the fold. It does *not* report `no-way-to-jump` — the
+  reading room has a contents nav above the fold, which is what makes the length
   affordable.
 - The `tests/fixtures/spatial-hallucination.html` fixture triggers all six
   modes. `tests/spatial-audit.test.mjs` asserts that, and asserts the plate
   view stays clean. If you change a threshold, both must still hold.
+
+**Correction, 22 Oct 2026.** This section used to name the *example kinds*
+(`one-size-for-all-prose`, `deep-scroll`) where the *mode ids* belong
+(`falseHierarchy`, `spatiallyExpensive`). `npm run audit` reads this section
+back as an allowlist, and a kind is not a mode, so the allowlist matched
+nothing and the audit correctly failed. The ids are now recorded, and the kinds
+are kept as the explanation. The character count and the screen count moved
+with the prose (3,781 → 3,937 characters; 11 → 13.2 screens) as the chapter
+grew; re-measure rather than trust either number.
 
 The auditor's known blind spots, so nobody trusts it too far:
 

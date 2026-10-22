@@ -4,8 +4,13 @@
 
 Then read [AGENTS.md](AGENTS.md); it is the main instructions file for this repo.
 
+When a rule fires, read [REMEDIES.md](REMEDIES.md) — it says where to go instead,
+and names a real place to look for each destination. Before building from a
+brief, check it: `node tools/brief-lint.mjs <file>`.
+
 @.non-slop/AGENTS.md
 @STYLE.md
+@REMEDIES.md
 
 <!-- non-slop:start -->
 ## Design quality: Non-Slop

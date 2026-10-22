@@ -1,5 +1,9 @@
 > **Read [ANTI-SLOP.md](ANTI-SLOP.md) before any design or frontend work.** These are Dr Non's hard rules against AI design slop: empty space is a decision, subtract before you add, and the map comes first. Run `tools/slop-lint.mjs` on any page you ship.
 
+> **Read [REMEDIES.md](REMEDIES.md) when a rule fires.** The doctrine says what is wrong; this says where to go instead, and names a real place to look for each destination. A rule that only says "no" leaves you to invent the alternative, and inventing an alternative under time pressure is how you get a purple gradient.
+
+> **Check the brief before you build from it.** `node tools/brief-lint.mjs <file>` reports every vague directive that carries no anchor — no number, no material, no named reference. "Make it more premium" is the cause of most slop, and no other check in this repo reads Markdown.
+
 For composition and image-placement reviews, read [Anti-spatial-hallucination](ANTI-SPATIAL-HALLUCINATION.md). Its hero patterns do not override Palette’s full-viewport colour field, instrument rail or prohibition on decorative effects.
 Measure the geometry with `node tools/spatial-audit.mjs <url>` before shipping a page. It reports the six failure modes as rectangles; the numbers are not a verdict, but a mode that never fires is a mode nobody looked at.
 
@@ -37,6 +41,7 @@ competes with it.
 npm test
 npm run check
 npm run dev
+npm run audit
 ```
 
 ## Sacred constraints

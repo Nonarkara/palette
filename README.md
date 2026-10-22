@@ -1,5 +1,25 @@
 # Palette
 
+**This repo is an instrument, not only an exhibition.** The doctrine is
+[ANTI-SLOP.md](ANTI-SLOP.md) — 13 hard limits, each with the measured evidence
+behind it. The destinations are [REMEDIES.md](REMEDIES.md) — for each failure,
+what to do instead, and a real place to look. The geometry is
+[ANTI-SPATIAL-HALLUCINATION.md](ANTI-SPATIAL-HALLUCINATION.md). The deliberate
+choices are [STYLE.md](STYLE.md), and they beat every generic rule.
+
+| Check | Command | What it proves |
+|---|---|---|
+| Static source rules | `node .non-slop/bin/non-slop.mjs scan .` | The source does not reach for a default nobody chose |
+| The rendered screen | `node tools/slop-lint.mjs <url>` | The page is not slop at 1440 and at 390 |
+| Layout geometry | `node tools/spatial-audit.mjs <url>` | The layout can explain its own geometry |
+| The brief | `node tools/brief-lint.mjs <file>` | The instructions name something |
+| All four | `npm run audit` | One report, and anything not recorded in STYLE.md fails it |
+
+A documented false positive is a liability, not a pardon. `npm run audit` reads
+STYLE.md back as an allowlist, so a rule that was renamed or retuned turns the
+audit red until the file is corrected. Nothing is skipped silently: if an
+instrument cannot run, it says so and the exit code says it too.
+
 [Type & context](https://colors.nonarkara.org/reading#typography) adds Dr Non's
 Bringhurst interpretation to the reading room. [Download the self-contained
 typography guide](TYPOGRAPHY-FIELD-GUIDE.md) or use the

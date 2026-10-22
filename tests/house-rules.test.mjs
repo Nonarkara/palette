@@ -110,6 +110,27 @@ assert.match(style, /does \*\*not\*\* read `## Allow`/, "STYLE.md must state tha
     !/non-slop-skip-file[^\n]*\) && !process\.env\.NON_SLOP_INCLUDE_EXAMPLES\) return null/.test(scan),
     "the vendored scanner must not drop a marked file silently"
   );
+  // The marker must be CAPTURED, so the report can say WHY a file was skipped.
+  // The pattern had no capture group, so marker[1] was always undefined and
+  // every deliberate example was reported as a plain "marked skip" — the
+  // distinction a reviewer needs in order to judge the skip.
+  {
+    const { scanTarget } = await import(new URL("../.non-slop/lib/scan.mjs", import.meta.url));
+    const { mkdtempSync, writeFileSync } = await import("node:fs");
+    const { tmpdir } = await import("node:os");
+    const { join } = await import("node:path");
+    const dir = mkdtempSync(join(tmpdir(), "non-slop-marker-"));
+    const reason = async (marker) => {
+      const file = join(dir, `${marker.replace(/[^a-z]/g, "")}.html`);
+      writeFileSync(file, `<!-- ${marker}: a deliberate reason -->\n<p>hello</p>\n`);
+      const res = await scanTarget(file);
+      return (res.note || []).join(" ");
+    };
+    const example = await reason("non-slop-example");
+    const skip = await reason("non-slop-skip-file");
+    assert.match(example, /\(example\)/, `an example marker must be named as an example, got: ${example}`);
+    assert.match(skip, /\(marked skip\)/, `a skip marker must be named as a marked skip, got: ${skip}`);
+  }
 }
 
 console.log("OK: conservation law, measure, header height, the five defaults and provenance are enforced");
