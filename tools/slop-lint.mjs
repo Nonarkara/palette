@@ -6,9 +6,16 @@
 // Setup once: npm i -D playwright pngjs && npx playwright install chromium   (or set CHROME=/path/to/chrome)
 // Verdict: >=6 points SLOP (fix before shipping) · 3-5 REVIEW (a person checks the hits) · <3 OK. Rules: see ANTI-SLOP.md.
 // Exports: measurePage(page), pixelStats(pngBuffer), score(desktop, mobile), lintUrl(browser,url,opts)
-import { chromium } from 'playwright';
-import { PNG } from 'pngjs';
+import { createRequire } from 'node:module';
 import fs from 'fs';
+
+// Playwright and pngjs are loaded lazily so this file can be imported (and its
+// pure functions unit-tested) on a machine that has neither a browser nor an
+// image decoder. A static import would make the whole module unusable there —
+// and this file is imported by tests that must not need a browser.
+const require = createRequire(import.meta.url);
+const loadChromium = () => require('playwright').chromium;
+const loadPNG = () => require('pngjs').PNG;
 
 // ---------------------------------------------------------------- in-page DOM metrics
 export function inPageMetrics() {
@@ -352,6 +359,7 @@ export function inPageMetrics() {
 // ---------------------------------------------------------------- screenshot pixel stats
 // share of the first screen that is flat (empty) and the largest connected flat region
 export function pixelStats(buf) {
+  const PNG = loadPNG();
   const png = PNG.sync.read(buf); const { width: W, height: H, data } = png; const T = 20;
   const cols = Math.floor(W / T), rows = Math.floor(H / T); const flat = new Uint8Array(cols * rows); const tcol = new Array(cols * rows);
   for (let ty = 0; ty < rows; ty++) for (let tx = 0; tx < cols; tx++) {
@@ -441,7 +449,7 @@ if (import.meta.url === `file://${process.argv[1]}`) {
   const args = process.argv.slice(2); const urls = args.filter(a => !a.startsWith('--')); const json = args.includes('--json');
   const shotsDir = (args.find(a => a.startsWith('--shots=')) || '').slice(8) || null;
   if (!urls.length) { console.error('usage: node slop-lint.mjs <url>... [--json] [--shots=dir]'); process.exit(2); }
-  const browser = await chromium.launch({ executablePath: process.env.CHROME || undefined, args: ['--use-gl=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'] });
+  const browser = await loadChromium().launch({ executablePath: process.env.CHROME || undefined, args: ['--use-gl=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'] });
   for (const u of urls) {
     const r = await lintUrl(browser, u, { shotsDir, slug: u.replace(/^https?:\/\//, '').replace(/[^a-z0-9]+/gi, '-').slice(0, 50) });
     if (json) console.log(JSON.stringify(r)); else if (!r.lint) console.log(`${u}\t${r.status || 'ERROR'}\t${r.desktopError || r.mobileError || ''}`);
