@@ -19,6 +19,7 @@
 
     <main id="palette-stage" class="stage" tabindex="-1" aria-label="Current colour combination">
       <div id="fields" class="fields" aria-hidden="true"></div>
+      <svg class="golden-overlay golden-overlay-stage" id="golden-overlay-stage" aria-hidden="true" focusable="false"></svg>
 
       <header class="identity">
         <a href="#plate-001" aria-label="Palette home">PALETTE</a>
@@ -41,7 +42,7 @@
         <button type="button" data-action="wallpaper" aria-label="Download palette wallpaper" title="Wallpaper download">↓</button>
         <button type="button" data-action="index" aria-label="Open complete index" title="Index — G">≡</button>
         <button type="button" data-action="contrast" aria-pressed="false" aria-label="Toggle grayscale study" title="Grayscale study — C">◐</button>
-        <button type="button" data-action="about" aria-label="About Dr Non and the research" title="About / research — A">A</button>
+        <button type="button" data-action="about" aria-label="Open the research room" title="Research — A">A</button>
         <button type="button" data-action="json" aria-label="View and copy palette JSON" title="JSON export — J"><span aria-hidden="true">{}</span></button>
         <button type="button" data-action="copy" aria-label="Copy palette instructions for an agent" title="Copy for your agent">⧉</button>
         <button type="button" data-action="digest" aria-label="Read principles and Dr Non's Digest" title="Digest — I">i</button>
@@ -153,11 +154,20 @@
       </div>
     </dialog>
 
-    <dialog id="about-dialog" class="sheet about-sheet">
+    <dialog id="about-dialog" class="sheet about-sheet research-sheet" aria-label="Research">
+      <svg class="golden-overlay" id="golden-overlay-sheet" aria-hidden="true" focusable="false"></svg>
       <form method="dialog" class="sheet-top about-top">
-        <p>About / research</p>
-        <button value="close" aria-label="Close about and research">×</button>
+        <p>Research</p>
+        <button value="close" aria-label="Close research">×</button>
       </form>
+
+      <nav class="research-jump" aria-label="Jump to a part of the research">
+        <a href="#research-spine">How it came about</a>
+        <a href="#research-wada">The book</a>
+        <a href="#research-playground">Playground</a>
+        <a href="#research-golden">Golden section</a>
+        <a href="#research-position">Position</a>
+      </nav>
 
       <section class="about-chord" aria-labelledby="about-title">
         <div class="about-red" aria-hidden="true">
@@ -176,7 +186,97 @@
         </div>
       </section>
 
-      <section class="wada-tribute" aria-labelledby="wada-title">
+      <section class="research-spine" id="research-spine" aria-labelledby="spine-title">
+        <header class="research-head">
+          <p class="research-kicker">How this came about</p>
+          <h2 id="spine-title">One printed book, and the argument that followed it.</h2>
+          <p>Nothing below was planned on a whiteboard. Every entry is a decision that changed something, and every date is the date in the record.</p>
+        </header>
+
+        <ol class="spine-list">
+          <li>
+            <p class="spine-date"><time datetime="1933">1933–34</time></p>
+            <div class="spine-body">
+              <h3>The book</h3>
+              <p>Sanzo Wada's <cite>Haishoku Sōkan</cite> publishes combinations rather than swatches: 159 named colours arranged into 348 relationships. It was republished in English in 1967 as <cite>A Dictionary of Color Combinations</cite>. The unit of the book is the relationship, not the colour. Everything here is built on that one decision.</p>
+            </div>
+          </li>
+          <li>
+            <p class="spine-date"><time datetime="2026-10-02">2026-10-02</time></p>
+            <div class="spine-body">
+              <h3>Open the room</h3>
+              <p>The first public exhibition: 348 source-verified relationships, full-viewport colour fields, local search, an index, a grayscale study, keyboard paths and copyable digital values. One combination owns the viewport, and the interface is confined to a black rail. A swatch grid explains a catalogue; it cannot reproduce the bodily experience of adjacent colour at scale.</p>
+            </div>
+          </li>
+          <li>
+            <p class="spine-date"><time datetime="2026-10-02">2026-10-02</time></p>
+            <div class="spine-body">
+              <h3>Give the source a room of his own</h3>
+              <p>Wada's life and work got a section of their own: the Japan Standard Color Association he founded in 1927, the <cite>Shikimei Sōkan</cite> of 1931, the Academy Award for costume design in 1955, the Person of Cultural Merit in 1958. Attribution in a footer names a source. It does not show the life that made the system possible.</p>
+            </div>
+          </li>
+          <li>
+            <p class="spine-date"><time datetime="2026-10-02">2026-10-02</time></p>
+            <div class="spine-body">
+              <h3>Make interpretation auditable</h3>
+              <p>The tribute became an explicit curatorial register in six parts: historic source, digital data, interpretive scope, computed reading, independence, licence. Tribute without a visible authorship boundary blurs source and interpretation. The same credit now travels inside every JSON export this site hands out.</p>
+            </div>
+          </li>
+          <li>
+            <p class="spine-date"><time datetime="2026-10-12">2026-10-12</time></p>
+            <div class="spine-body">
+              <h3>References made by people, on call</h3>
+              <p>A local server and a skill that return era-matched, named, dated references instead of a ban list. A ban list alone converges on the average: every agent forbids the same things and reaches for the same replacements. A named artefact, with a date and a credit, gives an agent something it can actually reason about.</p>
+            </div>
+          </li>
+          <li>
+            <p class="spine-date"><time datetime="2026-10-16">2026-10-16</time></p>
+            <div class="spine-body">
+              <h3>A control is the size of its label</h3>
+              <p>The real-estate law, taken from signage: a button's hit area is not its label. A small target is hard to hit and hard to read; a large one wastes the page. So a control is sized to the thing it names, and never below 44 × 44 CSS pixels.</p>
+            </div>
+          </li>
+          <li>
+            <p class="spine-date"><time datetime="2026-10-20">2026-10-20</time></p>
+            <div class="spine-body">
+              <h3>Name the defaults nobody chose</h3>
+              <p>Forty-six citizen-built flood apps were listed, thirty-seven were reachable, and thirty-one were labelled by eye and measured with DOM and pixel metrics. What came out was not a taste but thirteen limits, each with the evidence behind it. The clean apps differed from the slop ones mostly by what they left out.</p>
+            </div>
+          </li>
+          <li>
+            <p class="spine-date"><time datetime="2026-10-20">2026-10-20</time></p>
+            <div class="spine-body">
+              <h3>Give spatial decisions a contract</h3>
+              <p>Six ways a layout can hallucinate space: unjustified gaps, orphan elements, scattered actions, false hierarchy, accidental wrapping, and information that is expensive to reach. Alignment alone cannot explain an image's role or justify unused space, so each mode is measured and reported as rectangles to be argued with rather than a score to be trusted.</p>
+            </div>
+          </li>
+          <li>
+            <p class="spine-date"><time datetime="2026-10-21">2026-10-21</time></p>
+            <div class="spine-body">
+              <h3>Fifty styles, and the order that matters</h3>
+              <p>A style chosen before the subject produces the same page for everybody. So: name the core first — one sentence a competitor could not use — then pick two or three styles, then break one rule on purpose, and only then measure the geometry.</p>
+            </div>
+          </li>
+          <li>
+            <p class="spine-date"><time datetime="2026-10-23">2026-10-23</time></p>
+            <div class="spine-body">
+              <h3>Name the destination, and check the brief</h3>
+              <p>A rule that only says “no” leaves you to invent the alternative, and inventing an alternative under time pressure is how you get a purple gradient. So every failure has a destination: sixty-nine real places to look, each with a verdict for this project. And a linter reads the design brief and reports every directive with no anchor in it — no number, no material, no named reference.</p>
+            </div>
+          </li>
+          <li class="spine-pivot">
+            <p class="spine-date"><time datetime="2026-10-23">2026-10-23</time></p>
+            <div class="spine-body">
+              <h3>The system, not the page</h3>
+              <p>Slop and spatial hallucination are the same failure in different clothes: a decision nobody made, presented as a decision. One is a default that arrived; the other is a space that arrived. Both ship because nothing in the workflow asked. So the workflow now asks — a doctrine, thirteen measured limits, six measured layout modes, a remedy index with real destinations, a brief linter, a layout auditor, a slop linter, and a weight on the bytes. This room is the argument end to end, and the bench where the parts are tried against each other.</p>
+            </div>
+          </li>
+        </ol>
+
+        <p class="spine-coda">Two things follow from that record, and both are in this room. <a href="#research-playground">The playground</a> puts eight faces, six styles and the 348 relationships against each other, so the choices can be compared instead of argued. <a href="#research-golden">The golden section</a> is the proportion the plate has used since the first day, and it can be drawn over the interface to see what snaps to it.</p>
+      </section>
+
+      <section class="wada-tribute" id="research-wada" aria-labelledby="wada-title">
         <header class="wada-header">
           <div class="wada-name-field">
             <p class="wada-kicker">SOURCE: SANZO WADA<br>INTERPRETATION: DR NON</p>
@@ -272,6 +372,98 @@
         </footer>
       </section>
 
+      <section class="research-playground" id="research-playground" aria-labelledby="playground-title">
+        <header class="research-head">
+          <p class="research-kicker">The playground</p>
+          <h2 id="playground-title">Type, style and palette, tried against each other.</h2>
+          <p>Eight faces, six styles, and the 348 relationships. Every entry carries the reason it is here, and the one that arrived by default is marked as such, so the difference is visible rather than argued.</p>
+        </header>
+
+        <div class="pg-controls">
+          <fieldset class="pg-group pg-fonts">
+            <legend>Type</legend>
+            <div class="pg-options" id="pg-fonts" role="radiogroup" aria-label="Typeface"></div>
+          </fieldset>
+          <fieldset class="pg-group pg-styles">
+            <legend>Style</legend>
+            <div class="pg-options" id="pg-styles" role="radiogroup" aria-label="Design style"></div>
+          </fieldset>
+          <fieldset class="pg-group pg-palettes">
+            <legend>Palette</legend>
+            <label class="visually-hidden" for="pg-palette">Which relationship?</label>
+            <select id="pg-palette"></select>
+            <button type="button" id="pg-surprise">SURPRISE ME</button>
+          </fieldset>
+        </div>
+
+        <div class="pg-bench">
+          <div class="pg-stage" id="pg-stage">
+            <div class="pg-fields" id="pg-fields" aria-hidden="true"></div>
+            <svg class="golden-overlay" id="pg-overlay" aria-hidden="true" focusable="false"></svg>
+            <div class="pg-copy" id="pg-copy">
+              <p class="pg-plate" id="pg-plate">PLATE 001</p>
+              <h3 class="pg-headline" id="pg-headline">One colour is a fact. Two colours are a decision.</h3>
+              <p class="pg-body" id="pg-body">A live sample: a real relationship from Sanzo Wada’s catalogue, in the proportion the catalogue gives it.</p>
+            </div>
+          </div>
+          <aside class="pg-notes" aria-labelledby="pg-notes-title">
+            <h3 id="pg-notes-title">What you are looking at</h3>
+            <dl class="pg-facts">
+              <div>
+                <dt>The face</dt>
+                <dd id="pg-font-why"></dd>
+              </div>
+              <div>
+                <dt>The style</dt>
+                <dd id="pg-style-why"></dd>
+              </div>
+              <div>
+                <dt>The relationship</dt>
+                <dd id="pg-palette-why"></dd>
+              </div>
+            </dl>
+          </aside>
+        </div>
+      </section>
+
+      <section class="research-golden" id="research-golden" aria-labelledby="golden-title">
+        <header class="research-head">
+          <p class="research-kicker">The golden section</p>
+          <h2 id="golden-title">It is already in this plate.</h2>
+          <p>A two-colour relationship divides its field at 0.618 — not because a number was chosen, but because <code>1.618 : 1</code> is the ratio the catalogue’s own proportions follow, and the ratio five rules in this repository’s stylesheet already use. The diagram is the classical construction: a golden rectangle broken into squares, with a quarter arc drawn inside each one.</p>
+        </header>
+
+        <div class="golden-bench">
+          <div class="golden-stage" id="golden-stage">
+            <div class="golden-fields" id="golden-fields" aria-hidden="true"></div>
+            <svg class="golden-overlay" id="golden-overlay-demo" aria-hidden="true" focusable="false"></svg>
+          </div>
+          <div class="golden-notes">
+            <dl class="golden-facts">
+              <div>
+                <dt>Two-colour relationships</dt>
+                <dd id="golden-two-colour" data-count="120" data-of="348">120 of the 348, and every one of them divides its field at 0.618</dd>
+              </div>
+              <div>
+                <dt>The dominant field</dt>
+                <dd id="golden-field-share" data-pixels="855" data-of="1384">ends at 0.618 of the field area — 855 of 1,384 pixels at 1440</dd>
+              </div>
+              <div>
+                <dt>φ</dt>
+                <dd>(1 + √5) / 2 = 1.6180339887…</dd>
+              </div>
+              <div>
+                <dt>In the stylesheet</dt>
+                <dd id="golden-rule-count" data-count="6"><code>1.618fr 1fr</code>, six times</dd>
+              </div>
+            </dl>
+            <button type="button" id="golden-toggle" class="golden-toggle" aria-pressed="false">DRAW THE DIAGRAM</button>
+            <p class="golden-status" id="golden-status" role="status" aria-live="polite">The diagram is off. On the plate view, <kbd>P</kbd> draws it there.</p>
+            <p class="golden-source">The construction drawn here is the classical one: a golden rectangle broken into squares, with a quarter arc in each square, every radius equal to its square’s side. Dondi Bogusky has a worked note on using the proportion in a layout — as a quiet constraint rather than a rule — in <a href="https://dondibogusky.com/notes/golden-section-site-design/" rel="noreferrer">Using the Golden Section on This Site ↗</a>.</p>
+          </div>
+        </div>
+      </section>
+
       <section class="about-story" aria-labelledby="story-title">
         <h2 id="story-title">Why I keep looking</h2>
         <div class="story-body">
@@ -331,7 +523,7 @@
         </div>
       </figure>
 
-      <section class="research-position" aria-labelledby="research-title">
+      <section class="research-position" id="research-position" aria-labelledby="research-title">
         <h2 id="research-title">The research position</h2>
         <p>This exhibition does not argue that taste is universal. It is a visual research instrument: a way to make historic relationships large, searchable, comparable, and open to disagreement. The digital readings describe this software’s method, not Wada’s intention or the exact appearance of printed ink.</p>
         <div class="research-links">

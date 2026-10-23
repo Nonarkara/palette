@@ -102,6 +102,55 @@ The plate view's Chinese lives entirely inside its dialogs, so it now downloads 
 
 `npm run check:shipability` runs the measurement on its own. `npm run audit` runs it with everything else, and a route over budget fails the audit.
 
+## The golden section
+
+The proportion is not a decoration on this repository; it is the method. `tools/golden-section.mjs` measures it in three separate parts, because each can be true while the others are false: **the construction is exact**, **the interface lands on it**, and **the bench fits the field**. `npm run check:golden` runs it alone; `npm run audit` runs it with everything else.
+
+### The construction is exact
+
+The golden rectangle really is φ:1, and the pinwheel of squares really tiles it. Measured on a 1440×900 box, 23 Oct 2026:
+
+| measurement | value |
+|---|---|
+| the rectangle | 1440.000 × 889.969 — a ratio of 1.618033988750 |
+| φ² − φ − 1 | 0 to the last bit |
+| the squares | 16, covering 99.999979% of the rectangle |
+| the arcs | 16, every radius equal to its square's side, to 1e-9 |
+| consecutive arcs | meet to 0.00e+0 |
+
+The 0.000021% the squares do not cover is the sliver at the centre of the spiral: the peel stops when the remainder is under half a pixel. That is the construction, not a gap.
+
+### The interface lands on it
+
+| what | measured | expected |
+|---|---|---|
+| the plate's colour field | ends at **855px** of 1384px | 0.618 × 1384 = 855.5 |
+| the diagram's 0.618 cut | **855.36px** | on the boundary |
+| the demo's colour field | ends at **484px** of 783px | 0.618 × 783 = 483.9 |
+| the demo's 0.618 cut | **483.92px** | on the boundary |
+| the Research head's two columns | 783px and 484px — a ratio of **1.6180** | φ |
+| the stylesheet | **six** rules divide at `1.618fr 1fr` | the screen says six |
+
+The Research screen prints these numbers, and the instrument checks them: `data/colors.json` holds 348 relationships, 120 of them two-colour, and the screen says "120 of the 348". The count comes from the data, never from a comment about it.
+
+### What the instrument found
+
+**The diagram was drawn over the wrong box.** The plate's overlay carried `inset: 0 56px 0 0` — the width of the rail — but also `width: 100%`. An absolutely positioned replaced element with a specified width ignores the opposite inset, so the diagram was drawn over the whole **1440px** stage while the colour field it describes is **1384px**, and its 0.618 cut missed the boundary by exactly the width of the rail. The overlay is now sized from the field's own inset, in one place, through `--field-inset-inline-end` and `--field-inset-block-end`.
+
+**An `<svg>` is a replaced element.** With `width: auto` it takes its intrinsic size — 300×150, or its viewBox's ratio — not the box its insets describe. The diagram's box is therefore stated outright rather than left to the inset.
+
+**The demo stage was not a golden rectangle.** Its 783×414 box made the construction fit itself to the *height*, producing a 670px-wide rectangle whose own 0.618 division landed at 414px — in the middle of the wrong colour. The stage is now `aspect-ratio: 1.618`, so the rectangle fills the width and its 0.618 division is the colour field's boundary.
+
+**A stated number nobody measured was wrong.** The screen said the proportion was used "five times". The stylesheet uses it in six rules (seven declarations, one of them a small-screen override). The instrument now counts the rules from the stylesheet and compares the count with the number on the screen.
+
+### The bench fits the field
+
+A style says how loud it wants to be; the colour field says how loud it can be. `fitBench()` measures the rendered box and scales the display down until the sample sits inside the colour it is printed on — with a floor of 20px, because a display that shrinks to 13px on a phone is not a display.
+
+Measured across all six styles and all eight faces, at 1440×900, 1024×768 and 390×844 — 42 cases — **zero clip, zero horizontal scroll, and every case fits at scale 1.00**. The base display size is `clamp(1.15rem, 2.8vw, 2.8rem)` because that is the size at which every style fits unclamped; raise it and the fit pass starts trimming the loud end, which quietly turns six scales into one. The sample's caption was 205 characters, which is a paragraph and not a caption, and squeezed the display to 13px on a phone; it is now a caption.
+
+The playground's fonts load one at a time, only when a face is chosen, and the display is measured again when a webfont arrives late.
+
 ## Known results of the rendered check
 
 The **rendered** check (`non-slop render`) does **not** read `## Allow`. Only the static scan does.

@@ -94,6 +94,31 @@ function rootBlock(css, label) {
   throw new Error(`${label} :root is unclosed`);
 }
 
+/**
+ * The body of a media query, found by walking its braces.
+ *
+ * A regular expression cannot do this. The first version of the --rail check
+ * looked for the declaration with `[^}]*` between the opening brace and the
+ * property, which meant it only found the property when the declaration was
+ * the first thing in the block. Adding a rule to the top of the phone query
+ * silently broke it, and the token export lost a sentence nobody noticed.
+ */
+function mediaBlock(css, query, label) {
+  const escaped = query.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const match = new RegExp(`@media\\s*\\(\\s*${escaped}\\s*\\)`).exec(css);
+  if (!match) return null;
+  const open = css.indexOf("{", match.index);
+  let depth = 0;
+  for (let index = open; index < css.length; index += 1) {
+    if (css[index] === "{") depth += 1;
+    else if (css[index] === "}") {
+      depth -= 1;
+      if (depth === 0) return css.slice(open + 1, index);
+    }
+  }
+  throw new Error(`${label} @media (${query}) is unclosed`);
+}
+
 function declarations(block) {
   const found = [];
   for (const match of block.matchAll(/--([A-Za-z0-9_-]+)\s*:\s*([^;]+);/g)) {
@@ -270,9 +295,11 @@ export function buildTokenDocument({ colors, stylesCss, readingCss, appJs }) {
   for (const [name, value] of declarations(rootBlock(stylesCss, "styles.css"))) {
     addCustomProperty(interfaceTree, name, value, "styles.css", byHex, "Exhibition");
   }
+  const phoneBlock = mediaBlock(stylesCss, "max-width: 760px", "styles.css");
   if (
     interfaceTree.dimension.rail &&
-    /@media\s*\(\s*max-width:\s*760px\s*\)\s*\{[^}]*--rail:\s*100%/.test(stylesCss)
+    phoneBlock &&
+    /--rail\s*:\s*100%/.test(phoneBlock)
   ) {
     interfaceTree.dimension.rail.$description += " At max-width 760px, styles.css sets --rail to 100%.";
   }

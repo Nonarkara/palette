@@ -14,6 +14,12 @@
   --body: clamp(1rem, 1.6vw, 1.25rem);
   --micro: 0.75rem;
   --rail: 3.5rem;
+  /* Where the colour field stops. The rail covers the right of the stage on a
+     wide screen and the bottom of it on a narrow one, and the diagram is drawn
+     over the fields — so the diagram's box has to stop in the same place.
+     Both are tokens because both are decisions, not leftovers. */
+  --field-inset-inline-end: var(--rail);
+  --field-inset-block-end: 0px;
   --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
@@ -85,7 +91,7 @@ input:focus-visible,
 
 .fields {
   position: absolute;
-  inset: 0 var(--rail) 0 0;
+  inset: 0 var(--field-inset-inline-end) 0 0;
   display: grid;
   min-width: 0;
   transition: filter 220ms var(--ease);
@@ -1199,6 +1205,583 @@ input:focus-visible,
   color: #ffffff;
 }
 
+/* ── The research room ──────────────────────────────────────────────────────
+   The screen where the argument can be read end to end, the bench where type,
+   style and palette are tried against each other, and the golden section that
+   the plate has used since the first day.
+
+   The jump nav is sticky, because the room is long and a reader who cannot
+   move inside a long document is being charged for its length. The golden
+   diagram is drawn over the colour and under the words, so it explains the
+   composition without ever competing with it. */
+
+.research-jump {
+  position: sticky;
+  inset-block-start: 4rem;
+  z-index: 3;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 clamp(0.75rem, 2vw, 2rem);
+  padding: 0 clamp(1rem, 4vw, 4rem);
+  background: var(--white);
+  font-family: "JetBrains Mono", monospace;
+  font-size: var(--micro);
+}
+
+.research-jump a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--black);
+  text-decoration: none;
+}
+
+.research-jump a:hover,
+.research-jump a:focus-visible {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+/* The head is two columns at the house proportion: the claim on the wide side,
+   the explanation on the narrow one. A heading alone in the top-left of a
+   full-width section would leave a void that nothing had decided. */
+.research-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1.618fr) minmax(0, 1fr);
+  gap: clamp(1.5rem, 4vw, 4rem);
+  align-items: start;
+  padding: clamp(2.5rem, 7vh, 5.5rem) clamp(1rem, 4vw, 4rem) clamp(1.5rem, 4vh, 3rem);
+}
+
+.research-kicker {
+  grid-column: 1 / -1;
+  margin: 0;
+  font-family: "JetBrains Mono", monospace;
+  font-size: var(--micro);
+}
+
+.research-head h2 {
+  margin: 0;
+  font-size: clamp(1.9rem, 4vw, 4.2rem);
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+}
+
+.research-head > p:not(.research-kicker) {
+  margin: 0;
+  font-size: var(--body);
+  line-height: 1.5;
+}
+
+/* ── The spine ────────────────────────────────────────────────────────────── */
+.research-spine {
+  background: var(--white);
+  color: var(--black);
+}
+
+.spine-list {
+  margin: 0;
+  padding: 0 clamp(1rem, 4vw, 4rem) clamp(2rem, 6vh, 4rem);
+  list-style: none;
+  counter-reset: spine;
+}
+
+.spine-list > li {
+  display: grid;
+  /* The date column is sized to the date. A column three times wider than
+     the thing it holds is space that nothing decided. */
+  grid-template-columns: 8.5rem minmax(0, 1fr);
+  gap: clamp(1rem, 3vw, 3rem);
+  padding-block: clamp(1.25rem, 3vh, 2.25rem);
+  border-block-start: 1px solid rgb(16 16 16 / 0.16);
+}
+
+.spine-list > li:first-child {
+  border-block-start: 0;
+}
+
+.spine-date {
+  margin: 0;
+  font-family: "JetBrains Mono", monospace;
+  font-size: var(--micro);
+}
+
+.spine-body h3 {
+  margin: 0 0 0.35rem;
+  font-size: clamp(1.15rem, 1.9vw, 1.7rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.spine-body p {
+  margin: 0;
+  max-width: 62ch;
+  font-size: var(--body);
+  line-height: 1.5;
+}
+
+.spine-pivot .spine-body h3 {
+  font-size: clamp(1.4rem, 2.6vw, 2.4rem);
+}
+
+.spine-coda {
+  margin: 0;
+  padding: clamp(1.5rem, 4vh, 3rem) clamp(1rem, 4vw, 4rem) clamp(3rem, 8vh, 6rem);
+  max-width: 64ch;
+  font-size: var(--body);
+  line-height: 1.5;
+}
+
+.spine-coda a {
+  color: inherit;
+  text-underline-offset: 4px;
+}
+
+/* ── The playground ───────────────────────────────────────────────────────── */
+.research-playground {
+  background: var(--black);
+  color: var(--white);
+}
+
+.pg-controls {
+  display: grid;
+  grid-template-columns: minmax(0, 1.618fr) minmax(0, 1fr);
+  gap: clamp(1.5rem, 4vw, 4rem);
+  padding: 0 clamp(1rem, 4vw, 4rem) clamp(1.5rem, 4vh, 3rem);
+}
+
+.pg-group {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+
+.pg-group legend {
+  padding: 0;
+  font-family: "JetBrains Mono", monospace;
+  font-size: var(--micro);
+}
+
+.pg-fonts,
+.pg-styles {
+  grid-column: 1 / -1;
+}
+
+.pg-options {
+  display: grid;
+  gap: 1px;
+  margin-block-start: 0.75rem;
+  background: rgb(247 245 239 / 0.28);
+}
+
+.pg-fonts .pg-options {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.pg-styles .pg-options {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.pg-options button {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0.5rem 0.85rem;
+  border: 0;
+  background: var(--black);
+  color: var(--white);
+  font-family: inherit;
+  font-size: 0.95rem;
+  text-align: start;
+  cursor: pointer;
+}
+
+.pg-options button:hover {
+  background: #26262a;
+}
+
+.pg-options button[aria-checked="true"] {
+  background: var(--white);
+  color: var(--black);
+  font-weight: 600;
+}
+
+.pg-options button:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: -3px;
+}
+
+.pg-palettes {
+  display: grid;
+  align-content: start;
+  gap: 0.75rem;
+  grid-column: 2;
+}
+
+.pg-palettes select {
+  display: block;
+  width: 100%;
+  min-height: 48px;
+  padding: 0.6rem 0.75rem;
+  border: 0;
+  background: var(--black);
+  color: var(--white);
+  font: inherit;
+  font-size: 0.95rem;
+}
+
+.pg-palettes select:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: -3px;
+}
+
+.pg-palettes button {
+  justify-self: start;
+  min-height: 44px;
+  padding: 0.6rem 1rem;
+  border: 0;
+  background: var(--white);
+  color: var(--black);
+  font-family: "JetBrains Mono", monospace;
+  font-size: var(--micro);
+  cursor: pointer;
+}
+
+.pg-bench {
+  display: grid;
+  grid-template-columns: minmax(0, 1.618fr) minmax(0, 1fr);
+  gap: clamp(1.5rem, 4vw, 4rem);
+  padding: 0 clamp(1rem, 4vw, 4rem) clamp(3rem, 8vh, 6rem);
+}
+
+.pg-stage {
+  position: relative;
+  /* Tall enough for the loudest style in the set. A bench that clips the
+     sample it is showing is a bench lying about the style. */
+  min-height: clamp(24rem, 62vh, 42rem);
+  overflow: hidden;
+}
+
+.pg-fields {
+  position: absolute;
+  inset: 0;
+  display: grid;
+}
+
+.pg-fields > div {
+  min-width: 0;
+}
+
+.pg-copy {
+  position: absolute;
+  inset-block: 0;
+  inset-inline: 0 auto;
+  z-index: 2;
+  /* The copy never crosses the dominant field's edge, so the words sit on one
+     colour and the second field stays clean. The share is the one the chosen
+     relationship actually has: 0.618 for two colours, less for three or
+     four. */
+  width: calc(var(--pg-share, 0.618) * 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 0.6rem;
+  padding: clamp(1rem, 3vw, 2.5rem);
+  text-align: var(--pg-align, left);
+  font-family: var(--pg-family, "Archivo Narrow", Arial, sans-serif);
+}
+
+.pg-plate {
+  margin: 0;
+  font-family: "JetBrains Mono", monospace;
+  font-size: var(--micro);
+  opacity: 0.8;
+}
+
+.pg-headline {
+  margin: 0;
+  max-width: var(--pg-measure, 38ch);
+  /* The style sets how loud the display is. The field decides how loud it can
+     be: --pg-fit is measured, not chosen, so the loudest style on the smallest
+     field still lands inside the colour it is printed on.
+
+     The base is 2.8vw because that is the size at which every style in
+     data/playground.json fits the field unclamped — measured, at 1440×900.
+     Raise it and the fit pass starts trimming the loud end, which quietly
+     turns six scales into one. */
+  font-size: calc(clamp(1.15rem, 2.8vw, 2.8rem) * var(--pg-scale, 1) * var(--pg-fit, 1));
+  line-height: 0.98;
+  letter-spacing: var(--pg-tracking, -0.02em);
+  text-transform: var(--pg-case, none);
+}
+
+/* The rules a style draws around its headline. The width of the rule is the
+   rule count, so a style that draws no rule draws no space for one. */
+.pg-headline::before,
+.pg-headline::after {
+  content: "";
+  display: block;
+  height: 0;
+  border-block-start: 1px solid currentColor;
+  opacity: 0.45;
+}
+
+.pg-headline::before {
+  border-block-start-width: calc(var(--pg-rule-above, 0) * 1px);
+  margin-block-end: calc(var(--pg-rule-above, 0) * 0.45em);
+}
+
+.pg-headline::after {
+  border-block-start-width: calc(var(--pg-rule-below, 0) * 1px);
+  margin-block-start: calc(var(--pg-rule-below, 0) * 0.45em);
+}
+
+.pg-body {
+  margin: 0;
+  max-width: var(--pg-measure, 38ch);
+  font-size: 1rem;
+  line-height: 1.45;
+}
+
+.pg-notes {
+  align-self: end;
+}
+
+.pg-notes h3 {
+  margin: 0 0 1rem;
+  font-family: "JetBrains Mono", monospace;
+  font-size: var(--micro);
+  font-weight: 400;
+  text-transform: uppercase;
+}
+
+.pg-facts {
+  margin: 0;
+}
+
+.pg-facts > div {
+  padding-block: 0.9rem;
+  border-block-start: 1px solid rgb(247 245 239 / 0.28);
+}
+
+.pg-facts > div:first-child {
+  border-block-start: 0;
+  padding-block-start: 0;
+}
+
+.pg-facts dt {
+  font-family: "JetBrains Mono", monospace;
+  font-size: var(--micro);
+  opacity: 0.75;
+}
+
+.pg-facts dd {
+  margin: 0.4rem 0 0;
+  max-width: 44ch;
+  font-size: 1rem;
+  line-height: 1.45;
+}
+
+/* ── The golden section ───────────────────────────────────────────────────── */
+.research-golden {
+  background: var(--white);
+  color: var(--black);
+}
+
+.golden-bench {
+  display: grid;
+  grid-template-columns: minmax(0, 1.618fr) minmax(0, 1fr);
+  gap: clamp(1.5rem, 4vw, 4rem);
+  padding: 0 clamp(1rem, 4vw, 4rem) clamp(3rem, 8vh, 6rem);
+}
+
+.golden-stage {
+  position: relative;
+  /* The stage is a golden rectangle, so the diagram drawn in it is a golden
+     rectangle too: its 0.618 division is the colour field's boundary, which is
+     the whole point of drawing it here. Give the stage any other proportion and
+     the rectangle is fitted to its height instead, and its 0.618 division
+     lands in the middle of the wrong colour. */
+  aspect-ratio: 1.618;
+  min-height: 12rem;
+  overflow: hidden;
+}
+
+.golden-fields {
+  position: absolute;
+  inset: 0;
+  display: grid;
+}
+
+.golden-fields > div {
+  min-width: 0;
+}
+
+.golden-notes {
+  align-self: end;
+}
+
+.golden-facts {
+  margin: 0 0 1.5rem;
+}
+
+.golden-facts > div {
+  display: grid;
+  grid-template-columns: minmax(9rem, 0.8fr) minmax(0, 1.2fr);
+  gap: 1rem;
+  padding-block: 0.8rem;
+  border-block-start: 1px solid rgb(16 16 16 / 0.16);
+}
+
+.golden-facts > div:first-child {
+  border-block-start: 0;
+  padding-block-start: 0;
+}
+
+.golden-facts dt {
+  font-family: "JetBrains Mono", monospace;
+  font-size: var(--micro);
+}
+
+.golden-facts dd {
+  margin: 0;
+  max-width: 38ch;
+  font-size: 1rem;
+  line-height: 1.45;
+}
+
+.golden-toggle {
+  display: block;
+  width: 100%;
+  min-height: 48px;
+  padding: 0.75rem 1rem;
+  border: 0;
+  background: var(--black);
+  color: var(--white);
+  font-family: "JetBrains Mono", monospace;
+  font-size: var(--micro);
+  cursor: pointer;
+}
+
+.golden-toggle:hover,
+.golden-toggle[aria-pressed="true"] {
+  background: var(--white);
+  color: var(--black);
+}
+
+.golden-toggle:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: -3px;
+}
+
+.golden-status {
+  margin: 0.9rem 0 0;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+.golden-source {
+  margin: 0.9rem 0 0;
+  max-width: 46ch;
+  font-size: 0.9rem;
+  line-height: 1.45;
+  opacity: 0.78;
+}
+
+.golden-source a {
+  color: inherit;
+  text-underline-offset: 4px;
+}
+
+kbd {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.9em;
+  padding: 0.1em 0.35em;
+  border: 1px solid currentColor;
+}
+
+/* ── The golden diagram ──────────────────────────────────────────────────────
+   Drawn over the colour and under the words, so it explains the composition
+   and never competes with it. The ink is drawn twice — a dark pass and a
+   light pass one pixel off — so the diagram stays legible on a pale field and
+   on a dark one without a blend mode, which this repository does not use. */
+.golden-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  /* An <svg> is a replaced element: with `width: auto` it takes its intrinsic
+     size, not the size its insets describe. So the box is stated outright, and
+     the stage's is stated in terms of the field's own inset — the diagram is
+     drawn over the fields, and it has to stop where the fields stop. */
+  display: none;
+  pointer-events: none;
+}
+
+.golden-overlay-stage {
+  width: calc(100% - var(--field-inset-inline-end));
+  height: calc(100% - var(--field-inset-block-end));
+}
+
+.golden-ink-dark {
+  stroke: rgb(0 0 0 / 0.55);
+}
+
+.golden-ink-light {
+  stroke: rgb(255 255 255 / 0.5);
+}
+
+.golden-ink rect,
+.golden-ink path,
+.golden-ink line {
+  fill: none;
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.golden-ink .golden-square {
+  stroke-width: 0.75;
+  opacity: 0.5;
+}
+
+.golden-ink .golden-cut {
+  stroke-dasharray: 5 5;
+  opacity: 0.75;
+}
+
+.golden-ink .golden-arc {
+  stroke-width: 1.5;
+}
+
+/* The research room's own background carries the diagram when it is drawn.
+   It is fixed to the viewport, so it stays behind the text as the room
+   scrolls, and it is behind the words: the content is lifted above it. */
+.research-sheet > .golden-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+}
+
+/* The content is lifted above the diagram. The two sticky bands are not
+   touched here: `position` belongs to them, and a later rule that says
+   `position: relative` would silently unstick them. */
+.research-sheet > section,
+.research-sheet > figure {
+  position: relative;
+  z-index: 1;
+}
+
+.research-sheet .golden-ink-dark {
+  stroke: rgb(16 16 16 / 0.14);
+}
+
+.research-sheet .golden-ink-light {
+  display: none;
+}
+
 .visually-hidden {
   position: absolute !important;
   width: 1px !important;
@@ -1226,6 +1809,29 @@ input:focus-visible,
   .about-story,
   .research-position {
     grid-template-columns: 1fr;
+  }
+
+  /* The research room's grids become one column: the split that never
+     collapses is the split the phone was never meant to have. */
+  .research-head,
+  .pg-controls,
+  .pg-bench,
+  .golden-bench {
+    grid-template-columns: 1fr;
+  }
+
+  .pg-palettes {
+    grid-column: 1;
+  }
+
+  .spine-list > li {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+
+  .golden-facts > div {
+    grid-template-columns: 1fr;
+    gap: 0.3rem;
   }
 
   .story-body {
@@ -1334,10 +1940,32 @@ input:focus-visible,
 }
 
 @media (max-width: 760px) {
-  :root { --rail: 100%; }
+  /* Two columns, never one and never three: eight faces make four even rows
+     and six styles make three, so no row is left holding a single card. */
+  .pg-fonts .pg-options,
+  .pg-styles .pg-options {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .research-jump {
+    gap: 0 clamp(0.5rem, 2vw, 1rem);
+  }
+
+  .pg-stage {
+    min-height: 24rem;
+  }
+
+  .golden-stage {
+    min-height: 12rem;
+  }
+  :root {
+    --rail: 100%;
+    --field-inset-inline-end: 0px;
+    --field-inset-block-end: 3.5rem;
+  }
 
   .fields {
-    inset: 0 0 3.5rem;
+    inset: 0 0 var(--field-inset-block-end) 0;
   }
 
   .identity {

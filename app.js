@@ -6,7 +6,9 @@
     palettes: [],
     index: 0,
     grayscale: false,
-    indexSize: "all"
+    indexSize: "all",
+    golden: false,
+    playground: { data: null, font: null, style: null, paletteId: null }
   };
 
   const el = {};
@@ -141,6 +143,317 @@
 
   function fieldColumns(count) {
     return fieldWeights(count).map((weight) => `${weight}fr`).join(" ");
+  }
+
+  // ── The golden section ────────────────────────────────────────────────────
+  // The construction is drawn, not approximated. A golden rectangle is broken
+  // into squares; each square records the corner it shares with the next; a
+  // quarter arc is drawn in each square between the corner it shares with the
+  // previous one and the corner it shares with the next one. The radius is the
+  // side of the square, so every arc is exact, and consecutive arcs meet
+  // because the shared corner is literally the same point.
+  const SVG_NS = "http://www.w3.org/2000/svg";
+
+  function drawGolden(svg, width, height, { double = true } = {}) {
+    const golden = window.PALETTE_TOOLS.golden;
+    const rect = golden.rectangle(width, height);
+    const squares = golden.squares(rect);
+    const arcs = golden.arcs(squares);
+    const cuts = golden.cuts(width, height);
+    svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
+
+    const layer = (className, transform) => {
+      const group = document.createElementNS(SVG_NS, "g");
+      group.setAttribute("class", className);
+      if (transform) group.setAttribute("transform", transform);
+
+      const frame = document.createElementNS(SVG_NS, "rect");
+      frame.setAttribute("x", rect.x);
+      frame.setAttribute("y", rect.y);
+      frame.setAttribute("width", rect.width);
+      frame.setAttribute("height", rect.height);
+      group.append(frame);
+
+      squares.forEach((square) => {
+        const box = document.createElementNS(SVG_NS, "rect");
+        box.setAttribute("class", "golden-square");
+        box.setAttribute("x", square.x);
+        box.setAttribute("y", square.y);
+        box.setAttribute("width", square.side);
+        box.setAttribute("height", square.side);
+        group.append(box);
+      });
+
+      arcs.forEach((arc) => {
+        const path = document.createElementNS(SVG_NS, "path");
+        path.setAttribute("class", "golden-arc");
+        // The turn sense of an arc is the sign of the cross product of the two
+        // radii, so every arc in the spiral turns the same way.
+        const cross = (arc.start[0] - arc.centre[0]) * (arc.end[1] - arc.centre[1]) -
+          (arc.start[1] - arc.centre[1]) * (arc.end[0] - arc.centre[0]);
+        const radius = arc.radius.toFixed(3);
+        path.setAttribute("d", `M ${arc.start[0].toFixed(3)} ${arc.start[1].toFixed(3)} A ${radius} ${radius} 0 0 ${cross > 0 ? 1 : 0} ${arc.end[0].toFixed(3)} ${arc.end[1].toFixed(3)}`);
+        group.append(path);
+      });
+
+      [
+        [cuts.vertical[0], 0, cuts.vertical[0], height],
+        [cuts.vertical[1], 0, cuts.vertical[1], height],
+        [0, cuts.horizontal[0], width, cuts.horizontal[0]],
+        [0, cuts.horizontal[1], width, cuts.horizontal[1]]
+      ].forEach(([x1, y1, x2, y2]) => {
+        const line = document.createElementNS(SVG_NS, "line");
+        line.setAttribute("class", "golden-cut");
+        line.setAttribute("x1", x1);
+        line.setAttribute("y1", y1);
+        line.setAttribute("x2", x2);
+        line.setAttribute("y2", y2);
+        group.append(line);
+      });
+      return group;
+    };
+
+    const parts = [layer("golden-ink golden-ink-dark")];
+    // The dark pass and a light pass one pixel off. The diagram has to read
+    // on a pale field and on a dark one, and this repository does not use a
+    // blend mode to fake it.
+    if (double) parts.push(layer("golden-ink golden-ink-light", "translate(1 1)"));
+    svg.replaceChildren(...parts);
+  }
+
+  function paintGolden() {
+    // The box each diagram describes. The overlay's own box is set by CSS and
+    // matches the box it is drawn over; the diagram is measured from the thing
+    // it explains, never from its own canvas.
+    const viewport = {
+      width: document.documentElement.clientWidth,
+      height: document.documentElement.clientHeight
+    };
+    const instances = [
+      [el.goldenOverlayStage, el.fields, true],
+      [el.goldenOverlayDemo, el.goldenStage, true],
+      [el.pgOverlay, el.pgStage, true],
+      [el.goldenOverlaySheet, viewport, false]
+    ];
+    instances.forEach(([svg, target, double]) => {
+      if (!svg) return;
+      svg.style.display = state.golden ? "block" : "none";
+      if (!state.golden) return;
+      const box = target && target.getBoundingClientRect
+        ? target.getBoundingClientRect()
+        : { width: target.width, height: target.height };
+      const width = Math.round(box.width);
+      const height = Math.round(box.height);
+      if (!width || !height) return;
+      drawGolden(svg, width, height, { double });
+    });
+  }
+
+  function toggleGolden(force) {
+    state.golden = force === undefined ? !state.golden : Boolean(force);
+    if (el.goldenToggle) {
+      el.goldenToggle.setAttribute("aria-pressed", String(state.golden));
+      el.goldenToggle.textContent = state.golden ? "ERASE THE DIAGRAM" : "DRAW THE DIAGRAM";
+    }
+    if (el.goldenStatus) {
+      el.goldenStatus.textContent = state.golden
+        ? "The diagram is drawn on the plate view, behind the words, and behind this text. Press P on the plate view to erase it."
+        : "The diagram is off. On the plate view, P draws it there.";
+    }
+    paintGolden();
+    el.status.textContent = state.golden
+      ? "The golden section is drawn."
+      : "The golden section is hidden.";
+  }
+
+  // ── The playground ────────────────────────────────────────────────────────
+  // A bench, not a dashboard. Type, style and palette are three separate
+  // choices, and the reader can change any of them and see the other two
+  // answer.
+  function radioGroup(container, items, onPick) {
+    const buttons = items.map((item, index) => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.setAttribute("role", "radio");
+      button.setAttribute("aria-checked", String(index === 0));
+      button.tabIndex = index === 0 ? 0 : -1;
+      button.dataset.value = item.id;
+      button.textContent = item.name;
+      button.addEventListener("click", () => pick(item.id));
+      return button;
+    });
+    container.replaceChildren(...buttons);
+
+    function pick(id) {
+      const index = items.findIndex((item) => item.id === id);
+      if (index < 0) return;
+      buttons.forEach((button, position) => {
+        button.setAttribute("aria-checked", String(position === index));
+        button.tabIndex = position === index ? 0 : -1;
+      });
+      onPick(items[index]);
+    }
+
+    container.addEventListener("keydown", (event) => {
+      const step = event.key === "ArrowRight" || event.key === "ArrowDown" ? 1
+        : event.key === "ArrowLeft" || event.key === "ArrowUp" ? -1 : 0;
+      if (!step) return;
+      event.preventDefault();
+      const current = buttons.findIndex((button) => button.getAttribute("aria-checked") === "true");
+      const next = (current + step + buttons.length) % buttons.length;
+      buttons[next].focus();
+      pick(items[next].id);
+    });
+  }
+
+  function loadPlaygroundFont(font) {
+    if (!font?.google) return;
+    if (document.querySelector(`link[data-pg-font="${font.id}"]`)) return;
+    const link = document.createElement("link");
+    link.rel = "stylesheet";
+    link.href = `https://fonts.googleapis.com/css2?family=${font.google}&display=swap`;
+    link.dataset.pgFont = font.id;
+    // A face that arrives late changes the headline's metrics, and the headline
+    // was measured against the field. Measure again when it lands.
+    link.addEventListener("load", () => fitBench());
+    document.head.append(link);
+  }
+
+  async function loadPlayground() {
+    if (state.playground.data) {
+      renderPlayground();
+      return;
+    }
+    const response = await fetch("data/playground.json");
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    const data = await response.json();
+    state.playground.data = data;
+    state.playground.font = data.fonts[0];
+    state.playground.style = data.styles[0];
+    state.playground.paletteId = currentPalette().id;
+
+    radioGroup(el.pgFonts, data.fonts, (font) => {
+      state.playground.font = font;
+      loadPlaygroundFont(font);
+      renderPlayground();
+    });
+    radioGroup(el.pgStyles, data.styles, (style) => {
+      state.playground.style = style;
+      renderPlayground();
+    });
+
+    el.pgPalette.replaceChildren(...state.palettes.map((palette) => {
+      const option = document.createElement("option");
+      option.value = String(palette.id);
+      option.textContent = `${formatPlate(palette.id)} · ${palette.colors.map((color) => color.name).join(" + ")}`;
+      return option;
+    }));
+    el.pgPalette.value = String(state.playground.paletteId);
+    el.pgPalette.addEventListener("change", () => {
+      state.playground.paletteId = Number(el.pgPalette.value);
+      renderPlayground();
+    });
+    el.pgSurprise.addEventListener("click", () => {
+      const palette = state.palettes[Math.floor(Math.random() * state.palettes.length)];
+      state.playground.paletteId = palette.id;
+      el.pgPalette.value = String(palette.id);
+      renderPlayground();
+    });
+
+    loadPlaygroundFont(state.playground.font);
+    renderPlayground();
+  }
+
+  function paintFields(container, palette) {
+    container.style.gridTemplateColumns = fieldColumns(palette.colors.length);
+    container.replaceChildren(...palette.colors.map((color) => {
+      const field = document.createElement("div");
+      field.style.backgroundColor = color.hex;
+      return field;
+    }));
+  }
+
+  // ── The bench fits the field ───────────────────────────────────────────────
+  // A style says how loud it wants to be. The colour field says how loud it can
+  // be. When the two disagree, the field wins — and the display size is
+  // measured down until the sample sits inside the colour it is printed on.
+  //
+  // A bench that clips the sample it is showing is a bench lying about the
+  // style, so this is measured against the rendered box, not estimated from a
+  // character count.
+  //
+  // The floor is absolute, not a fraction: a display that shrinks to 13px on a
+  // phone is not a display, it is a smudge, and no scale ratio is worth that.
+  // When the floor is reached and the sample still does not fit, the bench
+  // overflows and says so — that is a finding for the instrument, not a
+  // licence to print unreadable type.
+  const FIT_MIN_PX = 20;
+  const FIT_MIN_RATIO = 0.55;
+
+  function fitBench() {
+    const stage = el.pgStage;
+    const copy = el.pgCopy;
+    const head = el.pgHeadline;
+    if (!stage || !copy || !head) return 1;
+    copy.style.setProperty("--pg-fit", "1");
+    const box = stage.getBoundingClientRect();
+    if (!box.width || !box.height) return 1;
+
+    // The copy is bottom-aligned in the field, so a sample that is too tall
+    // pushes its top past the field's padding, not past its bottom.
+    const overflows = () => {
+      const padding = parseFloat(getComputedStyle(copy).paddingTop) || 0;
+      const ceiling = copy.getBoundingClientRect().top + padding;
+      const first = copy.firstElementChild;
+      if (!first) return false;
+      return first.getBoundingClientRect().top < ceiling - 0.5;
+    };
+
+    if (!overflows()) {
+      stage.dataset.fit = "1";
+      return 1;
+    }
+    const natural = parseFloat(getComputedStyle(head).fontSize) || 1;
+    const floor = Math.min(1, Math.max(FIT_MIN_RATIO, FIT_MIN_PX / natural));
+    let low = floor;
+    let high = 1;
+    for (let step = 0; step < 7; step += 1) {
+      const middle = (low + high) / 2;
+      copy.style.setProperty("--pg-fit", String(middle));
+      if (overflows()) high = middle;
+      else low = middle;
+    }
+    copy.style.setProperty("--pg-fit", String(low));
+    stage.dataset.fit = String(Number(low.toFixed(3)));
+    stage.dataset.fitFloor = String(Number(floor.toFixed(3)));
+    return low;
+  }
+
+  function renderPlayground() {
+    const data = state.playground.data;
+    if (!data) return;
+    const font = state.playground.font;
+    const style = state.playground.style;
+    const palette = state.palettes.find((item) => item.id === state.playground.paletteId) || currentPalette();
+    if (!palette) return;
+
+    paintFields(el.pgFields, palette);
+    paintFields(el.goldenFields, palette);
+
+    const weights = fieldWeights(palette.colors.length);
+    const share = weights[0] / weights.reduce((sum, weight) => sum + weight, 0);
+    el.pgStage.style.setProperty("--pg-share", String(share));
+
+    el.pgCopy.style.setProperty("--pg-family", font.stack);
+    el.pgCopy.style.color = readableInk(palette.colors[0].rgb);
+    Object.entries(style.tokens).forEach(([name, value]) => el.pgCopy.style.setProperty(name, value));
+
+    el.pgPlate.textContent = `PLATE ${formatPlate(palette.id)}`;
+    el.pgFontWhy.textContent = `${font.name} — ${font.role}. ${font.why}`;
+    el.pgStyleWhy.textContent = `${style.name} — ${style.mood}. ${style.changes}`;
+    el.pgPaletteWhy.textContent = `Plate ${formatPlate(palette.id)} — ${palette.colors.map((color) => color.name).join(" + ")}. ${palette.temperature}; ${palette.energy}; ${palette.contrast}. Suggested room: ${palette.use}.`;
+    fitBench();
+    paintGolden();
   }
 
   function paletteExport(palette) {
@@ -362,7 +675,15 @@
       openDialog(el.indexDialog, el.indexDialog.querySelector("button"));
     }
     if (name === "digest") openDialog(el.digestDialog, el.digestDialog.querySelector("button"));
-    if (name === "about") openDialog(el.aboutDialog, el.aboutDialog.querySelector("button"));
+    if (name === "about") {
+      openDialog(el.aboutDialog, el.aboutDialog.querySelector("button"));
+      // The bench is only paid for when it is opened: the faces load, and
+      // the diagram is drawn, once a reader goes in.
+      loadPlayground().catch((error) => {
+        el.status.textContent = `The playground could not load: ${error.message}`;
+      });
+      requestAnimationFrame(paintGolden);
+    }
     if (name === "json") {
       renderJson();
       openDialog(el.jsonDialog, el.jsonDialog.querySelector("button"));
@@ -480,11 +801,23 @@
       if (letter === "a") action("about");
       if (letter === "j") action("json");
       if (letter === "c") action("contrast");
+      if (letter === "p") toggleGolden();
     });
     window.addEventListener("hashchange", () => {
       const match = location.hash.match(/plate-(\d{1,3})/);
       if (match) goToPlate(match[1]);
     });
+    // The diagram is drawn in real pixels, so it has to be drawn again when
+    // the box it describes changes size.
+    let repaint = null;
+    window.addEventListener("resize", () => {
+      if (repaint) return;
+      repaint = requestAnimationFrame(() => {
+        repaint = null;
+        paintGolden();
+      });
+    });
+    el.goldenToggle?.addEventListener("click", () => toggleGolden());
   }
 
   async function init() {
@@ -517,7 +850,27 @@
       wallpaperLabels: byId('wallpaper-labels'),
       wallpaperDownload: byId('wallpaper-download'),
       wallpaperInfo: byId('wallpaper-info'),
-      wallpaperStatus: byId('wallpaper-status')
+      wallpaperStatus: byId('wallpaper-status'),
+      goldenOverlayStage: byId('golden-overlay-stage'),
+      goldenOverlaySheet: byId('golden-overlay-sheet'),
+      goldenOverlayDemo: byId('golden-overlay-demo'),
+      goldenStage: byId('golden-stage'),
+      goldenFields: byId('golden-fields'),
+      goldenToggle: byId('golden-toggle'),
+      goldenStatus: byId('golden-status'),
+      pgFonts: byId('pg-fonts'),
+      pgStyles: byId('pg-styles'),
+      pgPalette: byId('pg-palette'),
+      pgSurprise: byId('pg-surprise'),
+      pgStage: byId('pg-stage'),
+      pgFields: byId('pg-fields'),
+      pgOverlay: byId('pg-overlay'),
+      pgCopy: byId('pg-copy'),
+      pgPlate: byId('pg-plate'),
+      pgHeadline: byId('pg-headline'),
+      pgFontWhy: byId('pg-font-why'),
+      pgStyleWhy: byId('pg-style-why'),
+      pgPaletteWhy: byId('pg-palette-why')
     });
     try {
       const response = await fetch("data/colors.json");

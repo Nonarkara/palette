@@ -1,0 +1,121 @@
+{
+  "note": "The playground compares type, style and palette on real Wada relationships. Every entry carries the reason it is here, and the ones that arrived by default are marked so the difference is visible rather than argued.",
+  "fonts": [
+    {
+      "id": "archivo-narrow",
+      "name": "Archivo Narrow",
+      "stack": "'Archivo Narrow', 'Arial Narrow', sans-serif",
+      "google": "Archivo+Narrow:wght@400;700",
+      "role": "house body and display",
+      "verdict": "house",
+      "why": "The instrument rail is 56px wide. A plate number has to fit inside it, so the house face is narrow rather than small."
+    },
+    {
+      "id": "ibm-plex-sans",
+      "name": "IBM Plex Sans",
+      "stack": "'IBM Plex Sans', 'Plex Sans', sans-serif",
+      "google": "IBM+Plex+Sans:wght@400;600",
+      "role": "house companion",
+      "verdict": "house",
+      "why": "Engineered, low contrast and open. It holds at 14px without turning thin, which is what a second face has to do."
+    },
+    {
+      "id": "jetbrains-mono",
+      "name": "JetBrains Mono",
+      "stack": "'JetBrains Mono', ui-monospace, monospace",
+      "google": "JetBrains+Mono:wght@400;600",
+      "role": "house figures",
+      "verdict": "house",
+      "why": "Data in a column has to align. Monospace is a decision about numbers, not about taste."
+    },
+    {
+      "id": "spectral",
+      "name": "Spectral",
+      "stack": "Spectral, Georgia, serif",
+      "google": "Spectral:wght@400;600",
+      "role": "study: serif",
+      "verdict": "study",
+      "why": "A serif carries a long measure without raising its voice. Useful to see next to a grotesque on the same field."
+    },
+    {
+      "id": "zilla-slab",
+      "name": "Zilla Slab",
+      "stack": "'Zilla Slab', Rockwell, serif",
+      "google": "Zilla+Slab:wght@400;600",
+      "role": "study: slab",
+      "verdict": "study",
+      "why": "A slab's low contrast keeps it calm over a flat colour field, where a high-contrast serif would sparkle."
+    },
+    {
+      "id": "space-grotesk",
+      "name": "Space Grotesk",
+      "stack": "'Space Grotesk', sans-serif",
+      "google": "Space+Grotesk:wght@400;600",
+      "role": "study: geometric grotesque",
+      "verdict": "study",
+      "why": "It refuses neutrality without becoming decorative. The middle ground between a neutral grotesque and a novelty."
+    },
+    {
+      "id": "playfair-display",
+      "name": "Playfair Display",
+      "stack": "'Playfair Display', Didot, serif",
+      "google": "Playfair+Display:wght@400;600",
+      "role": "study: display serif",
+      "verdict": "study",
+      "why": "A high-contrast display face. It can set a headline; it cannot set body text, and seeing that limit is the point."
+    },
+    {
+      "id": "inter",
+      "name": "Inter",
+      "stack": "Inter, system-ui, sans-serif",
+      "google": "Inter:wght@400;600",
+      "role": "the one that arrived by default",
+      "verdict": "default",
+      "why": "What a tool reaches for when nobody chose. Put it beside a chosen face and the difference is immediate, which is why it is here and not in the house."
+    }
+  ],
+  "styles": [
+    {
+      "id": "bauhaus",
+      "name": "Bauhaus",
+      "mood": "geometric, primary, balanced",
+      "changes": "Centred display, tight tracking, one hairline rule under the headline.",
+      "tokens": { "--pg-align": "center", "--pg-scale": "1.6", "--pg-tracking": "-0.02em", "--pg-rule-above": "0", "--pg-rule-below": "1", "--pg-measure": "34ch", "--pg-case": "none" }
+    },
+    {
+      "id": "brutalist",
+      "name": "Brutalist",
+      "mood": "raw, exposed, loud",
+      "changes": "Flush left, the display set as large as the field allows, no rules, wide measure, set in capitals.",
+      "tokens": { "--pg-align": "left", "--pg-scale": "1.75", "--pg-tracking": "-0.03em", "--pg-rule-above": "0", "--pg-rule-below": "0", "--pg-measure": "46ch", "--pg-case": "uppercase" }
+    },
+    {
+      "id": "international",
+      "name": "International",
+      "mood": "rational, gridded, exact",
+      "changes": "Flush left, exact and gridded, a hairline rule under the headline, the plate number in mono above it.",
+      "tokens": { "--pg-align": "left", "--pg-scale": "1.35", "--pg-tracking": "0", "--pg-rule-above": "0", "--pg-rule-below": "1", "--pg-measure": "38ch", "--pg-case": "none" }
+    },
+    {
+      "id": "editorial",
+      "name": "Editorial",
+      "mood": "considered, layered, readable",
+      "changes": "A rule above and below the headline, a serif measure, and the plate number carried as a caption.",
+      "tokens": { "--pg-align": "left", "--pg-scale": "1.2", "--pg-tracking": "-0.01em", "--pg-rule-above": "1", "--pg-rule-below": "1", "--pg-measure": "42ch", "--pg-case": "none" }
+    },
+    {
+      "id": "wabi-sabi",
+      "name": "Wabi Sabi",
+      "mood": "imperfect, quiet, handmade",
+      "changes": "Small display, wide tracking, generous air, one faint rule under the headline.",
+      "tokens": { "--pg-align": "left", "--pg-scale": "1.1", "--pg-tracking": "0.06em", "--pg-rule-above": "0", "--pg-rule-below": "1", "--pg-measure": "30ch", "--pg-case": "none" }
+    },
+    {
+      "id": "index",
+      "name": "Index",
+      "mood": "dense, archival, exact",
+      "changes": "Small type, a rule under the headline, the number set in mono at the margin.",
+      "tokens": { "--pg-align": "left", "--pg-scale": "0.95", "--pg-tracking": "0", "--pg-rule-above": "0", "--pg-rule-below": "1", "--pg-measure": "58ch", "--pg-case": "none" }
+    }
+  ]
+}

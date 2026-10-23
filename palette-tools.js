@@ -76,6 +76,109 @@
     return {results:(exact.length?exact:scored).map(x=>x.p),related:!exact.length&&scored.length>0,terms};
   }
   const sizes={phone:{width:1440,height:3120},tablet:{width:2048,height:2732},desktop:{width:3840,height:2160}};
+
+  // ── The golden section ────────────────────────────────────────────────────
+  // φ = (1 + √5) / 2. A line divided so the larger part is to the smaller as
+  // the whole is to the larger: 1 : 0.618 : 0.382. The exhibition already uses
+  // it — a two-colour plate divides its field area at 0.618, and 120 of the 348
+  // relationships are two-colour — so the construction is drawn, not invented.
+  const PHI = (1 + Math.sqrt(5)) / 2;
+  const golden = {
+    phi: PHI,
+    major: 1 / PHI,          // 0.6180339887
+    minor: 1 / (PHI * PHI),   // 0.3819660113
+    // Where a golden section cuts a box.
+    cuts(width, height) {
+      return {
+        vertical: [width * golden.minor, width * golden.major],
+        horizontal: [height * golden.minor, height * golden.major]
+      };
+    },
+    // The largest golden rectangle that fits in a box, anchored top-left.
+    rectangle(width, height) {
+      return width >= height * PHI
+        ? { x: 0, y: 0, width: height * PHI, height }
+        : { x: 0, y: 0, width, height: width / PHI };
+    },
+    // The classical construction: a golden rectangle broken into squares. The
+    // peel rotates a quarter turn each time, which tiles the rectangle in the
+    // familiar pinwheel. Each square records the corner it shares with the
+    // next one, so the arcs can meet exactly.
+    squares(rect) {
+      const squares = [];
+      let x = rect.x, y = rect.y, w = rect.width, h = rect.height, dir = 0;
+      while (Math.min(w, h) > 0.5 && squares.length < 40) {
+        const side = Math.min(w, h);
+        let sx = x, sy = y, shared = null;
+        if (dir === 0) { sx = x; sy = y; shared = [sx + side, sy]; }
+        else if (dir === 1) { sx = x; sy = y; shared = [sx + side, sy + side]; }
+        else if (dir === 2) { sx = x + w - side; sy = y; shared = [sx, sy + side]; }
+        else { sx = x; sy = y + h - side; shared = [sx, sy]; }
+        squares.push({ x: sx, y: sy, side, sharedNext: shared });
+        if (dir === 0) { x += side; w -= side; }
+        else if (dir === 1) { y += side; h -= side; }
+        else if (dir === 2) { w -= side; }
+        else { h -= side; }
+        dir = (dir + 1) % 4;
+      }
+      // The last square has no next one; its arc ends at the inner corner.
+      squares.at(-1).sharedNext = null;
+      return squares;
+    },
+    // The quarter arc inside each square. A quarter circle from the corner the
+    // square shares with the previous one to the corner it shares with the next
+    // one, radius = the side, so every arc is exact. Consecutive arcs meet
+    // because the shared corner is literally the same point for both.
+    arcs(squares) {
+      const corners = (square) => {
+        const { x, y, side } = square;
+        return [[x, y], [x + side, y], [x + side, y + side], [x, y + side]];
+      };
+      const near = (a, b) => Math.abs(a[0] - b[0]) < 0.01 && Math.abs(a[1] - b[1]) < 0.01;
+      const opposite = { 0: 2, 1: 3, 2: 0, 3: 1 };
+      const arcs = [];
+      let sense = 0;
+      squares.forEach((square, index) => {
+        const points = corners(square);
+        const indexOf = (point) => points.findIndex((q) => near(q, point));
+        // The outer square starts at the far corner of the golden rectangle;
+        // every other square starts where the previous arc ended.
+        const start = index === 0 ? points[3] : squares[index - 1].sharedNext;
+        const startIndex = indexOf(start) < 0 ? 3 : indexOf(start);
+        // The arc ends at the corner shared with the next square, or, for the
+        // last one, at the corner diagonally opposite its start.
+        const end = square.sharedNext || points[opposite[startIndex]];
+        const endIndex = indexOf(end) < 0 ? opposite[startIndex] : indexOf(end);
+        // The centre is one of the two remaining corners. The sign of the turn
+        // picks it, and the first arc sets the sense for all the others.
+        const candidates = points.filter((_, i) => i !== startIndex && i !== endIndex);
+        const cross = (c) => (start[0] - c[0]) * (end[1] - c[1]) - (start[1] - c[1]) * (end[0] - c[0]);
+        let centre = candidates[0];
+        for (const candidate of candidates) {
+          const value = cross(candidate);
+          if (!sense) { sense = value >= 0 ? 1 : -1; centre = candidate; break; }
+          if ((value >= 0 ? 1 : -1) === sense) { centre = candidate; break; }
+        }
+        arcs.push({ start, centre, end, radius: square.side });
+      });
+      return arcs;
+    },
+    // The spiral as an SVG path. r = a·e^{bθ} with b = ln φ / (π/2): every
+    // quarter turn multiplies the radius by exactly φ.
+    spiralPath(rect, turns = 4, steps = 40) {
+      const b = Math.log(PHI) / (Math.PI / 2);
+      const a = rect.height;
+      const cx = rect.x, cy = rect.y + rect.height;
+      const points = [];
+      for (let i = 0; i <= turns * steps; i++) {
+        const theta = (i / steps) * (Math.PI / 2) * turns;
+        const r = a * Math.exp(b * theta);
+        points.push([cx + r * Math.sin(theta), cy - r * Math.cos(theta)]);
+      }
+      return points.map(([x, y], i) => `${i ? 'L' : 'M'}${x.toFixed(2)} ${y.toFixed(2)}`).join(' ');
+    }
+  };
+
   function wallpaperPlan(palette, device) {
     const size=sizes[device];
     if(!size) throw new Error('Unknown wallpaper device');
@@ -91,7 +194,7 @@
     });
     return {...size,fields};
   }
-  const api={search,termsFor,wallpaperPlan,sizes};
+  const api={search,termsFor,wallpaperPlan,sizes,golden};
   if(typeof module!=='undefined') module.exports=api;
   if(typeof window!=='undefined') window.PALETTE_TOOLS=api;
 })();

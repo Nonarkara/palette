@@ -1,14 +1,15 @@
 #!/usr/bin/env node
 // audit.mjs — one command, every instrument, one honest report.
 //
-// The repo has five instruments and no single command:
+// The repo has six instruments and no single command:
 //   1. non-slop scan    static source rules          (no browser needed)
 //   2. slop-lint        rendered screen rules        (browser)
 //   3. spatial-audit    six layout failure modes     (browser)
 //   4. brief-lint       design brief rules           (no browser needed)
 //   5. shipability      bytes on the wire per route  (browser)
+//   6. golden-section   the proportion, and what lands on it (browser)
 //
-// This runs all five against a real local preview and prints one report.
+// This runs all six against a real local preview and prints one report.
 //
 // Two rules this script keeps:
 //   - Nothing is skipped silently. If an instrument cannot run, it is reported
@@ -22,10 +23,13 @@
 // Exit: 0 all passed · 1 something failed · 2 something could not run.
 
 import { spawn, execFileSync } from 'node:child_process';
+import { createRequire } from 'node:module';
 import http from 'node:http';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+
+const require = createRequire(import.meta.url);
 
 const root = fs.realpathSync(fileURLToPath(new URL('../', import.meta.url)));
 const PAGES = [
@@ -171,6 +175,7 @@ async function runRendered(port) {
     record('slop-lint (rendered)', 'NOT RUN', 'playwright is not installed — no screen was measured', ['npm i -D playwright && npx playwright install chromium']);
     record('spatial-audit (layout geometry)', 'NOT RUN', 'playwright is not installed — no geometry was measured', ['npm i -D playwright && npx playwright install chromium']);
     record('shipability (bytes on the wire)', 'NOT RUN', 'playwright is not installed — no route was weighed', ['npm i -D playwright && npx playwright install chromium']);
+    record('golden-section (the proportion)', 'NOT RUN', 'playwright is not installed — no proportion was measured', ['npm i -D playwright && npx playwright install chromium']);
     return;
   }
   const { lintUrl, RULES } = await import(path.join(root, 'tools/slop-lint.mjs'));
@@ -253,6 +258,35 @@ async function runRendered(port) {
     }
     record('shipability (bytes on the wire)', shipFail ? 'FAIL' : 'PASS',
       shipFail ? `${shipFail} route(s) over the byte budget` : `every route is inside the budget (route ${DEFAULT_BUDGETS.routeKB} kB, shell ${DEFAULT_BUDGETS.shellKB} kB, fonts ${DEFAULT_BUDGETS.fontKB} kB)`, shipDetail);
+
+    // ── the proportion, and what lands on it ────────────────────────────────
+    const goldenDetail = [];
+    let goldenFail = 0;
+    try {
+      const { measureAlignment, evaluateAlignment, constructionReport, evaluateConstruction } = await import(path.join(root, 'tools/golden-section.mjs'));
+      // palette-tools.js is a CommonJS-style script that also assigns to
+      // window. Importing it as an ES module puts its exports on `default`.
+      const { golden: goldenApi } = require(path.join(root, 'palette-tools.js'));
+      const construction = constructionReport(goldenApi, 1440, 900);
+      const constructionVerdict = evaluateConstruction(construction);
+      goldenDetail.push(`the rectangle ${construction.rect.width.toFixed(1)} × ${construction.rect.height.toFixed(1)} (ratio ${construction.ratio.toFixed(10)}) · ${construction.counts.squares} squares covering ${(construction.areaShare * 100).toFixed(4)}% · ${construction.counts.arcs} arcs, every radius equal to its square's side`);
+      for (const finding of constructionVerdict.findings) goldenDetail.push(`  FAIL ${finding.rule}: ${finding.why}`);
+      if (constructionVerdict.verdict !== 'OK') goldenFail++;
+
+      const measurement = await measureAlignment(browser, `http://127.0.0.1:${port}/index.html`);
+      const verdict = evaluateAlignment(measurement);
+      goldenDetail.push(`the plate's field ends at ${measurement.plate.fieldBoundary}px of ${measurement.plate.stageWidth}px · the diagram's 0.618 cut is at ${measurement.plate.verticalCuts[1]?.toFixed(2)}px`);
+      goldenDetail.push(`the demo's field ends at ${measurement.demo.fieldBoundary}px of ${measurement.demo.stageWidth}px · the diagram's 0.618 cut is at ${measurement.demo.verticalCuts[1]?.toFixed(2)}px`);
+      if (measurement.head) goldenDetail.push(`the research head's columns divide at ${measurement.head.ratio.toFixed(4)}`);
+      goldenDetail.push(`the bench: ${measurement.bench.cases.length} case(s) measured, ${measurement.bench.cases.filter(c => c.overflow > 1).length} clipping, smallest display ${Math.min(...measurement.bench.cases.map(c => c.headlinePx))}px`);
+      for (const finding of verdict.findings) goldenDetail.push(`  FAIL ${finding.rule}: ${finding.why}`);
+      if (verdict.verdict !== 'OK') goldenFail++;
+    } catch (e) {
+      goldenFail++;
+      goldenDetail.push(`the proportion was not measured: ${e.message}`);
+    }
+    record('golden-section (the proportion)', goldenFail ? 'FAIL' : 'PASS',
+      goldenFail ? `${goldenFail} finding(s)` : 'the construction is exact and the screen lands on it', goldenDetail);
   } finally {
     await browser.close();
   }
