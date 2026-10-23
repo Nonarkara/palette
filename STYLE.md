@@ -83,7 +83,14 @@ A subset is a payload decision, not a type decision. The typeface is unchanged: 
 | plate view | 262 kB | 205 kB | 49 kB | 49 kB |
 | reading room | 614 kB | 114 kB | 500 kB | 50 kB |
 
-Measured on the local preview at 1440×900, cold cache, 23 Oct 2026, three consecutive runs with identical numbers. The live site compresses the HTML, CSS and JavaScript, so it transfers less: 149 kB and 600 kB before the fix.
+Measured on the local preview at 1440×900, cold cache, 23 Oct 2026, three consecutive runs with identical numbers. The live site compresses the HTML, CSS and JavaScript, so it transfers less:
+
+| route, live | before | after |
+|---|---|---|
+| `colors.nonarkara.org/index.html` | 149 kB | **92 kB** |
+| `colors.nonarkara.org/reading.html` | 600 kB | **78 kB** |
+
+The reading room was paying more for its webfont than for its whole page. It now transfers less than the plate view does.
 
 The plate view's Chinese lives entirely inside its dialogs, so it now downloads **no Chinese face at all** until a reader opens one. The reading room's chapter labels are visible on arrival and cost 10.6 kB; the text inside the collapsed disclosures costs nothing until a disclosure is opened, at which point the browser fetches the deferred subset.
 

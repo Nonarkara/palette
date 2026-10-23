@@ -197,6 +197,11 @@ real browser which Chinese characters each page renders on arrival and which
 are waiting behind a collapsed disclosure, and asks Google for a subset of
 exactly those. The reading room's first load fell from 600 kB to 114 kB.
 
+On the live site, where the HTML, CSS and JavaScript are compressed, the same
+two routes went from 149 kB and 600 kB to **92 kB and 78 kB**. The reading room
+was paying more for its webfont than for its whole page; it now transfers less
+than the plate view does.
+
 **Why:** The reading room was paying 518 kB of webfont for a 600 kB page.
 Noto Sans SC is cut into 202 unicode-range chunks, and the eight characters of
 a visible chapter label fell in three of them: 74 kB, 45 kB and 51 kB. A
