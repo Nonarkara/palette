@@ -92,6 +92,8 @@ Measured on the local preview at 1440×900, cold cache, 23 Oct 2026, three conse
 
 The reading room was paying more for its webfont than for its whole page. It now transfers less than the plate view does.
 
+**The Research screen cost 13 kB.** Adding it took the live plate view from 92 kB to **105 kB** on its first load — the HTML, the stylesheet and the script all grew, and the playground's data (`data/playground.json`) is not fetched on arrival but only when a reader opens the room. The reading room is untouched at 78.4 kB. Measured on the live site, 23 Oct 2026, after the release.
+
 The plate view's Chinese lives entirely inside its dialogs, so it now downloads **no Chinese face at all** until a reader opens one. The reading room's chapter labels are visible on arrival and cost 10.6 kB; the text inside the collapsed disclosures costs nothing until a disclosure is opened, at which point the browser fetches the deferred subset.
 
 **A collapsed disclosure still resolved its face.** With the subset in place the reading room measured 114 kB, then 181 kB, then 114 kB, then 181 kB — the same page, the same cache, four runs. Chrome resolves a webfont for text inside a `content-visibility: hidden` subtree, and the closed `<details>` body is exactly that: laid out, not painted, and still charged. `reading.css` now hides a closed disclosure's body with `display: none`, which is not resolved. **The rendered page is byte-identical with and without the rule** — the same 14,080-pixel document, the same 56-pixel disclosure, the same PNG — so the change touches what the reader pays for and nothing they can see. After it, eight consecutive runs measured 114 kB.
