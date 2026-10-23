@@ -1,13 +1,14 @@
 #!/usr/bin/env node
 // audit.mjs — one command, every instrument, one honest report.
 //
-// The repo has four instruments and no single command:
+// The repo has five instruments and no single command:
 //   1. non-slop scan    static source rules          (no browser needed)
 //   2. slop-lint        rendered screen rules        (browser)
 //   3. spatial-audit    six layout failure modes     (browser)
 //   4. brief-lint       design brief rules           (no browser needed)
+//   5. shipability      bytes on the wire per route  (browser)
 //
-// This runs all four against a real local preview and prints one report.
+// This runs all five against a real local preview and prints one report.
 //
 // Two rules this script keeps:
 //   - Nothing is skipped silently. If an instrument cannot run, it is reported
@@ -169,10 +170,12 @@ async function runRendered(port) {
   } catch {
     record('slop-lint (rendered)', 'NOT RUN', 'playwright is not installed — no screen was measured', ['npm i -D playwright && npx playwright install chromium']);
     record('spatial-audit (layout geometry)', 'NOT RUN', 'playwright is not installed — no geometry was measured', ['npm i -D playwright && npx playwright install chromium']);
+    record('shipability (bytes on the wire)', 'NOT RUN', 'playwright is not installed — no route was weighed', ['npm i -D playwright && npx playwright install chromium']);
     return;
   }
   const { lintUrl, RULES } = await import(path.join(root, 'tools/slop-lint.mjs'));
   const { auditUrl } = await import(path.join(root, 'tools/spatial-audit.mjs'));
+  const { measureRoute, evaluate, DEFAULT_BUDGETS } = await import(path.join(root, 'tools/shipability.mjs'));
   const knownSlop = new Set([...allowedRuleIds(), ...renderedKnown().ids]);
   const openSlop = renderedKnown().open;
   const knownSpatial = spatialKnown();
@@ -233,6 +236,23 @@ async function runRendered(port) {
     }
     record('spatial-audit (layout geometry)', spatialFail ? 'FAIL' : 'PASS',
       spatialFail ? `${spatialFail} page(s) with an undocumented mode` : 'no undocumented layout mode', spatialDetail);
+
+    // ── what the reader actually pays for ──────────────────────────────────
+    // A file's size on disk is not what a reader pays. This measures the bytes
+    // that crossed the wire on the first load of each route.
+    const shipDetail = [];
+    let shipFail = 0;
+    for (const p of PAGES) {
+      const url = `http://127.0.0.1:${port}/${p.file}`;
+      const report = await measureRoute(browser, url, { settleMs: 1500 });
+      const verdict = evaluate(report, DEFAULT_BUDGETS);
+      shipDetail.push(`${p.name}: ${report.totalKB} kB transferred · ${report.fonts.kb} kB webfont (${report.fonts.count} file(s): ${report.fonts.families.join(', ') || 'none'}) · before first paint ${report.beforePaintKB} kB`);
+      shipDetail.push(`  shows ${report.renderedScripts.join(', ') || 'nothing'} on arrival · heaviest ${report.heaviest[0] ? report.heaviest[0].url : 'n/a'} at ${report.heaviest[0] ? report.heaviest[0].kb : 0} kB`);
+      for (const f of verdict.findings) shipDetail.push(`  FAIL ${f.rule}: ${f.why}`);
+      if (verdict.verdict !== 'OK') shipFail++;
+    }
+    record('shipability (bytes on the wire)', shipFail ? 'FAIL' : 'PASS',
+      shipFail ? `${shipFail} route(s) over the byte budget` : `every route is inside the budget (route ${DEFAULT_BUDGETS.routeKB} kB, shell ${DEFAULT_BUDGETS.shellKB} kB, fonts ${DEFAULT_BUDGETS.fontKB} kB)`, shipDetail);
   } finally {
     await browser.close();
   }

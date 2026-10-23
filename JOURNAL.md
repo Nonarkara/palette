@@ -188,6 +188,56 @@ never fetched. Design Reviewed artefact records were blocked and not bypassed.
 **Tags:** `mcp · references · nostalgia · provenance · anti-slop`
 
 
+## 2026-10-23 — Weigh the route, not the file
+
+**What changed:** Added `tools/shipability.mjs`, a fifth instrument that weighs
+each route by the bytes that crossed the wire on a cold cache, and wired it
+into `npm run audit`. Added `scripts/font-subsets.mjs`, which measures in a
+real browser which Chinese characters each page renders on arrival and which
+are waiting behind a collapsed disclosure, and asks Google for a subset of
+exactly those. The reading room's first load fell from 600 kB to 114 kB.
+
+**Why:** The reading room was paying 518 kB of webfont for a 600 kB page.
+Noto Sans SC is cut into 202 unicode-range chunks, and the eight characters of
+a visible chapter label fell in three of them: 74 kB, 45 kB and 51 kB. A
+reader paid 170 kB for eight glyphs, and paid them before reading a word.
+
+**Key decision:** A subset is a payload decision, not a type decision. The
+typeface is unchanged — a subset carries the same outlines for the same glyphs
+and nothing else — so the house choice of Noto Sans SC stands. What changed is
+which glyphs are shipped and when.
+
+**Correction:** The first version of the instrument counted the decoded body
+length and reported a 63 kB stylesheet as 231 kB, because the response carried
+no content-length. It now reads `transferSize` from the Resource Timing API.
+The second version classified a font by the first codepoint of its
+unicode-range and called IBM Plex Sans Thai's Thai chunk "latin"; a range now
+votes by the number of codepoints it holds in each script. A third error was
+mine: the eager and deferred subsets overlapped, so the browser matched the
+visible text against the larger face and downloaded the 74 kB file for eight
+visible characters. The sets must be disjoint.
+
+**A fourth finding, and the one that mattered.** The reading room measured
+114 kB, then 181 kB, then 114 kB, then 181 kB — the same page, the same cache.
+Chrome resolves a webfont for text inside a `content-visibility: hidden`
+subtree, and a closed `<details>` body is exactly that: laid out, not painted,
+and still charged. A closed disclosure's body is now hidden with
+`display: none`, which is not resolved. The rendered page is byte-identical
+with and without the rule — the same 14,080-pixel document, the same 56-pixel
+disclosure, the same PNG — so the change touches what the reader pays for and
+nothing they can see. Eight consecutive runs then measured 114 kB.
+
+**Evidence:** Five consecutive cold-cache runs of each route: the plate view
+transfers 49 kB of webfont and no Chinese face at all; the reading room
+transfers 49 kB, of which 10.6 kB is the eager Chinese subset. Opening a
+Chinese disclosure on the reading room fetches the deferred subset and the
+text computes to `Noto Sans SC`. Opening the digest dialog on the plate view
+fetches the deferred subset and the Chinese computes to `Noto Sans SC`.
+`tests/shipability.test.mjs` covers the budgets, the classifier, the subset
+coverage and the wire measurement.
+
+Tags: `shipability`, `performance`, `fonts`, `subsetting`, `audit`
+
 ## 2026-10-20 — Give spatial decisions a contract
 
 **What changed:** Added the anti-spatial-hallucination guide and linked agent, anti-slop and composition entrypoints.

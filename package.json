@@ -5,10 +5,11 @@
   "description": "A brutalist interactive edition of Sanzo Wada's colour combinations.",
   "scripts": {
     "dev": "node scripts/serve.mjs",
-    "build": "node scripts/export-tokens.mjs",
+    "build": "node scripts/export-tokens.mjs && node scripts/font-subsets.mjs",
     "test": "node --test tests/*.test.mjs",
-    "check": "node scripts/export-tokens.mjs --check && npm test && node tests/check-content.mjs",
+    "check": "node scripts/export-tokens.mjs --check && node scripts/font-subsets.mjs --check && npm test && node tests/check-content.mjs",
     "audit": "node scripts/audit.mjs",
+    "check:shipability": "node tools/shipability.mjs --local",
     "verify:browser": "node tests/browser.mjs"
   },
   "license": "MIT",

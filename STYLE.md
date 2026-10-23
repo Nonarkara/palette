@@ -59,6 +59,42 @@ Everything here was chosen on purpose. Agents and reviewers read this before any
 - rule long-lines: the plate-label overlay sits at the field's edge, not in a reading column.
 - rule emoji-icons: never. This is the one house rule with no exception.
 
+## Shipability
+
+A file's size on disk is not what a reader pays. A reader pays for the bytes that crossed the wire before the page was usable. `tools/shipability.mjs` measures exactly that — transferred bytes per route, on a cold cache — and `npm run audit` fails if a route goes over its budget.
+
+| budget | value | what it catches |
+|---|---|---|
+| route | 400 kB | a route that grew a hidden dependency |
+| shell | 250 kB | bytes that had to arrive before the first paint |
+| webfont | 250 kB | a face nobody can read yet |
+| oversampling | 3× | a picture painted into a box much smaller than the file |
+
+### What the audit found, 23 Oct 2026
+
+The reading room transferred **600 kB** on its first load, and **518 kB of it was webfont**. Noto Sans SC is cut by Google into 202 unicode-range chunks, and the eight Chinese characters of a visible chapter label fall in three of them: 74 kB, 45 kB and 51 kB. The reader paid 170 kB for eight glyphs. Both pages also asked for the whole Chinese family in their stylesheet — 61 kB of CSS, of which 202 of the 228 @font-face blocks were Noto Sans SC.
+
+**The fix.** `scripts/font-subsets.mjs` measures, in a real browser, which Chinese characters each page renders on arrival and which are waiting behind a collapsed disclosure or a closed dialog, then asks Google for a subset of exactly those characters. Two subsets, and they must not overlap: a character that is visible in one place and collapsed in another belongs to the eager set only, or the browser matches the visible text against the larger face and downloads the large file.
+
+A subset is a payload decision, not a type decision. The typeface is unchanged: a subset carries the same outlines for the same glyphs and nothing else. It is still Noto Sans SC, and `data/font-subsets.json` records every character it covers.
+
+| route | before | after | webfont before | webfont after |
+|---|---|---|---|---|
+| plate view | 262 kB | 205 kB | 49 kB | 49 kB |
+| reading room | 614 kB | 114 kB | 500 kB | 50 kB |
+
+Measured on the local preview at 1440×900, cold cache, 23 Oct 2026, three consecutive runs with identical numbers. The live site compresses the HTML, CSS and JavaScript, so it transfers less: 149 kB and 600 kB before the fix.
+
+The plate view's Chinese lives entirely inside its dialogs, so it now downloads **no Chinese face at all** until a reader opens one. The reading room's chapter labels are visible on arrival and cost 10.6 kB; the text inside the collapsed disclosures costs nothing until a disclosure is opened, at which point the browser fetches the deferred subset.
+
+**A collapsed disclosure still resolved its face.** With the subset in place the reading room measured 114 kB, then 181 kB, then 114 kB, then 181 kB — the same page, the same cache, four runs. Chrome resolves a webfont for text inside a `content-visibility: hidden` subtree, and the closed `<details>` body is exactly that: laid out, not painted, and still charged. `reading.css` now hides a closed disclosure's body with `display: none`, which is not resolved. **The rendered page is byte-identical with and without the rule** — the same 14,080-pixel document, the same 56-pixel disclosure, the same PNG — so the change touches what the reader pays for and nothing they can see. After it, eight consecutive runs measured 114 kB.
+
+**Two bugs the instrument had, recorded so nobody repeats them.** The first version counted the *decoded* body length, so a 63 kB stylesheet was reported as 231 kB — the reader pays 63 kB. It now reads `transferSize` from the Resource Timing API. The second version classified a font by the first codepoint of its unicode-range, which called IBM Plex Sans Thai's Thai chunk "latin"; a range now votes by the number of codepoints it holds in each script.
+
+**What was measured and deliberately left alone.** The plate view's 60 kB colour catalogue is 29% of its route, and it is fetched before the first colour field paints. Splitting it would add a request and a loading state to the artefact that is the product, to save less than the fonts cost. The catalogue is smaller than the webfont and the stylesheet together.
+
+`npm run check:shipability` runs the measurement on its own. `npm run audit` runs it with everything else, and a route over budget fails the audit.
+
 ## Known results of the rendered check
 
 The **rendered** check (`non-slop render`) does **not** read `## Allow`. Only the static scan does.

@@ -60,3 +60,10 @@ p,a,h1,h2,h3,dd,summary { overflow-wrap:anywhere; }
 @media(min-width:900px) { .opening { grid-template-columns:3fr 2fr; gap:32px; }.opening > p { grid-column:1/-1; }.opening-note { align-self:end; }.chapter { grid-template-columns:minmax(220px,1fr) minmax(0,2fr); gap:64px; } }
 @media(prefers-reduced-motion:reduce) { html { scroll-behavior:auto; } }
 @media print { .room-header,.contents,.download,.skip { display:none; } body,.opening,.chapter,footer { background:white; color:black; }.chapter { break-inside:avoid; } }
+
+/* A collapsed disclosure's body is not read on arrival, so its text must not
+   pull a webfont. Chrome resolves a face for text inside a
+   content-visibility:hidden subtree, which made the reading room's first load
+   bimodal: 114 kB or 181 kB depending on whether Chrome decided to resolve
+   the deferred Chinese face. display:none is not resolved. */
+details:not([open]) > *:not(summary) { display:none; }
