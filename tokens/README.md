@@ -14,6 +14,8 @@ The file has 159 colours and 348 combinations. Hex values are the credited digit
 
 `interface` is the first `:root` in `styles.css`: the rail, the type sizes, the focus colour, and the instrument colours. Where a custom property uses a catalogue hex, the token is an alias. `reading` is the reading room's `:root` in `reading.css`. Yellow Orange and Dark Tyrian Blue on that page are the Plate 002 conversions.
 
+`map` holds the map-dashboard limits from `map-first.css`: the top bar, the bottom navigation, the slim button padding, the 1px border, and the map's share of the viewport. Plate themes leave this set off. Enable it only for a map screen. The colour field does not use it. The rule is in [`MAP-FIRST.md`](../MAP-FIRST.md).
+
 ## Import into Penpot
 
 Penpot documents this file under Design Tokens, in [Importing and Exporting Tokens](https://help.penpot.app/user-guide/design-systems/design-tokens/). A single JSON file is imported from the Tokens tab: **Tools**, then **Import**. The first-level keys are the set names because `$metadata.tokenSetOrder` lists them. [Laura Kalbag's guide](https://penpot.app/blog/a-practical-guide-to-the-design-tokens-json-format/) (14 April 2026) shows the same shape: `$value`, `$type`, and `$description` on every token, with `$themes` and `$metadata` beside the sets.
@@ -24,7 +26,7 @@ Import replaces the tokens already in that Penpot file.
 2. At the bottom, choose Tools, then Import.
 3. Choose `tokens/palette.tokens.json`.
 4. Check `catalogue`, `interface`, `reading`, and `plate/001` through `plate/348`.
-5. The active theme is `Plate/001`. Switch the Plate theme to another number to open that combination. Each Plate theme enables `catalogue`, `interface`, `reading`, and one plate. Penpot keeps one theme in a group active.
+5. The active theme is `Plate/001`. Switch the Plate theme to another number to open that combination. Each Plate theme enables `catalogue`, `interface`, `reading`, and one plate. Penpot keeps one theme in a group active. The `map` set is in the file and stays off. Enable it only for a map dashboard.
 
 A colour `$value` in this file is a hex string, as in Penpot's import example. Penpot applies that string. The later DTCG colour object (`colorSpace` and `components`) is not what this file uses. Penpot issue [9305](https://github.com/penpot/penpot/issues/9305) records that the tokens feature does not apply that object.
 

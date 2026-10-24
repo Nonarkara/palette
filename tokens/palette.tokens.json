@@ -1093,6 +1093,57 @@
       }
     }
   },
+  "map": {
+    "number": {
+      "map-share-floor": {
+        "$value": "0.65",
+        "$type": "number",
+        "$description": "Custom property --map-share-floor from map-first.css. Minimum share of the viewport height the map keeps. Under this, the extra band opens as a drawer. Plate themes leave the map set off. The colour field does not use it."
+      },
+      "map-share-mobile": {
+        "$value": "0.70",
+        "$type": "number",
+        "$description": "Custom property --map-share-mobile from map-first.css. Share of the viewport height the map keeps on a phone when only the top bar and the bottom navigation are open. Plate themes leave the map set off. The colour field does not use it."
+      }
+    },
+    "dimension": {
+      "map-bar-top-desktop": {
+        "$value": "48px",
+        "$type": "dimension",
+        "$description": "Custom property --map-bar-top-desktop from map-first.css. Maximum height of the top bar on a wide screen. Plate themes leave the map set off. The colour field does not use it."
+      },
+      "map-bar-top-mobile": {
+        "$value": "44px",
+        "$type": "dimension",
+        "$description": "Custom property --map-bar-top-mobile from map-first.css. Maximum height of the top bar at max-width 760px. Plate themes leave the map set off. The colour field does not use it."
+      },
+      "map-bar-bottom": {
+        "$value": "56px",
+        "$type": "dimension",
+        "$description": "Custom property --map-bar-bottom from map-first.css. Maximum height of the bottom navigation. Plate themes leave the map set off. The colour field does not use it."
+      },
+      "map-button-pad-block": {
+        "$value": "0px",
+        "$type": "dimension",
+        "$description": "Custom property --map-button-pad-block from map-first.css. Block padding of a map-bar button. Slim: none. Plate themes leave the map set off. The colour field does not use it."
+      },
+      "map-button-pad-inline": {
+        "$value": "8px",
+        "$type": "dimension",
+        "$description": "Custom property --map-button-pad-inline from map-first.css. Inline padding of a map-bar button. Plate themes leave the map set off. The colour field does not use it."
+      },
+      "map-button-border": {
+        "$value": "1px",
+        "$type": "dimension",
+        "$description": "Custom property --map-button-border from map-first.css. Border width of a map-bar button. Square corners. The colour field does not use this border. Plate themes leave the map set off. The colour field does not use it."
+      },
+      "map-target": {
+        "$value": "44px",
+        "$type": "dimension",
+        "$description": "Custom property --map-target from map-first.css. Minimum width and height of a map control. Plate themes leave the map set off. The colour field does not use it."
+      }
+    }
+  },
   "plate/001": {
     "role": {
       "dominant": {
@@ -18032,6 +18083,7 @@
       "catalogue",
       "interface",
       "reading",
+      "map",
       "plate/001",
       "plate/002",
       "plate/003",

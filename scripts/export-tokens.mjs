@@ -252,7 +252,7 @@ export function combinationsFrom(colors) {
     .map(([id, paletteColors]) => ({ id, colors: paletteColors }));
 }
 
-export function buildTokenDocument({ colors, stylesCss, readingCss, appJs }) {
+export function buildTokenDocument({ colors, stylesCss, readingCss, appJs, mapCss }) {
   if (colors.length !== 159) throw new Error(`expected 159 colours, received ${colors.length}`);
   const slugs = new Map();
   const byHex = new Map();
@@ -331,12 +331,48 @@ export function buildTokenDocument({ colors, stylesCss, readingCss, appJs }) {
   const readingSet = compact(readingTree);
   readingSet.font = fontGroup(readingCss, READING_FONTS, "reading.css");
 
+  if (!mapCss) throw new Error("map-first.css is required");
+  const mapNotes = {
+    "map-bar-top-desktop": "Maximum height of the top bar on a wide screen.",
+    "map-bar-top-mobile": "Maximum height of the top bar at max-width 760px.",
+    "map-bar-bottom": "Maximum height of the bottom navigation.",
+    "map-button-pad-block": "Block padding of a map-bar button. Slim: none.",
+    "map-button-pad-inline": "Inline padding of a map-bar button.",
+    "map-button-border": "Border width of a map-bar button. Square corners. The colour field does not use this border.",
+    "map-share-floor": "Minimum share of the viewport height the map keeps. Under this, the extra band opens as a drawer.",
+    "map-share-mobile": "Share of the viewport height the map keeps on a phone when only the top bar and the bottom navigation are open.",
+    "map-target": "Minimum width and height of a map control.",
+  };
+  const mapTree = emptyTree();
+  for (const [name, value] of declarations(rootBlock(mapCss, "map-first.css"))) {
+    addCustomProperty(mapTree, name, value, "map-first.css", byHex, "Map dashboard");
+  }
+  const foundMap = new Set([
+    ...Object.keys(mapTree.color),
+    ...Object.keys(mapTree.number),
+    ...Object.keys(mapTree.dimension),
+    ...Object.keys(mapTree.string),
+  ]);
+  for (const name of Object.keys(mapNotes)) {
+    if (!foundMap.has(name)) throw new Error(`missing map token --${name}`);
+  }
+  for (const name of foundMap) {
+    if (!mapNotes[name]) throw new Error(`unexpected map token --${name}`);
+  }
+  for (const group of [mapTree.number, mapTree.dimension]) {
+    for (const [name, leaf] of Object.entries(group)) {
+      leaf.$description += ` ${mapNotes[name]} Plate themes leave the map set off. The colour field does not use it.`;
+    }
+  }
+  const mapSet = compact(mapTree);
+
   const document = {
     catalogue,
     interface: interfaceSet,
     reading: readingSet,
+    map: mapSet,
   };
-  const setNames = ["catalogue", "interface", "reading"];
+  const setNames = ["catalogue", "interface", "reading", "map"];
   const themes = [];
 
   for (const plate of plates) {
@@ -390,13 +426,14 @@ export function serializeTokenDocument(document) {
 }
 
 export async function loadTokenSources() {
-  const [colors, stylesCss, readingCss, appJs] = await Promise.all([
+  const [colors, stylesCss, readingCss, appJs, mapCss] = await Promise.all([
     readFile(new URL("../data/colors.json", import.meta.url), "utf8").then(JSON.parse),
     readFile(new URL("../styles.css", import.meta.url), "utf8"),
     readFile(new URL("../reading.css", import.meta.url), "utf8"),
     readFile(new URL("../app.js", import.meta.url), "utf8"),
+    readFile(new URL("../map-first.css", import.meta.url), "utf8"),
   ]);
-  return { colors, stylesCss, readingCss, appJs };
+  return { colors, stylesCss, readingCss, appJs, mapCss };
 }
 
 export async function renderedTokens() {

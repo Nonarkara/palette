@@ -35,6 +35,17 @@ lives in `reading.html`, not over the colour field. Source-book files stay priva
 One source-verified combination owns the viewport. Interface chrome never
 competes with it.
 
+## Map-first dashboards
+
+A screen whose job is a map follows [MAP-FIRST.md](MAP-FIRST.md), with the same
+rule in [Simplified Chinese](MAP-FIRST.zh-CN.md) and [Thai](MAP-FIRST.th.md).
+The map is the centre and the largest area. The bars are an instrument tray you
+glance at and leave. A fluent reader has not signed the Chinese or Thai.
+
+This rule does not change the colour field. One combination still owns that
+viewport. That viewport still has no visible border. Map-bar buttons may use the
+1px border in `map-first.css`. They stay square.
+
 ## Commands
 
 ```bash
