@@ -295,3 +295,12 @@ attribution and digital-conversion caveats recorded in `THIRD_PARTY_NOTICES.md`.
 ## Anti-spatial-hallucination
 
 [The composition guide](ANTI-SPATIAL-HALLUCINATION.md) asks why each element is here, this size and this far from its neighbour. It covers image roles, narrative heroes, readable overlays, purposeful whitespace, action grouping and responsive evidence. Hero treatment is a choice to justify, not a new template.
+
+## Task geometry
+
+[Decision geometry](DECISION-GEOMETRY.md) is part of the spatial law: prevent an
+oversized region from stretching its parent, pushing the task down and separating
+its controls. The [portable measurement gate](tools/decision-geometry/README.md)
+checks project-authored budgets, including preservation of operating regions.
+It supplements this framework's visual language; it does not restyle it or
+certify an interface from source alone.

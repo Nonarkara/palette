@@ -221,3 +221,14 @@ earlier compilation. The historical combinations are credited to Sanzo Wada.
 This project does not reproduce book scans, cover art, publisher copy, or claim
 affiliation with Seigensha, the Wada estate, or the upstream authors. Preserve
 those boundaries when you fork it.
+
+## Task geometry precedes visual compliance
+
+Aligned edges, a correct palette and consistent typography can coexist with a
+spatial failure. A long evidence column must not dictate a neighboring map's
+height without a comparison/operating reason. Tool titles and repeated explanatory
+bands must not push the information/action pair apart. Apply
+[Decision geometry](DECISION-GEOMETRY.md): measure the task, preserve its operating
+regions, falsify the previous failure and close independent review. This is an
+addition to the existing visual language, not permission to remove authored
+artwork, a color field, a live map or necessary source qualifications.

@@ -1,5 +1,12 @@
 # ANTI-SLOP: read this before you design or build any screen
 
+
+Read [Decision geometry](DECISION-GEOMETRY.md) before accepting a composition:
+measure the expansion chain and the information/action relationship, preserve
+working content, and prove a task-specific regression budget fails the old fault.
+A palette or source-lint pass cannot substitute for rendered task evidence.
+
+
 These are Dr Non's hard rules against AI design slop, and they apply to every agent (Grok Bot, Claude, Cursor, ChatGPT, Copilot) and every person. They sit on top of the house design system (Palette). If a rule here conflicts with a habit of your model, this file wins.
 
 ## The principle: empty space is a decision, and subtract before you add
