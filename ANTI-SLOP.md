@@ -6,6 +6,7 @@ measure the expansion chain and the information/action relationship, preserve
 working content, and prove a task-specific regression budget fails the old fault.
 A palette or source-lint pass cannot substitute for rendered task evidence.
 
+Enforce the [glance path and kinetic grid](#glance-path-and-kinetic-grid) before accepting a composition. Canonical text: [Nonarkara/Non-Slop MSH.md](https://github.com/Nonarkara/Non-Slop/blob/main/MSH.md), read with this file. Headline and primary action sit on the exit of the dominant visual. Related copy does not leapfrog a massive image. Scale contrast is extreme, a broken layout rule stays on the grid, negative space stays active, and accents stay at one or two. Motion snaps or shows a skeleton. It does not morph. On this product [STYLE.md](STYLE.md) still wins: add no accent, and the colour field is the subject.
 
 These are Dr Non's hard rules against AI design slop, and they apply to every agent (Grok Bot, Claude, Cursor, ChatGPT, Copilot) and every person. They sit on top of the house design system (Palette). If a rule here conflicts with a habit of your model, this file wins.
 
@@ -69,3 +70,14 @@ Apps whose maps show victims' or reporters' personal data were not pictured or q
 ## Composition and image placement
 
 Read [Anti-spatial-hallucination](ANTI-SPATIAL-HALLUCINATION.md) when layout is aligned but still feels arbitrary. Preserve the colour field as the subject; narrative-image patterns apply only where the page’s task and STYLE.md permit them.
+
+## Glance path and kinetic grid
+
+Canonical text: [Nonarkara/Non-Slop MSH.md](https://github.com/Nonarkara/Non-Slop/blob/main/MSH.md), read with this file. If the two disagree, `MSH.md` wins. [STYLE.md](STYLE.md) still beats both. These four rules are the ones builders enforce:
+
+- **Visual gravity.** Put the headline and the primary action on the exit of the dominant visual. Critical text does not sit in a dead zone above a heavy hero.
+- **No leapfrog.** Related copy does not jump a massive image to reach the thing it describes.
+- **Kinetic grid.** Use extreme scale contrast. When a layout breaks a rule, break it on the grid. Negative space stays active. Keep one or two accents, and no third shout.
+- **Motion.** Snap, or show the skeleton first. Do not float or morph. `prefers-reduced-motion` still removes non-essential motion.
+
+On Palette the dominant visual is the full-viewport colour field. Plate number, names and the copy action sit on its exit, the instrument edge, not in a band above it. Do not add an accent: the plate is the colour. The empty field is the composition (`void` in STYLE.md), not a dead zone.

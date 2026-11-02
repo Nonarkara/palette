@@ -12,6 +12,21 @@ use task-specific budgets, real viewport/state captures, a failing regression
 mutation and independent review. The guide's fixture numbers are not universal.
 <!-- /decision-geometry:v1 -->
 
+<!-- glance-path:v1 -->
+## Glance path and kinetic grid
+
+Enforce these on every composition. Canonical text:
+[Nonarkara/Non-Slop MSH.md](https://github.com/Nonarkara/Non-Slop/blob/main/MSH.md),
+read with [ANTI-SLOP.md](ANTI-SLOP.md). If this pointer and `MSH.md` disagree,
+`MSH.md` wins. [STYLE.md](STYLE.md) still beats both.
+
+- **Visual gravity.** Put the headline and the primary action on the exit of the dominant visual. Critical text does not sit in a dead zone above a heavy hero.
+- **No leapfrog.** Related copy does not jump a massive image to reach the thing it describes.
+- **Kinetic grid.** Use extreme scale contrast. When a layout breaks a rule, break it on the grid. Negative space stays active. Keep one or two accents, and no third shout.
+- **Motion.** Snap, or show the skeleton first. Do not float or morph. `prefers-reduced-motion` still removes non-essential motion.
+
+On Palette the dominant visual is the full-viewport colour field. Plate number, names and the copy action sit on its exit, the instrument edge, not in a band above it. Do not add an accent: the plate is the colour. The empty field is the composition (`void` in STYLE.md), not a dead zone.
+<!-- /glance-path:v1 -->
 
 > **Read [ANTI-SLOP.md](ANTI-SLOP.md) before any design or frontend work.** These are Dr Non's hard rules against AI design slop: empty space is a decision, subtract before you add, and the map comes first. Run `tools/slop-lint.mjs` on any page you ship.
 

@@ -70,6 +70,18 @@ historical claim.
 | This brief | `node tools/brief-lint.mjs docs/design-brief.md` | The instructions name something |
 | All four | `npm run audit` | One report, and anything not recorded in STYLE.md fails it |
 
+## Glance path and kinetic grid
+
+Builders enforce the pointer in [AGENTS.md](../AGENTS.md) and the section
+"Glance path and kinetic grid" in [ANTI-SLOP.md](../ANTI-SLOP.md). Canonical
+text: [Nonarkara/Non-Slop MSH.md](https://github.com/Nonarkara/Non-Slop/blob/main/MSH.md).
+[STYLE.md](../STYLE.md) still wins.
+
+- The plate number and **Copy this for your agent** sit on the exit of the colour field, at the 56px instrument rail, not in a dead band above the field.
+- A name stays with the colour it names. Related copy does not leapfrog the field.
+- Scale contrast is the plate number against the caption. A layout break stays on the grid. The empty field is the subject (`void` in STYLE.md). Add no accent colour.
+- A plate change snaps. Loading shows the layout skeleton. Motion does not morph. `prefers-reduced-motion` stays honoured.
+
 ## The last gate
 
 A different agent or person reviews. Never self-review — you have already
