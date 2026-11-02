@@ -16,9 +16,9 @@ mutation and independent review. The guide's fixture numbers are not universal.
 ## Glance path and kinetic grid
 
 Enforce these on every composition. Canonical text:
-[Nonarkara/Non-Slop MSH.md](https://github.com/Nonarkara/Non-Slop/blob/main/MSH.md),
-read with [ANTI-SLOP.md](ANTI-SLOP.md). If this pointer and `MSH.md` disagree,
-`MSH.md` wins. [STYLE.md](STYLE.md) still beats both.
+[Non-Slop ANTI-SPATIAL-HALLUCINATION.md](https://github.com/Nonarkara/Non-Slop/blob/main/ANTI-SPATIAL-HALLUCINATION.md) §6,
+and the review gate in [Non-Slop AGENTS.md](https://github.com/Nonarkara/Non-Slop/blob/main/AGENTS.md).
+If this pointer and that guide disagree, the guide wins. [STYLE.md](STYLE.md) still beats both.
 
 - **Visual gravity.** Put the headline and the primary action on the exit of the dominant visual. Critical text does not sit in a dead zone above a heavy hero.
 - **No leapfrog.** Related copy does not jump a massive image to reach the thing it describes.

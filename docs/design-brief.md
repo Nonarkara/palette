@@ -72,9 +72,9 @@ historical claim.
 
 ## Glance path and kinetic grid
 
-Builders enforce the pointer in [AGENTS.md](../AGENTS.md) and the section
-"Glance path and kinetic grid" in [ANTI-SLOP.md](../ANTI-SLOP.md). Canonical
-text: [Nonarkara/Non-Slop MSH.md](https://github.com/Nonarkara/Non-Slop/blob/main/MSH.md).
+Builders enforce the pointer in [AGENTS.md](../AGENTS.md). Canonical text:
+[Non-Slop ANTI-SPATIAL-HALLUCINATION.md](https://github.com/Nonarkara/Non-Slop/blob/main/ANTI-SPATIAL-HALLUCINATION.md) §6,
+and the review gate in [Non-Slop AGENTS.md](https://github.com/Nonarkara/Non-Slop/blob/main/AGENTS.md).
 [STYLE.md](../STYLE.md) still wins.
 
 - The plate number and **Copy this for your agent** sit on the exit of the colour field, at the 56px instrument rail, not in a dead band above the field.

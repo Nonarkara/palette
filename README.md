@@ -307,8 +307,9 @@ certify an interface from source alone.
 
 ## Glance path and kinetic grid
 
-[ANTI-SLOP.md](ANTI-SLOP.md) carries the short pointer. The canonical text is
-[Nonarkara/Non-Slop MSH.md](https://github.com/Nonarkara/Non-Slop/blob/main/MSH.md).
+The short pointer is restated below. Canonical text:
+[Non-Slop ANTI-SPATIAL-HALLUCINATION.md](https://github.com/Nonarkara/Non-Slop/blob/main/ANTI-SPATIAL-HALLUCINATION.md) §6,
+and the review gate in [Non-Slop AGENTS.md](https://github.com/Nonarkara/Non-Slop/blob/main/AGENTS.md).
 Put the headline and the primary action on the exit of the dominant visual.
 Critical text does not sit in a dead zone above a heavy hero, and related copy
 does not leapfrog a massive image. Use extreme scale contrast, break a layout

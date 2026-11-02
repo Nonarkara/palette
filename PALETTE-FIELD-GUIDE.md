@@ -237,4 +237,4 @@ artwork, a color field, a live map or necessary source qualifications.
 
 The colour field is the dominant visual. Plate number, names and **Copy this for your agent** sit on its exit, the instrument rail, not in a dead band above the field. A name stays with the colour it names: related copy does not leapfrog the field. The plate number is the extreme scale step. A layout break stays on the grid. The empty field is the composition, not a leftover. Add no accent colour. A plate change snaps, or the layout shows as a skeleton while data loads. Motion does not morph.
 
-Canonical text: [Nonarkara/Non-Slop MSH.md](https://github.com/Nonarkara/Non-Slop/blob/main/MSH.md), read with [ANTI-SLOP.md](ANTI-SLOP.md). [STYLE.md](STYLE.md) still wins, including `void` and `hero-no-data`.
+Canonical text: [Non-Slop ANTI-SPATIAL-HALLUCINATION.md](https://github.com/Nonarkara/Non-Slop/blob/main/ANTI-SPATIAL-HALLUCINATION.md) §6, and the review gate in [Non-Slop AGENTS.md](https://github.com/Nonarkara/Non-Slop/blob/main/AGENTS.md). [STYLE.md](STYLE.md) still wins, including `void` and `hero-no-data`.
