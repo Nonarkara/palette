@@ -187,3 +187,144 @@ disallows AI crawlers) and the eMuseum demo (challenge) are link lists that were
 never fetched. Design Reviewed artefact records were blocked and not bypassed.
 **Tags:** `mcp · references · nostalgia · provenance · anti-slop`
 
+
+## 2026-10-23 — The room where the method is visible
+
+**What changed:** The plate view's research dialog became a Research screen. It
+tells the story of how this came about — eleven dated entries from finding
+Sanzo Wada's book to this one — and then does two things it did not do before.
+It is a **playground**: eight faces, six design styles and all 348
+relationships, each choice explained, each one loadable and comparable against
+the others. And it carries **the golden section as a method**, not as a
+decoration: one toggle draws the classical construction behind the plate
+view, behind the Research screen's own text, and behind the playground's
+preview.
+
+Added `tools/golden-section.mjs`, a sixth instrument, which measures three
+separate claims — that the construction is exact, that the interface lands on
+the proportion, and that the playground's bench fits the field — and fails the
+audit if any of them stops being true. Added `data/playground.json`, which
+holds the faces, the styles and the reasons for both.
+
+**Why:** The house law was a set of rules in a file, and a set of rules in a
+file is a set of rules nobody can see working. The screen now shows the
+proportion drawn over the thing it describes, so a reader can check the claim
+instead of taking it.
+
+**Key decision:** The diagram is drawn over the colour and under the words. It
+z-indexes below the identity block and the plate label, and above the field, so
+it explains the composition and never competes with it. One state, shared: the
+button on the Research screen and `P` on the plate view are the same switch.
+
+**What was measured:** The 0.618 cut the diagram draws lands at 855.36px
+against a colour field that ends at 855px. The Research head's two columns
+divide at 1.6180. The stylesheet uses the proportion in six rules. The screen
+prints the first three, and the instrument checks them against the page.
+
+**Three bugs the instrument found, recorded so nobody repeats them.** The
+plate's overlay carried `inset: 0 56px 0 0` and `width: 100%`; an absolutely
+positioned replaced element with a specified width ignores the opposite inset,
+so the diagram was drawn over the whole 1440px stage while the field it
+describes is 1384px, and its cut missed the boundary by exactly the width of
+the rail. An `<svg>` is a replaced element, so with `width: auto` it takes its
+intrinsic size rather than the box its insets describe. And the demo stage was
+not a golden rectangle, so the construction fitted itself to the height and its
+0.618 division landed in the middle of the wrong colour.
+
+**Tags:** `research · golden-section · playground · typography · method`
+
+## 2026-10-23 — Weigh the route, not the file
+
+**What changed:** Added `tools/shipability.mjs`, a fifth instrument that weighs
+each route by the bytes that crossed the wire on a cold cache, and wired it
+into `npm run audit`. Added `scripts/font-subsets.mjs`, which measures in a
+real browser which Chinese characters each page renders on arrival and which
+are waiting behind a collapsed disclosure, and asks Google for a subset of
+exactly those. The reading room's first load fell from 600 kB to 114 kB.
+
+On the live site, where the HTML, CSS and JavaScript are compressed, the same
+two routes went from 149 kB and 600 kB to **92 kB and 78 kB**. The reading room
+was paying more for its webfont than for its whole page; it now transfers less
+than the plate view does.
+
+**Why:** The reading room was paying 518 kB of webfont for a 600 kB page.
+Noto Sans SC is cut into 202 unicode-range chunks, and the eight characters of
+a visible chapter label fell in three of them: 74 kB, 45 kB and 51 kB. A
+reader paid 170 kB for eight glyphs, and paid them before reading a word.
+
+**Key decision:** A subset is a payload decision, not a type decision. The
+typeface is unchanged — a subset carries the same outlines for the same glyphs
+and nothing else — so the house choice of Noto Sans SC stands. What changed is
+which glyphs are shipped and when.
+
+**Correction:** The first version of the instrument counted the decoded body
+length and reported a 63 kB stylesheet as 231 kB, because the response carried
+no content-length. It now reads `transferSize` from the Resource Timing API.
+The second version classified a font by the first codepoint of its
+unicode-range and called IBM Plex Sans Thai's Thai chunk "latin"; a range now
+votes by the number of codepoints it holds in each script. A third error was
+mine: the eager and deferred subsets overlapped, so the browser matched the
+visible text against the larger face and downloaded the 74 kB file for eight
+visible characters. The sets must be disjoint.
+
+**A fourth finding, and the one that mattered.** The reading room measured
+114 kB, then 181 kB, then 114 kB, then 181 kB — the same page, the same cache.
+Chrome resolves a webfont for text inside a `content-visibility: hidden`
+subtree, and a closed `<details>` body is exactly that: laid out, not painted,
+and still charged. A closed disclosure's body is now hidden with
+`display: none`, which is not resolved. The rendered page is byte-identical
+with and without the rule — the same 14,080-pixel document, the same 56-pixel
+disclosure, the same PNG — so the change touches what the reader pays for and
+nothing they can see. Eight consecutive runs then measured 114 kB.
+
+**Evidence:** Five consecutive cold-cache runs of each route: the plate view
+transfers 49 kB of webfont and no Chinese face at all; the reading room
+transfers 49 kB, of which 10.6 kB is the eager Chinese subset. Opening a
+Chinese disclosure on the reading room fetches the deferred subset and the
+text computes to `Noto Sans SC`. Opening the digest dialog on the plate view
+fetches the deferred subset and the Chinese computes to `Noto Sans SC`.
+`tests/shipability.test.mjs` covers the budgets, the classifier, the subset
+coverage and the wire measurement.
+
+Tags: `shipability`, `performance`, `fonts`, `subsetting`, `audit`
+
+## 2026-10-22 — Give the reader the bench, not the verdict
+
+**What changed:** The playground arrived as a comparison instead of a gallery.
+Eight faces — three house, four study, and Inter, marked as the one that
+arrived by default — and six styles, each with the reason it is in the set.
+Every entry says why it is there, so the difference is visible rather than
+argued.
+
+**Why:** A bench that shows a style without saying why the style is there is a
+catalogue. The reason is the content.
+
+**Key decision:** The stylesheet's own `--pg-rule` token was set by the data
+and read by nothing. Either the rules are drawn or the stylesheet is lying
+about the styles, so the bench draws them: one hairline under the headline, or
+one above and one below, and a style that draws no rule draws no space for
+one.
+
+## 2026-10-21 — Let the field decide how loud the type may be
+
+**What changed:** The playground's display size is measured against the colour
+field it sits on. `fitBench()` renders the sample, checks whether it fits
+inside the field's padding, and scales the display down until it does.
+
+**Why:** The loudest style in the set was set at 86px and pushed its headline
+**172px past the top of the field**, where the stage clipped it. A bench that
+clips the sample it is showing is a bench lying about the style.
+
+**Key decision:** The floor is absolute — 20px — not a ratio. A display that
+shrinks to 13px on a phone is not a display, it is a smudge, and no scale
+ratio is worth that. The sample's caption was 205 characters, which is a
+paragraph and not a caption; shortened, the loudest style fits at scale 1.00
+on every viewport measured, and six styles keep six different sizes.
+
+## 2026-10-20 — Give spatial decisions a contract
+
+**What changed:** Added the anti-spatial-hallucination guide and linked agent, anti-slop and composition entrypoints.
+**Why:** Alignment alone cannot explain an image’s role or justify unused space. Narrative heroes are one option, with a contrast and responsive fallback gate.
+**Conservation:** No product UI, colour field, tokens or rail changed. The guide explicitly preserves Palette’s field-first constraints.
+**Evidence:** Documentation/link and repository checks are recorded with this change; no UI render is claimed for a documentation-only update.
+Tags: `composition`, `spatial-hallucination`, `documentation`

@@ -1,0 +1,56 @@
+<!doctype html>
+<!-- non-slop-example: a deliberately broken layout, used as the positive
+     control for the phone rules in tools/slop-lint.mjs. It is supposed to trip
+     both `phone-squeezed` and `desktop-columns-on-phone`. The defaults below
+     (system-ui, 11px body copy, a centred hero, pill buttons) are part of the
+     slop being demonstrated, and the two-column split that never collapsed is
+     the fingerprint the second rule looks for. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Squeezed desktop</title>
+<style>
+/* Deliberately wrong: a desktop composition carried into a phone unchanged.
+   - three columns never collapse
+   - body copy keeps the desktop size, then shrinks further
+   - targets are smaller than a thumb
+   The phone gets a smaller desktop, not a phone layout. */
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: Arial, sans-serif; background: #ffffff; color: #111111; }
+  header { display: flex; justify-content: space-between; align-items: center; padding: 12px 20px; border-bottom: 1px solid #dddddd; }
+  header nav a { margin-right: 14px; font-size: 11px; color: #333333; }
+  .lead { padding: 20px; }
+  .lead h1 { font-size: 30px; margin: 0 0 10px; }
+  .lead p { font-size: 11px; line-height: 1.5; color: #444444; }
+  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; padding: 0 20px; }
+  .card { border: 1px solid #e5e5e5; border-radius: 10px; padding: 12px; box-shadow: 0 2px 10px rgba(0,0,0,.08); }
+  .card h2 { font-size: 13px; margin: 0 0 6px; }
+  .card p { font-size: 10px; line-height: 1.4; color: #666666; margin: 0; }
+  .card button { font-size: 10px; padding: 4px 8px; border-radius: 6px; border: 1px solid #cccccc; background: #fafafa; }
+  .tiles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; padding: 20px; }
+  .tile { background: #f6f6f6; border-radius: 8px; padding: 14px; text-align: center; }
+  .tile b { display: block; font-size: 22px; }
+  .tile span { font-size: 9px; color: #777777; }
+  .split { display: grid; grid-template-columns: 2fr 1fr; gap: 16px; padding: 0 20px 30px; }
+  .split aside { background: #fafafa; padding: 14px; font-size: 10px; }
+  .split article { font-size: 11px; line-height: 1.6; }
+</style>
+</head>
+<body>
+<header><strong>ACME</strong><nav><a href="#">Product</a><a href="#">Pricing</a><a href="#">Docs</a><a href="#">Blog</a></nav></header>
+<div class="lead"><h1>Build faster with AI</h1><p>Turn your ideas into real products. Ship in hours, not weeks, with the platform trusted by teams everywhere.</p></div>
+<div class="cards">
+  <div class="card"><h2>Fast</h2><p>Everything you need to move quickly and deliver results that matter to your business.</p><button>Learn more</button></div>
+  <div class="card"><h2>Simple</h2><p>Everything you need to move quickly and deliver results that matter to your business.</p><button>Learn more</button></div>
+  <div class="card"><h2>Secure</h2><p>Everything you need to move quickly and deliver results that matter to your business.</p><button>Learn more</button></div>
+</div>
+<div class="tiles">
+  <div class="tile"><b>10k</b><span>Users</span></div>
+  <div class="tile"><b>99.9%</b><span>Uptime</span></div>
+  <div class="tile"><b>24/7</b><span>Support</span></div>
+  <div class="tile"><b>150+</b><span>Integrations</span></div>
+</div>
+<div class="split"><article>Long prose that keeps its desktop measure on a phone. It fills the column and asks the reader to hunt for the start of the next line every time they finish one. The eye arrives at the right margin and the next row is nowhere in particular.</article><aside>Sidebar content that never collapsed, so the phone shows a narrow strip of a desktop split.</aside></div>
+</body>
+</html>

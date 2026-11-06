@@ -1,5 +1,25 @@
 # Palette
 
+**This repo is an instrument, not only an exhibition.** The doctrine is
+[ANTI-SLOP.md](ANTI-SLOP.md) — 13 hard limits, each with the measured evidence
+behind it. The destinations are [REMEDIES.md](REMEDIES.md) — for each failure,
+what to do instead, and a real place to look. The geometry is
+[ANTI-SPATIAL-HALLUCINATION.md](ANTI-SPATIAL-HALLUCINATION.md). The deliberate
+choices are [STYLE.md](STYLE.md), and they beat every generic rule.
+
+| Check | Command | What it proves |
+|---|---|---|
+| Static source rules | `node .non-slop/bin/non-slop.mjs scan .` | The source does not reach for a default nobody chose |
+| The rendered screen | `node tools/slop-lint.mjs <url>` | The page is not slop at 1440 and at 390 |
+| Layout geometry | `node tools/spatial-audit.mjs <url>` | The layout can explain its own geometry |
+| The brief | `node tools/brief-lint.mjs <file>` | The instructions name something |
+| All four | `npm run audit` | One report, and anything not recorded in STYLE.md fails it |
+
+A documented false positive is a liability, not a pardon. `npm run audit` reads
+STYLE.md back as an allowlist, so a rule that was renamed or retuned turns the
+audit red until the file is corrected. Nothing is skipped silently: if an
+instrument cannot run, it says so and the exit code says it too.
+
 [Type & context](https://colors.nonarkara.org/reading#typography) adds Dr Non's
 Bringhurst interpretation to the reading room. [Download the self-contained
 typography guide](TYPOGRAPHY-FIELD-GUIDE.md) or use the
@@ -271,3 +291,16 @@ edition is deliberately numbered `0.1.0` until that first-time-user test occurs.
 Code and original writing: **MIT licensed—use it, fork it, change it, and ship
 your own version.** Source data: upstream MIT terms retained. Preserve the
 attribution and digital-conversion caveats recorded in `THIRD_PARTY_NOTICES.md`.
+
+## Anti-spatial-hallucination
+
+[The composition guide](ANTI-SPATIAL-HALLUCINATION.md) asks why each element is here, this size and this far from its neighbour. It covers image roles, narrative heroes, readable overlays, purposeful whitespace, action grouping and responsive evidence. Hero treatment is a choice to justify, not a new template.
+
+## Task geometry
+
+[Decision geometry](DECISION-GEOMETRY.md) is part of the spatial law: prevent an
+oversized region from stretching its parent, pushing the task down and separating
+its controls. The [portable measurement gate](tools/decision-geometry/README.md)
+checks project-authored budgets, including preservation of operating regions.
+It supplements this framework's visual language; it does not restyle it or
+certify an interface from source alone.

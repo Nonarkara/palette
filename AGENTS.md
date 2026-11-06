@@ -1,4 +1,28 @@
+> **Read [ANTI-SLOP.md](ANTI-SLOP.md) before any design or frontend work.** These are Dr Non's hard rules against AI design slop: empty space is a decision, subtract before you add, and the map comes first. Run `tools/slop-lint.mjs` on any page you ship.
+
+> **Read [REMEDIES.md](REMEDIES.md) when a rule fires.** The doctrine says what is wrong; this says where to go instead, and names a real place to look for each destination. A rule that only says "no" leaves you to invent the alternative, and inventing an alternative under time pressure is how you get a purple gradient.
+
+> **Check the brief before you build from it.** `node tools/brief-lint.mjs <file>` reports every vague directive that carries no anchor — no number, no material, no named reference. "Make it more premium" is the cause of most slop, and no other check in this repo reads Markdown.
+
+For composition and image-placement reviews, read [Anti-spatial-hallucination](ANTI-SPATIAL-HALLUCINATION.md). Its hero patterns do not override Palette’s full-viewport colour field, instrument rail or prohibition on decorative effects.
+Measure the geometry with `node tools/spatial-audit.mjs <url>` before shipping a page. It reports the six failure modes as rectangles; the numbers are not a verdict, but a mode that never fires is a mode nobody looked at.
+
+For a visual register, read [Fifty design styles](DESIGN-STYLES.md) — but name the abstract core **before** the style, never after. A style chosen before the subject produces the same page for everyone.
+
 # Palette — agent contract
+
+<!-- decision-geometry:v1 -->
+## Task geometry before styling
+
+Read [Decision geometry](DECISION-GEOMETRY.md) for every UI composition change.
+Trace oversized introductions, sibling-stretched maps and separated controls to
+the first unnecessary expansion. Keep the task, its evidence and its next action
+legible together. Color, typography, alignment and zero horizontal overflow do
+not clear a failed composition. Preserve earned content and operating regions;
+use task-specific budgets, real viewport/state captures, a failing regression
+mutation and independent review. The guide's fixture numbers are not universal.
+<!-- /decision-geometry:v1 -->
+
 
 For typography decisions, read `skills/bringhurst-contextual-type/SKILL.md`.
 Proof actual content, role and script before changing fonts. The reading-room
@@ -30,6 +54,7 @@ competes with it.
 npm test
 npm run check
 npm run dev
+npm run audit
 ```
 
 ## Sacred constraints
@@ -50,17 +75,9 @@ Commit with `Agent: codex`, push to `main`, deploy through GitHub Pages, then
 exercise search, navigation, dialogs, copy, keyboard controls, and mobile layout
 on the live URL.
 
-## Anti-slop design rules (hard rules)
-
-These are known AI design-slop patterns. Never re-create them. Check every page before shipping; fix any hit. They sit on top of Palette and any map-first rule.
-
-1. **Boxes fit their content.** No text box, card, button or panel much wider or taller than its text. Padding follows type size (~0.5–1.5× line height). No fixed/min heights that leave empty space under short text.
-2. **Balanced composition.** Deliberate grid; visual weight balanced. No heavy side with an empty side, no orphan block. Squint-test at desktop, tablet and phone.
-3. **Readable line length (A4/A5).** Body ~45–75 characters (ideally 60–70); CSS `max-width: 65ch`. Thai/Chinese keep the same physical measure (~30–45 Chinese chars). Wide screens get columns or margins, never full-width paragraphs.
-4. **No AI-slop fonts.** Banned as primary: Inter, Poppins, Montserrat, Roboto, Open Sans, Lato, DM Sans, Space Grotesk, Geist, Plus Jakarta Sans, Manrope, Nunito, system-ui-as-design-font. Prefer Bauhaus/Bayer Universal lookalikes: **Jost** first, Josefin Sans or League Spartan for display, Prompt or Kanit for Thai; matching geometric sans for Chinese. At most two families per product.
-5. **No lazy ornaments.** No decorative boxes, borders, cards, dividers, blobs, gradients, glows or icon tiles only to fill or "balance". Every container groups things that belong together; if removing it loses no meaning, remove it. No emoji-as-icons, decorative stock icons, or generic gradient heroes.
-6. **Clear hierarchy: something must win.** One obvious first look (hero number, map, headline), then second and third. Real contrast in size (≥1.5–2× type step), weight, colour and space. No equal-weight card grids. Squint-test must show a focal point.
-7. **More slop to kill.** Centre-everything / symmetric card grids by default; fake depth (stacked shadows, glassmorphism, same radius everywhere); vague slogan heroes; filler copy ("Unlock the power…", "Seamless", "Revolutionize") and fake stats; too many colours (one meaningful accent); thick chrome that shrinks content; icons/badges on every line; dense same-size grey text.
-8. **No spatial hallucination.** Never invent a reason for things to occupy space instead of arranging them around how people read, choose and act. Eliminate the 6 tell-tales: unjustified gaps (space stretched to fill a container), orphan elements (photo/metric stranded beside emptiness), scattered actions (related buttons split across rows or opposite edges), false hierarchy (everything equal weight), accidental wrapping (navigation breaking haphazardly), and spatially expensive information (small decision requiring long scroll). Litmus test: *“Why is this here, why this size, and why this far from that?”* If the answer is merely *“the grid put it there,”* the layout has failed. Whitespace must be intentional, never asking the reader to supply an intention the designer lacked.
-
-**Pre-ship:** screenshot at 1440 / 1024 / 390; list hits against 1–8; fix; re-screenshot; different agent/person reviews — never self-review.
+<!-- non-slop:start -->
+## Design quality: Non-Slop
+Before any UI, page, dashboard, deck or visual work, read `.non-slop/AGENTS.md` and follow it.
+`STYLE.md` lists this repo's deliberate choices: it wins over every generic rule, and nothing listed there is stripped.
+Check with `node .non-slop/bin/non-slop.mjs scan .` (and `render <url>` when Playwright is installed). A different agent or person reviews; never self-review.
+<!-- non-slop:end -->

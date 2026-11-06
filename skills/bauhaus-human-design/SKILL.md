@@ -154,3 +154,7 @@ These are known AI design-slop patterns. Never re-create them. Check every page 
 8. **No spatial hallucination.** Never invent a reason for things to occupy space instead of arranging them around how people read, choose and act. Eliminate the 6 tell-tales: unjustified gaps (space stretched to fill a container), orphan elements (photo/metric stranded beside emptiness), scattered actions (related buttons split across rows or opposite edges), false hierarchy (everything equal weight), accidental wrapping (navigation breaking haphazardly), and spatially expensive information (small decision requiring long scroll). Litmus test: *“Why is this here, why this size, and why this far from that?”* If the answer is merely *“the grid put it there,”* the layout has failed. Whitespace must be intentional, never asking the reader to supply an intention the designer lacked.
 
 **Pre-ship:** screenshot at 1440 / 1024 / 390; list hits against 1–8; fix; re-screenshot; different agent/person reviews — never self-review.
+
+## Spatial relationships
+
+Read [Anti-spatial-hallucination](../../ANTI-SPATIAL-HALLUCINATION.md) for image roles, narrative composition, overlay acceptance and responsive review. Palette’s field remains primary; this is not permission to add a hero or backing panel over it.

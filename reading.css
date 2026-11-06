@@ -8,7 +8,7 @@ a { color:inherit; text-underline-offset:.2em; }
 a:focus-visible, summary:focus-visible { outline:3px solid currentColor; outline-offset:4px; }
 .skip { position:absolute; top:0; left:0; padding:12px; background:var(--paper); transform:translateY(-200%); z-index:2; }
 .skip:focus { transform:none; }
-.room-header { display:flex; flex-wrap:wrap; gap:12px 32px; justify-content:space-between; padding:24px var(--gutter); font-size:var(--micro); font-weight:700; }
+.room-header { display:flex; flex-wrap:wrap; gap:4px 32px; justify-content:space-between; align-items:baseline; padding:4px var(--gutter); font-size:var(--micro); font-weight:700; }
 .room-header a { display:flex; align-items:center; min-height:44px; }
 .opening { display:grid; gap:24px; padding:48px var(--gutter); background:var(--chord); color:var(--deep); }
 .opening > p { margin:0; font-size:var(--micro); }
@@ -16,7 +16,10 @@ h1,h2,h3 { font-family:'Archivo Narrow',Arial,sans-serif; }
 h1 { margin:0; font-size:var(--display); line-height:.93; letter-spacing:-.035em; }
 .opening-note { max-width:32ch; font-size:var(--body); line-height:1.4; }
 .opening-note p:first-child { font-weight:700; }
-.contents { display:flex; flex-wrap:wrap; gap:8px 32px; background:var(--deep); color:var(--paper); padding:24px var(--gutter); }
+.contents { display:flex; flex-wrap:wrap; gap:8px 24px; background:var(--deep); color:var(--paper); padding:24px var(--gutter); font-size:var(--micro); }
+/* Below 900px nine chapter links cannot share one line, so the contents becomes a
+   deliberate 3-column grid — three even rows, never a ragged 3+4+2 with an orphan. */
+@media(max-width:899px) { .contents { display:grid; grid-template-columns:repeat(3,1fr); gap:0 16px; } .contents a { justify-content:flex-start; } }
 .contents a { display:flex; align-items:center; min-height:44px; }
 .chapter { display:grid; gap:24px; padding:56px var(--gutter); }
 .chapter-label p { font-size:var(--micro); margin:0 0 16px; }
@@ -27,11 +30,26 @@ h3 { font-size:var(--body); line-height:1.2; margin:2rem 0 .75rem; }
 p { margin:0 0 1.25em; }
 li { margin-bottom:.75em; }
 .standards { background:var(--deep); color:var(--paper); }
+.composition { background:var(--paper); }
+.composition em { font-style:italic; }
+.composition code { font-family:ui-monospace,'SF Mono',Menlo,monospace; font-size:.95em; }
+.composition .digest { color:var(--chord); }
+.defaults { background:var(--paper); }
+.defaults code { font-family:ui-monospace,'SF Mono',Menlo,monospace; font-size:.95em; }
+.defaults h3 { border-top:1px solid currentColor; padding-top:1.25rem; }
+.defaults h3:first-of-type { border-top:0; padding-top:0; }
+.defaults .digest { color:var(--chord); }
 .digest { font-size:var(--body); font-weight:700; line-height:1.4; margin:2rem 0; }
 details { margin-top:24px; }
 summary { padding:12px 0; cursor:pointer; min-height:48px; font-size:var(--body); }
 details p { font-size:1.25rem; margin-top:12px; }
 .sources { background:var(--chord); color:var(--deep); }
+.destinations { background:var(--deep); color:var(--paper); }
+.destinations code { font-family:ui-monospace,'SF Mono',Menlo,monospace; font-size:.95em; }
+.destinations h3 { border-top:1px solid currentColor; padding-top:1.25rem; }
+.destinations h3:first-of-type { border-top:0; padding-top:0; }
+.destinations .digest { color:var(--chord); }
+.destinations em { font-style:italic; }
 dt { font-weight:700; margin-top:2rem; }
 dd { margin:8px 0 0; }
 .download { display:block; padding:16px 0; min-height:48px; font-weight:700; }
@@ -42,3 +60,10 @@ p,a,h1,h2,h3,dd,summary { overflow-wrap:anywhere; }
 @media(min-width:900px) { .opening { grid-template-columns:3fr 2fr; gap:32px; }.opening > p { grid-column:1/-1; }.opening-note { align-self:end; }.chapter { grid-template-columns:minmax(220px,1fr) minmax(0,2fr); gap:64px; } }
 @media(prefers-reduced-motion:reduce) { html { scroll-behavior:auto; } }
 @media print { .room-header,.contents,.download,.skip { display:none; } body,.opening,.chapter,footer { background:white; color:black; }.chapter { break-inside:avoid; } }
+
+/* A collapsed disclosure's body is not read on arrival, so its text must not
+   pull a webfont. Chrome resolves a face for text inside a
+   content-visibility:hidden subtree, which made the reading room's first load
+   bimodal: 114 kB or 181 kB depending on whether Chrome decided to resolve
+   the deferred Chinese face. display:none is not resolved. */
+details:not([open]) > *:not(summary) { display:none; }

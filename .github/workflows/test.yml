@@ -17,6 +17,9 @@ jobs:
           node-version: 22
       - run: npm ci
       - run: npm ci --prefix mcp
-      - run: npm run check
+      # The browser binary must exist BEFORE the test run: tests/spatial-audit.test.mjs
+      # launches Chromium to measure real geometry, and skips those cases if it
+      # cannot start. Installing it after npm run check would silently skip them.
       - run: npx playwright install --with-deps chromium
+      - run: npm run check
       - run: npm run verify:browser

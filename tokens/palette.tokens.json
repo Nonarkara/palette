@@ -909,6 +909,11 @@
         "$value": "3.5rem",
         "$type": "dimension",
         "$description": "Custom property --rail from styles.css. At max-width 760px, styles.css sets --rail to 100%."
+      },
+      "field-inset-block-end": {
+        "$value": "0px",
+        "$type": "dimension",
+        "$description": "Custom property --field-inset-block-end from styles.css."
       }
     },
     "string": {
@@ -921,6 +926,11 @@
         "$value": "clamp(1rem, 1.6vw, 1.25rem)",
         "$type": "string",
         "$description": "Custom property --body from styles.css. The stylesheet uses this clamp(). The min, preferred, and max lengths are dimension tokens beside it."
+      },
+      "field-inset-inline-end": {
+        "$value": "var(--rail)",
+        "$type": "string",
+        "$description": "Custom property --field-inset-inline-end from styles.css. Kept as written. Penpot does not apply this as a colour or a dimension."
       },
       "ease": {
         "$value": "cubic-bezier(0.2, 0.8, 0.2, 1)",
