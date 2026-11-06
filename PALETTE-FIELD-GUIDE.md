@@ -109,6 +109,7 @@ Field evidence: [`docs/design-slop-field-guide.md`](docs/design-slop-field-guide
 - No invented history, quotation, plate number, or printed-colour claim.
 - No fourth type family because one paragraph feels difficult.
 - No animation without a state change behind it.
+- No spatial hallucination: no unjustified gaps, orphan elements, scattered actions, false hierarchy, accidental wrapping, or spatially expensive scroll. Every element must answer: *“Why is this here, why this size, and why this far from that?”* If the answer is merely *“the grid put it there,”* the layout has failed.
 - No “AI-powered” claim: search and readings here are local and deterministic.
 - No inaccessible off-black approximation hidden behind pure-black contrast
   math. Measure the value actually rendered.

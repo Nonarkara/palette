@@ -39,6 +39,7 @@ export const RULES = [
   'Show provenance and real wear: the source volume, the scan edge, the fold. Never fake distress. (Design Reviewed, house wabi-sabi rule)',
   'Cross-link lineage: "related to", "influenced", "revived as". A curator\'s voice, not a feed. (CARI related aesthetics)',
   'State reuse plainly: what may be reused, by whom, and the credit line. (CARI, Design Reviewed, Artvee footers)',
+  'No spatial hallucination: never invent space to fill a container. Eliminate unjustified gaps, orphan elements, scattered actions, false hierarchy, accidental wrapping, and spatially expensive scroll. Litmus test: "Why is this here, why this size, and why this far from that?" If the answer is merely "the grid put it there," the layout has failed. (House anti-slop law)',
 ];
 export const OVERRIDES = 'House law wins: zero border-radius except true circles, no gradients except a dark photo overlay, no drop shadows, max three text sizes, non-looped Thai. Era gloss (Frutiger Aero, Y2K chrome, CARI\'s own rounded tiles) is history to cite, not a style to reproduce. Nostalgia comes from dates, flat ink, type, provenance and Wada colour.';
 

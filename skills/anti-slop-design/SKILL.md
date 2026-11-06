@@ -48,8 +48,24 @@ These are known AI design-slop patterns. Check every page against them before sh
 - Icons and badges on every line.
 - Dense pages where all the text is the same small grey.
 
+## 8. No spatial hallucination
+Spatial hallucination is when an interface invents a reason for things to occupy space, instead of arranging them around how people read, choose and act. It describes a layout that looks composed at first glance, but cannot explain its own geometry:
+- **Unjustified gaps:** Space stretched to fill a container.
+- **Orphan elements:** A photo or metric stranded beside an empty area.
+- **Scattered actions:** Related buttons on different rows or pushed to opposite edges.
+- **False hierarchy:** Everything gets equal weight, so nothing helps you choose.
+- **Accidental wrapping:** Navigation breaks wherever it runs out of room.
+- **Spatially expensive information:** A small decision requires a long scroll.
+
+### The Recurring Litmus Test
+Across our work, the recurring test is: **“Why is this here, why this size, and why this far from that?”**  
+If the answer is merely *“the grid put it there,”* the layout has failed.
+
+### Whitespace Law
+Whitespace is intentional when it separates meaningful groups, supports reading or establishes emphasis. It becomes spatial hallucination when it asks the reader to supply an intention the designer never had.
+
 ## Review checklist (run before shipping)
 1. Screenshot the page at 1440, 1024 and 390 px wide.
-2. Check each of rules 1 to 7 above, and list every hit with its element.
+2. Check each of rules 1 to 8 above, and list every hit with its element.
 3. Fix the hits, then screenshot again.
 4. Have a different agent or person check the result; never self-review.

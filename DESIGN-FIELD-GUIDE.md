@@ -52,6 +52,14 @@ and a wandering reading path. A ban list did not resolve the composition.
   draw a control that does nothing or hide a working one behind a clever symbol.
 - **Economy is not emptiness.** Spend bytes, attention and motion where the task
   benefits. No library, animation or image added merely to suggest sophistication.
+- **No spatial hallucination.** Spatial hallucination occurs when an interface invents
+  a reason for things to occupy space, rather than arranging them around how people
+  read, choose and act. Eliminate the six tell-tales: unjustified gaps, orphan elements,
+  scattered actions, false hierarchy, accidental wrapping, and spatially expensive
+  information. The recurring test is: *“Why is this here, why this size, and why this
+  far from that?”* If the answer is merely *“the grid put it there,”* the layout has failed.
+  Whitespace is intentional when it separates meaningful groups or establishes emphasis;
+  it becomes hallucination when it asks the reader to supply an intention the designer never had.
 
 ## Communicate
 
@@ -82,8 +90,6 @@ working links/exports, reduced motion, and preserved functionality. Use current
 HTML and WCAG guidance; old browser hacks and edition-era legal claims are not
 current requirements. House targets such as 44px touch controls are design policy,
 not a claim that every WCAG AA control must be 44px.
-
-**Real estate (Dr Non, 2026-10-16, hard rule):** the hero surface, whether that is the colour field, the map or the canvas, outranks blank chrome. A control is the size of its label plus padding. It is never as wide as its container, and a choice group wraps as chips. A panel shrinks to its content, and when it has nothing to show it collapses and gives the space back. A selected state is a solid ink fill with inverted text. Check it on the rendered pixels: a button far larger than its label, an overlay that is mostly empty, or a squeezed or clipped label is a fail. Touch targets of 44 px are met by height, not by width. The source case was the Jakarta atlas rain panel: full-width 88 px buttons, gold-on-white selection, and an hour label squeezed to "n".
 
 **Authored quality:** inspect actual pixels and the flow. Answer:
 
@@ -133,6 +139,21 @@ Repository ideas studied, not installed or copied wholesale:
 
 Original procedure and writing: MIT. Source books, artworks, fonts and third-party
 repositories keep their own rights. No endorsement by the authors or institutions.
+
+## Anti-slop design rules (hard rules)
+
+These are known AI design-slop patterns. Never re-create them. Check every page before shipping; fix any hit. They sit on top of Palette and any map-first rule.
+
+1. **Boxes fit their content.** No text box, card, button or panel much wider or taller than its text. Padding follows type size (~0.5–1.5× line height). No fixed/min heights that leave empty space under short text.
+2. **Balanced composition.** Deliberate grid; visual weight balanced. No heavy side with an empty side, no orphan block. Squint-test at desktop, tablet and phone.
+3. **Readable line length (A4/A5).** Body ~45–75 characters (ideally 60–70); CSS `max-width: 65ch`. Thai/Chinese keep the same physical measure (~30–45 Chinese chars). Wide screens get columns or margins, never full-width paragraphs.
+4. **No AI-slop fonts.** Banned as primary: Inter, Poppins, Montserrat, Roboto, Open Sans, Lato, DM Sans, Space Grotesk, Geist, Plus Jakarta Sans, Manrope, Nunito, system-ui-as-design-font. Prefer Bauhaus/Bayer Universal lookalikes: **Jost** first, Josefin Sans or League Spartan for display, Prompt or Kanit for Thai; matching geometric sans for Chinese. At most two families per product.
+5. **No lazy ornaments.** No decorative boxes, borders, cards, dividers, blobs, gradients, glows or icon tiles only to fill or "balance". Every container groups things that belong together; if removing it loses no meaning, remove it. No emoji-as-icons, decorative stock icons, or generic gradient heroes.
+6. **Clear hierarchy: something must win.** One obvious first look (hero number, map, headline), then second and third. Real contrast in size (≥1.5–2× type step), weight, colour and space. No equal-weight card grids. Squint-test must show a focal point.
+7. **More slop to kill.** Centre-everything / symmetric card grids by default; fake depth (stacked shadows, glassmorphism, same radius everywhere); vague slogan heroes; filler copy ("Unlock the power…", "Seamless", "Revolutionize") and fake stats; too many colours (one meaningful accent); thick chrome that shrinks content; icons/badges on every line; dense same-size grey text.
+8. **No spatial hallucination.** Never invent a reason for things to occupy space instead of arranging them around how people read, choose and act. Eliminate the 6 tell-tales: unjustified gaps (space stretched to fill a container), orphan elements (photo/metric stranded beside emptiness), scattered actions (related buttons split across rows or opposite edges), false hierarchy (everything equal weight), accidental wrapping (navigation breaking haphazardly), and spatially expensive information (small decision requiring long scroll). Litmus test: *“Why is this here, why this size, and why this far from that?”* If the answer is merely *“the grid put it there,”* the layout has failed. Whitespace must be intentional, never asking the reader to supply an intention the designer lacked.
+
+**Pre-ship:** screenshot at 1440 / 1024 / 390; list hits against 1–8; fix; re-screenshot; different agent/person reviews — never self-review.
 
 
 ---
@@ -329,17 +350,3 @@ Advance a source's coverage only after the agent actually reads the bounded
 passage or inspects the spread. Add source → reasoning → adaptation → test.
 Record contrary examples and edition-era assumptions, not just confirming quotes.
 Retain original book files privately; MIT covers our original work, not them.
-
-## Anti-slop design rules (hard rules)
-
-These are known AI design-slop patterns. Never re-create them. Check every page before shipping; fix any hit. They sit on top of Palette and any map-first rule.
-
-1. **Boxes fit their content.** No text box, card, button or panel much wider or taller than its text. Padding follows type size (~0.5–1.5× line height). No fixed/min heights that leave empty space under short text.
-2. **Balanced composition.** Deliberate grid; visual weight balanced. No heavy side with an empty side, no orphan block. Squint-test at desktop, tablet and phone.
-3. **Readable line length (A4/A5).** Body ~45–75 characters (ideally 60–70); CSS `max-width: 65ch`. Thai/Chinese keep the same physical measure (~30–45 Chinese chars). Wide screens get columns or margins, never full-width paragraphs.
-4. **No AI-slop fonts.** Banned as primary: Inter, Poppins, Montserrat, Roboto, Open Sans, Lato, DM Sans, Space Grotesk, Geist, Plus Jakarta Sans, Manrope, Nunito, system-ui-as-design-font. Prefer Bauhaus/Bayer Universal lookalikes: **Jost** first, Josefin Sans or League Spartan for display, Prompt or Kanit for Thai; matching geometric sans for Chinese. At most two families per product.
-5. **No lazy ornaments.** No decorative boxes, borders, cards, dividers, blobs, gradients, glows or icon tiles only to fill or "balance". Every container groups things that belong together; if removing it loses no meaning, remove it. No emoji-as-icons, decorative stock icons, or generic gradient heroes.
-6. **Clear hierarchy: something must win.** One obvious first look (hero number, map, headline), then second and third. Real contrast in size (≥1.5–2× type step), weight, colour and space. No equal-weight card grids. Squint-test must show a focal point.
-7. **More slop to kill.** Centre-everything / symmetric card grids by default; fake depth (stacked shadows, glassmorphism, same radius everywhere); vague slogan heroes; filler copy ("Unlock the power…", "Seamless", "Revolutionize") and fake stats; too many colours (one meaningful accent); thick chrome that shrinks content; icons/badges on every line; dense same-size grey text.
-
-**Pre-ship:** screenshot at 1440 / 1024 / 390; list hits against 1–7; fix; re-screenshot; different agent/person reviews — never self-review.
