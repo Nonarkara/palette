@@ -23,6 +23,21 @@ use task-specific budgets, real viewport/state captures, a failing regression
 mutation and independent review. The guide's fixture numbers are not universal.
 <!-- /decision-geometry:v1 -->
 
+<!-- glance-path:v1 -->
+## Glance path and kinetic grid
+
+Enforce these on every composition. Canonical text:
+[Non-Slop ANTI-SPATIAL-HALLUCINATION.md](https://github.com/Nonarkara/Non-Slop/blob/main/ANTI-SPATIAL-HALLUCINATION.md) §6,
+and the review gate in [Non-Slop AGENTS.md](https://github.com/Nonarkara/Non-Slop/blob/main/AGENTS.md).
+If this pointer and that guide disagree, the guide wins. [STYLE.md](STYLE.md) still beats both.
+
+- **Visual gravity.** Put the headline and the primary action on the exit of the dominant visual. Critical text does not sit in a dead zone above a heavy hero.
+- **No leapfrog.** Related copy does not jump a massive image to reach the thing it describes.
+- **Kinetic grid.** Use extreme scale contrast. When a layout breaks a rule, break it on the grid. Negative space stays active. Keep one or two accents, and no third shout.
+- **Motion.** Snap, or show the skeleton first. Do not float or morph. `prefers-reduced-motion` still removes non-essential motion.
+
+On Palette the dominant visual is the full-viewport colour field. Plate number, names and the copy action sit on its exit, the instrument edge, not in a band above it. Do not add an accent: the plate is the colour. The empty field is the composition (`void` in STYLE.md), not a dead zone.
+<!-- /glance-path:v1 -->
 
 For typography decisions, read `skills/bringhurst-contextual-type/SKILL.md`.
 Proof actual content, role and script before changing fonts. The reading-room

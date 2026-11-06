@@ -229,3 +229,9 @@ headings identify the task, and keep necessary qualifications at their decision
 point. Do not repair the page by hiding controls, shrinking text or removing
 working content. [Decision geometry](https://github.com/Nonarkara/Non-Slop/blob/main/DECISION-GEOMETRY.md) defines the measurement,
 regression mutation and review evidence; its budgets are product-specific.
+
+## Glance path and kinetic grid
+
+Canonical text: [Non-Slop ANTI-SPATIAL-HALLUCINATION.md](https://github.com/Nonarkara/Non-Slop/blob/main/ANTI-SPATIAL-HALLUCINATION.md) §6, and the review gate in [Non-Slop AGENTS.md](https://github.com/Nonarkara/Non-Slop/blob/main/AGENTS.md). Put the headline and the primary action on the exit of the dominant visual. Critical text does not sit in a dead zone above a heavy hero. Related copy does not leapfrog a massive image. Use extreme scale contrast; when a layout breaks a rule, break it on the grid; keep negative space active; keep one or two accents. UI motion snaps or shows a skeleton first. It does not float or morph.
+
+These rules do not authorise a marketing hero, an added accent, or a text band above Palette’s colour field. [STYLE.md](STYLE.md) wins. The field is the subject, and its exit is the instrument edge.

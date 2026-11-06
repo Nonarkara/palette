@@ -304,3 +304,16 @@ its controls. The [portable measurement gate](tools/decision-geometry/README.md)
 checks project-authored budgets, including preservation of operating regions.
 It supplements this framework's visual language; it does not restyle it or
 certify an interface from source alone.
+
+## Glance path and kinetic grid
+
+The short pointer is restated below. Canonical text:
+[Non-Slop ANTI-SPATIAL-HALLUCINATION.md](https://github.com/Nonarkara/Non-Slop/blob/main/ANTI-SPATIAL-HALLUCINATION.md) §6,
+and the review gate in [Non-Slop AGENTS.md](https://github.com/Nonarkara/Non-Slop/blob/main/AGENTS.md).
+Put the headline and the primary action on the exit of the dominant visual.
+Critical text does not sit in a dead zone above a heavy hero, and related copy
+does not leapfrog a massive image. Use extreme scale contrast, break a layout
+rule on the grid, keep negative space active, and keep one or two accents.
+UI motion snaps or shows a skeleton first. It does not morph.
+On this exhibition the colour field is the dominant visual, the instrument
+rail is its exit, and no accent is added. [STYLE.md](STYLE.md) still wins.
