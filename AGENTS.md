@@ -1,3 +1,5 @@
+> **Read [THE-BOOK-Design-Scripture.md](THE-BOOK-Design-Scripture.md) and [COMPOSITION-FIELD-GUIDE.md](COMPOSITION-FIELD-GUIDE.md) for master canon.** Grounded in the ten classical composition books, dynamic symmetry, glance path, kinetic grids, and the 40 hard commandments against AI slop and spatial hallucination.
+
 > **Read [ANTI-SLOP.md](ANTI-SLOP.md) before any design or frontend work.** These are Dr Non's hard rules against AI design slop: empty space is a decision, subtract before you add, and the map comes first. Run `tools/slop-lint.mjs` on any page you ship.
 
 > **Read [REMEDIES.md](REMEDIES.md) when a rule fires.** The doctrine says what is wrong; this says where to go instead, and names a real place to look for each destination. A rule that only says "no" leaves you to invent the alternative, and inventing an alternative under time pressure is how you get a purple gradient.
