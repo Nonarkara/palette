@@ -4,3 +4,10 @@ alwaysApply: true
 ---
 
 Before designing or changing any page, component, style or chart, read `ANTI-SLOP.md` at the repo root and follow its hard limits: empty space is a decision, subtract before you add, the map comes first. Run `node tools/slop-lint.mjs <url>` before calling UI work done.
+
+Also enforce the glance-path and kinetic-grid rules below. Canonical text: https://github.com/Nonarkara/Non-Slop/blob/main/ANTI-SPATIAL-HALLUCINATION.md §6, and the review gate in https://github.com/Nonarkara/Non-Slop/blob/main/AGENTS.md. `STYLE.md` wins.
+
+- Visual gravity: headline and primary action on the exit of the dominant visual. Critical text does not sit in a dead zone above a heavy hero.
+- No leapfrog: related copy does not jump a massive image.
+- Kinetic grid: extreme scale contrast; break a layout rule on the grid; negative space stays active; one or two accents, and no third shout.
+- Motion: snap, or show the skeleton first. Do not float or morph.
