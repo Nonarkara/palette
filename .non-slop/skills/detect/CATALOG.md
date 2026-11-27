@@ -13,6 +13,9 @@ Severity: **P0** anyone notices · **P1** a designer notices · **P2** polish. A
 | `default-font` | P1 | Primary face is a reach-for-it default (Inter, Roboto, Poppins, Geist, system-ui stack…) | Choose a face for this product and say why in STYLE.md. House starting point: Jost; Josefin Sans or League Spartan for display; Prompt or Kanit (non-looped) for Thai. | The default is the brief (e.g. system-ui so the font disappears into the OS). List it under STYLE.md → Allow → font. |
 | `tasteful-font` | P2 | The second-order 'tasteful free font' (Fraunces, Instrument Serif, Playfair…) picked because it isn't Inter | Fine if it fits the subject; otherwise choose from the subject's world and record the reason. | Listed in STYLE.md. |
 | `eyebrow-caps` | P2 | Tracked all-caps eyebrow labels used as template chrome (≥3) | Drop the label or make it carry real information in sentence case. | A wayfinding or signage system that really uses caps. |
+| `eyebrow` | P2 | Tracked all-caps kicker above a heading | Drop the kicker, or let the heading say the thing in sentence case. | A wayfinding or catalogue label that carries a real category, named in STYLE.md. |
+| `italic-word` | P1 | One italic, gradient or accent-coloured word inside a headline | The headline is one voice. Size and weight make it win. | The word is a title, a foreign word or a name, and STYLE.md says so. |
+| `tracked-caps` | P1 | Uppercase plus letter-spacing on a heading, button or label | Sentence case. Capitals only for a real acronym or a code. Negative tracking on a condensed face is not this ban. | A signage system or a code label named in STYLE.md. |
 | `type-scale` | P2 | More than 8 font sizes in one stylesheet (no type scale) | State a scale (e.g. 1.25 or 1.333) and map every size to a step; ≤8 sizes. | STYLE.md lists it |
 | `font-not-loaded` | P1 | A named web font is declared but never loaded (silent fallback) | Load it (@font-face, a <link>, next/font or @fontsource) or remove it from the stack. | STYLE.md lists it |
 
@@ -37,6 +40,7 @@ Severity: **P0** anyone notices · **P1** a designer notices · **P2** polish. A
 | `radius-soup` | P2 | ≥5 different corner radii in one stylesheet (no radius system) | One radius (or none) for the product, plus full-round only for true pills/avatars. | STYLE.md lists it |
 | `pill-clutter` | P2 | ≥10 pills/badges in one file (house limit is 5 per screen) | Use words in running text or a plain list; keep pills for real, filterable states. | STYLE.md lists it |
 | `accent-border-card` | P2 | Coloured left-border 'accent' cards (≥2) | Drop the stripe; if it encodes a state, say the state in words too. | A real status colour system (severity, line colour) named in STYLE.md. |
+| `side-stripe` | P2 | Colour down one side: a left accent stripe on a card, callout or list item | Drop the stripe. Use space, or a rule that runs the full edge. If it encodes a state, say the state in words. | A binding, a quotation rule, or a status colour named in STYLE.md. |
 | `icon-tile` | P2 | Icon in a tinted rounded square, repeated (≥3) | Drop the tile; an icon earns its place only if it is read faster than the word. | STYLE.md lists it |
 | `shadcn-untouched` | P1 | shadcn/ui theme left at its defaults | Set --primary, --radius and the neutrals from your own tokens. | STYLE.md lists it |
 
@@ -46,6 +50,8 @@ Severity: **P0** anyone notices · **P1** a designer notices · **P2** polish. A
 |---|---|---|---|---|
 | `centered-hero` | P1 | Centred hero: headline + subhead + two buttons, all centred | Open with the most characteristic thing in the subject (the map, the number, the photo, the table); one primary action. | STYLE.md lists it |
 | `card-grid-3` | P1 | Three (or four) identical cards in a row as the default composition | Vary weight: one thing leads; or use a list/table if the items are parallel. | The content really is three parallel things of equal weight (rare). |
+| `stat-card-row` | P1 | A row of three or more equal stat cards | Put the numbers in a ruled strip, or in the sentence they belong to. | The items are genuinely equal and STYLE.md says so. |
+| `title-blurb` | P2 | A muted one-line subtitle under three or more headings | Let the title stand. A following line has to be real information, not a grey echo under every heading. | The line is the section's actual lede, named in STYLE.md. |
 | `modal-on-load` | P1 | A modal, wall or cookie-style overlay on first load | Answer the question first; onboarding and disclaimers go inline or on demand. | A legal gate you are required to show. |
 
 ### Motion
@@ -56,6 +62,7 @@ Severity: **P0** anyone notices · **P1** a designer notices · **P2** polish. A
 | `bounce-easing` | P2 | Bounce/elastic easing | Ease-out, 150–250 ms, transform/opacity only. | A playful product where bounce is the voice (STYLE.md). |
 | `fade-up-everything` | P2 | The same fade-up-on-scroll on every section (≥4) | One orchestrated moment, or none; motion should answer an action. | STYLE.md lists it |
 | `count-up` | P2 | Count-up stat animation | Show the real number, with its date and source. | STYLE.md lists it |
+| `status-dot` | P1 | A pulsing status dot, or a canned operational badge | Status is plain text with a time, and only when it is real, live and actionable. | The dot is a live control someone acts on, named in STYLE.md. |
 
 ### Icons
 
@@ -131,6 +138,13 @@ Points: ≥6 SLOP, 3–5 REVIEW. Weights and thresholds come from the Oct 2026 m
 | `type-chaos` | 1 | ≥9 distinct font sizes |
 | `mobile-overflow` | 1 | Phone (390) or 320px layout scrolls sideways |
 | `broken-placeholder` | 1 | Visible undefined/NaN, lorem ipsum or mock/sample data |
+| `eyebrow` | 1 | A small tracked all-caps kicker sits above a heading |
+| `italic-word` | 1 | One italic, gradient or accent-coloured word inside a headline |
+| `tracked-caps` | 1 | Uppercase plus positive letter-spacing on a heading, button or label |
+| `side-stripe` | 1 | A colour stripe down the left of a card, callout or list item |
+| `stat-card-row` | 1 | Three or more equal stat cards in a row |
+| `title-blurb` | 1 | A small muted one-line subtitle under three or more headings |
+| `status-dot` | 1 | A pulsing dot or a canned operational badge |
 | `low-contrast` | 2 (access) | ≥3 text elements below WCAG AA contrast |
 | `small-targets` | 1 (access) | ≥3 phone controls smaller than 44×44px |
 | `focus-invisible` | 2 (access) | ≥2 controls show no visible change when reached with Tab |

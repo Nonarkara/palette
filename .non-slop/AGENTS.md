@@ -2,6 +2,8 @@
 
 This applies to every agent (Claude, Codex, Cursor, Copilot, Windsurf, Gemini, Grok Bot) and every person, on every page, dashboard, deck or visual. If your model's habit disagrees with this file, this file wins. If this file disagrees with the repo's `STYLE.md`, `STYLE.md` wins.
 
+Eight giveaways are banned as a default. The numbered section of `../ANTI-SLOP.md`. Keep one only when `STYLE.md` names the rule.
+
 ## 0. Style is not slop
 
 **Slop is a default nobody chose. Style is a choice somebody made.** Remove the first; protect the second.

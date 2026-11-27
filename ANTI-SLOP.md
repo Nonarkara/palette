@@ -37,6 +37,23 @@ The measured examples come from the study below. "Slop" means the median slop or
 
 The earlier rules still apply: boxes fit their content, the composition balances, banned slop fonts are out (use Jost or Josefin/League Spartan, with Prompt/Kanit for Thai), there's one accent colour that means something, something on the page clearly wins, there's no filler copy, and there are no fake or placeholder numbers.
 
+## Eight giveaways, banned as a default
+
+Mitchell Romney's graphic "Ban these before AI designs your site". He credits Johannes Nagl, Phil Whitehouse, Austin Ballard, sadeeqah S. and Bryce Galbraith. Recorded here 27 Nov 2026.
+
+These eight are banned as a default. They are the template, not a material, a document, or a decision. A product may keep one when `STYLE.md` names that rule and says why. Non's own signature is not slop. Judge the page. Do not strip a voice someone chose.
+
+The scanner id is in parentheses. Source is `.non-slop` scan. The rendered page is `tools/slop-lint.mjs`, at 1 point each, the same weight as the other component tells. Inter stays on `default-font`: P1 in the source scan, reported only on the rendered page, because the static scan judges faces. `eyebrow-caps` still fires at three or more tracked labels anywhere. `accent-border-card` still fires when a left stripe is repeated. Neither threshold was lowered.
+
+1. **Eyebrows** (`eyebrow`). A small tracked, all-caps kicker above a heading. "FEATURES" is not a heading. Drop it, or let the heading say the thing.
+2. **Colour down one side** (`side-stripe`). An accent bar or left-hand stripe on a card, a callout or a list item. Separate with space or a rule that runs the full edge. If the stripe encodes a state, say the state in words. One is the ban. `accent-border-card` still marks the repeat.
+3. **One italic word** (`italic-word`). A single italic, gradient or accent-coloured word inside a headline. "Build faster with AI", with one word set off, is the template. The headline is one voice. A foreign word, a title or a name can stay when `STYLE.md` says so.
+4. **All caps for looks** (`tracked-caps`). Uppercase plus letter-spacing on a heading, a button or a label. Capitals are for a real acronym or a code. Tightening a condensed face (negative tracking) is not this ban.
+5. **Inter on everything** (`default-font`). Inter, and the other reach-for-it faces already named in this file. Choose a face for this product and write the reason in `STYLE.md`.
+6. **Too many cards** (`stat-card-row`). A row of equal stat or feature cards, the 24 / 3 / 99% row. Put the numbers in a ruled strip, or in the sentence they belong to.
+7. **A blurb under every title** (`title-blurb`). A grey one-line subtitle under every heading, section, card or settings group. One line of real information may follow a title. The same muted line under every title may not. The scanner fires at three.
+8. **Blinking status dots** (`status-dot`). A pulsing or glowing dot, and the badges "All Systems Operational" and "AI Engine Active". Status is plain text, with a time, and only when it is real, live and actionable.
+
 ## Map-first "surgical table" rule
 
 On any map or data product the map is the operating table, and everything else is an instrument at its edge.

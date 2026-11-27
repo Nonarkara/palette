@@ -9,6 +9,8 @@ description: >-
 
 These are known AI design-slop patterns. Check every page against them before shipping, and fix any hit. They come on top of the house design system (Palette) and any map rule such as the map taking most of the screen.
 
+Eight giveaways are banned as a default. The numbered section of `ANTI-SLOP.md`. Keep one only when `STYLE.md` names it. Do not restate them here.
+
 ## 1. Boxes fit their content
 - No text box, card, button or panel that is much wider or taller than the text inside it.
 - Padding is proportional to the type size (roughly 0.5 to 1.5 times the line height), never a fixed fat padding.
