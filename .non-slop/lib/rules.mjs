@@ -98,6 +98,140 @@ function fontDecls(ctx) {
   return out.map((d) => ({ ...d, family: (d.list.replace(/^[\[\s]+/, "").split(",")[0] || "").replace(/["'`\]]/g, "").replace(/!important/, "").trim().toLowerCase() })).filter((d) => d.family && !d.family.startsWith("var("));
 }
 
+// Eight giveaways (ANTI-SLOP.md). Positive tracking only: a minus tightens a
+// condensed face and is not the tracked-caps look. One word inside a headline
+// is the tell; the whole headline in italic is a voice.
+const POS_TRACK_RE = /letter-spacing\s*:\s*(?!-)(?:0?\.(?:0[2-9]\d*|[1-9]\d*)em|[1-9]\d*(?:\.\d+)?px)\b/i;
+const UPPER_RE = /text-transform\s*:\s*uppercase/i;
+const TRACK_CLASS_RE = /\btracking-(?:wide|wider|widest|\[0?\.(?:0[2-9]|[1-9]))/;
+function hasPositiveTracking(css) { return POS_TRACK_RE.test(css || ""); }
+function hasUppercase(css) { return UPPER_RE.test(css || ""); }
+function attrList(attrs, name) {
+  const m = String(attrs || "").match(new RegExp(`\\b${name}\\s*=\\s*["']([^"']*)["']`, "i"));
+  return m ? m[1] : "";
+}
+function classBlock(text, name) {
+  const safe = name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const m = new RegExp(`\\.${safe}\\b[^{]*\\{([^}]*)\\}`, "i").exec(text);
+  return m ? m[1] : "";
+}
+function trackedDeclaration(text, attrs) {
+  const style = attrList(attrs, "style");
+  if (hasUppercase(style) && hasPositiveTracking(style)) return true;
+  const names = attrList(attrs, "class(?:Name)?").split(/\s+/).filter(Boolean);
+  const cls = names.join(" ");
+  if (/\buppercase\b/.test(cls) && TRACK_CLASS_RE.test(cls)) return true;
+  return names.some((name) => { const block = classBlock(text, name); return block && hasUppercase(block) && hasPositiveTracking(block); });
+}
+function eyebrowFindings(ctx) {
+  const out = [];
+  for (const m of matches(ctx.text, /<([a-zA-Z][\w:-]*)\b([^>]*)>([^<]{0,80})<\/\1>\s*(?=<h[1-3]\b)/g)) {
+    const label = m[3].replace(/\s+/g, " ").trim();
+    if (!label || label.length > 32 || !trackedDeclaration(ctx.text, m[2])) continue;
+    out.push({ line: lineAt(ctx.text, m.index), detail: label });
+    if (out.length >= 3) break;
+  }
+  return out;
+}
+function trackedCapsFindings(ctx) {
+  const out = [];
+  for (const m of matches(ctx.text, /<(h[1-6]|button|label)\b([^>]*)>/gi)) {
+    if (!trackedDeclaration(ctx.text, m[2])) continue;
+    out.push({ line: lineAt(ctx.text, m.index), detail: m[1].toLowerCase() });
+    if (out.length >= 3) return out;
+  }
+  for (const m of matches(ctx.text, /([^{}@]+)\{([^{}]*)\}/g)) {
+    if (!/(?:^|[\s,>+~])(?:h[1-6]|button|label)\b/i.test(m[1])) continue;
+    if (!hasUppercase(m[2]) || !hasPositiveTracking(m[2])) continue;
+    out.push({ line: lineAt(ctx.text, m.index), detail: m[1].trim().slice(0, 60) });
+    if (out.length >= 3) break;
+  }
+  return out;
+}
+function italicWordFindings(ctx) {
+  const out = [];
+  for (const m of matches(ctx.text, /<h([1-3])\b[^>]*>([\s\S]*?)<\/h\1>/gi)) {
+    const plain = m[2].replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
+    if (!plain) continue;
+    for (const b of m[2].matchAll(/<(em|i|span)\b([^>]*)>([\s\S]*?)<\/\1>/gi)) {
+      const word = b[3].replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
+      if (!word || word.length >= plain.length || word.split(" ").length > 3) continue;
+      const tag = b[1].toLowerCase();
+      const attrs = b[2];
+      const italic = tag === "em" || tag === "i" || /font-style\s*:\s*italic/i.test(attrs) || /\bitalic\b/.test(attrs);
+      const grad = /bg-clip-text|background-clip\s*:\s*text|bg-gradient|linear-gradient|radial-gradient/i.test(attrs) || (/\btext-transparent\b/.test(attrs) && /\b(?:from|via|to)-/.test(attrs));
+      const accent = /(?:^|[\s"'])text-(?:indigo|violet|purple|fuchsia|pink|blue|primary|accent|sky|rose|emerald|amber)-\d{2,3}\b/.test(attrs) || /color\s*:\s*(?!inherit\b|currentcolor\b)/i.test(attrs);
+      if (!(italic || grad || accent)) continue;
+      out.push({ line: lineAt(ctx.text, m.index), detail: word.slice(0, 40) });
+      break;
+    }
+    if (out.length >= 3) break;
+  }
+  return out;
+}
+function elementInner(text, from, tag, limit) {
+  const re = new RegExp(`<(/?)${tag}\\b[^>]*>`, "gi");
+  re.lastIndex = from;
+  let depth = 1;
+  let m;
+  while ((m = re.exec(text))) {
+    if (m.index > from + limit) return -1;
+    if (m[1]) depth--; else depth++;
+    if (depth === 0) return m.index;
+  }
+  return -1;
+}
+function statCardFindings(ctx) {
+  const text = ctx.text;
+  for (const m of matches(text, /<(div|section|ul|ol)\b([^>]*\b(?:grid-cols-[234]|flex|grid|stats?|cards?)\b[^>]*)>/gi)) {
+    const openEnd = m.index + m[0].length;
+    const closeAt = elementInner(text, openEnd, m[1], 4000);
+    if (closeAt < 0) continue;
+    const body = text.slice(openEnd, closeAt);
+    const kids = [...body.matchAll(/<(div|article|li|section)\b([^>]*)>([\s\S]*?)<\/\1>/gi)];
+    const statKids = kids.filter((k) => {
+      const inner = k[3].replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
+      return inner.length > 0 && inner.length <= 48 && /\d/.test(inner);
+    });
+    if (statKids.length >= 3) return [{ line: lineAt(text, m.index), detail: `${statKids.length} stat cards` }];
+  }
+  return [];
+}
+function titleBlurbFindings(ctx) {
+  let n = 0, at = -1;
+  for (const m of matches(ctx.text, /<h([1-6])\b[^>]*>[\s\S]*?<\/h\1>\s*<p\b([^>]*)>([\s\S]*?)<\/p>/gi)) {
+    const text = m[3].replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
+    if (text.length < 8 || text.length > 100) continue;
+    const attrs = m[2];
+    const muted = /\b(?:text-(?:gray|grey|muted|neutral|zinc|slate|stone|secondary)|opacity-|text-(?:xs|sm)|subtitle|blurb|lede|dek)\b/i.test(attrs)
+      || /color\s*:\s*(?:#[6-9a-f]|gray|grey)/i.test(attrs)
+      || /font-size\s*:\s*(?:1[0-4]px|0?\.[6-9]\d*rem)/i.test(attrs);
+    if (!muted) continue;
+    n++; if (at < 0) at = m.index;
+  }
+  return n >= 3 ? [{ line: lineAt(ctx.text, at), detail: `${n} title blurbs` }] : [];
+}
+function statusDotFindings(ctx) {
+  for (const c of classAttrs(ctx.text)) {
+    if (!/\banimate-(?:pulse|ping)\b/.test(c.s)) continue;
+    if (!/\b(?:rounded-full|rounded-\[50%\]|w-(?:1|1\.5|2|2\.5|3)|h-(?:1|1\.5|2|2\.5|3)|size-(?:1|1\.5|2|2\.5|3)|dot)\b/.test(c.s)) continue;
+    return [{ line: lineAt(ctx.text, c.i), detail: "pulsing dot" }];
+  }
+  for (const m of matches(ctx.text, /([^{}@]+)\{([^{}]*)\}/g)) {
+    if (!/animation(?:-name)?\s*:[^;}]*(?:pulse|ping)/i.test(m[2])) continue;
+    const small = /border-radius\s*:\s*(?:50%|9999px|999px)/i.test(m[2]) || /(?:^|[;\s])(?:width|height|inline-size|block-size)\s*:\s*(?:[1-9]|1[0-6])px/i.test(m[2]);
+    if (!small) continue;
+    return [{ line: lineAt(ctx.text, m.index), detail: m[1].trim().slice(0, 40) || "pulsing dot" }];
+  }
+  if (ctx.kind !== "css") {
+    const t = visibleText(ctx);
+    const phrase = t.match(/All Systems Operational|AI Engine Active/i);
+    if (phrase) return [{ line: lineAt(ctx.text, Math.max(0, t.indexOf(phrase[0]))), detail: phrase[0] }];
+  }
+  return [];
+}
+const SIDE_STRIPE_RE = /\bborder-l-(?:2|4|8|\[\d+px\])\b|\bborder-s-(?:2|4|8|\[\d+px\])\b|border-(?:left|inline-start)\s*:\s*[2-8]px\s+solid/g;
+
 export const RULES = [
   // ── Typography
   { id: "default-font", sev: "P1", cat: "type", kinds: ["css", "markup", "script"], title: "Primary face is a reach-for-it default (Inter, Roboto, Poppins, Geist, system-ui stack…)", fix: "Choose a face for this product and say why in STYLE.md. House starting point: Jost; Josefin Sans or League Spartan for display; Prompt or Kanit (non-looped) for Thai.", keep: "The default is the brief (e.g. system-ui so the font disappears into the OS). List it under STYLE.md → Allow → font.",
@@ -106,6 +240,12 @@ export const RULES = [
     file: (ctx) => fontDecls(ctx).filter((d) => TASTEFUL.includes(d.family)).slice(0, 2).map((d) => ({ line: lineAt(ctx.text, d.i), detail: d.family, font: d.family })) },
   { id: "eyebrow-caps", sev: "P2", cat: "type", kinds: ["css", "markup", "script"], title: "Tracked all-caps eyebrow labels used as template chrome (≥3)", fix: "Drop the label or make it carry real information in sentence case.", keep: "A wayfinding or signage system that really uses caps.",
     file: (ctx) => { let n = 0, at = -1; for (const c of classAttrs(ctx.text)) if (/\buppercase\b/.test(c.s) && /\btracking-(wide|wider|widest|\[0?\.[1-9])/.test(c.s)) { n++; if (at < 0) at = c.i; } for (const m of matches(ctx.text, /text-transform\s*:\s*uppercase[^}]*letter-spacing\s*:\s*(0?\.\d+em|[2-9]px)|letter-spacing\s*:\s*(0?\.(?:1|2|3)\d*em|[2-9]px)[^}]*text-transform\s*:\s*uppercase/gi)) { n++; if (at < 0) at = m.index; } return n >= 3 ? [{ line: lineAt(ctx.text, at), detail: `${n} eyebrow labels` }] : []; } },
+  { id: "eyebrow", sev: "P2", cat: "type", kinds: ["css", "markup", "script"], title: "Tracked all-caps kicker above a heading", fix: "Drop the kicker, or let the heading say the thing in sentence case.", keep: "A wayfinding or catalogue label that carries a real category, named in STYLE.md.",
+    file: (ctx) => eyebrowFindings(ctx) },
+  { id: "italic-word", sev: "P1", cat: "type", kinds: ["markup", "script"], title: "One italic, gradient or accent-coloured word inside a headline", fix: "The headline is one voice. Size and weight make it win.", keep: "The word is a title, a foreign word or a name, and STYLE.md says so.",
+    file: (ctx) => italicWordFindings(ctx) },
+  { id: "tracked-caps", sev: "P1", cat: "type", kinds: ["css", "markup", "script"], title: "Uppercase plus letter-spacing on a heading, button or label", fix: "Sentence case. Capitals only for a real acronym or a code. Negative tracking on a condensed face is not this ban.", keep: "A signage system or a code label named in STYLE.md.",
+    file: (ctx) => trackedCapsFindings(ctx) },
   { id: "type-scale", sev: "P2", cat: "type", kinds: ["css"], title: "More than 8 font sizes in one stylesheet (no type scale)", fix: "State a scale (e.g. 1.25 or 1.333) and map every size to a step; ≤8 sizes.", keep: "",
     file: (ctx) => { const s = new Set(); for (const m of matches(ctx.text, /font-size\s*:\s*([\d.]+)(px|rem|em)\b/gi)) s.add((m[2] === "px" ? +m[1] / 16 : +m[1]).toFixed(3)); return s.size > 8 ? [{ line: 1, detail: `${s.size} sizes` }] : []; } },
 
@@ -138,7 +278,9 @@ export const RULES = [
   { id: "pill-clutter", sev: "P2", cat: "depth", kinds: ["markup", "script"], title: "≥10 pills/badges in one file (house limit is 5 per screen)", fix: "Use words in running text or a plain list; keep pills for real, filterable states.", keep: "",
     file: (ctx) => { let n = 0; for (const c of classAttrs(ctx.text)) if (/\brounded-full\b/.test(c.s) && /\bpx-\d/.test(c.s) && !/\b(h|w|size)-\d+\b.*\b(h|w|size)-\d+\b/.test(c.s)) n++; return n >= 10 ? [{ line: 1, detail: `${n} pills` }] : []; } },
   { id: "accent-border-card", sev: "P2", cat: "depth", kinds: ["css", "markup", "script"], title: "Coloured left-border 'accent' cards (≥2)", fix: "Drop the stripe; if it encodes a state, say the state in words too.", keep: "A real status colour system (severity, line colour) named in STYLE.md.",
-    file: (ctx) => { const n = count(ctx.text, /\bborder-l-(?:4|\[\d+px\])\b|border-left\s*:\s*[3-8]px\s+solid/g); return n >= 2 ? first(ctx, /\bborder-l-(?:4|\[\d+px\])\b|border-left\s*:\s*[3-8]px\s+solid/) : []; } },
+    file: (ctx) => { const n = count(ctx.text, /\bborder-l-(?:4|\[\d+px\])\b|\bborder-s-(?:4|\[\d+px\])\b|border-(?:left|inline-start)\s*:\s*[3-8]px\s+solid/g); return n >= 2 ? first(ctx, /\bborder-l-(?:4|\[\d+px\])\b|\bborder-s-(?:4|\[\d+px\])\b|border-(?:left|inline-start)\s*:\s*[3-8]px\s+solid/) : []; } },
+  { id: "side-stripe", sev: "P2", cat: "depth", kinds: ["css", "markup", "script"], title: "Colour down one side: a left accent stripe on a card, callout or list item", fix: "Drop the stripe. Use space, or a rule that runs the full edge. If it encodes a state, say the state in words.", keep: "A binding, a quotation rule, or a status colour named in STYLE.md.",
+    file: (ctx) => { const n = count(ctx.text, SIDE_STRIPE_RE); return n >= 1 ? [{ line: lineAt(ctx.text, ctx.text.search(/\bborder-l-(?:2|4|8|\[\d+px\])\b|\bborder-s-(?:2|4|8|\[\d+px\])\b|border-(?:left|inline-start)\s*:\s*[2-8]px\s+solid/)), detail: `${n} side stripe${n === 1 ? "" : "s"}` }] : []; } },
   { id: "icon-tile", sev: "P2", cat: "depth", kinds: ["markup", "script"], title: "Icon in a tinted rounded square, repeated (≥3)", fix: "Drop the tile; an icon earns its place only if it is read faster than the word.", keep: "",
     file: (ctx) => { let n = 0, at = -1; for (const c of classAttrs(ctx.text)) if (/\b(?:h|size)-(?:8|9|10|11|12|14)\b/.test(c.s) && /\brounded-(?:md|lg|xl|2xl)\b/.test(c.s) && /\bbg-(?:[a-z]+-(?:50|100)|[a-z]+-\d{3}\/(?:5|10|15|20)|primary\/10)\b/.test(c.s)) { n++; if (at < 0) at = c.i; } return n >= 3 ? [{ line: lineAt(ctx.text, at), detail: `${n} icon tiles` }] : []; } },
   { id: "shadcn-untouched", sev: "P1", cat: "depth", kinds: ["css"], title: "shadcn/ui theme left at its defaults", fix: "Set --primary, --radius and the neutrals from your own tokens.", keep: "",
@@ -151,6 +293,10 @@ export const RULES = [
     file: (ctx) => { for (const m of matches(ctx.text, /<h1\b/gi)) { const before = ctx.text.slice(Math.max(0, m.index - 900), m.index), after = ctx.text.slice(m.index, m.index + 1600); const around = before + after.slice(0, 400); if (!/\b(?:text-center|place-items-center|justify-items-center)\b|text-align\s*:\s*center|\bitems-center\b[^"']{0,80}\bjustify-center\b|\bjustify-center\b[^"']{0,80}\bitems-center\b|\bflex-col\b[^"']{0,60}\bitems-center\b|\bitems-center\b[^"']{0,60}\bflex-col\b/.test(around)) continue; const ctas = (after.match(/<(?:button|Button)\b|<a\b[^>]*(?:class(?:Name)?=["'][^"']*(?:btn|button|rounded)[^"']*["'])/g) || []).length; if (ctas >= 2) return [{ line: lineAt(ctx.text, m.index), detail: `${ctas} buttons under a centred h1` }]; } return []; } },
   { id: "card-grid-3", sev: "P1", cat: "layout", kinds: ["markup", "script", "css"], title: "Three (or four) identical cards in a row as the default composition", fix: "Vary weight: one thing leads; or use a list/table if the items are parallel.", keep: "The content really is three parallel things of equal weight (rare).",
     file: (ctx) => { const g = /\b(?:\w+:)?grid-cols-[34]\b|grid-template-columns\s*:\s*repeat\(\s*[34]\s*,\s*(?:1fr|minmax)/; const m = ctx.text.match(g); if (!m) return []; const cards = [...classAttrs(ctx.text)].filter((c) => /\brounded(?:-\w+)?\b/.test(c.s) && /\b(?:border|shadow(?:-\w+)?|bg-white|bg-card|bg-[a-z]+-(?:50|100|800|900))\b/.test(c.s) && /\bp-(?:4|5|6|8)\b/.test(c.s)).length; return cards >= 3 || ctx.kind === "css" && /\.card\b/.test(ctx.text) ? [{ line: lineAt(ctx.text, ctx.text.search(g)), detail: m[0] }] : []; } },
+  { id: "stat-card-row", sev: "P1", cat: "layout", kinds: ["markup", "script"], title: "A row of three or more equal stat cards", fix: "Put the numbers in a ruled strip, or in the sentence they belong to.", keep: "The items are genuinely equal and STYLE.md says so.",
+    file: (ctx) => statCardFindings(ctx) },
+  { id: "title-blurb", sev: "P2", cat: "layout", kinds: ["markup", "script"], title: "A muted one-line subtitle under three or more headings", fix: "Let the title stand. A following line has to be real information, not a grey echo under every heading.", keep: "The line is the section's actual lede, named in STYLE.md.",
+    file: (ctx) => titleBlurbFindings(ctx) },
   { id: "modal-on-load", sev: "P1", cat: "layout", kinds: ["markup", "script"], title: "A modal, wall or cookie-style overlay on first load", fix: "Answer the question first; onboarding and disclaimers go inline or on demand.", keep: "A legal gate you are required to show.",
     file: (ctx) => first(ctx, /<dialog\b[^>]*\bopen\b|\bdefaultOpen(?:=\{true\}|\b(?!=))|useState\(\s*true\s*\)\s*;?\s*\/\/.*(?:modal|welcome)|const\s*\[\s*(?:show|is)(?:Welcome|Intro|Onboarding|Modal|Splash)\w*\s*,[^\]]*\]\s*=\s*useState\(\s*true/) },
 
@@ -163,6 +309,8 @@ export const RULES = [
     file: (ctx) => { const n = count(ctx.text, /\bwhileInView\b|\bdata-aos=["']fade-up|\banimate-fade-?up\b|\bfadeInUp\b/g); return n >= 4 ? first(ctx, /\bwhileInView\b|\bdata-aos=["']fade-up|\banimate-fade-?up\b|\bfadeInUp\b/, () => `${n} fade-ups`) : []; } },
   { id: "count-up", sev: "P2", cat: "motion", kinds: ["script", "markup"], title: "Count-up stat animation", fix: "Show the real number, with its date and source.", keep: "",
     file: (ctx) => first(ctx, /from\s+["']react-countup["']|\bnew\s+CountUp\(|countup\.js/i) },
+  { id: "status-dot", sev: "P1", cat: "motion", kinds: ["css", "markup", "script"], title: "A pulsing status dot, or a canned operational badge", fix: "Status is plain text with a time, and only when it is real, live and actionable.", keep: "The dot is a live control someone acts on, named in STYLE.md.",
+    file: (ctx) => statusDotFindings(ctx) },
 
   // ── Icons, copy, imagery
   { id: "emoji-icons", sev: "P1", cat: "icons", kinds: ["markup", "script"], title: "Emoji used as UI icons (buttons, nav, headings, labels, icon props)", fix: "Use a word, or one real icon set used sparingly.", keep: "Emoji in prose, personal posts or a playful list are voice, not icons: they are not flagged.",

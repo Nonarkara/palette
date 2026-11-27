@@ -46,7 +46,11 @@ font, default corner radius, three identical cards, a gradient behind a headline
 
 **The doctrine.** Limits 1–13, and the whole of `ANTI-SLOP.md`. There is no
 single remedy for this one, which is why it is first: this file cannot save a
-brief that never decided anything.
+brief that never decided anything. The eight giveaways (eyebrow, side stripe,
+one italic word, tracked capitals, Inter, a row of stat cards, a blurb under
+every title, a pulsing status dot) are the numbered section of
+[ANTI-SLOP.md](ANTI-SLOP.md). The destination for each is written there.
+`STYLE.md` is the only place a product keeps one.
 
 **The destination.** Decide the thing itself before the page. Name the subject's
 abstract core in one sentence a competitor could not use, then find the

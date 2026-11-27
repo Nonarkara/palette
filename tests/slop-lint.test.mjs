@@ -29,7 +29,7 @@ let browser = null;
 let browserSkip = "playwright not installed";
 try {
   const { chromium } = await import("playwright");
-  browser = await chromium.launch();
+  browser = await chromium.launch({ executablePath: process.env.CHROME || undefined, args: ["--no-sandbox", "--use-gl=swiftshader", "--enable-unsafe-swiftshader", "--ignore-gpu-blocklist"] });
   browserSkip = false;
 } catch (e) {
   browserSkip = `no usable browser: ${e.message.split("\n")[0]}`;
@@ -81,6 +81,9 @@ test("the plate view is not a squeezed desktop", { skip: browserSkip }, async ()
     assert.ok(!r.lint.hits.includes(id), `the plate view must not trip ${id}, got: ${r.lint.hits.join(", ")}`);
   }
   assert.equal(r.mobile.smallTextShare, 0, "no text on the phone is set below 12px");
+  for (const id of ["eyebrow", "italic-word", "tracked-caps", "side-stripe", "stat-card-row", "title-blurb", "status-dot"]) {
+    assert.ok(!r.lint.hits.includes(id), `the plate view must not trip ${id}, got: ${r.lint.hits.join(", ")}`);
+  }
 });
 
 test("the reading room is not a squeezed desktop", { skip: browserSkip }, async () => {
@@ -89,6 +92,28 @@ test("the reading room is not a squeezed desktop", { skip: browserSkip }, async 
   for (const id of ["phone-squeezed", "desktop-columns-on-phone"]) {
     assert.ok(!r.lint.hits.includes(id), `the reading room must not trip ${id}, got: ${r.lint.hits.join(", ")}`);
   }
+  for (const id of ["eyebrow", "italic-word", "tracked-caps", "side-stripe", "stat-card-row", "title-blurb", "status-dot"]) {
+    assert.ok(!r.lint.hits.includes(id), `the reading room must not trip ${id}, got: ${r.lint.hits.join(", ")}`);
+  }
+});
+
+test("the eight giveaways trip on a template page and stay quiet on a plate-like page", { skip: browserSkip }, async () => {
+  const bans = ["eyebrow", "italic-word", "tracked-caps", "side-stripe", "stat-card-row", "title-blurb", "status-dot"];
+  const slop = await lint.lintUrl(browser, `${base}/tests/fixtures/giveaway-bans.html`, { saveShots: false, settleMs: 400 });
+  assert.ok(slop.lint, "the template must be measurable");
+  for (const id of bans) {
+    assert.ok(slop.lint.hits.includes(id), `the template must trip ${id}, got: ${slop.lint.hits.join(", ")}`);
+    assert.equal(lint.RULES.find((r) => r.id === id).w, 1);
+  }
+  assert.ok((slop.desktop.giveawayKickers || 0) >= 1);
+  assert.ok((slop.desktop.giveawayBlurbs || 0) >= 3);
+  assert.ok((slop.desktop.giveawayStatRows || 0) >= 1);
+  const clean = await lint.lintUrl(browser, `${base}/tests/fixtures/giveaway-clean.html`, { saveShots: false, settleMs: 400 });
+  assert.ok(clean.lint, "the clean page must be measurable");
+  for (const id of bans) {
+    assert.ok(!clean.lint.hits.includes(id), `the clean page must not trip ${id}, got: ${clean.lint.hits.join(", ")}`);
+  }
+  assert.equal(clean.desktop.giveawayTracked || 0, 0, "negative tracking on a condensed face is not tracked caps");
 });
 
 console.log("OK: a squeezed desktop is caught, and this repo's own pages are not");

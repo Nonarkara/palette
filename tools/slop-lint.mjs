@@ -334,6 +334,72 @@ export function inPageMetrics() {
   // largest non-map box share (clipped to first screen)
   let largest = 0; for (const b of boxes) { if (b.el === document.body) continue; const a = clipV(b.r); if (a / VA > largest && b.r.width < VW * 0.98 + 1) largest = a / VA; }
   const rv = [...radii.entries()].filter(([k]) => k > 0).sort((a, b) => b[1] - a[1]); const rTot = [...radii.values()].reduce((a, b) => a + b, 0);
+  // Eight giveaways (ANTI-SLOP.md). Positive tracking only: negative letter-spacing
+  // tightens a condensed face and is not the tracked-caps look. Closed dialogs are off screen.
+  const shown = (el) => { for (let e = el; e; e = e.parentElement) { const s = getComputedStyle(e); if (s.display === 'none' || s.visibility === 'hidden' || +s.opacity < 0.05) return false; if (e.tagName === 'DIALOG' && !e.open) return false; } return true; };
+  const trackedLook = (cs) => { const fs = parseFloat(cs.fontSize) || 16; const ls = parseFloat(cs.letterSpacing); return cs.textTransform === 'uppercase' && ls > 0.02 * fs; };
+  let giveawayKickers = 0, giveawayItalic = 0, giveawayTracked = 0, giveawayStripes = 0, giveawayStatRows = 0, giveawayBlurbs = 0, giveawayDots = 0;
+  for (const h of document.querySelectorAll('h1,h2,h3,h4,h5,h6')) {
+    if (!shown(h)) continue;
+    const hcs = getComputedStyle(h);
+    const ht = (h.innerText || '').replace(/\s+/g, ' ').trim();
+    const hfs = parseFloat(hcs.fontSize) || 16;
+    const prev = h.previousElementSibling;
+    if (prev && shown(prev)) {
+      const pcs = getComputedStyle(prev);
+      const pt = (prev.innerText || '').replace(/\s+/g, ' ').trim();
+      if (pt.length > 0 && pt.length <= 32 && (parseFloat(pcs.fontSize) || 16) <= hfs && trackedLook(pcs)) giveawayKickers++;
+    }
+    if (ht && trackedLook(hcs)) giveawayTracked++;
+    for (const em of h.querySelectorAll('em, i, span')) {
+      const t = (em.innerText || '').replace(/\s+/g, ' ').trim();
+      if (!t || t.length >= ht.length || t.split(' ').length > 3) continue;
+      const ecs = getComputedStyle(em);
+      const grad = (ecs.backgroundImage || '').includes('gradient') || (ecs.webkitBackgroundClip || ecs.backgroundClip) === 'text';
+      if (ecs.fontStyle === 'italic' || grad || (ecs.color !== hcs.color && ecs.color !== 'inherit')) { giveawayItalic++; break; }
+    }
+    const next = h.nextElementSibling;
+    if (next && next.tagName === 'P' && shown(next)) {
+      const ncs = getComputedStyle(next);
+      const nt = (next.innerText || '').replace(/\s+/g, ' ').trim();
+      const muted = +ncs.opacity < 0.85 || (ncs.color !== hcs.color && ncs.color !== 'inherit');
+      if (nt.length >= 8 && nt.length <= 90 && (parseFloat(ncs.fontSize) || 16) <= hfs * 0.92 && muted) giveawayBlurbs++;
+    }
+  }
+  for (const b of document.querySelectorAll('button, [role="button"], label')) {
+    if (!shown(b)) continue;
+    const t = (b.innerText || '').replace(/\s+/g, ' ').trim();
+    if (t && t.length <= 40 && trackedLook(getComputedStyle(b))) giveawayTracked++;
+  }
+  for (const el of document.querySelectorAll('body *')) {
+    const r = el.getBoundingClientRect();
+    if (r.bottom < 0 || r.top > docTopLimit || r.width < 2 || r.height < 2) continue;
+    const cs = getComputedStyle(el);
+    const L = parseFloat(cs.borderLeftWidth) || 0, R = parseFloat(cs.borderRightWidth) || 0, T = parseFloat(cs.borderTopWidth) || 0, Btm = parseFloat(cs.borderBottomWidth) || 0;
+    if (L >= 2 && R < 1 && T < 1 && Btm < 1 && cs.borderLeftStyle !== 'none' && r.width > 40 && r.height > 16 && shown(el)) giveawayStripes++;
+    if (r.width <= 18 && r.height <= 18) {
+      const name = (cs.animationName || '') + ' ' + (typeof el.className === 'string' ? el.className : '');
+      const round = parseFloat(cs.borderTopLeftRadius) >= Math.min(r.width, r.height) / 2 - 1;
+      if (round && /pulse|ping/i.test(name) && shown(el)) giveawayDots++;
+    }
+  }
+  if (/All Systems Operational|AI Engine Active/i.test(document.body.innerText || '')) giveawayDots++;
+  const statSeen = new Set();
+  for (const el of document.querySelectorAll('div, section, ul, ol')) {
+    if (statSeen.has(el) || !shown(el)) continue;
+    const cs = getComputedStyle(el);
+    if (!cs.display.includes('flex') && !cs.display.includes('grid')) continue;
+    const kids = [...el.children].filter((k) => { const b = k.getBoundingClientRect(); const kcs = getComputedStyle(k); return shown(k) && kcs.position !== 'absolute' && kcs.position !== 'fixed' && b.width > 40 && b.height > 20 && b.top < docTopLimit; });
+    const rows = new Map();
+    for (const k of kids) { const top = Math.round(k.getBoundingClientRect().top / 4); (rows.get(top) || rows.set(top, []).get(top)).push(k); }
+    for (const row of rows.values()) {
+      if (row.length < 3) continue;
+      const ws = row.map((k) => k.getBoundingClientRect().width);
+      const same = (Math.max(...ws) - Math.min(...ws)) / Math.max(...ws) < 0.08;
+      const stat = row.every((k) => { const t = (k.innerText || '').replace(/\s+/g, ' ').trim(); return t.length > 0 && t.length <= 48 && /\d/.test(t); });
+      if (same && stat) { giveawayStatRows++; statSeen.add(el); break; }
+    }
+  }
   const txt = (document.body.innerText || '').slice(0, 200000);
   const ph = {}; const PH = { lorem: /lorem ipsum/gi, placeholder: /placeholder/gi, sample: /sample data|ข้อมูลตัวอย่าง|\bdemo data\b|\bmock\b|dummy/gi, simulated: /simulated|จำลอง/gi, broken: /\bundefined\b|\bNaN\b|\[object Object\]/g, loading: /loading\.\.\.|กำลังโหลด/gi, comingSoon: /coming soon|เร็ว ?ๆ ?นี้/gi, dash: /(^|\s)(--|—|N\/A)(\s|$)/g };
   for (const [k, re] of Object.entries(PH)) ph[k] = (txt.match(re) || []).length;
@@ -351,7 +417,8 @@ export function inPageMetrics() {
     purpleShare: colorArea.painted ? +(colorArea.purple / colorArea.painted).toFixed(3) : 0, accentHues: [...hues.entries()].filter(([, c]) => c >= 3).length,
     tailwindDefaultShare: colorSamples ? +(twHits / colorSamples).toFixed(2) : 0, oklch, primaryFont: famTop[0]?.[0] || '', fontFamilies: famTop.filter(([, c]) => c > 50).length,
     defaultFont: famTop[0] ? SLOPF.includes(famTop[0][0]) : false,
-    placeholderHits: ph, textChars: txt.length, bodySample: txt.slice(0, 160).replace(/\s+/g, ' '), examples
+    placeholderHits: ph, textChars: txt.length, bodySample: txt.slice(0, 160).replace(/\s+/g, ' '), examples,
+    giveawayKickers, giveawayItalic, giveawayTracked, giveawayStripes, giveawayStatRows, giveawayBlurbs, giveawayDots
   });
   return out;
 }
@@ -402,6 +469,14 @@ export const RULES = [
   { id: 'phone-squeezed', w: 1, desc: 'Phone layout is the desktop layout shrunk: ≥25% of the visible text on a 390px screen is set below 12px', test: (d, m) => (m.smallTextShare || 0) >= 0.25 },
   { id: 'desktop-columns-on-phone', w: 1, desc: 'The desktop split survived at 390px: a narrow column stayed beside a much wider one instead of collapsing', test: (d, m) => (m.narrowStrips || 0) >= 1 },
   { id: 'broken-placeholder', w: 1, desc: 'Visible undefined/NaN, lorem ipsum or mock/sample data', test: d => (d.placeholderHits?.broken || 0) + (d.placeholderHits?.lorem || 0) + (d.placeholderHits?.sample || 0) >= 1 },
+  // Eight giveaways. Weight 1, the same as the other component tells. ANTI-SLOP.md.
+  { id: 'eyebrow', w: 1, desc: 'A small tracked all-caps kicker sits above a heading', test: d => (d.giveawayKickers || 0) >= 1 },
+  { id: 'italic-word', w: 1, desc: 'One italic, gradient or accent-coloured word inside a headline', test: d => (d.giveawayItalic || 0) >= 1 },
+  { id: 'tracked-caps', w: 1, desc: 'Uppercase plus positive letter-spacing on a heading, button or label', test: d => (d.giveawayTracked || 0) >= 1 },
+  { id: 'side-stripe', w: 1, desc: 'A colour stripe down the left of a card, callout or list item', test: d => (d.giveawayStripes || 0) >= 1 },
+  { id: 'stat-card-row', w: 1, desc: 'Three or more equal stat cards in a row', test: d => (d.giveawayStatRows || 0) >= 1 },
+  { id: 'title-blurb', w: 1, desc: 'A small muted one-line subtitle under three or more headings', test: d => (d.giveawayBlurbs || 0) >= 3 },
+  { id: 'status-dot', w: 1, desc: 'A pulsing dot or a canned operational badge', test: d => (d.giveawayDots || 0) >= 1 },
   { id: 'default-font', w: 0, desc: 'Primary face is a stock default (reported only: clean apps use them too)', test: d => !!d.defaultFont },
 ];
 export function score(d, m = {}) {
